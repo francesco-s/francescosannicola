@@ -54,7 +54,7 @@
             margin-right: 5px;
         }
         .container {
-            max-width: 1200px;
+            max-width: 1500px;
             margin: 20px auto;
             padding: 20px;
             background-color: #fff;
@@ -74,7 +74,22 @@
         ul li {
             margin-bottom: 10px;
         }
+		
+		.accordion.active .arrow {
+			transform: rotate(180deg);
+		}
 
+		.accordion {
+			position: relative; /* Per consentire il posizionamento assoluto dell'elemento figlio */
+		}
+
+		.arrow {
+			display: inline-block;
+			position: absolute;
+			right: 0; /* Posiziona la freccia all'estrema destra dell'h2 */
+			font-size: 0.65em;
+		}
+	
         /* Responsive CSS */
         @media screen and (max-width: 768px) {
             .container {
@@ -101,59 +116,67 @@
         </div>
     </header>
     <div class="container">
-        <div class="column">
+        <!-- <div class="column">
             <h2>About me</h2>
             <p>Pragmatic, sincere, and ambitious are three adjectives that best describe me. I love everything related to IT, Machine Learning, and fitness.</p>
-        </div>
+        </div> -->
         <div class="column">
-            <h2>Employment history</h2>
+        <h2 class="accordion">Employment history<span class="arrow">&#9660;</span></h2>
             <ul>
                 <li><strong>Machine Learning Engineer - Consultant</strong><br>
                     Links Management & Technology<br>
-                    March 23–current
+					Competence Center AI & IoT<br>
+                    March 2023 – current
                 </li>
                 <li><strong>Artificial Intelligence and Data - Analyst</strong><br>
                     Deloitte<br>
-                    October 22–February 23
+					Big Data and Insight Driven Organization<br>
+                    October 2022 – February 2023
                 </li>
                 <li><strong>AI engineer and System Administrator - Intern</strong><br>
                     Intesa Sanpaolo<br>
-                    December 21–May 22
+					Hybrid Data Center & PAAS<br>
+                    December 2021 – May 2022
                 </li>
             </ul>
-            <h2>Education</h2>
+		</div>
+		<div class="column">
+			<h2 class="accordion">Education<span class="arrow">&#9660;</span></h2>
             <ul>
                 <li><strong>Master’s degree in Computer Science - AI</strong><br>
-                    University of Turin, Turin<br>
-                    2022
+                    University of Turin<br>
+                    January 2020 – April 2022
                 </li>
                 <li><strong>Bachelor’s degree in Computer Science</strong><br>
-                    University of Bari, Bari<br>
-                    2020
+                    University of Bari<br>
+                    October 2016 – December 2019
                 </li>
             </ul>
-            <h2>Certifications</h2>
+		</div>
+		<div class="column">
+            <h2 class="accordion">Certifications<span class="arrow">&#9660;</span></h2>
             <ul>
                 <li><strong>AWS Certified Machine Learning - Specialty</strong><br>
                     Amazon Web Services
-				(<a href="https://www.credly.com/badges/ab41e8bd-32a3-49ce-a7a5-e3106f58beab/public_url" target="_blank">View Credentials</a>)
+				(<a href="https://www.credly.com/badges/ab41e8bd-32a3-49ce-a7a5-e3106f58beab/public_url" target="_blank">View Credentials</a>)<br>
+				April 2024 – April 2027
                 </li>
-            </ul>
-			<h2>Certificates</h2>
-			<ul>
                 <li>AWS Machine Learning – Specialty Certication Preparation<br>Cloud Academy
-                    (<a href="https://certificates.cloudacademy.com/8997053f1d2091596d528402607d41ca312060fc.pdf" target="_blank">View Credentials</a>)
+                    (<a href="https://certificates.cloudacademy.com/8997053f1d2091596d528402607d41ca312060fc.pdf" target="_blank">View Credentials</a>)<br>
+				March 2024 – no expiry
                 </li>
                 <li>Google Cloud Fundamentals: Core Infrastructure<br>Coursera
-                    (<a href="https://www.coursera.org/account/accomplishments/verify/GCCEPUHES7UC" target="_blank">View Credentials</a>)
+                    (<a href="https://www.coursera.org/account/accomplishments/verify/GCCEPUHES7UC" target="_blank">View Credentials</a>)<br>
+				April 2022 – no expiry
                 </li>
 				<li>Google Cloud Big Data and ML Fundamentals<br>Coursera
-                    (<a href="https://www.coursera.org/account/accomplishments/verify/KFC43YVQX5ZS" target="_blank">View Credentials</a>)
+                    (<a href="https://www.coursera.org/account/accomplishments/verify/KFC43YVQX5ZS" target="_blank">View Credentials</a>)<br>
+				May 2022 – no expiry
                 </li>
             </ul>
         </div>
         <div class="column">
-            <h2>Personal Projects</h2>
+            <h2 class="accordion">Personal Projects<span class="arrow">&#9660;</span></h2>
             <ul>
 				<li><strong>Links Academy - Anomaly detection</strong><br>
 					Anomaly detection from statistical baseline to density-based and distance-based methods.<br>
@@ -177,5 +200,23 @@
             </ul>
         </div>
     </div>
+	<script>
+        var accordions = document.getElementsByClassName("accordion");
+
+        for (var i = 0; i < accordions.length; i++) {
+			var panel = accordions[i].nextElementSibling;
+            panel.style.display = "none";
+			
+            accordions[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        }
+    </script>
 </body>
 </html>
