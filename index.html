@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Francesco Sannicola</title>
-	<link rel="icon" type="image/x-icon" href="http://francescosannicola.it.s3-website.eu-west-3.amazonaws.com/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="http://francescosannicola.it.s3-website.eu-west-3.amazonaws.com/favicon.ico">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,26 +16,34 @@
         header {
             background-color: transparent;
             color: #fff;
-            padding: 20px 0;
+            padding: 30px 0;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-		
+        .profile {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            margin-right: 45px;
+        }
         header h1 {
             color: #000;
             margin-bottom: 10px;
-			font-weight: normal;
+            font-weight: normal;
         }
-		h1, h2 {
+        h1, h2, h3 {
             color: rgb(96, 125, 138);
         }
-        h2 {
+        h2, h3 {
             border-bottom: 2px solid rgb(96, 125, 138);
             padding-bottom: 5px;
-			font-weight: normal;
+            font-weight: normal;
         }
-		.role {
-			color: #000;
-		}
+        .role {
+            color: #000;
+        }
         .contact-info {
             display: flex;
             justify-content: center;
@@ -54,20 +62,36 @@
             height: 20px;
             margin-right: 5px;
         }
-        .container {
+        .main-container {
             max-width: 1500px;
             margin: 20px auto;
             padding: 20px;
             background-color: #fff;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: grid;
-            gap: 20px;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         }
-        .column {
+        .left-column, .right-column {
+            flex: 1;
+            min-width: 300px;
+            padding: 0px;
+        }
+        .info-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1500px;
+            margin: 30px auto;
             padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+		
+        .info-column {
+            flex: 1;
+            margin: 10px;
+        }
+		
         ul {
             list-style-type: none;
             padding: 0;
@@ -75,136 +99,230 @@
         ul li {
             margin-bottom: 10px;
         }
-		
-		.accordion.active .arrow {
-			transform: rotate(180deg);
-		}
-
-		.accordion {
-			position: relative; /* Per consentire il posizionamento assoluto dell'elemento figlio */
-		}
-
-		.arrow {
-			display: inline-block;
-			position: absolute;
-			right: 0; /* Posiziona la freccia all'estrema destra dell'h2 */
-			font-size: 0.65em;
-		}
-	
-        /* Responsive CSS */
-        @media screen and (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
+        
+        .accordion.active .arrow {
+            transform: rotate(180deg);
         }
+
+        .accordion {
+            position: relative;
+        }
+
+        .arrow {
+            display: inline-block;
+            position: absolute;
+            right: 0;
+            font-size: 0.65em;
+        }
+
+        .projects-container {
+            max-width: 1500px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+		.project-columns {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+		}
+
+		.project-column {
+			flex-basis: calc(25% - 20px);
+			padding: 0px;
+			box-sizing: border-box;
+		}
+
+		.project-column ul {
+			list-style-type: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		.project-column ul li {
+			margin-bottom: 30px;
+			display: flex;
+			flex-direction: column;
+			align-items: left;
+			text-align: left;
+		}
+
+		.project-column img {
+			width: 100%;
+			height: 200px;
+			margin-bottom: 10px;
+		}
+
+		.project-column strong {
+			font-size: 1.1em;
+		}
+    
+
 		
+
+		/* Media query per adattare il layout quando la larghezza dello schermo è inferiore a 1200px */
+		@media screen and (max-width: 1200px) {
+			.project-columns {
+				justify-content: center; /* Centra le colonne quando lo schermo è stretto */
+			}
+
+			.project-column {
+				flex-basis: calc(50% - 20px); /* Imposta la larghezza delle colonne al 50% del contenitore con uno spazio tra le colonne */
+			}
+			
+			.info-column {
+				flex-basis: calc(50% - 20px); /* Imposta la larghezza delle colonne al 50% del contenitore con uno spazio tra le colonne */
+			}
+		}
+
+		/* Media query per adattare ulteriormente il layout quando la larghezza dello schermo è inferiore a 600px */
+		@media screen and (max-width: 600px) {
+			.project-column {
+				flex-basis: calc(100% - 20px); /* Imposta la larghezza delle colonne al 100% del contenitore con uno spazio tra le colonne */
+			}
+			.info-column {
+				flex-basis: calc(100% - 20px); /* Imposta la larghezza delle colonne al 100% del contenitore con uno spazio tra le colonne */
+				
+			}
+		}
+        
     </style>
 </head>
 <body>
-    <header>
-        <h1>Francesco Sannicola</h1>
-        <p class="role">Machine Learning Engineer</p>		
-        <div class="contact-info">
-		    <a href="mailto:francescosannicola1997@gmail.com">
-                <img src="https://e7.pngegg.com/pngimages/909/295/png-clipart-mail-icon-computer-icons-envelope-drawing-white-envelope-miscellaneous-angle.png" alt="Email" class="icon">
-            </a>
-			<a href="https://www.linkedin.com/in/francesco-sannicola" target="_blank">
-                <img src="https://cdn.icon-icons.com/icons2/3245/PNG/512/linkedin_in_icon_198091.png" alt="LinkedIn" class="icon">
-            </a>
-			<a href="https://github.com/francesco-s" target="_blank">
-                <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" class="icon">
-            </a>
+    <div class="main-container">
+        <div class="left-column">
+            <header>
+                <img src="francescosannicola.jpg" class="profile" alt="Profile Picture">
+                <div>
+                    <h1>Francesco Sannicola</h1>
+                    <p class="role">Machine Learning Software Engineer</p>        
+                    <div class="contact-info">
+                        <a href="mailto:francescosannicola1997@gmail.com">
+                            <img src="email.png" alt="Email" class="icon">
+                        </a>
+                        <a href="https://www.linkedin.com/in/francesco-sannicola" target="_blank">
+                            <img src="linkedin.png" alt="LinkedIn" class="icon">
+                        </a>
+                        <a href="https://github.com/francesco-s" target="_blank">
+                            <img src="github.png" alt="GitHub" class="icon">
+                        </a>
+                    </div>
+                </div>
+            </header>
         </div>
-    </header>
-    <div class="container">
-        <!-- <div class="column">
-            <h2>About me</h2>
-            <p>Pragmatic, sincere, and ambitious are three adjectives that best describe me. I love everything related to IT, Machine Learning, and fitness.</p>
-        </div> -->
-        <div class="column">
-        <h2 class="accordion">Employment history<span class="arrow">&#9660;</span></h2>
-            <ul>
-                <li><strong>Machine Learning Engineer - Consultant</strong><br>
-                    Links Management & Technology<br>
-					Competence Center AI & IoT<br>
-                    March 2023 – current
-                </li>
-                <li><strong>Artificial Intelligence and Data - Analyst</strong><br>
-                    Deloitte<br>
-					Big Data and Insight Driven Organization<br>
-                    October 2022 – February 2023
-                </li>
-                <li><strong>AI engineer and System Administrator - Intern</strong><br>
-                    Intesa Sanpaolo<br>
-					Hybrid Data Center & PAAS<br>
-                    December 2021 – May 2022
-                </li>
-            </ul>
-		</div>
-		<div class="column">
-			<h2 class="accordion">Education<span class="arrow">&#9660;</span></h2>
-            <ul>
-                <li><strong>Master’s degree in Computer Science - AI</strong><br>
-                    University of Turin<br>
-                    January 2020 – April 2022
-                </li>
-                <li><strong>Bachelor’s degree in Computer Science</strong><br>
-                    University of Bari<br>
-                    October 2016 – December 2019
-                </li>
-            </ul>
-		</div>
-		<div class="column">
-            <h2 class="accordion">Certifications<span class="arrow">&#9660;</span></h2>
-            <ul>
-                <li><strong>AWS Certified Machine Learning - Specialty</strong><br>
-                    Amazon Web Services
-				(<a href="https://www.credly.com/badges/ab41e8bd-32a3-49ce-a7a5-e3106f58beab/public_url" target="_blank">View Credentials</a>)<br>
-				April 2024 – April 2027
-                </li>
-                <li>AWS Machine Learning – Specialty Certication Preparation 
-                    (<a href="https://certificates.cloudacademy.com/8997053f1d2091596d528402607d41ca312060fc.pdf" target="_blank">View Credentials</a>)<br>
-                </li>
-                <li>Google Cloud Fundamentals: Core Infrastructure 
-                    (<a href="https://www.coursera.org/account/accomplishments/verify/GCCEPUHES7UC" target="_blank">View Credentials</a>)<br>
-                </li>
-				<li>Google Cloud Big Data and ML Fundamentals
-                    (<a href="https://www.coursera.org/account/accomplishments/verify/KFC43YVQX5ZS" target="_blank">View Credentials</a>)<br>
-                </li>
-            </ul>
+        <div class="info-container">
+            <div class="info-column">
+			    <h3 class="accordion">About me<span class="arrow">&#9660;</span></h3>
+                <p>Pragmatic, sincere, and ambitious are three adjectives that best describe me. I love everything related to IT, Machine Learning, and fitness.</p>
+            </div>
+            <div class="info-column">
+                <h3 class="accordion">Employment history<span class="arrow">&#9660;</span></h3>
+                <ul>
+                    <li><strong>Machine Learning Engineer - Consultant</strong><br>
+                        Links Management & Technology<br>
+                        Competence Center AI & IoT<br>
+                        March 2023 – current
+                    </li>
+                    <li><strong>Artificial Intelligence and Data - Analyst</strong><br>
+                        Deloitte<br>
+                        Big Data and Insight Driven Organization<br>
+                        October 2022 – February 2023
+                    </li>
+                    <li><strong>AI engineer and System Administrator - Intern</strong><br>
+                        Intesa Sanpaolo<br>
+                        Hybrid Data Center & PAAS<br>
+                        December 2021 – May 2022
+                    </li>
+                </ul>
+            </div>
+            <div class="info-column">
+                <h3 class="accordion">Education<span class="arrow">&#9660;</span></h3>
+                <ul>
+                    <li><strong>Master’s degree in Computer Science - AI</strong><br>
+                        University of Turin<br>
+                        January 2020 – April 2022
+                    </li>
+                    <li><strong>Bachelor’s degree in Computer Science</strong><br>
+                        University of Bari<br>
+                        October 2016 – December 2019
+                    </li>
+                </ul>
+            </div>
+            <div class="info-column">
+                <h3 class="accordion">Certifications<span class="arrow">&#9660;</span></h3>
+                <ul>
+                    <li><strong>AWS Certified Machine Learning - Specialty</strong><br>
+                        Amazon Web Services (<a href="https://www.credly.com/badges/ab41e8bd-32a3-49ce-a7a5-e3106f58beab/public_url" target="_blank">View Credentials</a>)<br>
+                        April 2024 – April 2027
+                    </li>
+                    <li>AWS Machine Learning – Specialty Certication Preparation 
+                        (<a href="https://certificates.cloudacademy.com/8997053f1d2091596d528402607d41ca312060fc.pdf" target="_blank">View Credentials</a>)<br>
+                    </li>
+                    <li>Google Cloud Fundamentals: Core Infrastructure 
+                        (<a href="https://www.coursera.org/account/accomplishments/verify/GCCEPUHES7UC" target="_blank">View Credentials</a>)<br>
+                    </li>
+                    <li>Google Cloud Big Data and ML Fundamentals
+                        (<a href="https://www.coursera.org/account/accomplishments/verify/KFC43YVQX5ZS" target="_blank">View Credentials</a>)<br>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="column">
-            <h2 class="accordion">Personal Projects<span class="arrow">&#9660;</span></h2>
-            <ul>
-				<li><strong>Links Academy - Anomaly detection</strong><br>
-					Anomaly detection from statistical baseline to density-based and distance-based methods.<br>
-					    <a href="https://github.com/francesco-s/Links-Academy---Anomaly-Detection-Time-series-analysis/tree/main/Anomaly%20detection" target="_blank">GitHub Repository</a>
-				</li>
-				<li><strong>Links Academy - Time-series analysis</strong><br>
-					Time series component analysis, forecasting utilizing AutoRegressive models, and time series anomaly detection employing LSTM.<br>
-					    <a href="https://github.com/francesco-s/Links-Academy---Anomaly-Detection-Time-series-analysis/tree/main/Time%20series%20analysis" target="_blank">GitHub Repository</a>
-				</li>
-				<li><strong>Greek and Latin Part of Speech Tagging</strong><br>
-					PoS tagging for Greek and Latin texts using dynamic programming and Viterbi algorithm.<br>
-					    <a href="https://github.com/francesco-s/NLP--Greek-Latin-PoSTagger" target="_blank">GitHub Repository</a>
-				</li>
-				
-				<li><strong>Natural Language Technologies: Leveraging Ontologies and Lexical Resources</strong><br>
-					Four tutorials showing the application of linguistic resources and lexical ontologies such as WordNet, BabelNet and NASARI. It includes methods for measuring word similarity, mapping between Framenet and WordNet, text summarization, and evaluating semantic similarity in Italian using NASARI and BabelNet.<br>
-					    <a href="https://github.com/francesco-s/NLP--Use-of-ontologies-lexical-resources" target="_blank">GitHub Repository</a>
-				</li>
-				
-				
-            </ul>
+        <div class="projects-container">
+            <h2>Personal Projects</h2>
+            <div class="project-columns">
+                <div class="project-column">
+                    <ul>
+                        <li>
+                            <img src="anomalydetection.png" alt="Anomaly Detection Image"><br><br>
+                            <strong><br>Links Academy - Anomaly detection</strong><br>
+                            Anomaly detection from statistical baseline to density-based and distance-based methods.<br>
+                            <a href="https://github.com/francesco-s/Links-Academy---Anomaly-Detection-Time-series-analysis/tree/main/Anomaly%20detection" target="_blank">GitHub Repository</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="project-column">
+                    <ul>
+                        <li>
+                            <img src="timeseries.png" alt="Anomaly Detection Image"><br><br>
+                            <strong><br>Links Academy - Time-series analysis</strong><br>
+                            Time series component analysis, forecasting utilizing AutoRegressive models, and time series anomaly detection employing LSTM.<br>
+                            <a href="https://github.com/francesco-s/Links-Academy---Anomaly-Detection-Time-series-analysis/tree/main/Time%20series%20analysis" target="_blank">GitHub Repository</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="project-column">
+                    <ul>
+                        <li>
+                            <img src="pos.png" alt="Anomaly Detection Image"><br><br>
+                            <strong><br>Greek and Latin Part of Speech Tagging</strong><br>
+                            PoS tagging for Greek and Latin texts using dynamic programming and Viterbi algorithm.<br>
+                            <a href="https://github.com/francesco-s/NLP--Greek-Latin-PoSTagger" target="_blank">GitHub Repository</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="project-column">
+                    <ul>
+                        <li>
+                            <img src="kg.jpg" alt="Anomaly Detection Image"><br><br>
+                            <strong><br>Natural Language Technologies: Leveraging Ontologies and Lexical Resources</strong><br>
+                            Four tutorials showing the application of linguistic resources and lexical ontologies such as WordNet, BabelNet and NASARI. It includes methods for measuring word similarity, mapping between Framenet and WordNet, text summarization, and evaluating semantic similarity in Italian using NASARI and BabelNet.<br>
+                            <a href="https://github.com/francesco-s/NLP--Use-of-ontologies-lexical-resources" target="_blank">GitHub Repository</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
-	<script>
+    <script>
         var accordions = document.getElementsByClassName("accordion");
 
         for (var i = 0; i < accordions.length; i++) {
-			var panel = accordions[i].nextElementSibling;
+            var panel = accordions[i].nextElementSibling;
             panel.style.display = "none";
-			
+            
             accordions[i].addEventListener("click", function() {
                 this.classList.toggle("active");
                 var panel = this.nextElementSibling;
