@@ -168,11 +168,19 @@
 			font-size: 1.1em;
 		}
     
+		@media screen and (max-width: 1300px) {
+			.project-columns {
+				justify-content: center; /* Centra le colonne quando lo schermo è stretto */
+			}
 
+			.project-column {
+				flex-basis: calc(33% - 20px); /* Imposta la larghezza delle colonne al 50% del contenitore con uno spazio tra le colonne */
+			}
+		}
 		
 
 		/* Media query per adattare il layout quando la larghezza dello schermo è inferiore a 1200px */
-		@media screen and (max-width: 1200px) {
+		@media screen and (max-width: 1000px) {
 			.project-columns {
 				justify-content: center; /* Centra le colonne quando lo schermo è stretto */
 			}
@@ -185,6 +193,7 @@
 				flex-basis: calc(50% - 20px); /* Imposta la larghezza delle colonne al 50% del contenitore con uno spazio tra le colonne */
 			}
 		}
+		
 
 		/* Media query per adattare ulteriormente il layout quando la larghezza dello schermo è inferiore a 600px */
 		@media screen and (max-width: 600px) {
