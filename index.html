@@ -178,11 +178,13 @@
 			text-decoration: none; /* Rimuove la sottolineatura dal testo */
 			color: inherit; /* Mantiene il colore del testo */
 		}
-		.project-column ul li:hover {
-			transform: scale(1.00); /* Ingrandisce leggermente il riquadro */
-			box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Aggiunge un'ombra più pronunciata */
-			z-index: 1; /* Assicura che il riquadro ingrandito rimanga sopra agli altri */
-		}
+      .project-column ul li:hover {
+         background-color: #ccd4d8; /* Dark, elegant color (you can customize this further) */
+         /*color: white;  Ensure text is white for contrast */
+         transition: all 0.3s ease; /* Smooth transition for hover effects */
+         z-index: 1; /* Ensures the hovered item stays above others */
+         border-radius: 5px; /* Optional: Adds a smooth look */
+      }
 		
          @media screen and (max-width: 1300px) {
          .project-columns {
@@ -254,7 +256,7 @@
 		}
 
 		body.dark-mode a:hover {
-			color: #ccefff; /* Brighter blue on hover in dark mode */
+			color: #333;  /* Black text on hover in dark mode */
 		}
 
 
