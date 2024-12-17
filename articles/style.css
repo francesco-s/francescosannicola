@@ -75,11 +75,6 @@ th, td {
    font-size: 1rem; /* Ensure text is readable at all screen sizes */
 }
 
-th {
-   background-color: #f2f2f2; /* Light gray for the header row */
-}
-
-
 .responsive-code-container {
    display: block;
    overflow-x: auto; /* Allows horizontal scrolling if necessary */
