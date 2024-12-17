@@ -116,9 +116,8 @@
                 <ol>
                     <li><a href="#lcg">Linear Congruential Generator (LCG)</a></li>
                     <li><a href="#pcg">Permuted Congruential Generator (PCG)</a></li>
-                    <li><a href="#implementations">Python Implementations</a></li>
-                    <li><a href="#comparison">Performance Comparison</a></li>
-                    <li><a href="#conclusion">Conclusion</a></li>
+                    <li><a href="#implementations">Python implementations</a></li>
+                    <li><a href="#considerations">Considerations</a></li>
                 </ol>
             </div>
 
@@ -145,20 +144,20 @@
                 <p>Let's build a Linear Congruential Generator (LCG) from scratch in Python for simplicity. Our first task is to define a class called <code>LCGPseudoRand</code>, with constructor parameters for <code>a</code>, <code>c</code>, <code>m</code>, and <code>seed</code>. Here's the implementation:</p>
 
                 <pre><code class="language-python">
-                class LCGPseudoRand:
-                    def __init__(self, a=48271, c=0, m=2**31-1, seed=1):  # C++11 LCG parameters
-                        self.a = a
-                        self.c = c
-                        self.m = m
-                        self.x0 = seed
-                        # Compute the first value based on the seed
-                        self.prev_x = (a * self.x0 + c) % m
+    class LCGPseudoRand:
+        def __init__(self, a=48271, c=0, m=2**31-1, seed=1):  # C++11 LCG parameters
+            self.a = a
+            self.c = c
+            self.m = m
+            self.x0 = seed
+            # Compute the first value based on the seed
+            self.prev_x = (a * self.x0 + c) % m
                 </code></pre>
                 
                 <p>In this implementation, I've used the C++11 LCG parameters with a default seed value of <code>1</code>. The constructor also initializes the first value of the sequence using the LCG formula:</p>
                 
                 <pre><code class="language-python">
-                self.prev_x = (a * self.x0 + c) % m
+    self.prev_x = (a * self.x0 + c) % m
                 </code></pre>
                 
                 <p>For example, if we create the object <code>lcg = LCGPseudoRand()</code>, the first value is calculated as:</p><p class="responsive-math">(48271 * 1 + 0) % (2**31-1) = 48271</p>
@@ -166,17 +165,17 @@
                 <p>The starting value of the sequence is <code>48271</code>. Now, let's add a method to generate the pseudo-random numbers based on the same formula:</p>
                 
                 <pre><code class="language-python">
-                def generate_number(self, min_range=None, max_range=None):
-                    self.prev_x = (self.a * self.prev_x + self.c) % self.m
-                    return self.prev_x
+    def generate_number(self, min_range=None, max_range=None):
+        self.prev_x = (self.a * self.prev_x + self.c) % self.m
+        return self.prev_x
                 </code></pre>
                 
                 <p>The method updates the state using the LCG formula and returns the next number in the sequence. Let's generate 5 pseudo-random numbers and print them:</p>
                 
                 <pre><code class="language-python">
-                lcg = LCGPseudoRand()
-                for _ in range(5):
-                    print(lcg.generate_number())
+    lcg = LCGPseudoRand()
+    for _ in range(5):
+        print(lcg.generate_number())
                 </code></pre>
                 
                 <p>The output will look like this:</p>
@@ -205,19 +204,19 @@
                 <p>As we discussed earlier, a more unpredictable starting seed is required to avoid deterministic sequences. Atmospheric noise or radioactive decay might be difficult to integrate. A simple yet effective alternative is to combine the current time with the system's process ID. This method works well and ensures better randomness when initializing the generator's seed in the constructor.</p>
 
                 <pre><code class="language-python">
-                import os
-                import time
-                
-                class LCGPseudoRand:
-                    def __init__(self, a=48271, c=0, m=2**31-1, seed=None):
-                        self.a = a
-                        self.c = c
-                        self.m = m
-                        if seed is None:
-                            self.x0 = int(os.getpid() + time.time())
-                        else:
-                            self.x0 = seed
-                        self.prev_x = (a * self.x0 + c) % m
+    import os
+    import time
+    
+    class LCGPseudoRand:
+        def __init__(self, a=48271, c=0, m=2**31-1, seed=None):
+            self.a = a
+            self.c = c
+            self.m = m
+            if seed is None:
+                self.x0 = int(os.getpid() + time.time())
+            else:
+                self.x0 = seed
+            self.prev_x = (a * self.x0 + c) % m
                     </code></pre>
 
                     <p>In this example, we've added functionality to automatically generate a unique seed if the user doesn't provide one. The line <code>self.x0 = int(os.getpid() + time.time())</code> combines the system's process ID with the current time to ensure that each execution generates a different seed.</p>
@@ -232,13 +231,13 @@
                     </p>
                     <p>In the following code snippet, we modify the previously generated pseudo-random number using a scaling formula to fit within the user-defined range:</p>
                     <pre><code class="language-python">
-                    def generate_number(self, min_range=None, max_range=None):
-                        self.prev_x = (self.a * self.prev_x + self.c) % self.m
-                    
-                        if min_range is not None and max_range is not None:
-                            return int((self.prev_x / self.m) * (max_range - min_range) + min_range)
-                        else:
-                            return self.prev_x
+    def generate_number(self, min_range=None, max_range=None):
+        self.prev_x = (self.a * self.prev_x + self.c) % self.m
+    
+        if min_range is not None and max_range is not None:
+            return int((self.prev_x / self.m) * (max_range - min_range) + min_range)
+        else:
+            return self.prev_x
                     </code></pre>
 
                     <p>The <code>generate_number</code> method first calculates the next number in the sequence using the standard LCG formula, and then scales the result to fit within the specified <code>min_range</code> and <code>max_range</code>.</p>
@@ -246,9 +245,9 @@
                     <p>Let’s consider an example where we generate random numbers between 10 and 50:</p>
 
                     <pre><code class="language-python">
-                    lcg = LCGPseudoRand()
-                    for _ in range(5):
-                        print(lcg.generate_number(10, 50))
+    lcg = LCGPseudoRand()
+    for _ in range(5):
+        print(lcg.generate_number(10, 50))
                     </code></pre>
 
                     <p>Each time this program runs, the output numbers will be scaled to the specified range (10 to 50).</p>
@@ -265,71 +264,72 @@
 
 <p>Different programming languages and libraries initialize LCGs using unique approaches to determine the initial seed \(X_0\), which impacts reproducibility and sequence variation:</p>
 
-<table border="1" cellpadding="8" cellspacing="0">
-    <thead>
-        <tr>
-            <th>Language</th>
-            <th>Initialization Mechanism</th>
-            <th>Seed Parameters</th>
-            <th>a (Multiplier)</th>
-            <th>c (Increment)</th>
-            <th>m (Modulus)</th>
-            <th>Example Code</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><strong>Java</strong></td>
-            <td>The `java.util.Random` class uses an LCG. Seeding is done using system time by default.</td>
-            <td>Default seed is derived from the current time in milliseconds.</td>
-            <td>25214903917</td>
-            <td>11</td>
-            <td>\(m = 2^{48}\)</td>
-            <td><pre><code>long seed = System.currentTimeMillis();</code></pre></td>
-        </tr>
-        <tr>
-            <td><strong>Borland C++</strong></td>
-            <td>Uses the "std::linear_congruential_engine" from the &lt;random&gt; header, requiring explicit seed values.</td>
-            <td>The seed value is provided by the user when creating the generator instance.</td>
-            <td>22695477</td>
-            <td>1</td>
-            <td>\(m = 2^{31}\)</td>
-            <td><pre><code>#include &lt;random&gt;
-std::linear_congruential_engine<unsigned, 16807, 0, 2147483647> engine(12345);
-</code></pre></td>
-        </tr>
-        <tr>
-            <td><strong>C++11</strong></td>
-            <td>The "std::minstd_rand" engine uses a LCG.</td>
-            <td>The default seed is user-defined or zero if not explicitly initialized.</td>
-            <td>48271</td>
-            <td>0</td>
-            <td>\(m = 2^{31} - 1\)</td>
-            <td><pre><code>#include &lt;random&gt;
-std::minstd_rand rng(42);</code></pre></td>
-        </tr>
-        
-        <tr>
-            <td><strong>JavaScript</strong></td>
-            <td>"Math.random()" abstracts away the seeding process and doesn't allow for user-defined seeds. Its underlying RNG algorithm might use LCG or a variation, but the details are not publicly exposed by JavaScript engines.</td>
-            <td>No explicit seed from the user. The engine typically uses a system-based or time-based seed.</td>
-            <td>Not accessible.</td>
-            <td>Not accessible.</td>
-            <td>Not accessible.</td>
-            <td>No code for seeding, as direct seeding is not supported in `Math.random()`.</td>
-        </tr>
-        <tr>
-            <td><strong>Python</strong></td>
-            <td>Uses Mersenne Twister as the default generator in the "random" module (I'll try to cover Mersenne Twister in the future). Earlier versions (pre-2.2) might have used LCG for `random` but this is not standard in modern implementations.</td>
-            <td>Common seeds include system time or a fixed integer provided by the user. For example, "random.seed(12345)` or just `random.seed()" for system time.</td>
-            <td>Multiplier and increment used depend on the specific algorithm, but with Mersenne Twister, the details are not equivalent to a simple LCG (it’s a much more complex state transition). With older LCGs used for "random.seed()" there would be corresponding values for a and c but they are no longer part of the active algorithm in modern versions of Python.</td>
-            <td>Fixed increment (for older LCG, if used), typically a constant.</td>
-            <td>Uses internally defined modulus for Mersenne Twister. LCG implementations in older versions or different libraries might have \(m = 2^{32}\) or similar values.</td>
-            <td>Example: "random.seed(12345)" initializes with a seed value. "random.seed()" with no argument uses system time.</td>
-        </tr>
-    </tbody>
-</table>
-
+<div class="responsive-table-container">
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Language</th>
+                <th>Initialization Mechanism</th>
+                <th>Seed Parameters</th>
+                <th>a (Multiplier)</th>
+                <th>c (Increment)</th>
+                <th>m (Modulus)</th>
+                <th>Example Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Java</strong></td>
+                <td>The `java.util.Random` class uses an LCG. Seeding is done using system time by default.</td>
+                <td>Default seed is derived from the current time in milliseconds.</td>
+                <td>25214903917</td>
+                <td>11</td>
+                <td>\(m = 2^{48}\)</td>
+                <td><pre><code>long seed = System.currentTimeMillis();</code></pre></td>
+            </tr>
+            <tr>
+                <td><strong>Borland C++</strong></td>
+                <td>Uses the "std::linear_congruential_engine" from the &lt;random&gt; header, requiring explicit seed values.</td>
+                <td>The seed value is provided by the user when creating the generator instance.</td>
+                <td>22695477</td>
+                <td>1</td>
+                <td>\(m = 2^{31}\)</td>
+                <td><pre><code>#include &lt;random&gt;
+    std::linear_congruential_engine<unsigned, 16807, 0, 2147483647> engine(12345);
+    </code></pre></td>
+            </tr>
+            <tr>
+                <td><strong>C++11</strong></td>
+                <td>The "std::minstd_rand" engine uses a LCG.</td>
+                <td>The default seed is user-defined or zero if not explicitly initialized.</td>
+                <td>48271</td>
+                <td>0</td>
+                <td>\(m = 2^{31} - 1\)</td>
+                <td><pre><code>#include &lt;random&gt;
+    std::minstd_rand rng(42);</code></pre></td>
+            </tr>
+            
+            <tr>
+                <td><strong>JavaScript</strong></td>
+                <td>"Math.random()" abstracts away the seeding process and doesn't allow for user-defined seeds. Its underlying RNG algorithm might use LCG or a variation, but the details are not publicly exposed by JavaScript engines.</td>
+                <td>No explicit seed from the user. The engine typically uses a system-based or time-based seed.</td>
+                <td>Not accessible.</td>
+                <td>Not accessible.</td>
+                <td>Not accessible.</td>
+                <td>No code for seeding, as direct seeding is not supported in `Math.random()`.</td>
+            </tr>
+            <tr>
+                <td><strong>Python</strong></td>
+                <td>Uses Mersenne Twister as the default generator in the "random" module (I'll try to cover Mersenne Twister in the future). Earlier versions (pre-2.2) might have used LCG for `random` but this is not standard in modern implementations.</td>
+                <td>Common seeds include system time or a fixed integer provided by the user. For example, "random.seed(12345)` or just `random.seed()" for system time.</td>
+                <td>Multiplier and increment used depend on the specific algorithm, but with Mersenne Twister, the details are not equivalent to a simple LCG (it’s a much more complex state transition). With older LCGs used for "random.seed()" there would be corresponding values for a and c but they are no longer part of the active algorithm in modern versions of Python.</td>
+                <td>Fixed increment (for older LCG, if used), typically a constant.</td>
+                <td>Uses internally defined modulus for Mersenne Twister. LCG implementations in older versions or different libraries might have \(m = 2^{32}\) or similar values.</td>
+                <td>Example: "random.seed(12345)" initializes with a seed value. "random.seed()" with no argument uses system time.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
     <h2 id="pcg">2. Permuted Congruential Generator (PCG)</h2>
     <p>The Permuted Congruential Generator (PCG) is a modern pseudo-random number generator that improves upon the classic Linear Congruential Generator (LCG). It combines a linear congruential generator with a permutation function to produce higher-quality random numbers with minimal computational overhead.</p>
 
@@ -347,25 +347,25 @@ std::minstd_rand rng(42);</code></pre></td>
 
     <p>The constructor initializes the generator's parameters: <code>multiplier</code>, <code>increment</code>, and <code>modulus</code>. Like previously, if a seed is provided, it is used as the initial state; otherwise, the generator creates a unique seed by combining the process ID and the current time:</p>
     <pre><code class="language-python">
-        class PCGPseudoRand:
-            def __init__(self, multiplier=6364136223846793005, increment=1442695040888963407, seed=None) -> None:
-                self.multiplier = multiplier
-                self.increment = increment | 1
-                self.modulus = 2**64
-                if seed is not None:
-                    self.state = seed
-                else:
-                    self.state = int(os.getpid() + time.time()) & 0xFFFFFFFFFFFFFFFF
+    class PCGPseudoRand:
+        def __init__(self, multiplier=6364136223846793005, increment=1442695040888963407, seed=None) -> None:
+            self.multiplier = multiplier
+            self.increment = increment | 1
+            self.modulus = 2**64
+            if seed is not None:
+                self.state = seed
+            else:
+                self.state = int(os.getpid() + time.time()) & 0xFFFFFFFFFFFFFFFF
     </code></pre>
 
     <p>In this implementation the multiplier, increment and modulus are from Donald Knuth's MMIX.</p>
-    <p>The expression <code>int(os.getpid() + time.time()) & 0xFFFFFFFFFFFFFFFF</code> generates a unique 64-bit seed: the <code>& 0xFFFFFFFFFFFFFFFF</code> operation ensures the result is limited to a 64-bit integer, even if the sum exceeds the maximum value of a 64-bit number.</li>
+    <p>The expression <code>int(os.getpid() + time.time()) & 0xFFFFFFFFFFFFFFFF</code> generates a pseudo-random 64-bit seed by combining the current process ID and the current time. This approach adds a level of non-determinism since the process ID and time are unlikely to repeat simultaneously (same way as LCG discussed earlier). The bitwise AND operation <code>& 0xFFFFFFFFFFFFFFFF</code> ensures that the resulting value is constrained to a 64-bit integer, even if the sum exceeds the 64-bit range.</p>
         
 
     <p>The Linear Congruential Step method updates the internal state using the LCG formula:</p>
     <pre><code class="language-python">
-        def _lcg_step(self):
-            self.state = (self.state * self.multiplier + self.increment) & 0xFFFFFFFFFFFFFFFF
+    def _lcg_step(self):
+        self.state = (self.state * self.multiplier + self.increment) & 0xFFFFFFFFFFFFFFFF
     </code></pre>
     <p>The new state is calculated by multiplying the current state by the multiplier, adding the increment, and applying a modulo operation to ensure the value stays within a 64-bit range.</p>
 
@@ -380,104 +380,140 @@ std::minstd_rand rng(42);</code></pre></td>
         </li>
     </ol>
 
+    <pre>
+        <code class="language-python">
+    def _permute(self, x):
+        shift = (x >> 59) + 1
+        return ((x >> shift) ^ x) & 0xFFFFFFFFFFFFFFFF</code>
+    </pre>
+
     <p>Let's walk through the calculation step-by-step for the expression <span class="highlight">shift = (x &gt;&gt; 59) + 1</span>, where the number <span class="highlight">x = 0xF123456789ABCDEF</span>.</p>
     <p>The hexadecimal value <span class="highlight">x = 0xF123456789ABCDEF</span> is converted to binary:</p>
-    <pre><code>
+    <div class="responsive-code-container">
+        <pre><code>
         x = 0xF123456789ABCDEF<br>
         In binary, x = 11110001001000110100010101100111000100111010111111011111
-    </code></pre>
+        </code></pre>
+    </div>
     <p>The expression <span class="highlight">x &gt;&gt; 59</span> means shifting the bits of <span class="highlight">x</span> to the right by 59 positions. This operation discards the 59 least significant bits and moves the remaining bits to the right.</p>
-    <pre><code>
+    <div class="responsive-code-container">
+        <pre><code>
         x = 11110001001000110100010101100111000100111010111111011111<br>
         x &gt;&gt; 59 = 00000000000000000000000000000000000000000000000000000111
-    </code></pre>
-    <p>Now, we compute the final value of <span class="highlight">shift</span>:</p>
+        </code></pre>
+    </div>
+    <p>Next, we compute the final value of <span class="highlight">shift</span>. The top 5 bits of <code>x</code> after shifting right by 59 are <code>111</code> in binary, which equals <code>7</code> in decimal. Adding <code>1</code> ensures a minimum shift value of <code>1</code>:</p>
+    <div class="responsive-code-container">
     <pre><code>
         shift = (x &gt;&gt; 59) + 1 = 7 + 1 = 8
     </code></pre>
-
-    <p>Now, let's compute the expression <span class="highlight">((x &gt;&gt; shift) ^ x) &amp; 0xFFFFFFFFFFFFFFFF</span>.</p>
-    
-    <p>Right Shift by 8:</p>
-    <ul>
-        <li>The original number is: <p class="responsive-math">11110001001000110100010101100111000100111010111111011111</p></li>
-        <li>When we right shift by 8 bits, we move the bits to the right, discarding the last 8 bits:<p class="responsive-math">111100010010001101000101011001110001001110101111</p></li>
-        <li>The shifted value is: <span class="highlight">0xF123456789ABCD</span></li>
-    </ul>
-
-
-    <p>Let's now apply XOR between the two binary numbers:</p>
-
-    <pre><code>
-    Original x:           11110001001000110100010101100111000100111010111111011111
-    Shifted (x &gt;&gt; 8):     111100010010001101000101011001110001001110101111
-    ------------------------------------------------------------
-    XOR Result:           00000000000000000000000000000000000000000000000000000111
-    </code></pre>
-    
-    
-    
-----------------------------------------------------------------------
-
-
-    <h3>3. Apply the Mask <span class="highlight">0xFFFFFFFFFFFFFFFF</span>:</h3>
-    <pre><code>
-        ((x &gt;&gt; shift) ^ x) &amp; 0xFFFFFFFFFFFFFFFF = 0x0000000000000031
-    </code></pre>
-
-    <h2>Final Result</h2>
-    <p>The result of <span class="highlight">((x &gt;&gt; shift) ^ x) &amp; 0xFFFFFFFFFFFFFFFF</span> when <span class="highlight">x = 0xF123456789ABCDEF</span> and <span class="highlight">shift = 8</span> is:</p>
-    <div class="result">
-        Result = 0x31
     </div>
+    <p>Now, let’s calculate the expression <span class="highlight">((x &gt;&gt; shift) ^ x) &amp; 0xFFFFFFFFFFFFFFFF</span> step by step.</p>
     
+    <p>Shifting <code>x</code> to the right by <code>8</code> positions discards the least significant 8 bits, shifting zeros into the left:</p>
+    <ul>
+        <li>The original value of <code>x</code> in binary: 
+            <span class="responsive-math">11110001001000110100010101100111000100111010111111011111</span></li>
+        <li>The shifted value (right shifted by 8 bits):
+            <span class="responsive-math">00000000111100010010001101000101011001110001001110101111</span></li>
+    </ul>
     
+    <p>Performing the XOR operation between the original value <code>x</code> and the shifted value:</p>
+    <div class="responsive-code-container">
+    <pre><code>
+        Original (x):   11110001001000110100010101100111000100111010111111011111
+        Shifted:        00000000111100010010001101000101011001110001001110101111
+        XOR result:     11110001110100100110011000100010011101001011110001110000
+    </code></pre>
+    </div>
+    <p>In hexadecimal, the result of the XOR operation is: 
+       <span class="highlight">0xF1D2662274BC70</span>.</p>
+    
+    <p>Finally, the result is ANDed with <code>0xFFFFFFFFFFFFFFFF</code> to constrain it to 64 bits. Since the XOR result already fits within 64 bits, the AND operation does not change the value:</p>
+    <div class="responsive-code-container">
+        <pre><code>
+        ((x &gt;&gt; shift) ^ x) &amp; 0xFFFFFFFFFFFFFFFF = 0xF1D2662274BC70
+        </code></pre>
+    </div>
+    <p>The final value is 0xF1D2662274BC70 or 68066805493841008 in decimal.
+</code></pre>
+<p>This value represents a 64-bit unsigned integer, making it suitable for scaling to a desired range using the scaling formula:</p>
+<p class="responsive-math">
+\[
+\text{output} = \text{min_range} + \left( \frac{P(S_n)}{2^{64}} \right) \times (\text{max_range} - \text{min_range})
+\]
+</p>
 
-            <p>Scaling formula:</p>
-            <p class="responsive-math">
-                \[ \text{output} = \text{min_range} + \left( \frac{P(S_n)}{2^{64}} \right) \times (\text{max_range} - \text{min_range}) \]
-            </p>
+<ul>
+    <li><strong>\( P(S_n) \)</strong>: The 64-bit value to be scaled (e.g., <code>0xF1D2662274BC70</code>).</li>
+    <li><strong>\( 2^{64} \)</strong>: The total range of possible 64-bit unsigned integers.</li>
+    <li><strong>\( \text{min_range} \)</strong> and <strong>\( \text{max_range} \)</strong>: The target range for scaling.</li>
+</ul>
+<p>The fraction \( \frac{P(S_n)}{2^{64}} \) normalizes the 64-bit integer value <code>P(S_n)</code> into the range <code>[0, 1)</code>. Multiplying this fraction by \( \text{max_range} - \text{min_range} \) scales it to the size of the target range. Adding \( \text{min_range} \) shifts the result to start at the desired minimum value.</p>
+
         
-            <h2>Python Complete Implementations</h2>
-            <pre><code>
-            class LCGPseudoRand:
-                def __init__(self, a, c, m):
-                    self.a = a
-                    self.c = c
-                    self.m = m
-                    self.x = (os.getpid() + int(time.time() * 1000)) % self.m
+            <h2 id="implementations">3. Python implementations</h2>
+            <pre><code class="language-python">
+    class LCGPseudoRand():
+        def __init__(self, a=48271, c=0, m=2**31-1, seed=None) -> None: # C++ version
+            self.a = a
+            self.c = c
+            self.m = m
+    
+            if seed:
+                self.x0 = seed
+            else:
+                self.x0 = int(os.getpid() + time.time())
+            
+            self.prev_x = (a * self.x0 + self.c) % self.m
         
-                def generate_number(self, min_range=0, max_range=1):
-                    self.x = (self.a * self.x + self.c) % self.m
-                    return min_range + (self.x / self.m) * (max_range - min_range)
+        def generate_number(self, min_range=None, max_range=None):
+    
+            self.prev_x = (self.a * self.prev_x + self.c) % self.m
+    
+            if min_range and max_range:
+                return int((self.prev_x / self.m) * (max_range - min_range) + min_range)
+            else:
+                return self.prev_x
+
+    class PCGPseudoRand:
+        def __init__(self, multiplier=6364136223846793005, increment=1442695040888963407, seed=None) -> None:
+            self.multiplier = multiplier  
+            self.increment = increment | 1 
+            self.modulus = 2**64 
+    
+            
+            if seed is not None:
+                self.state = seed
+            else:
+                self.state = int(os.getpid() + time.time()) & 0xFFFFFFFFFFFFFFFF
         
-            class PCGPseudoRand:
-                def __init__(self, a, c):
-                    self.a = a
-                    self.c = c
-                    self.state = (os.getpid() + int(time.time() * 1000)) & ((1 << 64) - 1)
-        
-                def _lcg_step(self):
-                    self.state = (self.a * self.state + self.c) & ((1 << 64) - 1)
-        
-                def _permute(self):
-                    x = self.state
-                    shift = (x >> 59) + 5
-                    return ((x >> shift) ^ x) & ((1 << 64) - 1)
-        
-                def generate_number(self, min_range=0, max_range=1):
-                    self._lcg_step()
-                    return min_range + (self._permute() / (1 << 64)) * (max_range - min_range)
+        def _lcg_step(self):
+            self.state = (self.state * self.multiplier + self.increment) & 0xFFFFFFFFFFFFFFFF
+    
+        def _permute(self, x):
+            shift = (x >> 59) + 1
+            return ((x >> shift) ^ x) & 0xFFFFFFFFFFFFFFFF
+
+        def generate_number(self, min_range=None, max_range=None):
+            self._lcg_step()
+            
+            permuted_value = self._permute(self.state)
+            print(self.state, permuted_value)
+    
+            if min_range is not None and max_range is not None:
+                return int((permuted_value / self.modulus) * (max_range - min_range) + min_range)
+            else:
+                return permuted_value
                       
             </code></pre>
         
-            <h2>Performance Comparison</h2>
-            <p>While the LCG is faster and easier to implement, it often suffers from lower randomness quality. This can make it unsuitable for applications requiring high unpredictability, such as cryptography. The PCG, on the other hand, provides better randomness at the cost of slightly increased computational overhead.</p>
-        
-            <h2>Conclusion</h2>
-            <p>Choosing the right random number generator depends on the application's requirements. For tasks where speed is crucial and statistical quality is less critical, the LCG may be sufficient. However, when randomness quality matters, the PCG or more advanced generators like the Mersenne Twister or cryptographically secure RNGs are recommended.</p>
-        
-            <p>Experiment with these implementations and understand their behaviors to gain a deeper insight into random number generation!</p>
+            <h2 id="considerations">4. Considerations</h2>
+            <p>While the Linear Congruential Generator (LCG) is faster and simpler to implement, it often suffers from lower randomness quality. LCGs generate sequences with a predictable structure.</p>
+            <p>The Permuted Congruential Generator (PCG), on the other hand, introduces a permutation step on top of the basic linear congruential approach. This permutation step greatly improves randomness quality by better scrambling the bits of the generated numbers. Although PCG incurs a slight computational overhead compared to LCG, it is negligible for most use cases and worth the tradeoff for significantly better randomness properties.</p>
+            <p>In the future, I hope to discuss the <strong>Mersenne Twister</strong>, another widely used pseudorandom number generator. Known for its extremely long period (2<sup>19937</sup> − 1) and excellent randomness properties, the Mersenne Twister addresses many shortcomings of earlier generators like LCG.
+            Interestingly, the Mersenne Twister is the default pseudorandom number generator in Python's <code>random</code> module. Its widespread use stems from its efficiency, ability to produce high-quality randomness, and suitability for general-purpose random number generation.</p>
+
         </div>
         
 

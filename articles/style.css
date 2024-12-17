@@ -55,6 +55,39 @@ p {
     box-sizing: border-box;
 }
 
+.responsive-table-container {
+   display: block;
+   overflow-x: auto; /* Allows horizontal scrolling if necessary */
+   white-space: wrap; /* Prevent table cells from wrapping */
+   margin: 1em 0; /* Adds margin around the table */
+   box-sizing: border-box;
+}
+
+table {
+   border-collapse: collapse;
+   width: 98%; 
+}
+
+th, td {
+   border: 1px solid #ddd;
+   padding: 8px;
+   text-align: left;
+   font-size: 1rem; /* Ensure text is readable at all screen sizes */
+}
+
+th {
+   background-color: #f2f2f2; /* Light gray for the header row */
+}
+
+
+.responsive-code-container {
+   display: block;
+   overflow-x: auto; /* Allows horizontal scrolling if necessary */
+   white-space: nowrap; /* Prevent wrapping of the code */
+   margin: 1em 0; /* Adds margin around the code block */
+   box-sizing: border-box;
+}
+
 /* For smaller devices, scale the font size
 @media (max-width: 600px) {
     .responsive-math {
