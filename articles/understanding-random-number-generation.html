@@ -17,6 +17,7 @@
 
     <link rel="stylesheet" type="text/css" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
 </head>
 <body>
@@ -86,8 +87,29 @@
             </header>
             </div>
         </div>
+        <div class="link-container">
+            <div class="link-column">
+                <a href="https://francescosannicola.it" target="_blank">
+                    <i class="fas fa-home"></i> Home
+                 </a>
+            </div>
+            <div class="link-column">
+                <a href="https://d1jdvilibzz056.cloudfront.net/personal-projects" target="_blank">
+                    <i class="fas fa-project-diagram"></i> Personal Projects
+                 </a>
+            </div>
+            <div class="link-column">
+                <a href="https://d1jdvilibzz056.cloudfront.net/articles/" target="_blank">
+                    <i class="fas fa-newspaper"></i> Articles
+                 </a>            </div>
+            <div class="link-column">
+                <a href="https://d1jdvilibzz056.cloudfront.net/about.html" target="_blank">
+                    <i class="fas fa-user"></i> About Me
+                 </a>
+            </div>
+         </div>
         <div class="article-container">
-            <h1>Understanding Random Number Generation</h1>
+            <h1><span style="font-size: 16px;">./articles/</span> Understanding Random Number Generation</h1>
 
             <p>
                 Despite its everyday use, the mechanics of Random Number Generation (RNG) are often misunderstood, particularly in determining how "randomness" is generated and ensuring its reliability across different use cases.
@@ -521,7 +543,7 @@
         
         document.getElementById("darkModeToggle").addEventListener("change", function() {
         var element = document.body;
-        var containers = document.querySelectorAll('.main-container, .info-container, .projects-container, .article-container, .accordion, .code');
+        var containers = document.querySelectorAll('.main-container, .info-container, .projects-container, .article-container, .link-container, .accordion, .code');
         
         // Toggle dark-mode class on body
         element.classList.toggle("dark-mode");
