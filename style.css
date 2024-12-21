@@ -285,7 +285,7 @@ border-radius: 5px; /* Optional: Adds a smooth look */
 
 @media screen and (max-width: 1300px) {
 .project-columns {
-  justify-content: center; /* Centra le colonne quando lo schermo è stretto */
+  justify-content: lefù; /* Centra le colonne quando lo schermo è stretto */
 }
 .project-column {
   flex-basis: calc(33% - 20px); /* Imposta la larghezza delle colonne al 50% del contenitore con uno spazio tra le colonne */
@@ -294,7 +294,7 @@ border-radius: 5px; /* Optional: Adds a smooth look */
 /* Media query per adattare il layout quando la larghezza dello schermo è inferiore a 1200px */
 @media screen and (max-width: 1000px) {
   .project-columns {
-      justify-content: center; /* Centra le colonne quando lo schermo è stretto */
+      justify-content: left; /* Centra le colonne quando lo schermo è stretto */
 }
 
 .project-column {
@@ -303,9 +303,7 @@ border-radius: 5px; /* Optional: Adds a smooth look */
 .info-column {
   flex-basis: calc(50% - 20px); /* Imposta la larghezza delle colonne al 50% del contenitore con uno spazio tra le colonne */
 }
-.link-column {
-  flex-basis: calc(50% - 20px); /* Imposta la larghezza delle colonne al 50% del contenitore con uno spazio tra le colonne */
-}
+
 
 }
 /* Media query per adattare ulteriormente il layout quando la larghezza dello schermo è inferiore a 600px */
@@ -332,7 +330,16 @@ header h1.dark-mode {
   color: #fff;
 }
 .dark-mode svg {
-  fill: white;
+  fill: rgb(207, 216, 220);
+}
+.dark-mode svg:hover {
+  fill: #ffffff;
+}
+svg:hover {
+  fill: rgb(0, 0, 0);
+}
+svg {
+  fill: rgb(96, 125, 138);
 }
 /* Update container styles */
 .main-container.dark-mode {
@@ -357,8 +364,11 @@ header h1.dark-mode {
    background-color: #29363d ; /* Dark background */
    color: #fff; /* Light text */
 }
-.dark-mode h1, .dark-mode h4 {
+.dark-mode h4 {
   color: rgb(207, 216, 220);
+}
+.dark-mode h1 {
+  color: rgb(255, 255, 255);
 }
 .dark-mode h2, .dark-mode h3 {
   color: rgb(207, 216, 220);
@@ -369,8 +379,15 @@ header h1.dark-mode {
    color: #000000;
 }
 
+body a {
+  color: rgb(96, 125, 138); /* Light blue for contrast in dark mode */
+}
+body a:hover {
+   color: #000000; /* Light blue for contrast in dark mode */
+ }
+
 body.dark-mode a {
-  color: #4FAFFF; /* Light blue for contrast in dark mode */
+  color: rgb(207, 216, 220);
 }
 body.dark-mode a:hover {
    color: #ffffff; /* Light blue for contrast in dark mode */
