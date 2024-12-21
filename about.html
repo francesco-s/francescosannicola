@@ -136,18 +136,53 @@
          </div>
          <script>
             
-            document.getElementById("darkModeToggle").addEventListener("change", function() {
-            var element = document.body;
-            var containers = document.querySelectorAll('.main-container, .info-container, .article-container, .link-container, .accordion');
-            
-            // Toggle dark-mode class on body
-            element.classList.toggle("dark-mode");
-            
-            // Also toggle dark-mode on other elements explicitly
-            containers.forEach(function(container) {
-                container.classList.toggle("dark-mode");
+            // Get stored dark mode state
+            let isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+            // Function to apply dark mode
+            function applyDarkMode(dark) {
+                const darkModeToggle = document.getElementById('darkModeToggle');
+                const elements = [
+                    document.body,
+                    ...document.querySelectorAll('.main-container, .info-container, .projects-container, .article-container, .link-container, .accordion')
+                ];
+                
+                // Update state
+                isDarkMode = dark;
+                localStorage.setItem('darkMode', dark);
+                
+                // Update UI
+                elements.forEach(element => {
+                    if (dark) {
+                        element.classList.add('dark-mode');
+                    } else {
+                        element.classList.remove('dark-mode');
+                    }
+                });
+
+                // Update toggle
+                if (darkModeToggle) {
+                    darkModeToggle.checked = dark;
+                }
+            }
+
+            // Initialize dark mode
+            document.addEventListener('DOMContentLoaded', () => {
+                const darkModeToggle = document.getElementById('darkModeToggle');
+                
+                // Apply initial state
+                applyDarkMode(isDarkMode);
+                
+                // Handle toggle changes
+                darkModeToggle.addEventListener('change', (e) => {
+                    applyDarkMode(e.target.checked);
+                });
             });
-            });
+
+            // Apply dark mode immediately if needed
+            if (isDarkMode) {
+                applyDarkMode(true);
+            }
             
          </script>
 
