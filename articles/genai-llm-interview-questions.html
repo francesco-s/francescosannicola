@@ -26,7 +26,9 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="./assets/francescosannicola.jpg" />
-    <title>Francesco Sannicola - Understanding Random Number Generation</title>
+    <title>
+      Francesco Sannicola - Gen AI and LLM Interview Questions for Top Companies
+    </title>
     <link rel="icon" type="image/x-icon" href="../favicon.ico" />
     <script
       type="text/javascript"
@@ -184,69 +186,58 @@
     </div>
     <div class="article-container">
       <h1>
-        <span style="font-size: 16px">./articles/</span> Understanding Random
-        Number Generation
+        <span style="font-size: 16px">./articles/</span> GenAI and LLM Interview
+        Questions with In-Depth Answers
       </h1>
 
       <p>
-        Despite its everyday use, the mechanics of Random Number Generation
-        (RNG) are often misunderstood, particularly in determining how
-        "randomness" is generated and ensuring its reliability across different
-        use cases. In this article, we will explore two common random number
-        generators (RNGs): the Linear Congruential Generator
-        (<strong>LCG</strong>) and the Permuted Congruential Generator
-        (<strong>PCG</strong>). But first let's understand what "random" means.
+        The rapid advancements in Generative AI and Large Language Models (LLMs)
+        have brought transformative changes to industries ranging from customer
+        support to creative content generation. As organizations and
+        professionals dive into this exciting domain, understanding the key
+        concepts and gaining practical knowledge is crucial.
       </p>
       <p>
-        If your question is: are there truly random algorithms? I want to tell
-        you bad news. Algorithms are not truly random because they are
-        inherently deterministic by design. True randomness originates from
-        unpredictable, non-deterministic sources, while algorithms—being sets of
-        defined instructions—cannot achieve this unpredictability.
+        This guide serves as a comprehensive resource for anyone preparing for
+        interviews or aiming to deepen their expertise in LLMs. Each topic is
+        composed of a wide range of questions, carefully curated to cover
+        foundational concepts, practical applications, and advanced topics. The
+        questions in this guide are derived from the repository
+        <a
+          href="https://github.com/llmgenai/LLMInterviewQuestions/tree/main?tab=readme-ov-file#deployment-of-llm"
+        >
+          LLM Interview Questions</a
+        >, a community-driven resource dedicated to fostering knowledge and
+        preparation in the field of LLMs.
       </p>
+
       <p>
-        A fundamental characteristic of an algorithm is that it consistently
-        produces the same output given the same input. This reproducibility
-        allows outcomes to be replicated and even predicted, setting them apart
-        from true randomness. Furthermore, algorithms operate within a finite
-        computational environment, constrained by systems like integers or
-        floating-point numbers with defined limits. These restrictions
-        inevitably lead to repetition in the output, forming what is known as
-        the period of a pseudo-random sequence.
-      </p>
-      <p>
-        To approximate true randomness, external entropy sources must be
-        incorporated. Cryptographically Secure Pseudo-Random Number Generators
-        (CSPRNGs) employ this strategy by using entropy from unpredictable
-        external sources, such as hardware random number generators (HRNGs). In
-        contrast, Pseudo-Random Number Generators (<strong>PRNGs</strong>) rely
-        entirely on an initial input or seed, producing outputs that only appear
-        random. Techniques like the LCG and the PCG exemplify these methods,
-        which we will implement later.
-      </p>
-      <p>
-        True Random Number Generators (<strong>TRNGs</strong>), however, derive
-        randomness from physical phenomena, such as atmospheric noise,
-        radioactive decay, or thermal fluctuations. These sources are inherently
-        unpredictable, yielding a higher degree of randomness compared to
-        algorithmic approaches.
-      </p>
-      <p>
-        Therefore, our focus will remain on PRNGs and their deterministic, yet
-        practical, approach to generating sequences that approximate randomness.
+        The questions tackle diverse areas such as Prompt Engineering and Basics
+        of LLM, exploring foundational principles like understanding predictive
+        vs. generative AI, key concepts in language model training, and decoding
+        strategies, as well as advanced aspects like in-context learning and
+        strategies to optimize prompt writing for enhanced model performance.
+        These topics highlight not only theoretical knowledge but also practical
+        approaches to improving the reasoning and utility of LLMs across varied
+        use cases.
       </p>
 
       <div class="summary">
         <h4>Quick Navigation</h4>
         <ol>
-          <li><a href="#lcg">Linear Congruential Generator (LCG)</a></li>
-          <li><a href="#pcg">Permuted Congruential Generator (PCG)</a></li>
-          <li><a href="#implementations">Python implementations</a></li>
-          <li><a href="#considerations">Considerations</a></li>
+          <li><a href="#llm-basics">Basics of LLM</a></li>
+          <li><a href="#prompt-engineering">Prompt Engineering</a></li>
+          <li><a href="#rag">Retrieval Augmented Generation (RAG)</a></li>
+          <li><a href="#fine-tuning">Fine-tuning of LLMs</a></li>
+          <li><a href="#agent-based">Agent-Based System</a></li>
+          <li><a href="#miscellaneous">Miscellaneous</a></li>
         </ol>
       </div>
 
-      <h2 id="lcg">1. Linear Congruential Generator (LCG)</h2>
+      <h2 id="llm-basics">1. Basics of LLM</h2>
+      <h4>
+        1.1 What is the difference between predictive AI and generative AI?
+      </h4>
       <p>
         The Linear Congruential Generator (LCG) is a widely-used and simple
         pseudo-random number generator based on a linear recurrence relation:
@@ -527,8 +518,7 @@
               <td>1</td>
               <td>\(m = 2^{31}\)</td>
               <td>
-                <pre><code>#include &lt;random&gt;
-            std::linear_congruential_engine&lt;unsigned, 16807, 0, 2147483647&gt; engine(12345);</code></pre>
+                <pre><code>#include &lt;random&gt; std::linear_congruential_engine&lt;unsigned, 16807, 0, 2147483647&gt; engine(12345);</code></pre>
               </td>
             </tr>
             <tr>
@@ -604,7 +594,7 @@
           </tbody>
         </table>
       </div>
-      <h2 id="pcg">2. Permuted Congruential Generator (PCG)</h2>
+      <h2 id="prompt-engineering">2. Prompt Engineering</h2>
       <p>
         The Permuted Congruential Generator (PCG) is a modern pseudo-random
         number generator that improves upon the classic Linear Congruential
@@ -860,7 +850,7 @@
         shifts the result to start at the desired minimum value.
       </p>
 
-      <h2 id="implementations">3. Python implementations</h2>
+      <h2 id="rag">3. Retrieval Augmented Generation (RAG)</h2>
       <pre><code class="language-python">
     class LCGPseudoRand():
         def __init__(self, a=48271, c=0, m=2**31-1, seed=None) -> None: # C++ version
@@ -916,7 +906,7 @@
                       
             </code></pre>
 
-      <h2 id="considerations">4. Considerations</h2>
+      <h2 id="fine-tuning">4. Fine-tuning of LLMs</h2>
       <p>
         While the Linear Congruential Generator (LCG) is faster and simpler to
         implement, it often suffers from lower randomness quality. LCGs generate
@@ -942,6 +932,9 @@
         high-quality randomness, and suitability for general-purpose random
         number generation.
       </p>
+
+      <h2 id="agent-based">5. Agent-Based System</h2>
+      <h2 id="miscellaneous">6. Miscellaneous</h2>
     </div>
 
     <script>

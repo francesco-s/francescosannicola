@@ -1,58 +1,61 @@
 body {
-   font-family: Arial, sans-serif;
-   margin: 0;
-   padding: 0;
-   background-color: #f5f5f5;
-   color: #333;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+  color: #333;
 }
 header {
-   background-color: transparent;
-   color: #fff;
-   padding: 10px 0;
-   text-align: center;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   position: relative;
+  background-color: transparent;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 .profile {
-   width: 135px;
-   height: 135px;
-   border-radius: 50%;
-   margin-right: 40px;
+  width: 135px;
+  height: 135px;
+  border-radius: 50%;
+  margin-right: 40px;
 }
 header h1 {
-   font-size: 2rem;
-   color: black;
+  font-size: 2rem;
+  color: black;
 }
-h2, h3, h4 {
-   color: rgb(96, 125, 138);
+h2,
+h3,
+h4 {
+  color: rgb(96, 125, 138);
 }
-h2, h3 {
-   border-bottom: 2px solid rgb(96, 125, 138);
-   padding-bottom: 5px;
-   font-weight: normal;
+h2,
+h3 {
+  border-bottom: 2px solid rgb(96, 125, 138);
+  padding-bottom: 5px;
+  font-weight: normal;
 }
-h4 { 
-   font-weight: normal; 
+h4 {
+  font-weight: normal;
 }
 p {
-   margin-bottom: 1.2em; /* Increase spacing between paragraphs */
-   line-height: 1.5; /* Increase line spacing within paragraphs */
+  margin-bottom: 1.2em; /* Increase spacing between paragraphs */
+  line-height: 1.5; /* Increase line spacing within paragraphs */
 }
 
 .role {
   color: #000;
 }
 .responsive-math {
-   display: block;
-   overflow-x: auto; /* Allow horizontal scrolling if necessary */
-   white-space: nowrap; /* Prevent wrapping of the math expression */
-   text-align: left; /* Align left to maintain readability */
-   font-size: 1rem; /* Set a responsive font size */
-   margin: 1em 0;
-   padding: 0.5em;
-   box-sizing: border-box;
+  display: block;
+  overflow-x: auto; /* Allow horizontal scrolling if necessary */
+  white-space: nowrap; /* Prevent wrapping of the math expression */
+  text-align: left; /* Align left to maintain readability */
+  font-size: 1rem; /* Set a responsive font size */
+  margin: 1em 0;
+  padding: 0.5em;
+  box-sizing: border-box;
 }
 
 .responsive-table-container {
@@ -65,10 +68,11 @@ p {
 
 table {
   border-collapse: collapse;
-  width: 98%; 
+  width: 98%;
 }
 
-th, td {
+th,
+td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
@@ -91,11 +95,11 @@ th, td {
 }
 */
 .contact-info {
-   display: flex;
-   justify-content: center;
-   align-items: left;
-   gap: 15px;
-   margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: left;
+  gap: 15px;
+  margin-top: 10px;
 }
 /*.contact-info {
    position: absolute; 
@@ -108,43 +112,44 @@ th, td {
    margin-top: 0;
 }*/
 .contact-info a {
-   display: flex;
-   align-items: left;
-   text-decoration: none;
-   color: inherit;
+  display: flex;
+  align-items: left;
+  text-decoration: none;
+  color: inherit;
 }
 .contact-info a .icon {
-   width: 20px;
-   height: 20px;
-   margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
 }
 .main-container {
-   max-width: 1500px;
-   margin: 7px auto;
-   padding: 10px;
-   background-color: #fff;
-   border-radius: 5px;
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 1500px;
+  margin: 7px auto;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-.left-column, .right-column {
-   flex: 1;
-   min-width: 300px;
-   padding: 0px;
+.left-column,
+.right-column {
+  flex: 1;
+  min-width: 300px;
+  padding: 0px;
 }
 .info-container {
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: space-between;
-   max-width: 1500px;
-   margin: 0px auto;
-   padding: 10px;
-   background-color: #fff;
-   border-radius: 5px;
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1500px;
+  margin: 0px auto;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 .info-column {
-   flex: 1;
-   margin: 10px;
+  flex: 1;
+  margin: 10px;
 }
 
 .link-container {
@@ -162,7 +167,6 @@ th, td {
   flex: 1;
   margin: 7px;
   text-align: center;
-
 }
 
 .link-column a {
@@ -173,26 +177,26 @@ th, td {
   text-decoration: none;
 }
 .link-container a i {
-   margin-right: 10px; /* Adds space between the icon and text */
+  margin-right: 10px; /* Adds space between the icon and text */
 }
 
 ul {
   padding: 0;
 }
 ol {
-   padding: 0;
+  padding: 0;
 }
 ul li {
-   list-style-type: disc;
-   margin-top: 5px;
-   margin-bottom: 5px;
-   margin-left: 15px;
+  list-style-type: disc;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 15px;
 }
 ol {
-   list-style-type: disc;
-   margin-top: 5px;
-   margin-bottom: 5px;
-   margin-left: 15px;
+  list-style-type: disc;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 15px;
 }
 
 .accordion.active .arrow {
@@ -204,67 +208,67 @@ ol {
   font-size: 16px;
 }
 .arrow {
-   display: inline-block;
-   position: absolute;
-   right: 0;
-   font-size: 0.65em;
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  font-size: 0.65em;
 }
 .projects-container {
-   max-width: 1500px;
-   margin: 7px auto;
-   padding: 10px;
-   background-color: #fff;
-   border-radius: 5px;
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 1500px;
+  margin: 7px auto;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .article-container {
-   max-width: 1500px;
-   margin: 7px auto;
-   padding: 10px;
-   background-color: #fff;
-   border-radius: 5px;
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 1500px;
+  margin: 7px auto;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.article-container h1, 
-.article-container h2, 
+.article-container h1,
+.article-container h2,
 .article-container h3,
 .article-container h4,
-.article-container p, 
-.article-container li, 
-.article-container table, 
+.article-container p,
+.article-container li,
+.article-container table,
 .article-container ul {
-   margin-left: 20px;
-   margin-right: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .project-columns {
-   display: flex;
-   flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .project-column {
-   flex-basis: calc(25% - 5px);
-   padding: 2px;
-   box-sizing: border-box;
+  flex-basis: calc(25% - 5px);
+  padding: 2px;
+  box-sizing: border-box;
 }
 .project-column ul {
-   list-style-type: none;
-   margin: 0;
+  list-style-type: none;
+  margin: 0;
 }
 .project-column ul li {
-   margin-bottom: 30px;
-   display: flex;
-   padding: 10px;
-   flex-direction: column;
-   align-items: left;
-   text-align: left;
+  margin-bottom: 30px;
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  align-items: left;
+  text-align: left;
 }
 .project-column img {
-   width: 100%;
-   height: 200px;
-   margin-bottom: 0px;
+  width: 100%;
+  height: 200px;
+  margin-bottom: 0px;
 }
 .project-column strong {
   font-size: 1.1em;
@@ -275,47 +279,57 @@ ol {
   color: inherit; /* Mantiene il colore del testo */
 }
 .project-column ul li:hover {
-background-color: #ccd4d8; /* Dark, elegant color (you can customize this further) */
-/*color: white;  Ensure text is white for contrast */
-transition: all 0.3s ease; /* Smooth transition for hover effects */
-z-index: 1; /* Ensures the hovered item stays above others */
-border-radius: 5px; /* Optional: Adds a smooth look */
+  background-color: #ccd4d8; /* Dark, elegant color (you can customize this further) */
+  /*color: white;  Ensure text is white for contrast */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+  z-index: 1; /* Ensures the hovered item stays above others */
+  border-radius: 5px; /* Optional: Adds a smooth look */
 }
 
 @media screen and (max-width: 1300px) {
-.project-columns {
-  justify-content: left; /* Centra le colonne quando lo schermo è stretto */
-}
-.project-column {
-  flex-basis: calc(33% - 5px); /* Imposta la larghezza delle colonne al 50% del contenitore con uno spazio tra le colonne */
-}
+  .project-columns {
+    justify-content: left; /* Centra le colonne quando lo schermo è stretto */
+  }
+  .project-column {
+    flex-basis: calc(
+      33% - 5px
+    ); /* Imposta la larghezza delle colonne al 50% del contenitore con uno spazio tra le colonne */
+  }
 }
 /* Media query per adattare il layout quando la larghezza dello schermo è inferiore a 1200px */
 @media screen and (max-width: 1000px) {
   .project-columns {
-      justify-content: left; /* Centra le colonne quando lo schermo è stretto */
-}
+    justify-content: left; /* Centra le colonne quando lo schermo è stretto */
+  }
 
-.project-column {
-  flex-basis: calc(50% - 20px); /* Imposta la larghezza delle colonne al 50% del contenitore con uno spazio tra le colonne */
-}
-.info-column {
-  flex-basis: calc(50% - 20px); /* Imposta la larghezza delle colonne al 50% del contenitore con uno spazio tra le colonne */
-}
-
-
+  .project-column {
+    flex-basis: calc(
+      50% - 20px
+    ); /* Imposta la larghezza delle colonne al 50% del contenitore con uno spazio tra le colonne */
+  }
+  .info-column {
+    flex-basis: calc(
+      50% - 20px
+    ); /* Imposta la larghezza delle colonne al 50% del contenitore con uno spazio tra le colonne */
+  }
 }
 /* Media query per adattare ulteriormente il layout quando la larghezza dello schermo è inferiore a 600px */
 @media screen and (max-width: 600px) {
   .project-column {
-      flex-basis: calc(100% - 20px); /* Imposta la larghezza delle colonne al 100% del contenitore con uno spazio tra le colonne */
-}
-.info-column {
-  flex-basis: calc(100% - 20px); /* Imposta la larghezza delle colonne al 100% del contenitore con uno spazio tra le colonne */
-}
-.link-column {
-  flex-basis: calc(50% - 20px); /* Imposta la larghezza delle colonne al 50% del contenitore con uno spazio tra le colonne */
-}
+    flex-basis: calc(
+      100% - 20px
+    ); /* Imposta la larghezza delle colonne al 100% del contenitore con uno spazio tra le colonne */
+  }
+  .info-column {
+    flex-basis: calc(
+      100% - 20px
+    ); /* Imposta la larghezza delle colonne al 100% del contenitore con uno spazio tra le colonne */
+  }
+  .link-column {
+    flex-basis: calc(
+      50% - 20px
+    ); /* Imposta la larghezza delle colonne al 50% del contenitore con uno spazio tra le colonne */
+  }
 }
 /* Dark Mode Styles */
 body.dark-mode {
@@ -342,30 +356,30 @@ svg {
 }
 /* Update container styles */
 .main-container.dark-mode {
-  background-color: #29363d ; /* Dark background */
+  background-color: #29363d; /* Dark background */
   color: #fff; /* Light text */
 }
 .info-container.dark-mode {
-  background-color: #29363d ; /* Dark background */
+  background-color: #29363d; /* Dark background */
   color: #fff; /* Light text */
 }
 
 .link-container.dark-mode {
-   background-color: #29363d ; /* Dark background */
-   color: #fff; /* Light text */
+  background-color: #29363d; /* Dark background */
+  color: #fff; /* Light text */
 }
 
 .projects-container.dark-mode {
-  background-color: #29363d ; /* Dark background */
+  background-color: #29363d; /* Dark background */
   color: #fff; /* Light text */
 }
 .portfolio-container.dark-mode {
-  background-color: #29363d ; /* Dark background */
+  background-color: #29363d; /* Dark background */
   color: #fff; /* Light text */
 }
 .article-container.dark-mode {
-   background-color: #29363d ; /* Dark background */
-   color: #fff; /* Light text */
+  background-color: #29363d; /* Dark background */
+  color: #fff; /* Light text */
 }
 .dark-mode h4 {
   color: rgb(207, 216, 220);
@@ -373,29 +387,28 @@ svg {
 .dark-mode h1 {
   color: rgb(255, 255, 255);
 }
-.dark-mode h2, .dark-mode h3 {
+.dark-mode h2,
+.dark-mode h3 {
   color: rgb(207, 216, 220);
   border-bottom: 2px solid rgb(207, 216, 220);
 }
 
-.projects-container.dark-mode a:hover{
-   color: #000000;
+.projects-container.dark-mode a:hover {
+  color: #000000;
 }
-
 body a {
   color: rgb(96, 125, 138); /* Light blue for contrast in dark mode */
 }
 body a:hover {
-   color: #000000; /* Light blue for contrast in dark mode */
- }
+  color: #000000; /* Light blue for contrast in dark mode */
+}
 
 body.dark-mode a {
   color: rgb(207, 216, 220);
 }
 body.dark-mode a:hover {
-   color: #ffffff; /* Light blue for contrast in dark mode */
- }
-
+  color: #ffffff; /* Light blue for contrast in dark mode */
+}
 
 /* 
 Other sections like accordions can also be styled 
@@ -423,7 +436,7 @@ Other sections like accordions can also be styled
   position: relative;
 }
 .switch-label:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 3px;
   left: 3px;
@@ -480,7 +493,7 @@ Other sections like accordions can also be styled
   margin-left: 0px;
 }
 
-.portfolio-sections h2{
+.portfolio-sections h2 {
   margin-left: 10px;
   margin-right: 10px;
 }
@@ -491,20 +504,18 @@ Other sections like accordions can also be styled
   flex-direction: column;
 }
 
-
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-
 }
 
 .portfolio-grid-4 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-
 }
 
-.portfolio-item, .article-column {
+.portfolio-item,
+.article-column {
   margin-bottom: 0px;
   display: flex;
   padding: 10px;
@@ -513,40 +524,45 @@ Other sections like accordions can also be styled
   text-align: left;
 
   margin-left: 15px;
-
 }
 
-.portfolio-item a:hover, .article-column a:hover {
+.portfolio-item a:hover,
+.article-column a:hover {
   background-color: #ccd4d8; /* Dark, elegant color (you can customize this further) */
-/*color: white;  Ensure text is white for contrast */
-transition: all 0.3s ease; /* Smooth transition for hover effects */
-z-index: 1; /* Ensures the hovered item stays above others */
-border-radius: 5px; /* Optional: Adds a smooth look */
+  /*color: white;  Ensure text is white for contrast */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+  z-index: 1; /* Ensures the hovered item stays above others */
+  border-radius: 5px; /* Optional: Adds a smooth look */
 }
 
-.dark-mode .portfolio-item a:hover, .dark-mode .article-column a:hover {
+.dark-mode .portfolio-item a:hover,
+.dark-mode .article-column a:hover {
   background-color: #555; /* Darker background for dark mode */
   color: #fff; /* Ensure text is white for contrast */
 }
 
-.portfolio-item img, .article-column img {
+.portfolio-item img,
+.article-column img {
   width: 100%;
   height: 200px;
   margin-bottom: 0px;
 }
 
-.portfolio-item a, .article-column a {
+.portfolio-item a,
+.article-column a {
   text-decoration: none;
   color: inherit;
   padding: 5px;
 }
 
-.portfolio-item strong, .article-column strong {
+.portfolio-item strong,
+.article-column strong {
   display: block;
   margin: 10px 0;
 }
 
-.portfolio-item p, .article-column p {
+.portfolio-item p,
+.article-column p {
   margin: 10px 0 0;
   color: #666;
 }
@@ -570,7 +586,6 @@ border-radius: 5px; /* Optional: Adds a smooth look */
   font-weight: bold;
 }
 
-
 .view-all-btn i {
   margin-left: 8px;
   font-size: 0.9em;
@@ -581,12 +596,11 @@ border-radius: 5px; /* Optional: Adds a smooth look */
   .portfolio-sections {
     flex-direction: column;
   }
-  
+
   .section-column {
     flex: 0 0 100%;
   }
 }
-
 
 @media (max-width: 1300px) {
   .portfolio-grid {
@@ -595,7 +609,6 @@ border-radius: 5px; /* Optional: Adds a smooth look */
 
   .portfolio-grid-4 {
     grid-template-columns: repeat(3, 1fr);
-  
   }
 }
 
@@ -606,7 +619,6 @@ border-radius: 5px; /* Optional: Adds a smooth look */
 
   .portfolio-grid-4 {
     grid-template-columns: repeat(2, 1fr);
-  
   }
 }
 
@@ -617,12 +629,12 @@ border-radius: 5px; /* Optional: Adds a smooth look */
 
   .portfolio-grid-4 {
     grid-template-columns: repeat(1, 1fr);
-  
   }
 }
 
 /* Dark mode styles */
-.dark-mode .portfolio-item, .dark-mode .article-column {
+.dark-mode .portfolio-item,
+.dark-mode .article-column {
   color: #000000;
 }
 
@@ -630,6 +642,7 @@ border-radius: 5px; /* Optional: Adds a smooth look */
   border-bottom-color: #fff;
 }
 
-.dark-mode .portfolio-item p, .dark-mode .article-column p {
+.dark-mode .portfolio-item p,
+.dark-mode .article-column p {
   color: #ccc;
 }
