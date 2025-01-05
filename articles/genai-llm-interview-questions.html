@@ -236,705 +236,1593 @@
 
       <h2 id="llm-basics">1. Basics of LLM</h2>
       <h4>
-        1.1 What is the difference between predictive AI and generative AI?
+        1.1 What is the difference between Predictive/Discriminative AI and
+        Generative AI?
       </h4>
+
       <p>
-        The Linear Congruential Generator (LCG) is a widely-used and simple
-        pseudo-random number generator based on a linear recurrence relation:
+        Predictive AI, also known as discriminative AI, focuses on predicting
+        the output based on input data. It aims to learn the relationship
+        between input features and output labels, making predictions based on
+        patterns in the training data. Common examples of predictive AI include
+        classification and regression tasks, where the model predicts discrete
+        classes or continuous values, respectively.
       </p>
-      <p class="responsive-math">\[ X_{n+1} = (a \cdot X_n + c) \mod m \]</p>
-      <p>Where:</p>
+
+      <p>Core Characteristics:</p>
       <ul>
         <li>
-          <span>\(a\)</span>: The multiplier that determines how much the
-          sequence progresses between consecutive numbers.
+          Focuses on learning \(P(y|x)\) - the probability of output y given
+          input x
+        </li>
+        <li>Optimized for accuracy in classification and prediction tasks</li>
+        <li>Efficient in resource usage compared to generative models</li>
+        <li>Typically requires less training data for good performance</li>
+        <li>Better suited for tasks with clear decision boundaries</li>
+      </ul>
+      <p>Key Technical Aspects of Predictive AI you must known:</p>
+      <ul>
+        <li>
+          <strong>Feature Engineering:</strong> The process of manually or
+          automatically deriving meaningful features from raw data to improve
+          model performance.
         </li>
         <li>
-          <span>\(c\)</span>: The increment that introduces variability,
-          preventing the sequence from falling into zero cycles.
+          <strong>Loss Functions:</strong> Metrics used to quantify prediction
+          errors, including cross-entropy, hinge loss, and mean squared error
+          (MSE).
         </li>
         <li>
-          <span>\(m\)</span>: The modulus that sets the range of the generated
-          numbers, often chosen as a power of 2 for computational efficiency.
+          <strong>Optimization:</strong> Techniques such as gradient descent and
+          stochastic optimization to minimize the loss function during training.
         </li>
         <li>
-          <span>\(X_n\)</span>: The current state, which can be either the
-          initial seed or the previously generated number.
+          <strong>Regularization:</strong> Methods like L1/L2 regularization,
+          dropout, and batch normalization to prevent overfitting and improve
+          generalization.
         </li>
       </ul>
 
       <p>
-        Let's build a Linear Congruential Generator (LCG) from scratch in Python
-        for simplicity. Our first task is to define a class called
-        <code>LCGPseudoRand</code>, with constructor parameters for
-        <code>a</code>, <code>c</code>, <code>m</code>, and <code>seed</code>.
-        Here's the implementation:
+        Generative AI, on the other hand, is designed to generate new data that
+        resembles the training data distribution. Instead of predicting a
+        specific output, generative models learn the underlying structure of the
+        data and generate new samples that are similar to the training examples.
+        These models can create new images, text, audio, or other types of data
+        based on the patterns they have learned during training.
       </p>
+      <p>Core Characteristics:</p>
+      <ul>
+        <li>Models the complete joint probability distribution \(P(x,y)\)</li>
+        <li>Creates novel, coherent outputs across various domains</li>
+        <li>
+          Can handle multiple tasks including content generation and
+          understanding
+        </li>
+        <li>Requires larger datasets and computational resources</li>
+        <li>Capable of unsupervised and self-supervised learning</li>
+      </ul>
 
-      <pre><code class="language-python">
-    class LCGPseudoRand:
-        def __init__(self, a=48271, c=0, m=2**31-1, seed=1):  # C++11 LCG parameters
-            self.a = a
-            self.c = c
-            self.m = m
-            self.x0 = seed
-            # Compute the first value based on the seed
-            self.prev_x = (a * self.x0 + c) % m
-                </code></pre>
+      <p>Key Examples of GenAI Architectures to know:</p>
+      <ul>
+        <li>
+          <strong>Transformer Models:</strong> Use self-attention mechanisms,
+          which allow the model to weigh the importance of different words in a
+          sentence, and multi-head attention, which enables the model to focus
+          on different parts of the sentence simultaneously for better context
+          understanding.
+        </li>
+        <li>
+          <strong>Generative Adversarial Networks (GANs):</strong> Utilize a
+          generator, which creates data samples, and a discriminator, which
+          evaluates them, in a competitive framework to create realistic data
+          samples.
+        </li>
+        <li>
+          <strong>Diffusion Models:</strong> Use denoising processes, which
+          iteratively refine noisy data to generate high-quality outputs, and
+          U-Net architectures, which are convolutional neural networks designed
+          for image segmentation and generation.
+        </li>
+        <li>
+          <strong>Variational Autoencoders (VAEs):</strong> Focus on latent
+          space modeling using the reparameterization trick, which allows for
+          backpropagation through stochastic variables by introducing a
+          differentiable approximation, and minimize reconstruction loss for
+          generative tasks.
+        </li>
+      </ul>
+
+      <svg
+        viewBox="0 0 400 200"
+        width="720"
+        height="480"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <!-- Left side - Discriminative -->
+        <g transform="translate(50, 0)">
+          <!-- Dots group 1 -->
+          <g>
+            <circle cx="25" cy="25" r="4" fill="#4299E1" />
+            <circle cx="15" cy="40" r="4" fill="#4299E1" />
+            <circle cx="35" cy="45" r="4" fill="#4299E1" />
+            <circle cx="10" cy="60" r="4" fill="#4299E1" />
+            <circle cx="30" cy="70" r="4" fill="#4299E1" />
+            <circle cx="20" cy="80" r="4" fill="#4299E1" />
+            <circle cx="40" cy="85" r="4" fill="#4299E1" />
+          </g>
+          <!-- Dots group 2 -->
+          <g>
+            <circle cx="90" cy="25" r="4" fill="#2B6CB0" />
+            <circle cx="75" cy="35" r="4" fill="#2B6CB0" />
+            <circle cx="95" cy="50" r="4" fill="#2B6CB0" />
+            <circle cx="80" cy="65" r="4" fill="#2B6CB0" />
+            <circle cx="100" cy="75" r="4" fill="#2B6CB0" />
+            <circle cx="85" cy="85" r="4" fill="#2B6CB0" />
+            <circle cx="70" cy="95" r="4" fill="#2B6CB0" />
+          </g>
+          <!-- Decision boundary -->
+          <line
+            x1="50"
+            y1="10"
+            x2="55"
+            y2="100"
+            stroke="black"
+            stroke-width="1"
+            stroke-dasharray="4,3"
+          />
+          <!-- Label -->
+          <text
+            x="50"
+            y="125"
+            text-anchor="middle"
+            font-size="10"
+            font-family="Arial"
+          >
+            Discriminative
+          </text>
+        </g>
+
+        <!-- Right side - Generative -->
+        <g transform="translate(225,0)">
+          <!-- Container 1 -->
+          <rect
+            x="0"
+            y="20"
+            width="60"
+            height="90"
+            rx="30"
+            fill="#4299E1"
+            opacity="0.3"
+          />
+          <g>
+            <circle cx="15" cy="35" r="4" fill="#4299E1" />
+            <circle cx="30" cy="45" r="4" fill="#4299E1" />
+            <circle cx="20" cy="60" r="4" fill="#4299E1" />
+            <circle cx="40" cy="70" r="4" fill="#4299E1" />
+            <circle cx="25" cy="85" r="4" fill="#4299E1" />
+            <circle cx="35" cy="95" r="4" fill="#4299E1" />
+          </g>
+          <!-- Container 2 -->
+          <rect
+            x="70"
+            y="20"
+            width="60"
+            height="90"
+            rx="30"
+            fill="#2B6CB0"
+            opacity="0.3"
+          />
+          <g>
+            <circle cx="85" cy="35" r="4" fill="#2B6CB0" />
+            <circle cx="100" cy="45" r="4" fill="#2B6CB0" />
+            <circle cx="90" cy="60" r="4" fill="#2B6CB0" />
+            <circle cx="110" cy="70" r="4" fill="#2B6CB0" />
+            <circle cx="95" cy="85" r="4" fill="#2B6CB0" />
+            <circle cx="105" cy="95" r="4" fill="#2B6CB0" />
+          </g>
+          <!-- Label -->
+          <text
+            x="65"
+            y="125"
+            text-anchor="middle"
+            font-size="10"
+            font-family="Arial"
+          >
+            Generative
+          </text>
+        </g>
+      </svg>
+
+      <h4>1.2 What is LLM, and how are LLMs trained?</h4>
+      <p>
+        LLM (Large Language Model) is an AI system trained to understand and
+        generate human-like text by processing vast amounts of textual data.
+        These models represent the cutting edge of natural language processing
+        technology.
+      </p>
+      <p>
+        Training large language models is a multi-layered stack of processes,
+        each playing a unique role in shaping the model's performance. The three
+        main phases are:
+      </p>
+      <ul>
+        <li>Self-supervised learning</li>
+        <li>Supervised learning</li>
+        <li>Reinforcement learning</li>
+      </ul>
+      <p>
+        <strong
+          >Phase 1: Self-Supervised Learning for Language Understanding</strong
+        >
+      </p>
+      <p>
+        Self-supervised learning, the first phase of training, is typically what
+        comes to mind when discussing language modeling. This process involves
+        exposing the model to vast amounts of unannotated or raw data and
+        instructing it to predict the ‘missing’ elements within that data.
+        Through this, the model learns about both language and the underlying
+        domain to generate plausible responses.
+      </p>
 
       <p>
-        In this implementation, I've used the C++11 LCG parameters with a
-        default seed value of <code>1</code>. The constructor also initializes
-        the first value of the sequence using the LCG formula:
+        For instance, if we provide the model with text from a weather website
+        and ask it to predict the next word, the model must comprehend the
+        language and the context of the weather domain. In my presentation, I
+        used the example: “A flash flood watch will be in effect all _____.” At
+        an intermediate stage, the model ranks possible predictions, from the
+        most likely answers (“day,” “night,” “hour”) to those that are less
+        probable (“month”), and even to nonsensical ones (“giraffe”) that
+        receive low probability scores.
+      </p>
+      <p>
+        This process is called self-supervision (distinct from unsupervised
+        learning) because there is a specific, correct answer—the word that
+        appeared in the collected text, which in this case was “night.” While
+        self-supervision shares similarities with unsupervised learning, it is
+        distinct in that it focuses on predicting specific correct outcomes,
+        even within the context of abundant, unannotated data.
       </p>
 
-      <pre><code class="language-python">
-    self.prev_x = (a * self.x0 + c) % m
-                </code></pre>
+      <img
+        src="../assets/self-supervised-learning.png"
+        alt="Visualization of LLM training process"
+        class="responsive-img"
+        width="720"
+        height="480"
+      />
 
       <p>
-        For example, if we create the object <code>lcg = LCGPseudoRand()</code>,
-        the first value is calculated as:
+        <strong
+          >Phase 2: Supervised Learning for Instruction Understanding</strong
+        >
       </p>
-      <p class="responsive-math">(48271 * 1 + 0) % (2**31-1) = 48271</p>
 
       <p>
-        The starting value of the sequence is <code>48271</code>. Now, let's add
-        a method to generate the pseudo-random numbers based on the same
-        formula:
+        Supervised learning, or instruction tuning, marks the second stage in
+        the training process of large language models (LLMs). This phase is
+        vital, building upon the foundational knowledge established during the
+        self-supervised learning phase. In this phase, the model is trained
+        specifically to follow instructions. Unlike self-supervised learning,
+        which focuses on predicting words and completing sentences, instruction
+        tuning teaches the model to understand and respond to explicit user
+        requests. This shift makes the model significantly more interactive and
+        useful in real-world applications. The impact of instruction tuning on
+        enhancing LLM capabilities has been demonstrated through numerous
+        studies, including those led by Snorkel researchers. One key outcome was
+        that models trained with instruction tuning performed better at
+        generalizing to new, unseen tasks. This is a major achievement, as the
+        ability to effectively handle unfamiliar tasks is a central goal of
+        machine learning models. Given its proven success, instruction tuning
+        has become a standard practice in LLM training. Once this phase is
+        completed, the model is no longer just predicting the next word—it’s
+        trained to engage with users, comprehend their instructions, and provide
+        meaningful, context-aware responses.
       </p>
-
-      <pre><code class="language-python">
-    def generate_number(self, min_range=None, max_range=None):
-        self.prev_x = (self.a * self.prev_x + self.c) % self.m
-        return self.prev_x
-                </code></pre>
 
       <p>
-        The method updates the state using the LCG formula and returns the next
-        number in the sequence. Let's generate 5 pseudo-random numbers and print
-        them:
+        <strong
+          >Phase 3: Reinforcement Learning to Promote Desired Behavior</strong
+        >
+      </p>
+      <p>
+        The final stage in training large language models (LLMs) is
+        reinforcement learning, a critical process that fine-tunes the model by
+        encouraging desired behaviors and discouraging undesirable outputs.
+        Unlike earlier stages, this phase doesn’t provide the model with
+        specific target outputs but instead evaluates and “grades” the responses
+        the model generates.
+      </p>
+      <p>
+        Although reinforcement learning has a long history in machine learning,
+        its application to LLM training was first proposed by OpenAI after the
+        advent of instruction tuning. The process begins with a model already
+        capable of understanding instructions and generating coherent language.
+        Human annotations are then used to compare model outputs, identifying
+        which responses are better or worse. These comparisons help guide the
+        creation of a reward model, which assigns quantitative scores to the
+        quality of the outputs. The reward model plays a pivotal role by scaling
+        feedback to the model, steering it toward generating preferred responses
+        while penalizing undesired ones. This method is particularly effective
+        for fostering nuanced behaviors, such as encouraging brevity or
+        discouraging harmful or inappropriate language. As a result, the model
+        learns to produce higher-quality, context-sensitive responses.
+      </p>
+      <p>
+        This process, known as reinforcement learning with human feedback
+        (RLHF), underscores the value of human involvement in shaping the
+        model's behavior. By incorporating human preferences into the training
+        loop, RLHF ensures the model aligns more closely with user expectations
+        and ethical standards, delivering a safer and more user-centric
+        experience.
       </p>
 
-      <pre><code class="language-python">
-    lcg = LCGPseudoRand()
-    for _ in range(5):
-        print(lcg.generate_number())
-                </code></pre>
+      <img
+        src="../assets/llm-training.png"
+        alt="Visualization of training process"
+        class="responsive-img"
+        width="720"
+        height="480"
+      />
 
-      <p>The output will look like this:</p>
+      <h4>1.3 What is a token in the language model?</h4>
+      <p>
+        In the context of language models, a token refers to the smallest unit
+        of text that the model processes. Tokens can represent individual words,
+        subwords, or characters, depending on the tokenization strategy used.
+        The choice of tokenization impacts the model's ability to understand and
+        generate text.
+      </p>
+      <p>
+        Each language model has a context window—a limit on the number of tokens
+        it can handle at a time. This context window defines how much text the
+        model can "remember" and process simultaneously. For example, a model
+        with a 4,000-token context window can work with approximately
+        3,000–4,000 words of text at once, depending on the complexity of the
+        language and the average token length.
+      </p>
+      <p>
+        The vector representation of a token is called an embedding. These
+        vectors capture the meaning, context, and relationships between tokens
+        in a form that the model can compute.
+      </p>
 
+      <h4>
+        1.4 How to estimate the cost of running SaaS-based and Open Source LLM
+        models?
+      </h4>
+
+      <p>
+        These are subscription-based or pay-per-use services that provide hosted
+        LLMs. SaaS-based LLM services charge based on processed tokens (both
+        input and output). For example, GPT-4 charges $0.03 for input tokens and
+        $0.06 for output tokens per 1,000 tokens. The total cost can be
+        calculated by multiplying the sum of input and output tokens by the cost
+        per token.
+      </p>
       <p class="responsive-math">
-        182605794, 1291394886, 1914720637, 2078669041, 407355683
+        Total Cost = (Tokens Input + Tokens Output) × Cost Per Token
       </p>
-
-      <p>We have successfully generated 5 pseudo-random numbers.</p>
-      <ul>
-        <li>
-          The first element of the list is calculated as:
-          <p class="responsive-math">
-            (48271 * 48271 + 0) % 2147483647 = 182605794
-          </p>
-        </li>
-        <li>
-          The second element is calculated as:
-          <p class="responsive-math">
-            (48271 * 182605794 + 0) % 2147483647 = 1291394886
-          </p>
-        </li>
-      </ul>
-
       <p>
-        However, if you re-run the same code without changing the seed, the
-        algorithm will produce the exact same sequence again. This is because
-        LCGs are deterministic. Their output is entirely determined by the
-        initial seed and the parameters <code>a</code>, <code>c</code>, and
-        <code>m</code>.
+        Other costs include compute tier options (with different pricing for
+        different models), monthly subscription fees for premium access, and
+        possible additional charges for reserved capacity to ensure low latency
+        or scalability.
+      </p>
+      <p>
+        With SaaS, there’s no need for infrastructure setup or maintenance. The
+        service scales automatically, making it ideal for prototypes or
+        low-volume usage.
       </p>
 
       <p>
-        As we discussed earlier, a more unpredictable starting seed is required
-        to avoid deterministic sequences. Atmospheric noise or radioactive decay
-        might be difficult to integrate. A simple yet effective alternative is
-        to combine the current time with the system's process ID. This method
-        works well and ensures better randomness when initializing the
-        generator's seed in the constructor.
+        On the other hand, Open Source LLM models are free to use but require
+        infrastructure setup and maintenance. For self-hosted open-source
+        models, compute costs can vary widely depending on the choice of
+        infrastructure. Cloud-based GPU instances range from $1 to $6 per hour
+        per GPU, with an average cost for an NVIDIA A100 instance being around
+        $2.5 per hour. The compute cost is calculated by multiplying the
+        instance cost by the number of hours used.
       </p>
-
-      <pre><code class="language-python">
-    import os
-    import time
-    
-    class LCGPseudoRand:
-        def __init__(self, a=48271, c=0, m=2**31-1, seed=None):
-            self.a = a
-            self.c = c
-            self.m = m
-            if seed is None:
-                self.x0 = int(os.getpid() + time.time())
-            else:
-                self.x0 = seed
-            self.prev_x = (a * self.x0 + c) % m
-                    </code></pre>
-
-      <p>
-        In this example, we've added functionality to automatically generate a
-        unique seed if the user doesn't provide one. The line
-        <code>self.x0 = int(os.getpid() + time.time())</code> combines the
-        system's process ID with the current time to ensure that each execution
-        generates a different seed.
-      </p>
-      <p>
-        The <code>os.getpid()</code> function fetches the process ID of the
-        current program, which is usually unique per running program. The
-        <code>time.time()</code> function returns the current time in seconds
-        since the epoch, which changes with each program execution. When you add
-        these together and cast them to an integer, the result becomes a fairly
-        unique seed that minimizes the likelihood of repeating values. Notice
-        that each time the program runs, a new sequence is generated, thanks to
-        our dynamic seed generation mechanism.
-      </p>
-
-      <p>
-        When generating pseudo-random numbers with a LCG, it is often necessary
-        to scale the output so that it falls within a specified range. For
-        example, you may need a random number between 10 and 50, or between two
-        user-defined values, such as <code>min_range</code> and
-        <code>max_range</code>. By scaling the generated number, you can ensure
-        that it fits within the desired bounds.
-      </p>
-
-      <p>The scaling formula is:</p>
       <p class="responsive-math">
-        \[ \text{output} = \text{min_range} + \left( \frac{X_n}{m} \right)
-        \times (\text{max_range} - \text{min_range}) \]
+        Cost (Compute) = (Instance Cost) × (Hours of Use)
       </p>
       <p>
-        In the following code snippet, we modify the previously generated
-        pseudo-random number using a scaling formula to fit within the
-        user-defined range:
+        Open-source LLMs also incur storage and networking costs (e.g., 100GB+
+        for large models), energy costs for continuous operation, personnel
+        costs for engineering and maintenance, and possible software licensing
+        fees for supporting software.
       </p>
-      <pre><code class="language-python">
-    def generate_number(self, min_range=None, max_range=None):
-        self.prev_x = (self.a * self.prev_x + self.c) % self.m
-    
-        if min_range is not None and max_range is not None:
-            return int((self.prev_x / self.m) * (max_range - min_range) + min_range)
-        else:
-            return self.prev_x
-                    </code></pre>
-
       <p>
-        The <code>generate_number</code> method first calculates the next number
-        in the sequence using the standard LCG formula, and then scales the
-        result to fit within the specified <code>min_range</code> and
-        <code>max_range</code>.
+        Open source LLMs offer full control over the model and infrastructure.
+        They can be customized for specific needs and may incur lower long-term
+        costs for high-volume usage.
       </p>
 
-      <p>
-        Let’s consider an example where we generate random numbers between 10
-        and 50:
-      </p>
-
-      <pre><code class="language-python">
-    lcg = LCGPseudoRand()
-    for _ in range(5):
-        print(lcg.generate_number(10, 50))
-                    </code></pre>
-
-      <p>
-        Each time this program runs, the output numbers will be scaled to the
-        specified range (10 to 50).
-      </p>
-
-      <h4>Initialization Differences Between Programming Languages</h4>
-
-      <p>
-        The parameters \(a\), \(c\), and \(m\) directly affect the quality of
-        randomness and the period of the LCG. A poorly chosen set of parameters
-        may result in sequences with clear patterns or shorter-than-expected
-        periods. To achieve the maximum period of \(m\), the following
-        conditions must be met:
-      </p>
-      <ul>
-        <li>The increment \(c\) must be relatively prime to \(m\).</li>
-        <li>
-          The multiplier \(a - 1\) must be divisible by all prime factors of
-          \(m\).
-        </li>
-        <li>
-          If \(m\) is a multiple of 4, \(a\) and \(m\) should share the same
-          remainder when divided by 4.
-        </li>
-      </ul>
-
-      <p>
-        Different programming languages and libraries initialize LCGs using
-        unique approaches to determine the initial seed \(X_0\), which impacts
-        reproducibility and sequence variation:
-      </p>
-
+      <p><strong>Comparison table</strong></p>
       <div class="responsive-table-container">
-        <table border="1" cellpadding="8" cellspacing="0">
+        <table border="1">
           <thead>
             <tr>
-              <th>Language</th>
-              <th>Initialization Mechanism</th>
-              <th>Seed Parameters</th>
-              <th>a (Multiplier)</th>
-              <th>c (Increment)</th>
-              <th>m (Modulus)</th>
-              <th>Example Code</th>
+              <th>Factor</th>
+              <th>SaaS-Based</th>
+              <th>Open-Source</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong>Java</strong></td>
-              <td>
-                The `java.util.Random` class uses an LCG. Seeding is done using
-                system time by default.
-              </td>
-              <td>
-                Default seed is derived from the current time in milliseconds.
-              </td>
-              <td>25214903917</td>
-              <td>11</td>
-              <td>\(m = 2^{48}\)</td>
-              <td>
-                <pre><code>long seed = System.currentTimeMillis();</code></pre>
-              </td>
+              <td>Ease of Setup</td>
+              <td>Instant, minimal configuration</td>
+              <td>Significant setup and maintenance</td>
             </tr>
             <tr>
-              <td><strong>Borland C++</strong></td>
-              <td>
-                Uses the "std::linear_congruential_engine" from the
-                &lt;random&gt; header, requiring explicit seed values.
-              </td>
-              <td>
-                The seed value is provided by the user when creating the
-                generator instance.
-              </td>
-              <td>22695477</td>
-              <td>1</td>
-              <td>\(m = 2^{31}\)</td>
-              <td>
-                <pre><code>#include &lt;random&gt; std::linear_congruential_engine&lt;unsigned, 16807, 0, 2147483647&gt; engine(12345);</code></pre>
-              </td>
+              <td>Scalability</td>
+              <td>Automatic, scales with need</td>
+              <td>Manual provisioning required</td>
             </tr>
             <tr>
-              <td><strong>C++11</strong></td>
-              <td>The "std::minstd_rand" engine uses a LCG.</td>
-              <td>
-                The default seed is user-defined or zero if not explicitly
-                initialized.
-              </td>
-              <td>48271</td>
-              <td>0</td>
-              <td>\(m = 2^{31} - 1\)</td>
-              <td>
-                <pre><code>#include &lt;random&gt;
-    std::minstd_rand rng(42);</code></pre>
-              </td>
-            </tr>
-
-            <tr>
-              <td><strong>JavaScript</strong></td>
-              <td>
-                "Math.random()" abstracts away the seeding process and doesn't
-                allow for user-defined seeds. Its underlying RNG algorithm might
-                use LCG or a variation, but the details are not publicly exposed
-                by JavaScript engines.
-              </td>
-              <td>
-                No explicit seed from the user. The engine typically uses a
-                system-based or time-based seed.
-              </td>
-              <td>Not accessible.</td>
-              <td>Not accessible.</td>
-              <td>Not accessible.</td>
-              <td>
-                No code for seeding, as direct seeding is not supported in
-                `Math.random()`.
-              </td>
+              <td>Costs for Low Usage</td>
+              <td>Lower for prototypes</td>
+              <td>Higher initial setup cost</td>
             </tr>
             <tr>
-              <td><strong>Python</strong></td>
-              <td>
-                Uses Mersenne Twister as the default generator in the "random"
-                module (I'll try to cover Mersenne Twister in the future).
-                Earlier versions (pre-2.2) might have used LCG for `random` but
-                this is not standard in modern implementations.
-              </td>
-              <td>
-                Common seeds include system time or a fixed integer provided by
-                the user. For example, "random.seed(12345)` or just
-                `random.seed()" for system time.
-              </td>
-              <td>
-                Multiplier and increment used depend on the specific algorithm,
-                but with Mersenne Twister, the details are not equivalent to a
-                simple LCG (it’s a much more complex state transition). With
-                older LCGs used for "random.seed()" there would be corresponding
-                values for a and c but they are no longer part of the active
-                algorithm in modern versions of Python.
-              </td>
-              <td>
-                Fixed increment (for older LCG, if used), typically a constant.
-              </td>
-              <td>
-                Uses internally defined modulus for Mersenne Twister. LCG
-                implementations in older versions or different libraries might
-                have \(m = 2^{32}\) or similar values.
-              </td>
-              <td>
-                Example: "random.seed(12345)" initializes with a seed value.
-                "random.seed()" with no argument uses system time.
-              </td>
+              <td>Costs for High Usage</td>
+              <td>Scales linearly, can be expensive</td>
+              <td>More cost-effective long-term</td>
+            </tr>
+            <tr>
+              <td>Customizability</td>
+              <td>Limited by vendor</td>
+              <td>Full control</td>
+            </tr>
+            <tr>
+              <td>Operational Control</td>
+              <td>Relies on vendor</td>
+              <td>Complete independence</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <h2 id="prompt-engineering">2. Prompt Engineering</h2>
-      <p>
-        The Permuted Congruential Generator (PCG) is a modern pseudo-random
-        number generator that improves upon the classic Linear Congruential
-        Generator (LCG). It combines a linear congruential generator with a
-        permutation function to produce higher-quality random numbers with
-        minimal computational overhead.
-      </p>
 
-      <p class="responsive-math">
-        \[ \text{state}_{n+1} = (\text{state}_n \times \text{multiplier} +
-        \text{increment}) \mod 2^{64} \]
+      <h4>1.5 Explain the Temperature parameter and how to set it.</h4>
+
+      <p>
+        The <strong>Temperature</strong> parameter is used in language models to
+        control the level of randomness in the text generation process. It is
+        particularly useful for fine-tuning the creativity and variability of
+        the model’s responses.
       </p>
 
       <p>
-        However, unlike the LCG, PCG applies a permutation step to the generated
-        state to enhance randomness:
+        In simple terms, the temperature adjusts the "steepness" of the
+        probability distribution over possible next words or tokens. When
+        generating text, a model selects tokens based on a distribution of
+        probabilities. A lower temperature (e.g., 0.1) makes the model more
+        deterministic, meaning it is more likely to select the most probable
+        next token, leading to more predictable and coherent text. A higher
+        temperature (e.g., 1.0) adds more randomness to the selection, allowing
+        for more creative or unexpected outputs.
       </p>
+
+      <p>
+        The temperature parameter works by modifying the logits (raw scores) of
+        the possible next tokens before converting them to probabilities using
+        the softmax function. The formula for calculating the probability
+        distribution for the next token given the logits is:
+      </p>
+
       <p class="responsive-math">
-        \[ \text{output} = ((\text{state} >> \text{shift}) \oplus \text{state})
-        \mod 2^{64} \]
+        \[P(w_i) = exp(logit(w_i) / T) / Σ exp(logit(w_j) / T) \]
       </p>
-      <p>Where:</p>
+
+      <p>
+        Here, <span>\(w_i\)</span> refers to the ith token in the vocabulary,
+        and <span>\(logit(w_i)\)</span> is the unscaled score for that token.
+        The parameter <em>T</em> is the temperature:
+      </p>
       <ul>
-        <li><span>state</span>: The internal state of the generator.</li>
         <li>
-          <span>multiplier</span>: A large odd number used in the linear step.
+          T = 0: This means maximum determinism. The model always selects the
+          most probable token (argmax sampling). However, most implementations
+          prevent using an exact 0 since it removes any stochasticity
+          altogether.
         </li>
         <li>
-          <span>increment</span>: Another large odd number ensuring a full
-          period.
+          T between 0 and 1: Sharper probability distributions, making
+          high-probability tokens even more dominant. Lower values reduce
+          randomness and make the output more focused and predictable.
         </li>
         <li>
-          <span>shift</span>: A calculated bit-shift for scrambling the state.
+          T = 1: No adjustment to the logits. The original probability
+          distribution is used.
+        </li>
+        <li>
+          T > 1: Flattens the probability distribution, increasing randomness.
+          Less probable tokens become more likely to be chosen, producing
+          creative or exploratory outputs.
         </li>
       </ul>
+      <img
+        src="../assets/temperature.png"
+        alt="Temperature parameter visualization"
+        class="responsive-img"
+        width="720"
+        height="480"
+      />
 
       <p>
-        The constructor initializes the generator's parameters:
-        <code>multiplier</code>, <code>increment</code>, and
-        <code>modulus</code>. Like previously, if a seed is provided, it is used
-        as the initial state; otherwise, the generator creates a unique seed by
-        combining the process ID and the current time:
-      </p>
-      <pre><code class="language-python">
-    class PCGPseudoRand:
-        def __init__(self, multiplier=6364136223846793005, increment=1442695040888963407, seed=None) -> None:
-            self.multiplier = multiplier
-            self.increment = increment | 1
-            self.modulus = 2**64
-            if seed is not None:
-                self.state = seed
-            else:
-                self.state = int(os.getpid() + time.time()) & 0xFFFFFFFFFFFFFFFF
-    </code></pre>
-
-      <p>
-        In this implementation the multiplier, increment and modulus are from
-        Donald Knuth's MMIX.
-      </p>
-      <p>
-        The expression
-        <code>int(os.getpid() + time.time()) & 0xFFFFFFFFFFFFFFFF</code>
-        generates a pseudo-random 64-bit seed by combining the current process
-        ID and the current time. This approach adds a level of non-determinism
-        since the process ID and time are unlikely to repeat simultaneously
-        (same way as LCG discussed earlier). The bitwise AND operation
-        <code>& 0xFFFFFFFFFFFFFFFF</code> ensures that the resulting value is
-        constrained to a 64-bit integer, even if the sum exceeds the 64-bit
-        range.
+        The temperature parameter is often adjusted through an API or in the
+        model configuration. If you are interacting with an API, you will
+        usually specify the temperature in the request. Here's a typical API
+        call setting:
       </p>
 
-      <p>
-        The Linear Congruential Step method updates the internal state using the
-        LCG formula:
-      </p>
-      <pre><code class="language-python">
-    def _lcg_step(self):
-        self.state = (self.state * self.multiplier + self.increment) & 0xFFFFFFFFFFFFFFFF
-    </code></pre>
-      <p>
-        The new state is calculated by multiplying the current state by the
-        multiplier, adding the increment, and applying a modulo operation to
-        ensure the value stays within a 64-bit range.
-      </p>
+      <pre>
+      {
+        "model": "gpt-4",
+        "temperature": 0.7,
+        "prompt": "Describe a sunset over a mountain range."
+      }
+      </pre>
 
       <p>
-        Is it similar to an LCG? Yes, to some extent. However, there is an
-        additional permutation step here, which does not exist in a standard
-        LCG. This step involves the following:
+        Experimenting with different temperature settings can help achieve the
+        desired tone and level of creativity in the responses. Lower
+        temperatures are appropriate for factual, straightforward tasks, while
+        higher temperatures are useful for generating new ideas, brainstorming,
+        or creative writing.
       </p>
-      <ol>
+
+      <h4>
+        1.6 What are different decoding strategies for picking output tokens?
+      </h4>
+      <p>
+        Language models are pre-trained to predict the next token in a text
+        corpus. Decoding strategies determine how to select the next token based
+        on the probability distribution over a fixed vocabulary. The process of
+        selecting these tokens, known as decoding, plays a crucial role in
+        shaping the output text. By tailoring the decoding approach, you can
+        customize text generation to suit specific needs. Depending on the
+        decoding method, the model may choose the most probable token, consider
+        multiple top candidates, or introduce randomness for variety.
+      </p>
+      <p>
+        An effective decoding strategy transforms a language model from a simple
+        next-token predictor into a powerful text generator capable of handling
+        diverse tasks. This raises two key questions: "What are the different
+        decoding strategies?" and "How do they influence the output generated by
+        language models?".
+      </p>
+      <img
+        src="../assets/autoregressive_gen.webp"
+        alt="Autoregressive generation"
+        class="responsive-img"
+        width="720"
+        height="480"
+      />
+
+      <p>
+        The simplest way to implement a sampling function is to select the next
+        token with the highest probability at each step, an approach known as
+        <strong>Greedy Search</strong>. This straightforward method is fast and
+        efficient because it prioritizes the most probable token every time.
+        However, this predictability often results in repetitive or unoriginal
+        text, making it unsuitable for generating creative content. Can this be
+        improved? Absolutely.
+      </p>
+      <p>
+        <strong>Beam search</strong> offers an enhancement by maintaining a beam
+        of the K most probable sequences at each time step, where K is the beam
+        width. The process continues until a maximum sequence length is reached
+        or an end-of-sequence token is generated. Beam search typically results
+        in higher-quality text than greedy search, but it requires more
+        computational effort.
+      </p>
+      <p>
+        Suppose the initial sequence is "Once upon a time" and
+        <span class="highlight">K=2</span>.
+      </p>
+      <ul>
         <li>
-          <p>
-            The first step involves extracting key bits from the uppermost part
-            of the 64-bit integer <code>x</code> to determine how much the
-            number will be shifted. Specifically,
-            <code>shift = (x &gt;&gt; 59) + 1</code> performs a right shift of
-            <code>x</code> by 59 bits. Since <code>x</code> is a 64-bit integer,
-            this operation isolates the top 5 bits (bits 59-63) after the shift.
-          </p>
-          <p>
-            The result is a value between 0 and 31, as the top 5 bits form a
-            5-bit binary number. Adding 1 ensures that the shift amount is
-            always at least 1, preventing a shift by 0 bits, which would have no
-            effect.
-          </p>
+          The two most likely tokens are <strong>"a"</strong> and
+          <strong>"the"</strong>.
         </li>
         <li>
-          <p>
-            Next, the bits of <code>x</code> are shifted to the right by the
-            calculated <code>shift</code> amount. This operation discards the
-            bits on the right and shifts in zeros on the left. The resulting
-            value is then XORed with the original value of <code>x</code>. The
-            XOR operation compares each corresponding bit of the shifted value
-            and <code>x</code>, returning 1 if the bits differ and 0 if they are
-            the same. This step introduces a mix of the bits, ensuring better
-            scrambling of the number.
-          </p>
+          In the next step:
+          <ul>
+            <li>
+              The sequence <em>("a", "cat")</em> has a probability of
+              <strong>0.20</strong> (<code>0.5 × 0.4</code>).
+            </li>
+            <li>
+              The sequence <em>("the", "people")</em> has a probability of
+              <strong>0.21</strong> (<code>0.3 × 0.7</code>).
+            </li>
+          </ul>
         </li>
-      </ol>
+        <li>
+          Beam search selects the sequence <em>"the people"</em> as it has the
+          higher cumulative probability.
+        </li>
+      </ul>
+      <img
+        src="../assets/beam_search.webp"
+        alt="Beam search visualization"
+        class="responsive-img"
+        width="720"
+        height="480"
+      />
+
+      <p>
+        The above methods that choose the most probable next token at each step
+        are called Deterministic methods. These methods produce output text
+        ensuring predictability but often at the expense of diversity. So if you
+        are looking for creative writing, we need some better mechanisms.
+      </p>
+      <p>
+        To overcome the limitations of deterministic methods in generating
+        varied and creative text, stochastic methods introduce randomness into
+        the selection process. These methods reduce predictability, creating
+        outputs that are less repetitive and more diverse.
+      </p>
+      <p>
+        When generating text, stochastic methods often rely on strategies that
+        prioritize tokens with higher probabilities while maintaining a degree
+        of randomness. Popular approaches for achieving this balance are ramdom
+        sampling, temperature sampling, Top-k sampling and Top-p sampling, each
+        offering unique mechanisms for selecting the next token.
+      </p>
+      <p>
+        The simplest stochastic approach is <strong>random sampling</strong>,
+        where the next token is sampled from the probability distribution:
+      </p>
+      <pre>
+        <code class="language-python">
+        def sample(p):
+            return np.random.choice(np.arange(p.shape[-1]), p=p)</code>
+            </pre>
+      <p>
+        With this method, each execution produces different outputs. However,
+        while less predictable, this approach may result in incoherent text. To
+        achieve varied yet coherent results, we need more refined strategies.
+      </p>
+      <p>
+        <strong>Temperature sampling</strong>, as discuss earlier, adjusts the
+        likelihood of selecting tokens by altering the temperature of the
+        softmax function, which transforms the model’s logits into
+        probabilities.
+      </p>
+      <p>
+        Consider tokens with logits [1, 2, 3, 4, 5]. The following code plots
+        the temperature-controlled softmax probability distribution:
+      </p>
+      <pre>
+        <code class="language-python">
+        from matplotlib import pyplot
+        import torch
+        
+        depth = range(6)
+        logits = torch.tensor([1, 2, 3, 4, 5])
+        prob_list = []
+        
+        for temperature in depth:
+            prob = torch.nn.functional.softmax(logits / (temperature + 0.1), dim=-1)
+            prob_list.append(prob.numpy())
+        
+        pyplot.plot(depth, prob_list)
+        pyplot.xlabel("Temperature")
+        pyplot.ylabel("Probability")
+        pyplot.title("Temperature-Controlled Softmax Distribution")
+        pyplot.show()</code>
+            </pre>
+
+      <img
+        src="../assets/visualization-temperature.webp"
+        alt="Temperature sampling visualization"
+        class="responsive-img"
+        width="620"
+        height="360"
+      />
+
+      <p>
+        <strong>Top-k sampling</strong> limits selection to the
+        <strong>k</strong> most probable tokens. For instance, if
+        <span class="math">k=2</span> and token probabilities are:
+      </p>
+      <p class="responsive-math">
+        \( P(T_0) = 0.6, P(T_1) = 0.4, P(T_2) = 0.3, P(T_3) = 0.1, P(T_4) =
+        0.05, P(T_5) = 0.04 \)
+      </p>
+
+      <p>
+        The tokens <span class="math">\( T_3, T_4, T_5 \)</span> are excluded,
+        and the remaining probabilities are redistributed.
+      </p>
+      <img
+        src="../assets/topk.png"
+        alt="Top-k sampling visualization"
+        class="responsive-img"
+        width="320"
+        height="160"
+      />
+
+      <p>
+        <strong>Top-p Sampling</strong> — chooses from the possible set of words
+        whose cumulative probability exceeds the probability p. The probability
+        mass is then redistributed among this set of words. For p = 0.95, Top-p
+        sampling picks the minimum number of tokens to exceed together p = 95%
+        of the probability mass. Unlike Top-k sampling which has a fixed number
+        of tokens k, this mechanism allows the number of tokens in a set to
+        dynamically increase or decrease according to the next word’s
+        probability distribution. Choosing a set of high-probability tokens
+        removes the very unlikely low-probability values, thus helping to
+        generate diverse and coherent text, making it very popular for text
+        generation. This Top-p sampling is also known as Nucleus sampling.
+      </p>
+      <img
+        src="../assets/topp.png"
+        alt="Top-p sampling visualization"
+        class="responsive-img"
+        width="320"
+        height="160"
+      />
+      <p>
+        Combining top-p and top-k sampling can further refine the balance
+        between randomness and coherence.
+      </p>
+
+      <h4>
+        1.7 What are different ways you can define stopping criteria in large
+        language model?
+      </h4>
+
+      <p>
+        One common approach is to set a <strong>predefined token limit</strong>.
+        By specifying the maximum length of the output, we can ensure that the
+        generated text doesn’t exceed a certain number of tokens. This is
+        particularly useful in cases like generating headlines or summaries
+        where brevity is essential. For more structured tasks,
+        <strong>minimum and maximum length thresholds</strong> can be combined.
+        This ensures the output is neither too short to be meaningful nor too
+        long to remain concise. For example, when generating summaries, you
+        might require the output to be at least 30 tokens but no more than 100
+        tokens long.
+      </p>
 
       <pre>
         <code class="language-python">
-    def _permute(self, x):
-        shift = (x >> 59) + 1
-        return ((x >> shift) ^ x) & 0xFFFFFFFFFFFFFFFF</code>
-    </pre>
+          response = model.generate(input, min_length=30, max_length=100)
+        </code></pre>
 
       <p>
-        Let's walk through the calculation step-by-step for the expression
-        <span class="highlight">shift = (x &gt;&gt; 59) + 1</span>, where the
-        number <span class="highlight">x = 0xF123456789ABCDEF</span>.
+        Another widely used technique involves relying on the
+        <strong>end-of-sequence (EOS) token</strong>. The model generates tokens
+        until it predicts this special token, which signals that the sequence
+        has concluded naturally. This method is ideal for scenarios like
+        document generation or conversational models, where the model's training
+        data inherently includes a concept of when sequences should terminate.
+      </p>
+      <pre>
+        <code class="language-python">
+          if token == eos_token:
+            break
+      </code></pre>
+
+      <p>
+        To prevent outputs from becoming repetitive or looping endlessly, a
+        <strong>repetition-based stopping criterion</strong> or
+        <strong>frequency penalty</strong> is often applied. This involves
+        checking the sequence of tokens generated so far and ending the process
+        if significant repetition is detected.
+      </p>
+      <pre>
+        <code class="language-python">
+          if sequence in history:
+            break
+          </code></pre>
+
+      <p>
+        In dynamic and real-time applications like chatbots, a
+        <strong>time-based stopping criterion</strong> might be more
+        appropriate. Here, the model ceases generation once a specified duration
+        has passed. This ensures timely responses and enhances the interactive
+        experience for users.
+      </p>
+
+      <p>
+        Another advanced approach involves <strong>semantic analysis</strong>.
+        Instead of setting hard rules based on token counts or repetition, the
+        model evaluates the coherence and relevance of its generated tokens. If
+        the semantic quality drops below a specific threshold, the generation is
+        stopped. <strong>Probabilistic methods</strong> can also guide stopping
+        criteria. For instance, by monitoring the probabilities associated with
+        predicted tokens, you could stop when the highest-probability token
+        falls below a certain threshold, indicating that the model is uncertain.
+        This method is useful in precision-critical tasks.
+      </p>
+
+      <p>
+        In many cases, a <strong>combination of criteria</strong> yields the
+        best results. For example, combining a token limit, EOS token detection,
+        and repetition-based stopping can create robust rules for most tasks.
+      </p>
+
+      <h4>1.8 How to use stop sequences in LLMs?</h4>
+      <p>
+        Once you've defined the stop sequence, you'll typically pass it as a
+        parameter when making the request to generate text from an LLM API.
       </p>
       <p>
-        The hexadecimal value
-        <span class="highlight">x = 0xF123456789ABCDEF</span> is converted to
-        binary:
+        If you’re using OpenAI's API to generate text, you can specify the stop
+        parameter in the API request.
+      </p>
+      <pre>
+        <code class="language-python">
+          import openai
+
+          response = openai.Completion.create(
+              engine="text-davinci-003",  # The model to use
+              prompt="Please write a creative ending for Dragon Ball.",  # The text prompt
+              stop=["END", "===END==="],  # List of stop sequences to terminate the generation
+              max_tokens=100      # Limit the maximum number of tokens (words/pieces of text)
+          )
+
+          print(response.choices[0].text.strip())
+        </code></pre>
+
+      <h2 id="prompt-engineering">2. Prompt Engineering</h2>
+      --------------------------------------------------
+
+      <h4>2.1 Explain the basic structure of prompt engineering.</h4>
+      <p>
+        Effective prompting can unlock the full potential of large language
+        models (LLMs). While simple prompts can yield results, the quality of
+        the output improves with well-crafted instructions and sufficient
+        context.
+      </p>
+      <p>A prompt contains any of the following elements:</p>
+      <ul>
+        <li>
+          Instruction - a specific task or instruction you want the model to
+          perform
+        </li>
+        <li>
+          Context - external information or additional context that can steer
+          the model to better responses
+        </li>
+        <li>
+          Input Data - the input or question that we are interested to find a
+          response for
+        </li>
+        <li>Output Indicator - the type or format of the output.</li>
+      </ul>
+      <p>
+        To demonstrate the prompt elements better, here is a simple prompt that
+        aims to perform a text classification task:
       </p>
       <div class="responsive-code-container">
         <pre><code>
-        x = 0xF123456789ABCDEF<br>
-        In binary, x = 11110001001000110100010101100111000100111010111111011111
+          Prompt: Classify the text into neutral, negative, or positive Text: I think the food was okay. Sentiment:
         </code></pre>
       </div>
       <p>
-        The expression <span class="highlight">x &gt;&gt; 59</span> means
-        shifting the bits of <span class="highlight">x</span> to the right by 59
-        positions. This operation discards the 59 least significant bits and
-        moves the remaining bits to the right.
+        In the prompt example above, the instruction corresponds to the
+        classification task, "Classify the text into neutral, negative, or
+        positive". The input data corresponds to the "I think the food was
+        okay." part, and the output indicator used is "Sentiment:". Note that
+        this basic example doesn't use context but this can also be provided as
+        part of the prompt. For instance, the context for this text
+        classification prompt can be additional examples provided as part of the
+        prompt to help the model better understand the task and steer the type
+        of outputs that you expect. You do not need all four elements for a
+        prompt and the format depends on the task at hand. We will touch on more
+        concrete examples in upcoming guides.
+      </p>
+      <p>
+        As you get started with designing prompts, you should keep in mind that
+        it is really an iterative process that requires a lot of experimentation
+        to get optimal results. Using a simple playground from OpenAI or Cohere
+        is a good starting point. You can start with simple prompts and keep
+        adding more elements and context as you aim for better results.
+        Iterating your prompt along the way is vital for this reason. As you
+        read the guide, you will see many examples where specificity,
+        simplicity, and conciseness will often give you better results. When you
+        have a big task that involves many different subtasks, you can try to
+        break down the task into simpler subtasks and keep building up as you
+        get better results. This avoids adding too much complexity to the prompt
+        design process at the beginning.
+      </p>
+
+      <p>
+        You can design effective prompts for various simple tasks by using
+        commands to instruct the model what you want to achieve, such as
+        "Write", "Classify", "Summarize", "Translate", "Order", etc. Keep in
+        mind that you also need to experiment a lot to see what works best. Try
+        different instructions with different keywords, contexts, and data and
+        see what works best for your particular use case and task. Usually, the
+        more specific and relevant the context is to the task you are trying to
+        perform, the better. We will touch on the importance of sampling and
+        adding more context in the upcoming guides. Others recommend that you
+        place instructions at the beginning of the prompt. Another
+        recommendation is to use some clear separator like "###" to separate the
+        instruction and context.
+      </p>
+      <p>Prompt:</p>
+      <div class="responsive-code-container">
+        <pre><code>
+          ### Instruction ###
+          Translate the text below to Spanish:
+          Text: "hello!"
+        </code></pre>
+      </div>
+      <p>Output: <code>¡Hola!</code></p>
+
+      <p>
+        Be very specific about the instruction and task you want the model to
+        perform. The more descriptive and detailed the prompt is, the better the
+        results. This is particularly important when you have a desired outcome
+        or style of generation you are seeking. There aren't specific tokens or
+        keywords that lead to better results. It's more important to have a good
+        format and descriptive prompt. In fact, providing examples in the prompt
+        is very effective to get desired output in specific formats. When
+        designing prompts, you should also keep in mind the length of the prompt
+        as there are limitations regarding how long the prompt can be. Thinking
+        about how specific and detailed you should be. Including too many
+        unnecessary details is not necessarily a good approach. The details
+        should be relevant and contribute to the task at hand. This is something
+        you will need to experiment with a lot. We encourage a lot of
+        experimentation and iteration to optimize prompts for your applications.
+      </p>
+      <p>Prompt:</p>
+      <div class="responsive-code-container">
+        <pre><code>
+          Extract the name of places in the following text. 
+
+          Desired format:
+          Place: &lt;comma_separated_list_of_places&gt;
+          
+          Input: "Although these developments are encouraging to researchers, much is still a mystery. 
+          “We often have a black box between the brain and the effect we see in the periphery,” says 
+          Henrique Veiga-Fernandes, a neuroimmunologist at the Champalimaud Centre for the Unknown in Lisbon. 
+          “If we want to use it in the therapeutic context, we actually need to understand the mechanism.“"
+        </code></pre>
+      </div>
+
+      <p>
+        Output: <code>Place: Champalimaud Centre for the Unknown, Lisbon</code>
+      </p>
+
+      <p>
+        It's often better to be specific and direct. The more direct, the more
+        effective the message gets across. For example, you might be interested
+        in learning the concept of prompt engineering. You might try something
+        like:
       </p>
       <div class="responsive-code-container">
         <pre><code>
-        x = 11110001001000110100010101100111000100111010111111011111<br>
-        x &gt;&gt; 59 = 00000000000000000000000000000000000000000000000000000111
+          ### Instruction ###
+          Explain the concept prompt engineering. 
+          Keep the explanation short, only a few sentences, and don't be too descriptive.
         </code></pre>
       </div>
       <p>
-        Next, we compute the final value of
-        <span class="highlight">shift</span>. The top 5 bits of
-        <code>x</code> after shifting right by 59 are <code>111</code> in
-        binary, which equals <code>7</code> in decimal. Adding
-        <code>1</code> ensures a minimum shift value of <code>1</code>:
+        It's not clear from the prompt above how many sentences to use and what
+        style. You might still somewhat get good responses with the above
+        prompts but the better prompt would be one that is very specific,
+        concise, and to the point. Something like:
       </p>
       <div class="responsive-code-container">
         <pre><code>
-        shift = (x &gt;&gt; 59) + 1 = 7 + 1 = 8
-    </code></pre>
+          Use 2-3 sentences to explain the concept of prompt engineering to a high school student.
+        </code></pre>
       </div>
       <p>
-        Now, let’s calculate the expression
-        <span class="highlight"
-          >((x &gt;&gt; shift) ^ x) &amp; 0xFFFFFFFFFFFFFFFF</span
+        Another common tip when designing prompts is to avoid saying what not to
+        do but say what to do instead. This encourages more specificity and
+        focuses on the details that lead to good responses from the model.
+      </p>
+
+      <p>
+        Sources:
+        <a
+          href="https://www.promptingguide.ai/introduction/basics"
+          target="_blank"
+          >https://www.promptingguide.ai/introduction/basics</a
         >
-        step by step.
       </p>
 
+      <h4>2.2 Explain in-context learning.</h4>
+
       <p>
-        Shifting <code>x</code> to the right by <code>8</code> positions
-        discards the least significant 8 bits, shifting zeros into the left:
+        In-context learning is a capability of large language models (LMs) to
+        perform new tasks by conditioning on a few input-label pairs, known as
+        demonstrations, during inference without any gradient updates or model
+        retraining. This approach allows models to generalize to new tasks by
+        observing task examples within the input context, effectively learning
+        through inference alone
       </p>
+      <p>Key Concepts of In-Context Learning:</p>
       <ul>
         <li>
-          The original value of <code>x</code> in binary:
-          <span class="responsive-math"
-            >11110001001000110100010101100111000100111010111111011111</span
-          >
+          Demonstrations: The model is presented with examples of input-label
+          pairs (e.g., question-answer pairs) that illustrate the task. These
+          are concatenated in the input prompt along with a test example for
+          which the model generates a prediction.
         </li>
         <li>
-          The shifted value (right shifted by 8 bits):
-          <span class="responsive-math"
-            >00000000111100010010001101000101011001110001001110101111</span
-          >
-        </li>
-      </ul>
-
-      <p>
-        Performing the XOR operation between the original value
-        <code>x</code> and the shifted value:
-      </p>
-      <div class="responsive-code-container">
-        <pre><code>
-        Original (x):   11110001001000110100010101100111000100111010111111011111
-        Shifted:        00000000111100010010001101000101011001110001001110101111
-        XOR result:     11110001110100100110011000100010011101001011110001110000
-    </code></pre>
-      </div>
-      <p>
-        In hexadecimal, the result of the XOR operation is:
-        <span class="highlight">0xF1D2662274BC70</span>.
-      </p>
-
-      <p>
-        Finally, the result is ANDed with <code>0xFFFFFFFFFFFFFFFF</code> to
-        constrain it to 64 bits. Since the XOR result already fits within 64
-        bits, the AND operation does not change the value:
-      </p>
-      <div class="responsive-code-container">
-        <pre><code>
-        ((x &gt;&gt; shift) ^ x) &amp; 0xFFFFFFFFFFFFFFFF = 0xF1D2662274BC70
-        </code></pre>
-      </div>
-      <p>
-        The final value is 0xF1D2662274BC70 or 68066805493841008 in decimal.
-      </p>
-      <p>
-        This value represents a 64-bit unsigned integer, making it suitable for
-        scaling to a desired range using the scaling formula:
-      </p>
-      <p class="responsive-math">
-        \[ \text{output} = \text{min_range} + \left( \frac{P(S_n)}{2^{64}}
-        \right) \times (\text{max_range} - \text{min_range}) \]
-      </p>
-
-      <ul>
-        <li>
-          <strong>\( P(S_n) \)</strong>: The 64-bit value to be scaled (e.g.,
-          <code>0xF1D2662274BC70</code>).
-        </li>
-        <li>
-          <strong>\( 2^{64} \)</strong>: The total range of possible 64-bit
-          unsigned integers.
-        </li>
-        <li>
-          <strong>\( \text{min_range} \)</strong> and
-          <strong>\( \text{max_range} \)</strong>: The target range for scaling.
+          Zero-shot vs. Few-shot: In-context learning enhances zero-shot
+          methods, enabling models to perform tasks without prior exposure.
+          However, few-shot learning, which involves presenting the model with a
+          small set of task examples, typically leads to significantly higher
+          accuracy and generalization across diverse tasks by offering
+          context-specific guidance (but requires explicit training/fine-tuning
+          phase).
         </li>
       </ul>
       <p>
-        The fraction \( \frac{P(S_n)}{2^{64}} \) normalizes the 64-bit integer
-        value <code>P(S_n)</code> into the range <code>[0, 1)</code>.
-        Multiplying this fraction by \( \text{max_range} - \text{min_range} \)
-        scales it to the size of the target range. Adding \( \text{min_range} \)
-        shifts the result to start at the desired minimum value.
+        A fascinating insight from seminal research (<a
+          href="https://arxiv.org/abs/2202.12837"
+          target="_blank"
+          >Min et al., 2022</a
+        >) challenges our understanding of how language models learn from
+        examples: the accuracy of labels in demonstrations appears to have
+        minimal impact on task performance. Their experiments showed that even
+        when correct labels are randomly replaced with incorrect ones, model
+        performance remains largely unchanged across various classification and
+        multiple-choice tasks. This counter-intuitive finding was consistently
+        observed across different model scales, including GPT-3.
       </p>
 
+      <p>
+        Through extensive experimentation, the researchers uncovered that large
+        language models heavily rely on superficial patterns rather than deep
+        semantic understanding. This suggests that in-context learning functions
+        more as sophisticated pattern matching than true learning - the model
+        uses provided input-output examples to retrieve and apply similar
+        patterns from its training data. However, this mechanism proves fragile:
+        even minor modifications to labeling formats or demonstration templates
+        can significantly degrade performance, revealing the brittle nature of
+        this capability.
+      </p>
+      <h4>2.3 Explain types of prompt engineering.</h4>
+      <p>
+        Prompt engineering is the process of crafting and refining prompts to
+        optimize the performance and accuracy of AI language models.
+      </p>
+      <ul>
+        <li>
+          <strong>Zero-shot Prompting</strong>
+          <p>
+            Description: This involves providing the model with a task or
+            question without giving any examples.
+          </p>
+          <p>
+            Use Case: When the model is expected to generalize from its
+            pre-existing knowledge.
+          </p>
+          <p>Example: "Write a summary of the following text."</p>
+        </li>
+        <li>
+          <strong>One-shot Prompting</strong>
+          <p>
+            Description: The model is given one example before performing the
+            task.
+          </p>
+          <p>
+            Use Case: Helps guide the model by offering a single reference
+            point.
+          </p>
+          <p>
+            Example: "Translate the following sentence into French. Example:
+            'Hello' -> 'Bonjour'. Now translate: 'Good morning'."
+          </p>
+        </li>
+        <li>
+          <strong>Few-shot Prompting</strong>
+          <p>
+            Description: The model receives multiple examples to learn the
+            pattern before completing the task.
+          </p>
+          <p>
+            Use Case: Useful for complex tasks requiring nuanced understanding.
+          </p>
+          <p>
+            Example: "Convert these active sentences to passive voice: 'John
+            eats an apple.' -> 'An apple is eaten by John.' 'Sarah writes a
+            book.' -> 'A book is written by Sarah.' Now convert: 'Tom kicks the
+            ball.'"
+          </p>
+        </li>
+        <li>
+          <strong>Chain-of-thought Prompting</strong>
+          <p>
+            Description: Encourages the model to explain its reasoning process
+            step by step.
+          </p>
+          <p>
+            Use Case: Useful for problem-solving and logical reasoning tasks.
+          </p>
+          <p>
+            Example: "Solve the following math problem by explaining each step.
+            What is 45 divided by 3?"
+          </p>
+        </li>
+        <li>
+          <strong>Instruction-based Prompting</strong>
+          <p>
+            Description: The model is explicitly instructed to perform a task in
+            a specific way.
+          </p>
+          <p>
+            Use Case: Ensures the output follows a strict format or guideline.
+          </p>
+          <p>Example: "List three benefits of exercise in bullet points."</p>
+        </li>
+        <li>
+          <strong>Persona-based Prompting</strong>
+          <p>
+            Description: The model is prompted to respond as if it were a
+            specific character or role.
+          </p>
+          <p>
+            Use Case: Enhances engagement or aligns the response with a
+            particular tone or expertise.
+          </p>
+          <p>
+            Example: "You are a nutritionist. Explain the benefits of a balanced
+            diet."
+          </p>
+        </li>
+        <li>
+          <strong>Contextual Prompting</strong>
+          <p>
+            Description: The model is provided with relevant context or
+            background information before answering.
+          </p>
+          <p>Use Case: Helps improve relevance and coherence of responses.</p>
+          <p>
+            Example: "Given that climate change is accelerating, suggest three
+            ways to reduce carbon emissions."
+          </p>
+        </li>
+        <li>
+          <strong>Iterative Prompting</strong>
+          <p>
+            Description: The prompt evolves based on feedback or prior outputs.
+          </p>
+          <p>Use Case: Improves performance through a refinement loop.</p>
+          <p>
+            Example: "Rewrite the following paragraph to make it clearer. If
+            necessary, suggest additional edits."
+          </p>
+        </li>
+      </ul>
+      <h4>
+        2.4 What are some aspects to keep in mind while using few-shots
+        prompting?
+      </h4>
+      <p>
+        <strong>Few-shot prompting</strong> has emerged as a powerful technique
+        in natural language processing, particularly valuable when labeled data
+        is scarce. This approach, which involves providing a model with
+        carefully selected examples to guide its responses, requires thoughtful
+        consideration of several key elements to maximize its effectiveness. At
+        the foundation of successful few-shot prompting lies the art of
+        <strong>example selection</strong> and <strong>formatting</strong>. The
+        examples you choose should represent a diverse range of scenarios within
+        your task's scope while maintaining clarity and unambiguity. It's
+        crucial to establish a consistent format across all examples, clearly
+        delineating inputs from outputs to help the model understand the pattern
+        you want it to follow.
+      </p>
+
+      <p>
+        The question of <strong>quantity</strong> often arises in few-shot
+        prompting. While there's no universal rule, experience shows that three
+        to five examples typically provide a sweet spot between sufficient
+        context and avoiding cognitive overload. This number can be adjusted
+        based on your specific task's complexity and requirements. The
+        <strong>arrangement</strong> of these examples matters significantly -
+        starting with simpler cases and progressively moving to more complex
+        ones helps the model build understanding gradually, much like how humans
+        learn new concepts.
+      </p>
+
+      <p>
+        <strong>Task clarity</strong> plays a vital role in the success of
+        few-shot prompting. Before presenting any examples, it's essential to
+        establish a clear definition of the task or objective. For complex
+        tasks, explicit instructions can serve as valuable guardrails, helping
+        the model stay on track and deliver more accurate results.
+      </p>
+
+      <p>
+        The <strong>sensitivity</strong> of language models to subtle variations
+        in prompting cannot be overstated. Minor changes in phrasing or example
+        order can significantly impact performance. This characteristic makes it
+        essential to experiment with different approaches and validate outputs
+        regularly. Whether through manual review, automated testing, or
+        cross-validation, consistent <strong>output verification</strong> helps
+        ensure the model maintains alignment with expected outcomes.
+      </p>
+
+      <p>
+        <strong>Domain adaptation</strong> represents another crucial aspect of
+        effective few-shot prompting. The examples you provide should reflect
+        the specific context and terminology of your target domain. This
+        alignment between examples and domain context significantly enhances the
+        relevance and accuracy of the model's outputs, leading to more practical
+        and applicable results.
+      </p>
+      <h4>2.5 What are certain strategies to write good prompts?</h4>
+
+      <p>
+        Craft effective prompts to elicit clear, relevant, and creative
+        responses. Be specific to avoid vagueness.
+      </p>
+      <ul>
+        <li>
+          Use "Describe a smartphone for seniors with usability features"
+          instead of "Describe a product."
+        </li>
+        <li>
+          Provide context, e.g., "You are a marketing manager launching an
+          energy drink. Write an ad for college students."
+        </li>
+        <li>
+          Ask open-ended questions, like "What are the benefits and challenges
+          of remote work?" to encourage detailed answers.
+        </li>
+        <li>
+          Guide responses with examples and constraints, such as "Summarize a
+          novel in 100 words with a plot twist."
+        </li>
+        <li>
+          Specify tone and style for the audience: "Write a persuasive letter
+          advocating for public transportation expansion."
+        </li>
+        <li>
+          Break down complex tasks: "List three waste-reduction strategies and
+          explain their implementation."
+        </li>
+        <li>
+          Test and refine prompts by adjusting phrasing. Clarify by adding
+          details, e.g., "Describe a futuristic city in 2050 focusing on
+          technology and sustainability."
+        </li>
+      </ul>
+
+      <h4>
+        2.6 What is hallucination, and how can it be controlled using prompt
+        engineering?
+      </h4>
+      <p>
+        Hallucination in AI refers to the generation of incorrect, nonsensical,
+        or fabricated outputs by models, particularly in NLP and generative
+        tasks. These outputs are not grounded in data but appear plausible. This
+        occurs when models misinterpret input or overgeneralize patterns.
+      </p>
+      <p>
+        Manifestations include:
+        <strong>Factual inaccuracies</strong> (False information),
+        <strong>Logical inconsistencies</strong> (Contradictions or errors), and
+        <strong>Fabrication</strong> (Nonexistent references or data).
+      </p>
+      <p>
+        Causes of hallucination include incomplete or biased training data, the
+        complexity of models that generate diverse but occasionally erroneous
+        outputs, vague or ambiguous input that prompts fabrication, and
+        overfitting, where models memorize data instead of effectively
+        generalizing.
+      </p>
+      <p>
+        Prompt engineering refines input to guide AI toward accurate outputs,
+        minimizing hallucinations.
+      </p>
+      <p>Key Techniques to optimize outputs:</p>
+      <ul>
+        <li>
+          <strong>Precise Language:</strong> Use specific prompts. For example,
+          instead of a vague prompt, say, "List NASA space milestones from 1960
+          to 2020." This helps the model understand exactly what information you
+          are seeking.
+        </li>
+        <li>
+          <strong>Context:</strong> Add relevant background. For instance, if
+          you want a summary of a report, say, "Summarize the 2022 IPCC climate
+          report." Providing context helps the model generate more accurate and
+          relevant information.
+        </li>
+        <li>
+          <strong>Scope Limitation:</strong> Limit the scope of the response.
+          For example, ask, "Give five facts about renewable energy, excluding
+          fossil fuels." This focuses the model's output and avoids unnecessary
+          information.
+        </li>
+        <li>
+          <strong>Break Down Queries:</strong> Enhance clarity by breaking down
+          queries into parts. For example, ask, "Explain the greenhouse effect,
+          then describe CO2's role." This step-by-step approach guides the model
+          through complex topics more effectively.
+        </li>
+        <li>
+          <strong>Request Sources:</strong> Add credibility by requesting
+          sources or citations. For example, say, "List three studies on
+          meditation reducing stress." This encourages the model to provide
+          verifiable information.
+        </li>
+      </ul>
+      <p>
+        Regular monitoring, feedback, and iterative prompt refinement reduce
+        hallucinations. In critical tasks, human oversight ensures accuracy.
+      </p>
+      <h4>
+        2.7 How to improve the reasoning ability of LLM through prompt
+        engineering?
+      </h4>
+      <p>
+        Improving the reasoning ability of large language models (LLMs) through
+        prompt engineering involves using specific strategies to guide the
+        model's thought process. Here are some effective techniques:
+      </p>
+      <ol>
+        <li>
+          <strong>Chain-of-Thought Prompting:</strong> Enable step-by-step
+          reasoning by explicitly asking the model to break down its thinking
+          process. For example, instead of "What's 13 x 27?", use "Let's solve
+          13 x 27 step by step. Think through each part of the calculation."
+          Chain-of-thought (CoT) prompting, as originally outlined by Wei et.
+          al. in their paper
+          <a href="https://arxiv.org/abs/2201.11903" target="_blank"
+            >"Chain of Thought Prompting Elicits Reasoning in Large Language
+            Models"</a
+          >, is a form of few-shot prompting. Few-shot prompting, in contrast to
+          zero-shot prompting, involves providing an “exemplar” (example) of a
+          similar question and answer pair before posing the question which the
+          LLM should solve. In CoT prompting, the exemplar answer walks through
+          the problem step-by-step. This compels the LLM to then respond to the
+          real question step-by-step, mimicking the exemplar answer.
+        </li>
+        <li>
+          <strong>Zero-Shot Chain-of-Thought:</strong> Zero-shot
+          chain-of-thought prompting, as outlined by Kojima et. al. in their
+          paper
+          <a href="https://arxiv.org/abs/2205.11916" target="_blank"
+            >"Large Language Models are Zero-Shot Reasoners"</a
+          >, attempts to emulate this effect by simply appending the phrase
+          “let’s think step by step” to the prompt, without providing an
+          exemplar. It is crucial to understand that this zero-shot
+          chain-of-thought prompting is the form of CoT prompting which this
+          novel method seeks to improve, not the original “few-shot” CoT
+          prompting.
+        </li>
+        <img
+          src="../assets/cot.webp"
+          alt="Visualization of CoR and LoT prompting"
+          class="responsive-img"
+          width="720"
+          height="480"
+        />
+        <li>
+          <strong>LoT Prompting (Logic of Thought Prompting):</strong>
+
+          LoT prompting begins by asking the LLM to solve the problem step by
+          step, similar to zero-shot chain-of-thought prompting. After the LLM
+          provides its initial step-by-step solution, follow-up prompts instruct
+          it to verify each step. Specifically, the LLM is asked to give both a
+          positive and negative review for each step, then justify the correct
+          part of the reasoning and criticize the incorrect one, based on the
+          original problem’s premises. If necessary, the LLM is directed to
+          revise the step according to its own critique. Once a step is revised
+          or confirmed, the original problem is restated, along with the
+          verified or updated steps, to ensure the solution is coherent and
+          accurate.
+        </li>
+        <br />
+        <img
+          src="../assets/lot.webp"
+          alt="LoT mechanism"
+          class="responsive-img"
+          width="720"
+          height="480"
+        />
+        <li>
+          <strong>Self-Consistency:</strong> Ask the model to approach the
+          problem from multiple angles and cross-check its reasoning. For
+          instance, "Solve this problem using two different methods and verify
+          that they give the same result."
+        </li>
+        <li>
+          <strong>Program of Thoughts (PoT):</strong>
+          Program of Thoughts (PoT) is a prompting technique that combines the
+          strengths of Chain-of-Thought (CoT) and program synthesis. It involves
+          generating a program or a sequence of instructions that the model can
+          follow to solve a problem. This approach leverages the model's ability
+          to understand and execute structured instructions, leading to more
+          accurate and reliable reasoning. In PoT, the large language models
+          (LLMs) are primarily responsible for expressing the ‘reasoning
+          process’ in a programming language, while the computation is delegated
+          to an external process, such as a Python interpreter. By disentangling
+          computation from reasoning, PoT addresses challenges LLMs face in
+          generating complex equations, such as those involving cubes or
+          polynomials. Key aspects of PoT include:
+          <ol>
+            <li>Breaking down problems into a multi-step ‘thought’ process.</li>
+            <li>
+              Binding semantic meanings to variables. By using semantically
+              meaningful variable names (e.g., <code>interest_rate</code> or
+              <code>sum_in_two_years_with_interest</code>), PoT creates a
+              structured representation that aligns with human reasoning.
+            </li>
+          </ol>
+          This structured approach enhances the model's ability to solve tasks
+          involving numerical reasoning and logical inference.
+
+          <p>PoT Evaluation:</p>
+          <ul>
+            <li>
+              PoT has been tested across multiple datasets, including
+              mathematical word problems (MWP) and financial datasets.
+            </li>
+            <li>
+              In few-shot settings, PoT showed an average gain of 8% over CoT on
+              MWP datasets and 15% on financial datasets. In zero-shot settings,
+              it achieved a 12% average gain on MWP datasets.
+            </li>
+            <li>
+              Combining PoT with self-consistency (SC) decoding further improved
+              performance, outperforming CoT+SC by an average of 10%.
+            </li>
+            <li>
+              PoT+SC achieved the best-known results on MWP datasets and
+              near-best results on financial datasets (excluding GPT-4).
+            </li>
+          </ul>
+
+          <p>
+            The following diagram illustrates how PoT resolves complex problems
+            that traditional CoT approaches fail to address, utilizing Python
+            programs to express reasoning and relying on a Python interpreter
+            for computation.
+          </p>
+          <img
+            src="../assets/pot.jpg"
+            alt="PoT mechanism"
+            class="responsive-img"
+            width="720"
+            height="480"
+          />
+          <p>
+            Source:
+            <a href="https://arxiv.org/pdf/2211.12588.pdf"
+              >arxiv.org/2211.12588</a
+            >
+          </p>
+        </li>
+
+        <li>
+          <strong>Structure Decomposition:</strong> Break complex problems into
+          smaller sub-problems. For example, instead of "Analyze this investment
+          strategy," use "Let's analyze this investment strategy by first
+          examining the risk factors, then calculating potential returns, and
+          finally evaluating market conditions."
+        </li>
+        <li>
+          <strong>Explicit Constraints and Requirements:</strong> Clearly state
+          what constitutes valid reasoning. For example, "Your solution must
+          include clear assumptions, mathematical justification, and potential
+          edge cases."
+        </li>
+        <li>
+          <strong>Role Prompting:</strong> Assign a specific expert role to
+          encourage domain-specific reasoning. For example, "As a mathematical
+          logician, explain why..."
+        </li>
+        <li>
+          <strong>Meta-Cognition Prompting:</strong> Ask the model to evaluate
+          its own reasoning. For example, "After providing your solution,
+          explain which parts of your reasoning you're most and least confident
+          about."
+        </li>
+      </ol>
+      <h4>2.8 How to improve LLM reasoning if your COT prompt fails?</h4>
+      <p>
+        CoT prompts help guide logical steps, but their effectiveness depends
+        heavily on their design and context.
+      </p>
+      <p>
+        <strong>Clarity</strong> in the prompt is crucial. Specific instructions
+        tailored to the problem often yield better results than vague requests.
+        Breaking problems into smaller parts makes reasoning more manageable,
+        particularly when combined with illustrative examples. For instance,
+        guiding the model to identify known quantities, apply formulas, and
+        simplify step-by-step enhances accuracy.
+      </p>
+      <p>
+        <strong>Context</strong> is another key factor. Prompts lacking
+        sufficient information can confuse the model. Including necessary
+        background or providing structured inputs such as diagrams or tables
+        helps clarify expectations. <strong>Rephrasing</strong> questions or
+        representing problems visually can also aid reasoning. Experimenting
+        with different phrasings often reveals what works best for the model.
+        <strong> Self-verification </strong> is a valuable technique. Prompts
+        that ask the model to review and justify its solutions can uncover
+        errors and fill gaps in logic. Integrating
+        <strong> external tools </strong>can further support structured
+        reasoning. For example, pairing the LLM with symbolic solvers or
+        computation platforms like WolframAlpha ensures precision in tasks
+        requiring formal logic or accurate calculations.
+      </p>
       <h2 id="rag">3. Retrieval Augmented Generation (RAG)</h2>
-      <pre><code class="language-python">
-    class LCGPseudoRand():
-        def __init__(self, a=48271, c=0, m=2**31-1, seed=None) -> None: # C++ version
-            self.a = a
-            self.c = c
-            self.m = m
-    
-            if seed:
-                self.x0 = seed
-            else:
-                self.x0 = int(os.getpid() + time.time())
-            
-            self.prev_x = (a * self.x0 + self.c) % self.m
-        
-        def generate_number(self, min_range=None, max_range=None):
-    
-            self.prev_x = (self.a * self.prev_x + self.c) % self.m
-    
-            if min_range and max_range:
-                return int((self.prev_x / self.m) * (max_range - min_range) + min_range)
-            else:
-                return self.prev_x
-
-    class PCGPseudoRand:
-        def __init__(self, multiplier=6364136223846793005, increment=1442695040888963407, seed=None) -> None:
-            self.multiplier = multiplier  
-            self.increment = increment | 1 
-            self.modulus = 2**64 
-    
-            
-            if seed is not None:
-                self.state = seed
-            else:
-                self.state = int(os.getpid() + time.time()) & 0xFFFFFFFFFFFFFFFF
-        
-        def _lcg_step(self):
-            self.state = (self.state * self.multiplier + self.increment) & 0xFFFFFFFFFFFFFFFF
-    
-        def _permute(self, x):
-            shift = (x >> 59) + 1
-            return ((x >> shift) ^ x) & 0xFFFFFFFFFFFFFFFF
-
-        def generate_number(self, min_range=None, max_range=None):
-            self._lcg_step()
-            
-            permuted_value = self._permute(self.state)
-            print(self.state, permuted_value)
-    
-            if min_range is not None and max_range is not None:
-                return int((permuted_value / self.modulus) * (max_range - min_range) + min_range)
-            else:
-                return permuted_value
-                      
-            </code></pre>
+      <h4>
+        3.1 How to increase accuracy, reliability, and make answers verifiable
+        in LLM?
+      </h4>
+      <h4>3.2 How does RAG work?</h4>
+      <h4>3.3 What are some benefits of using the RAG system?</h4>
+      <h4>3.4 When should I use Fine-tuning instead of RAG?</h4>
+      <h4>
+        3.5 What are the architecture patterns for customizing LLM with
+        proprietary data?
+      </h4>
 
       <h2 id="fine-tuning">4. Fine-tuning of LLMs</h2>
-      <p>
-        While the Linear Congruential Generator (LCG) is faster and simpler to
-        implement, it often suffers from lower randomness quality. LCGs generate
-        sequences with a predictable structure.
-      </p>
-      <p>
-        The Permuted Congruential Generator (PCG), on the other hand, introduces
-        a permutation step on top of the basic linear congruential approach.
-        This permutation step greatly improves randomness quality by better
-        scrambling the bits of the generated numbers. Although PCG incurs a
-        slight computational overhead compared to LCG, it is negligible for most
-        use cases and worth the tradeoff for significantly better randomness
-        properties.
-      </p>
-      <p>
-        In the future, I hope to discuss the <strong>Mersenne Twister</strong>,
-        another widely used pseudorandom number generator. Known for its
-        extremely long period (2<sup>19937</sup> − 1) and excellent randomness
-        properties, the Mersenne Twister addresses many shortcomings of earlier
-        generators like LCG. Interestingly, the Mersenne Twister is the default
-        pseudorandom number generator in Python's <code>random</code> module.
-        Its widespread use stems from its efficiency, ability to produce
-        high-quality randomness, and suitability for general-purpose random
-        number generation.
-      </p>
+
+      <h4>4.1 What is fine-tuning, and why is it needed?</h4>
+      <h4>4.2 Which scenario do we need to fine-tune LLM?</h4>
+      <h4>4.3 How to make the decision of fine-tuning?</h4>
+      <h4>
+        4.4 How do you improve the model to answer only if there is sufficient
+        context for doing so?
+      </h4>
+      <h4>4.5 How to create fine-tuning datasets for Q&A?</h4>
+      <h4>4.6 How to set hyperparameters for fine-tuning?</h4>
+      <h4>
+        4.7 How to estimate infrastructure requirements for fine-tuning LLM?
+      </h4>
+      <h4>4.8 How do you fine-tune LLM on consumer hardware?</h4>
+      <h4>4.9 What are the different categories of the PEFT method?</h4>
+      <h4>4.10 What is catastrophic forgetting in LLMs?</h4>
+      <h4>4.11 What are different re-parameterized methods for fine-tuning?</h4>
 
       <h2 id="agent-based">5. Agent-Based System</h2>
+      <h4>
+        5.1 Explain the basic concepts of an agent and the types of strategies
+        available to implement agents.
+      </h4>
+      <h4>
+        5.2 Why do we need agents and what are some common strategies to
+        implement agents?
+      </h4>
+      <h4>
+        5.3 Explain ReAct prompting with a code example and its advantages.
+      </h4>
+      <h4>5.4 Explain Plan and Execute prompting strategy.</h4>
+      <h4>5.5 Explain OpenAI functions strategy with code examples.</h4>
+      <h4>
+        5.6 Explain the difference between OpenAI functions vs LangChain Agents.
+      </h4>
       <h2 id="miscellaneous">6. Miscellaneous</h2>
+      <h4>6.1 How to optimize the cost of the overall LLM system?</h4>
+      <h4>6.2 What are mixture of expert models (MoE)?</h4>
+      <h4>
+        6.3 How to build a production-grade RAG system, explain each component
+        in detail?
+      </h4>
+      <h4>6.4 What is FP8 variable and what are its advantages?</h4>
+      <h4>
+        6.5 How to train LLM with low precision training without compromising on
+        accuracy?
+      </h4>
+      <h4>6.6 How to calculate the size of the KV cache?</h4>
+      <h4>
+        6.7 Explain the dimension of each layer in a multi-headed transformation
+        attention block.
+      </h4>
+      <h4>
+        6.8 How do you make sure that the attention layer focuses on the right
+        part of the input?
+      </h4>
     </div>
 
     <script>

@@ -68,7 +68,7 @@ p {
 
 table {
   border-collapse: collapse;
-  width: 98%;
+  width: 90%;
 }
 
 th,
@@ -85,6 +85,14 @@ td {
   white-space: nowrap; /* Prevent wrapping of the code */
   margin: 1em 0; /* Adds margin around the code block */
   box-sizing: border-box;
+}
+
+.responsive-img,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block; /* Removes inline gaps, especially when inside a parent container */
+  margin: 0 auto;
 }
 
 /* For smaller devices, scale the font size
