@@ -187,7 +187,7 @@
     <div class="article-container">
       <h1>
         <span style="font-size: 16px">./articles/</span> GenAI and LLM Interview
-        Questions with In-Depth Answers
+        Questions with In-Depth Answers (Work in Progress)
       </h1>
 
       <p>
@@ -235,668 +235,700 @@
       </div>
 
       <h2 id="llm-basics">1. Basics of LLM</h2>
-      <h4>
+
+      <h4 class="accordion">
         1.1 What is the difference between Predictive/Discriminative AI and
-        Generative AI?
+        Generative AI?<span class="arrow" style="float: left">&#9660;</span>
       </h4>
+      <div>
+        <p>
+          Predictive AI, also known as discriminative AI, focuses on predicting
+          the output based on input data. It aims to learn the relationship
+          between input features and output labels, making predictions based on
+          patterns in the training data. Common examples of predictive AI
+          include classification and regression tasks, where the model predicts
+          discrete classes or continuous values, respectively.
+        </p>
 
-      <p>
-        Predictive AI, also known as discriminative AI, focuses on predicting
-        the output based on input data. It aims to learn the relationship
-        between input features and output labels, making predictions based on
-        patterns in the training data. Common examples of predictive AI include
-        classification and regression tasks, where the model predicts discrete
-        classes or continuous values, respectively.
-      </p>
+        <p>Core Characteristics:</p>
+        <ul>
+          <li>
+            Focuses on learning \(P(y|x)\) - the probability of output y given
+            input x
+          </li>
+          <li>Optimized for accuracy in classification and prediction tasks</li>
+          <li>Efficient in resource usage compared to generative models</li>
+          <li>Typically requires less training data for good performance</li>
+          <li>Better suited for tasks with clear decision boundaries</li>
+        </ul>
+        <p>Key Technical Aspects of Predictive AI you must known:</p>
+        <ul>
+          <li>
+            <strong>Feature Engineering:</strong> The process of manually or
+            automatically deriving meaningful features from raw data to improve
+            model performance.
+          </li>
+          <li>
+            <strong>Loss Functions:</strong> Metrics used to quantify prediction
+            errors, including cross-entropy, hinge loss, and mean squared error
+            (MSE).
+          </li>
+          <li>
+            <strong>Optimization:</strong> Techniques such as gradient descent
+            and stochastic optimization to minimize the loss function during
+            training.
+          </li>
+          <li>
+            <strong>Regularization:</strong> Methods like L1/L2 regularization,
+            dropout, and batch normalization to prevent overfitting and improve
+            generalization.
+          </li>
+        </ul>
 
-      <p>Core Characteristics:</p>
-      <ul>
-        <li>
-          Focuses on learning \(P(y|x)\) - the probability of output y given
-          input x
-        </li>
-        <li>Optimized for accuracy in classification and prediction tasks</li>
-        <li>Efficient in resource usage compared to generative models</li>
-        <li>Typically requires less training data for good performance</li>
-        <li>Better suited for tasks with clear decision boundaries</li>
-      </ul>
-      <p>Key Technical Aspects of Predictive AI you must known:</p>
-      <ul>
-        <li>
-          <strong>Feature Engineering:</strong> The process of manually or
-          automatically deriving meaningful features from raw data to improve
-          model performance.
-        </li>
-        <li>
-          <strong>Loss Functions:</strong> Metrics used to quantify prediction
-          errors, including cross-entropy, hinge loss, and mean squared error
-          (MSE).
-        </li>
-        <li>
-          <strong>Optimization:</strong> Techniques such as gradient descent and
-          stochastic optimization to minimize the loss function during training.
-        </li>
-        <li>
-          <strong>Regularization:</strong> Methods like L1/L2 regularization,
-          dropout, and batch normalization to prevent overfitting and improve
-          generalization.
-        </li>
-      </ul>
+        <p>
+          Generative AI, on the other hand, is designed to generate new data
+          that resembles the training data distribution. Instead of predicting a
+          specific output, generative models learn the underlying structure of
+          the data and generate new samples that are similar to the training
+          examples. These models can create new images, text, audio, or other
+          types of data based on the patterns they have learned during training.
+        </p>
+        <p>Core Characteristics:</p>
+        <ul>
+          <li>Models the complete joint probability distribution \(P(x,y)\)</li>
+          <li>Creates novel, coherent outputs across various domains</li>
+          <li>
+            Can handle multiple tasks including content generation and
+            understanding
+          </li>
+          <li>Requires larger datasets and computational resources</li>
+          <li>Capable of unsupervised and self-supervised learning</li>
+        </ul>
 
-      <p>
-        Generative AI, on the other hand, is designed to generate new data that
-        resembles the training data distribution. Instead of predicting a
-        specific output, generative models learn the underlying structure of the
-        data and generate new samples that are similar to the training examples.
-        These models can create new images, text, audio, or other types of data
-        based on the patterns they have learned during training.
-      </p>
-      <p>Core Characteristics:</p>
-      <ul>
-        <li>Models the complete joint probability distribution \(P(x,y)\)</li>
-        <li>Creates novel, coherent outputs across various domains</li>
-        <li>
-          Can handle multiple tasks including content generation and
-          understanding
-        </li>
-        <li>Requires larger datasets and computational resources</li>
-        <li>Capable of unsupervised and self-supervised learning</li>
-      </ul>
+        <p>Key Examples of GenAI Architectures to know:</p>
+        <ul>
+          <li>
+            <strong>Transformer Models:</strong> Use self-attention mechanisms,
+            which allow the model to weigh the importance of different words in
+            a sentence, and multi-head attention, which enables the model to
+            focus on different parts of the sentence simultaneously for better
+            context understanding.
+          </li>
+          <li>
+            <strong>Generative Adversarial Networks (GANs):</strong> Utilize a
+            generator, which creates data samples, and a discriminator, which
+            evaluates them, in a competitive framework to create realistic data
+            samples.
+          </li>
+          <li>
+            <strong>Diffusion Models:</strong> Use denoising processes, which
+            iteratively refine noisy data to generate high-quality outputs, and
+            U-Net architectures, which are convolutional neural networks
+            designed for image segmentation and generation.
+          </li>
+          <li>
+            <strong>Variational Autoencoders (VAEs):</strong> Focus on latent
+            space modeling using the reparameterization trick, which allows for
+            backpropagation through stochastic variables by introducing a
+            differentiable approximation, and minimize reconstruction loss for
+            generative tasks.
+          </li>
+        </ul>
 
-      <p>Key Examples of GenAI Architectures to know:</p>
-      <ul>
-        <li>
-          <strong>Transformer Models:</strong> Use self-attention mechanisms,
-          which allow the model to weigh the importance of different words in a
-          sentence, and multi-head attention, which enables the model to focus
-          on different parts of the sentence simultaneously for better context
-          understanding.
-        </li>
-        <li>
-          <strong>Generative Adversarial Networks (GANs):</strong> Utilize a
-          generator, which creates data samples, and a discriminator, which
-          evaluates them, in a competitive framework to create realistic data
-          samples.
-        </li>
-        <li>
-          <strong>Diffusion Models:</strong> Use denoising processes, which
-          iteratively refine noisy data to generate high-quality outputs, and
-          U-Net architectures, which are convolutional neural networks designed
-          for image segmentation and generation.
-        </li>
-        <li>
-          <strong>Variational Autoencoders (VAEs):</strong> Focus on latent
-          space modeling using the reparameterization trick, which allows for
-          backpropagation through stochastic variables by introducing a
-          differentiable approximation, and minimize reconstruction loss for
-          generative tasks.
-        </li>
-      </ul>
-
-      <svg
-        viewBox="0 0 400 200"
-        width="720"
-        height="480"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <!-- Left side - Discriminative -->
-        <g transform="translate(50, 0)">
-          <!-- Dots group 1 -->
-          <g>
-            <circle cx="25" cy="25" r="4" fill="#4299E1" />
-            <circle cx="15" cy="40" r="4" fill="#4299E1" />
-            <circle cx="35" cy="45" r="4" fill="#4299E1" />
-            <circle cx="10" cy="60" r="4" fill="#4299E1" />
-            <circle cx="30" cy="70" r="4" fill="#4299E1" />
-            <circle cx="20" cy="80" r="4" fill="#4299E1" />
-            <circle cx="40" cy="85" r="4" fill="#4299E1" />
-          </g>
-          <!-- Dots group 2 -->
-          <g>
-            <circle cx="90" cy="25" r="4" fill="#2B6CB0" />
-            <circle cx="75" cy="35" r="4" fill="#2B6CB0" />
-            <circle cx="95" cy="50" r="4" fill="#2B6CB0" />
-            <circle cx="80" cy="65" r="4" fill="#2B6CB0" />
-            <circle cx="100" cy="75" r="4" fill="#2B6CB0" />
-            <circle cx="85" cy="85" r="4" fill="#2B6CB0" />
-            <circle cx="70" cy="95" r="4" fill="#2B6CB0" />
-          </g>
-          <!-- Decision boundary -->
-          <line
-            x1="50"
-            y1="10"
-            x2="55"
-            y2="100"
-            stroke="black"
-            stroke-width="1"
-            stroke-dasharray="4,3"
-          />
-          <!-- Label -->
-          <text
-            x="50"
-            y="125"
-            text-anchor="middle"
-            font-size="10"
-            font-family="Arial"
-          >
-            Discriminative
-          </text>
-        </g>
-
-        <!-- Right side - Generative -->
-        <g transform="translate(225,0)">
-          <!-- Container 1 -->
-          <rect
-            x="0"
-            y="20"
-            width="60"
-            height="90"
-            rx="30"
-            fill="#4299E1"
-            opacity="0.3"
-          />
-          <g>
-            <circle cx="15" cy="35" r="4" fill="#4299E1" />
-            <circle cx="30" cy="45" r="4" fill="#4299E1" />
-            <circle cx="20" cy="60" r="4" fill="#4299E1" />
-            <circle cx="40" cy="70" r="4" fill="#4299E1" />
-            <circle cx="25" cy="85" r="4" fill="#4299E1" />
-            <circle cx="35" cy="95" r="4" fill="#4299E1" />
-          </g>
-          <!-- Container 2 -->
-          <rect
-            x="70"
-            y="20"
-            width="60"
-            height="90"
-            rx="30"
-            fill="#2B6CB0"
-            opacity="0.3"
-          />
-          <g>
-            <circle cx="85" cy="35" r="4" fill="#2B6CB0" />
-            <circle cx="100" cy="45" r="4" fill="#2B6CB0" />
-            <circle cx="90" cy="60" r="4" fill="#2B6CB0" />
-            <circle cx="110" cy="70" r="4" fill="#2B6CB0" />
-            <circle cx="95" cy="85" r="4" fill="#2B6CB0" />
-            <circle cx="105" cy="95" r="4" fill="#2B6CB0" />
-          </g>
-          <!-- Label -->
-          <text
-            x="65"
-            y="125"
-            text-anchor="middle"
-            font-size="10"
-            font-family="Arial"
-          >
-            Generative
-          </text>
-        </g>
-      </svg>
-
-      <h4>1.2 What is LLM, and how are LLMs trained?</h4>
-      <p>
-        LLM (Large Language Model) is an AI system trained to understand and
-        generate human-like text by processing vast amounts of textual data.
-        These models represent the cutting edge of natural language processing
-        technology.
-      </p>
-      <p>
-        Training large language models is a multi-layered stack of processes,
-        each playing a unique role in shaping the model's performance. The three
-        main phases are:
-      </p>
-      <ul>
-        <li>Self-supervised learning</li>
-        <li>Supervised learning</li>
-        <li>Reinforcement learning</li>
-      </ul>
-      <p>
-        <strong
-          >Phase 1: Self-Supervised Learning for Language Understanding</strong
+        <svg
+          viewBox="0 0 400 200"
+          width="720"
+          height="480"
+          xmlns="http://www.w3.org/2000/svg"
         >
-      </p>
-      <p>
-        Self-supervised learning, the first phase of training, is typically what
-        comes to mind when discussing language modeling. This process involves
-        exposing the model to vast amounts of unannotated or raw data and
-        instructing it to predict the ‘missing’ elements within that data.
-        Through this, the model learns about both language and the underlying
-        domain to generate plausible responses.
-      </p>
+          <!-- Left side - Discriminative -->
+          <g transform="translate(50, 0)">
+            <!-- Dots group 1 -->
+            <g>
+              <circle cx="25" cy="25" r="4" fill="#4299E1" />
+              <circle cx="15" cy="40" r="4" fill="#4299E1" />
+              <circle cx="35" cy="45" r="4" fill="#4299E1" />
+              <circle cx="10" cy="60" r="4" fill="#4299E1" />
+              <circle cx="30" cy="70" r="4" fill="#4299E1" />
+              <circle cx="20" cy="80" r="4" fill="#4299E1" />
+              <circle cx="40" cy="85" r="4" fill="#4299E1" />
+            </g>
+            <!-- Dots group 2 -->
+            <g>
+              <circle cx="90" cy="25" r="4" fill="#2B6CB0" />
+              <circle cx="75" cy="35" r="4" fill="#2B6CB0" />
+              <circle cx="95" cy="50" r="4" fill="#2B6CB0" />
+              <circle cx="80" cy="65" r="4" fill="#2B6CB0" />
+              <circle cx="100" cy="75" r="4" fill="#2B6CB0" />
+              <circle cx="85" cy="85" r="4" fill="#2B6CB0" />
+              <circle cx="70" cy="95" r="4" fill="#2B6CB0" />
+            </g>
+            <!-- Decision boundary -->
+            <line
+              x1="50"
+              y1="10"
+              x2="55"
+              y2="100"
+              stroke="black"
+              stroke-width="1"
+              stroke-dasharray="4,3"
+            />
+            <!-- Label -->
+            <text
+              x="50"
+              y="125"
+              text-anchor="middle"
+              font-size="10"
+              font-family="Arial"
+            >
+              Discriminative
+            </text>
+          </g>
 
-      <p>
-        For instance, if we provide the model with text from a weather website
-        and ask it to predict the next word, the model must comprehend the
-        language and the context of the weather domain. In my presentation, I
-        used the example: “A flash flood watch will be in effect all _____.” At
-        an intermediate stage, the model ranks possible predictions, from the
-        most likely answers (“day,” “night,” “hour”) to those that are less
-        probable (“month”), and even to nonsensical ones (“giraffe”) that
-        receive low probability scores.
-      </p>
-      <p>
-        This process is called self-supervision (distinct from unsupervised
-        learning) because there is a specific, correct answer—the word that
-        appeared in the collected text, which in this case was “night.” While
-        self-supervision shares similarities with unsupervised learning, it is
-        distinct in that it focuses on predicting specific correct outcomes,
-        even within the context of abundant, unannotated data.
-      </p>
-
-      <img
-        src="../assets/self-supervised-learning.png"
-        alt="Visualization of LLM training process"
-        class="responsive-img"
-        width="720"
-        height="480"
-      />
-
-      <p>
-        <strong
-          >Phase 2: Supervised Learning for Instruction Understanding</strong
-        >
-      </p>
-
-      <p>
-        Supervised learning, or instruction tuning, marks the second stage in
-        the training process of large language models (LLMs). This phase is
-        vital, building upon the foundational knowledge established during the
-        self-supervised learning phase. In this phase, the model is trained
-        specifically to follow instructions. Unlike self-supervised learning,
-        which focuses on predicting words and completing sentences, instruction
-        tuning teaches the model to understand and respond to explicit user
-        requests. This shift makes the model significantly more interactive and
-        useful in real-world applications. The impact of instruction tuning on
-        enhancing LLM capabilities has been demonstrated through numerous
-        studies, including those led by Snorkel researchers. One key outcome was
-        that models trained with instruction tuning performed better at
-        generalizing to new, unseen tasks. This is a major achievement, as the
-        ability to effectively handle unfamiliar tasks is a central goal of
-        machine learning models. Given its proven success, instruction tuning
-        has become a standard practice in LLM training. Once this phase is
-        completed, the model is no longer just predicting the next word—it’s
-        trained to engage with users, comprehend their instructions, and provide
-        meaningful, context-aware responses.
-      </p>
-
-      <p>
-        <strong
-          >Phase 3: Reinforcement Learning to Promote Desired Behavior</strong
-        >
-      </p>
-      <p>
-        The final stage in training large language models (LLMs) is
-        reinforcement learning, a critical process that fine-tunes the model by
-        encouraging desired behaviors and discouraging undesirable outputs.
-        Unlike earlier stages, this phase doesn’t provide the model with
-        specific target outputs but instead evaluates and “grades” the responses
-        the model generates.
-      </p>
-      <p>
-        Although reinforcement learning has a long history in machine learning,
-        its application to LLM training was first proposed by OpenAI after the
-        advent of instruction tuning. The process begins with a model already
-        capable of understanding instructions and generating coherent language.
-        Human annotations are then used to compare model outputs, identifying
-        which responses are better or worse. These comparisons help guide the
-        creation of a reward model, which assigns quantitative scores to the
-        quality of the outputs. The reward model plays a pivotal role by scaling
-        feedback to the model, steering it toward generating preferred responses
-        while penalizing undesired ones. This method is particularly effective
-        for fostering nuanced behaviors, such as encouraging brevity or
-        discouraging harmful or inappropriate language. As a result, the model
-        learns to produce higher-quality, context-sensitive responses.
-      </p>
-      <p>
-        This process, known as reinforcement learning with human feedback
-        (RLHF), underscores the value of human involvement in shaping the
-        model's behavior. By incorporating human preferences into the training
-        loop, RLHF ensures the model aligns more closely with user expectations
-        and ethical standards, delivering a safer and more user-centric
-        experience.
-      </p>
-
-      <img
-        src="../assets/llm-training.png"
-        alt="Visualization of training process"
-        class="responsive-img"
-        width="720"
-        height="480"
-      />
-
-      <h4>1.3 What is a token in the language model?</h4>
-      <p>
-        In the context of language models, a token refers to the smallest unit
-        of text that the model processes. Tokens can represent individual words,
-        subwords, or characters, depending on the tokenization strategy used.
-        The choice of tokenization impacts the model's ability to understand and
-        generate text.
-      </p>
-      <p>
-        Each language model has a context window—a limit on the number of tokens
-        it can handle at a time. This context window defines how much text the
-        model can "remember" and process simultaneously. For example, a model
-        with a 4,000-token context window can work with approximately
-        3,000–4,000 words of text at once, depending on the complexity of the
-        language and the average token length.
-      </p>
-      <p>
-        The vector representation of a token is called an embedding. These
-        vectors capture the meaning, context, and relationships between tokens
-        in a form that the model can compute.
-      </p>
-
-      <h4>
-        1.4 How to estimate the cost of running SaaS-based and Open Source LLM
-        models?
-      </h4>
-
-      <p>
-        These are subscription-based or pay-per-use services that provide hosted
-        LLMs. SaaS-based LLM services charge based on processed tokens (both
-        input and output). For example, GPT-4 charges $0.03 for input tokens and
-        $0.06 for output tokens per 1,000 tokens. The total cost can be
-        calculated by multiplying the sum of input and output tokens by the cost
-        per token.
-      </p>
-      <p class="responsive-math">
-        Total Cost = (Tokens Input + Tokens Output) × Cost Per Token
-      </p>
-      <p>
-        Other costs include compute tier options (with different pricing for
-        different models), monthly subscription fees for premium access, and
-        possible additional charges for reserved capacity to ensure low latency
-        or scalability.
-      </p>
-      <p>
-        With SaaS, there’s no need for infrastructure setup or maintenance. The
-        service scales automatically, making it ideal for prototypes or
-        low-volume usage.
-      </p>
-
-      <p>
-        On the other hand, Open Source LLM models are free to use but require
-        infrastructure setup and maintenance. For self-hosted open-source
-        models, compute costs can vary widely depending on the choice of
-        infrastructure. Cloud-based GPU instances range from $1 to $6 per hour
-        per GPU, with an average cost for an NVIDIA A100 instance being around
-        $2.5 per hour. The compute cost is calculated by multiplying the
-        instance cost by the number of hours used.
-      </p>
-      <p class="responsive-math">
-        Cost (Compute) = (Instance Cost) × (Hours of Use)
-      </p>
-      <p>
-        Open-source LLMs also incur storage and networking costs (e.g., 100GB+
-        for large models), energy costs for continuous operation, personnel
-        costs for engineering and maintenance, and possible software licensing
-        fees for supporting software.
-      </p>
-      <p>
-        Open source LLMs offer full control over the model and infrastructure.
-        They can be customized for specific needs and may incur lower long-term
-        costs for high-volume usage.
-      </p>
-
-      <p><strong>Comparison table</strong></p>
-      <div class="responsive-table-container">
-        <table border="1">
-          <thead>
-            <tr>
-              <th>Factor</th>
-              <th>SaaS-Based</th>
-              <th>Open-Source</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Ease of Setup</td>
-              <td>Instant, minimal configuration</td>
-              <td>Significant setup and maintenance</td>
-            </tr>
-            <tr>
-              <td>Scalability</td>
-              <td>Automatic, scales with need</td>
-              <td>Manual provisioning required</td>
-            </tr>
-            <tr>
-              <td>Costs for Low Usage</td>
-              <td>Lower for prototypes</td>
-              <td>Higher initial setup cost</td>
-            </tr>
-            <tr>
-              <td>Costs for High Usage</td>
-              <td>Scales linearly, can be expensive</td>
-              <td>More cost-effective long-term</td>
-            </tr>
-            <tr>
-              <td>Customizability</td>
-              <td>Limited by vendor</td>
-              <td>Full control</td>
-            </tr>
-            <tr>
-              <td>Operational Control</td>
-              <td>Relies on vendor</td>
-              <td>Complete independence</td>
-            </tr>
-          </tbody>
-        </table>
+          <!-- Right side - Generative -->
+          <g transform="translate(225,0)">
+            <!-- Container 1 -->
+            <rect
+              x="0"
+              y="20"
+              width="60"
+              height="90"
+              rx="30"
+              fill="#4299E1"
+              opacity="0.3"
+            />
+            <g>
+              <circle cx="15" cy="35" r="4" fill="#4299E1" />
+              <circle cx="30" cy="45" r="4" fill="#4299E1" />
+              <circle cx="20" cy="60" r="4" fill="#4299E1" />
+              <circle cx="40" cy="70" r="4" fill="#4299E1" />
+              <circle cx="25" cy="85" r="4" fill="#4299E1" />
+              <circle cx="35" cy="95" r="4" fill="#4299E1" />
+            </g>
+            <!-- Container 2 -->
+            <rect
+              x="70"
+              y="20"
+              width="60"
+              height="90"
+              rx="30"
+              fill="#2B6CB0"
+              opacity="0.3"
+            />
+            <g>
+              <circle cx="85" cy="35" r="4" fill="#2B6CB0" />
+              <circle cx="100" cy="45" r="4" fill="#2B6CB0" />
+              <circle cx="90" cy="60" r="4" fill="#2B6CB0" />
+              <circle cx="110" cy="70" r="4" fill="#2B6CB0" />
+              <circle cx="95" cy="85" r="4" fill="#2B6CB0" />
+              <circle cx="105" cy="95" r="4" fill="#2B6CB0" />
+            </g>
+            <!-- Label -->
+            <text
+              x="65"
+              y="125"
+              text-anchor="middle"
+              font-size="10"
+              font-family="Arial"
+            >
+              Generative
+            </text>
+          </g>
+        </svg>
       </div>
+      <h4 class="accordion">
+        1.2 What is LLM, and how are LLMs trained?<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
+      </h4>
+      <div>
+        <p>
+          LLM (Large Language Model) is an AI system trained to understand and
+          generate human-like text by processing vast amounts of textual data.
+          These models represent the cutting edge of natural language processing
+          technology.
+        </p>
+        <p>
+          Training large language models is a multi-layered stack of processes,
+          each playing a unique role in shaping the model's performance. The
+          three main phases are:
+        </p>
+        <ul>
+          <li>Self-supervised learning</li>
+          <li>Supervised learning</li>
+          <li>Reinforcement learning</li>
+        </ul>
+        <p>
+          <strong
+            >Phase 1: Self-Supervised Learning for Language
+            Understanding</strong
+          >
+        </p>
+        <p>
+          Self-supervised learning, the first phase of training, is typically
+          what comes to mind when discussing language modeling. This process
+          involves exposing the model to vast amounts of unannotated or raw data
+          and instructing it to predict the ‘missing’ elements within that data.
+          Through this, the model learns about both language and the underlying
+          domain to generate plausible responses.
+        </p>
 
-      <h4>1.5 Explain the Temperature parameter and how to set it.</h4>
+        <p>
+          For instance, if we provide the model with text from a weather website
+          and ask it to predict the next word, the model must comprehend the
+          language and the context of the weather domain. In my presentation, I
+          used the example: “A flash flood watch will be in effect all _____.”
+          At an intermediate stage, the model ranks possible predictions, from
+          the most likely answers (“day,” “night,” “hour”) to those that are
+          less probable (“month”), and even to nonsensical ones (“giraffe”) that
+          receive low probability scores.
+        </p>
+        <p>
+          This process is called self-supervision (distinct from unsupervised
+          learning) because there is a specific, correct answer—the word that
+          appeared in the collected text, which in this case was “night.” While
+          self-supervision shares similarities with unsupervised learning, it is
+          distinct in that it focuses on predicting specific correct outcomes,
+          even within the context of abundant, unannotated data.
+        </p>
 
-      <p>
-        The <strong>Temperature</strong> parameter is used in language models to
-        control the level of randomness in the text generation process. It is
-        particularly useful for fine-tuning the creativity and variability of
-        the model’s responses.
-      </p>
+        <img
+          src="../assets/self-supervised-learning.png"
+          alt="Visualization of LLM training process"
+          class="responsive-img"
+          width="720"
+          height="480"
+        />
 
-      <p>
-        In simple terms, the temperature adjusts the "steepness" of the
-        probability distribution over possible next words or tokens. When
-        generating text, a model selects tokens based on a distribution of
-        probabilities. A lower temperature (e.g., 0.1) makes the model more
-        deterministic, meaning it is more likely to select the most probable
-        next token, leading to more predictable and coherent text. A higher
-        temperature (e.g., 1.0) adds more randomness to the selection, allowing
-        for more creative or unexpected outputs.
-      </p>
+        <p>
+          <strong
+            >Phase 2: Supervised Learning for Instruction Understanding</strong
+          >
+        </p>
 
-      <p>
-        The temperature parameter works by modifying the logits (raw scores) of
-        the possible next tokens before converting them to probabilities using
-        the softmax function. The formula for calculating the probability
-        distribution for the next token given the logits is:
-      </p>
+        <p>
+          Supervised learning, or instruction tuning, marks the second stage in
+          the training process of large language models (LLMs). This phase is
+          vital, building upon the foundational knowledge established during the
+          self-supervised learning phase. In this phase, the model is trained
+          specifically to follow instructions. Unlike self-supervised learning,
+          which focuses on predicting words and completing sentences,
+          instruction tuning teaches the model to understand and respond to
+          explicit user requests. This shift makes the model significantly more
+          interactive and useful in real-world applications. The impact of
+          instruction tuning on enhancing LLM capabilities has been demonstrated
+          through numerous studies, including those led by Snorkel researchers.
+          One key outcome was that models trained with instruction tuning
+          performed better at generalizing to new, unseen tasks. This is a major
+          achievement, as the ability to effectively handle unfamiliar tasks is
+          a central goal of machine learning models. Given its proven success,
+          instruction tuning has become a standard practice in LLM training.
+          Once this phase is completed, the model is no longer just predicting
+          the next word—it’s trained to engage with users, comprehend their
+          instructions, and provide meaningful, context-aware responses.
+        </p>
 
-      <p class="responsive-math">
-        \[P(w_i) = exp(logit(w_i) / T) / Σ exp(logit(w_j) / T) \]
-      </p>
+        <p>
+          <strong
+            >Phase 3: Reinforcement Learning to Promote Desired Behavior</strong
+          >
+        </p>
+        <p>
+          The final stage in training large language models (LLMs) is
+          reinforcement learning, a critical process that fine-tunes the model
+          by encouraging desired behaviors and discouraging undesirable outputs.
+          Unlike earlier stages, this phase doesn’t provide the model with
+          specific target outputs but instead evaluates and “grades” the
+          responses the model generates.
+        </p>
+        <p>
+          Although reinforcement learning has a long history in machine
+          learning, its application to LLM training was first proposed by OpenAI
+          after the advent of instruction tuning. The process begins with a
+          model already capable of understanding instructions and generating
+          coherent language. Human annotations are then used to compare model
+          outputs, identifying which responses are better or worse. These
+          comparisons help guide the creation of a reward model, which assigns
+          quantitative scores to the quality of the outputs. The reward model
+          plays a pivotal role by scaling feedback to the model, steering it
+          toward generating preferred responses while penalizing undesired ones.
+          This method is particularly effective for fostering nuanced behaviors,
+          such as encouraging brevity or discouraging harmful or inappropriate
+          language. As a result, the model learns to produce higher-quality,
+          context-sensitive responses.
+        </p>
+        <p>
+          This process, known as reinforcement learning with human feedback
+          (RLHF), underscores the value of human involvement in shaping the
+          model's behavior. By incorporating human preferences into the training
+          loop, RLHF ensures the model aligns more closely with user
+          expectations and ethical standards, delivering a safer and more
+          user-centric experience.
+        </p>
 
-      <p>
-        Here, <span>\(w_i\)</span> refers to the ith token in the vocabulary,
-        and <span>\(logit(w_i)\)</span> is the unscaled score for that token.
-        The parameter <em>T</em> is the temperature:
-      </p>
-      <ul>
-        <li>
-          T = 0: This means maximum determinism. The model always selects the
-          most probable token (argmax sampling). However, most implementations
-          prevent using an exact 0 since it removes any stochasticity
-          altogether.
-        </li>
-        <li>
-          T between 0 and 1: Sharper probability distributions, making
-          high-probability tokens even more dominant. Lower values reduce
-          randomness and make the output more focused and predictable.
-        </li>
-        <li>
-          T = 1: No adjustment to the logits. The original probability
-          distribution is used.
-        </li>
-        <li>
-          T > 1: Flattens the probability distribution, increasing randomness.
-          Less probable tokens become more likely to be chosen, producing
-          creative or exploratory outputs.
-        </li>
-      </ul>
-      <img
-        src="../assets/temperature.png"
-        alt="Temperature parameter visualization"
-        class="responsive-img"
-        width="720"
-        height="480"
-      />
+        <img
+          src="../assets/llm-training.png"
+          alt="Visualization of training process"
+          class="responsive-img"
+          width="720"
+          height="480"
+        />
+      </div>
+      <h4 class="accordion">
+        1.3 What is a token in the language model?<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
+      </h4>
+      <div>
+        <p>
+          In the context of language models, a token refers to the smallest unit
+          of text that the model processes. Tokens can represent individual
+          words, subwords, or characters, depending on the tokenization strategy
+          used. The choice of tokenization impacts the model's ability to
+          understand and generate text.
+        </p>
+        <p>
+          Each language model has a context window—a limit on the number of
+          tokens it can handle at a time. This context window defines how much
+          text the model can "remember" and process simultaneously. For example,
+          a model with a 4,000-token context window can work with approximately
+          3,000–4,000 words of text at once, depending on the complexity of the
+          language and the average token length.
+        </p>
+        <p>
+          The vector representation of a token is called an embedding. These
+          vectors capture the meaning, context, and relationships between tokens
+          in a form that the model can compute.
+        </p>
+      </div>
+      <h4 class="accordion">
+        1.4 How to estimate the cost of running SaaS-based and Open Source LLM
+        models?<span class="arrow" style="float: left">&#9660;</span>
+      </h4>
+      <div>
+        <p>
+          These are subscription-based or pay-per-use services that provide
+          hosted LLMs. SaaS-based LLM services charge based on processed tokens
+          (both input and output). For example, GPT-4 charges $0.03 for input
+          tokens and $0.06 for output tokens per 1,000 tokens. The total cost
+          can be calculated by multiplying the sum of input and output tokens by
+          the cost per token.
+        </p>
+        <p class="responsive-math">
+          Total Cost = (Tokens Input + Tokens Output) × Cost Per Token
+        </p>
+        <p>
+          Other costs include compute tier options (with different pricing for
+          different models), monthly subscription fees for premium access, and
+          possible additional charges for reserved capacity to ensure low
+          latency or scalability.
+        </p>
+        <p>
+          With SaaS, there’s no need for infrastructure setup or maintenance.
+          The service scales automatically, making it ideal for prototypes or
+          low-volume usage.
+        </p>
 
-      <p>
-        The temperature parameter is often adjusted through an API or in the
-        model configuration. If you are interacting with an API, you will
-        usually specify the temperature in the request. Here's a typical API
-        call setting:
-      </p>
+        <p>
+          On the other hand, Open Source LLM models are free to use but require
+          infrastructure setup and maintenance. For self-hosted open-source
+          models, compute costs can vary widely depending on the choice of
+          infrastructure. Cloud-based GPU instances range from $1 to $6 per hour
+          per GPU, with an average cost for an NVIDIA A100 instance being around
+          $2.5 per hour. The compute cost is calculated by multiplying the
+          instance cost by the number of hours used.
+        </p>
+        <p class="responsive-math">
+          Cost (Compute) = (Instance Cost) × (Hours of Use)
+        </p>
+        <p>
+          Open-source LLMs also incur storage and networking costs (e.g., 100GB+
+          for large models), energy costs for continuous operation, personnel
+          costs for engineering and maintenance, and possible software licensing
+          fees for supporting software.
+        </p>
+        <p>
+          Open source LLMs offer full control over the model and infrastructure.
+          They can be customized for specific needs and may incur lower
+          long-term costs for high-volume usage.
+        </p>
 
-      <pre>
+        <p><strong>Comparison table</strong></p>
+        <div class="responsive-table-container">
+          <table border="1">
+            <thead>
+              <tr>
+                <th>Factor</th>
+                <th>SaaS-Based</th>
+                <th>Open-Source</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ease of Setup</td>
+                <td>Instant, minimal configuration</td>
+                <td>Significant setup and maintenance</td>
+              </tr>
+              <tr>
+                <td>Scalability</td>
+                <td>Automatic, scales with need</td>
+                <td>Manual provisioning required</td>
+              </tr>
+              <tr>
+                <td>Costs for Low Usage</td>
+                <td>Lower for prototypes</td>
+                <td>Higher initial setup cost</td>
+              </tr>
+              <tr>
+                <td>Costs for High Usage</td>
+                <td>Scales linearly, can be expensive</td>
+                <td>More cost-effective long-term</td>
+              </tr>
+              <tr>
+                <td>Customizability</td>
+                <td>Limited by vendor</td>
+                <td>Full control</td>
+              </tr>
+              <tr>
+                <td>Operational Control</td>
+                <td>Relies on vendor</td>
+                <td>Complete independence</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <h4 class="accordion">
+        1.5 Explain the Temperature parameter and how to set it.<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
+      </h4>
+
+      <div>
+        <p>
+          The <strong>Temperature</strong> parameter is used in language models
+          to control the level of randomness in the text generation process. It
+          is particularly useful for fine-tuning the creativity and variability
+          of the model’s responses.
+        </p>
+
+        <p>
+          In simple terms, the temperature adjusts the "steepness" of the
+          probability distribution over possible next words or tokens. When
+          generating text, a model selects tokens based on a distribution of
+          probabilities. A lower temperature (e.g., 0.1) makes the model more
+          deterministic, meaning it is more likely to select the most probable
+          next token, leading to more predictable and coherent text. A higher
+          temperature (e.g., 1.0) adds more randomness to the selection,
+          allowing for more creative or unexpected outputs.
+        </p>
+
+        <p>
+          The temperature parameter works by modifying the logits (raw scores)
+          of the possible next tokens before converting them to probabilities
+          using the softmax function. The formula for calculating the
+          probability distribution for the next token given the logits is:
+        </p>
+
+        <p class="responsive-math">
+          \[P(w_i) = exp(logit(w_i) / T) / Σ exp(logit(w_j) / T) \]
+        </p>
+
+        <p>
+          Here, <span>\(w_i\)</span> refers to the ith token in the vocabulary,
+          and <span>\(logit(w_i)\)</span> is the unscaled score for that token.
+          The parameter <em>T</em> is the temperature:
+        </p>
+        <ul>
+          <li>
+            T = 0: This means maximum determinism. The model always selects the
+            most probable token (argmax sampling). However, most implementations
+            prevent using an exact 0 since it removes any stochasticity
+            altogether.
+          </li>
+          <li>
+            T between 0 and 1: Sharper probability distributions, making
+            high-probability tokens even more dominant. Lower values reduce
+            randomness and make the output more focused and predictable.
+          </li>
+          <li>
+            T = 1: No adjustment to the logits. The original probability
+            distribution is used.
+          </li>
+          <li>
+            T > 1: Flattens the probability distribution, increasing randomness.
+            Less probable tokens become more likely to be chosen, producing
+            creative or exploratory outputs.
+          </li>
+        </ul>
+        <img
+          src="../assets/temperature.png"
+          alt="Temperature parameter visualization"
+          class="responsive-img"
+          width="720"
+          height="480"
+        />
+
+        <p>
+          The temperature parameter is often adjusted through an API or in the
+          model configuration. If you are interacting with an API, you will
+          usually specify the temperature in the request. Here's a typical API
+          call setting:
+        </p>
+
+        <pre>
       {
         "model": "gpt-4",
         "temperature": 0.7,
         "prompt": "Describe a sunset over a mountain range."
       }
-      </pre>
+      </pre
+        >
 
-      <p>
-        Experimenting with different temperature settings can help achieve the
-        desired tone and level of creativity in the responses. Lower
-        temperatures are appropriate for factual, straightforward tasks, while
-        higher temperatures are useful for generating new ideas, brainstorming,
-        or creative writing.
-      </p>
-
-      <h4>
-        1.6 What are different decoding strategies for picking output tokens?
+        <p>
+          Experimenting with different temperature settings can help achieve the
+          desired tone and level of creativity in the responses. Lower
+          temperatures are appropriate for factual, straightforward tasks, while
+          higher temperatures are useful for generating new ideas,
+          brainstorming, or creative writing.
+        </p>
+      </div>
+      <h4 class="accordion">
+        1.6 What are different decoding strategies for picking output
+        tokens?<span class="arrow" style="float: left">&#9660;</span>
       </h4>
-      <p>
-        Language models are pre-trained to predict the next token in a text
-        corpus. Decoding strategies determine how to select the next token based
-        on the probability distribution over a fixed vocabulary. The process of
-        selecting these tokens, known as decoding, plays a crucial role in
-        shaping the output text. By tailoring the decoding approach, you can
-        customize text generation to suit specific needs. Depending on the
-        decoding method, the model may choose the most probable token, consider
-        multiple top candidates, or introduce randomness for variety.
-      </p>
-      <p>
-        An effective decoding strategy transforms a language model from a simple
-        next-token predictor into a powerful text generator capable of handling
-        diverse tasks. This raises two key questions: "What are the different
-        decoding strategies?" and "How do they influence the output generated by
-        language models?".
-      </p>
-      <img
-        src="../assets/autoregressive_gen.webp"
-        alt="Autoregressive generation"
-        class="responsive-img"
-        width="720"
-        height="480"
-      />
+      <div>
+        <p>
+          Language models are pre-trained to predict the next token in a text
+          corpus. Decoding strategies determine how to select the next token
+          based on the probability distribution over a fixed vocabulary. The
+          process of selecting these tokens, known as decoding, plays a crucial
+          role in shaping the output text. By tailoring the decoding approach,
+          you can customize text generation to suit specific needs. Depending on
+          the decoding method, the model may choose the most probable token,
+          consider multiple top candidates, or introduce randomness for variety.
+        </p>
+        <p>
+          An effective decoding strategy transforms a language model from a
+          simple next-token predictor into a powerful text generator capable of
+          handling diverse tasks. This raises two key questions: "What are the
+          different decoding strategies?" and "How do they influence the output
+          generated by language models?".
+        </p>
+        <img
+          src="../assets/autoregressive_gen.webp"
+          alt="Autoregressive generation"
+          class="responsive-img"
+          width="720"
+          height="480"
+        />
 
-      <p>
-        The simplest way to implement a sampling function is to select the next
-        token with the highest probability at each step, an approach known as
-        <strong>Greedy Search</strong>. This straightforward method is fast and
-        efficient because it prioritizes the most probable token every time.
-        However, this predictability often results in repetitive or unoriginal
-        text, making it unsuitable for generating creative content. Can this be
-        improved? Absolutely.
-      </p>
-      <p>
-        <strong>Beam search</strong> offers an enhancement by maintaining a beam
-        of the K most probable sequences at each time step, where K is the beam
-        width. The process continues until a maximum sequence length is reached
-        or an end-of-sequence token is generated. Beam search typically results
-        in higher-quality text than greedy search, but it requires more
-        computational effort.
-      </p>
-      <p>
-        Suppose the initial sequence is "Once upon a time" and
-        <span class="highlight">K=2</span>.
-      </p>
-      <ul>
-        <li>
-          The two most likely tokens are <strong>"a"</strong> and
-          <strong>"the"</strong>.
-        </li>
-        <li>
-          In the next step:
-          <ul>
-            <li>
-              The sequence <em>("a", "cat")</em> has a probability of
-              <strong>0.20</strong> (<code>0.5 × 0.4</code>).
-            </li>
-            <li>
-              The sequence <em>("the", "people")</em> has a probability of
-              <strong>0.21</strong> (<code>0.3 × 0.7</code>).
-            </li>
-          </ul>
-        </li>
-        <li>
-          Beam search selects the sequence <em>"the people"</em> as it has the
-          higher cumulative probability.
-        </li>
-      </ul>
-      <img
-        src="../assets/beam_search.webp"
-        alt="Beam search visualization"
-        class="responsive-img"
-        width="720"
-        height="480"
-      />
+        <p>
+          The simplest way to implement a sampling function is to select the
+          next token with the highest probability at each step, an approach
+          known as
+          <strong>Greedy Search</strong>. This straightforward method is fast
+          and efficient because it prioritizes the most probable token every
+          time. However, this predictability often results in repetitive or
+          unoriginal text, making it unsuitable for generating creative content.
+          Can this be improved? Absolutely.
+        </p>
+        <p>
+          <strong>Beam search</strong> offers an enhancement by maintaining a
+          beam of the K most probable sequences at each time step, where K is
+          the beam width. The process continues until a maximum sequence length
+          is reached or an end-of-sequence token is generated. Beam search
+          typically results in higher-quality text than greedy search, but it
+          requires more computational effort.
+        </p>
+        <p>
+          Suppose the initial sequence is "Once upon a time" and
+          <span class="highlight">K=2</span>.
+        </p>
+        <ul>
+          <li>
+            The two most likely tokens are <strong>"a"</strong> and
+            <strong>"the"</strong>.
+          </li>
+          <li>
+            In the next step:
+            <ul>
+              <li>
+                The sequence <em>("a", "cat")</em> has a probability of
+                <strong>0.20</strong> (<code>0.5 × 0.4</code>).
+              </li>
+              <li>
+                The sequence <em>("the", "people")</em> has a probability of
+                <strong>0.21</strong> (<code>0.3 × 0.7</code>).
+              </li>
+            </ul>
+          </li>
+          <li>
+            Beam search selects the sequence <em>"the people"</em> as it has the
+            higher cumulative probability.
+          </li>
+        </ul>
+        <img
+          src="../assets/beam_search.webp"
+          alt="Beam search visualization"
+          class="responsive-img"
+          width="720"
+          height="480"
+        />
 
-      <p>
-        The above methods that choose the most probable next token at each step
-        are called Deterministic methods. These methods produce output text
-        ensuring predictability but often at the expense of diversity. So if you
-        are looking for creative writing, we need some better mechanisms.
-      </p>
-      <p>
-        To overcome the limitations of deterministic methods in generating
-        varied and creative text, stochastic methods introduce randomness into
-        the selection process. These methods reduce predictability, creating
-        outputs that are less repetitive and more diverse.
-      </p>
-      <p>
-        When generating text, stochastic methods often rely on strategies that
-        prioritize tokens with higher probabilities while maintaining a degree
-        of randomness. Popular approaches for achieving this balance are ramdom
-        sampling, temperature sampling, Top-k sampling and Top-p sampling, each
-        offering unique mechanisms for selecting the next token.
-      </p>
-      <p>
-        The simplest stochastic approach is <strong>random sampling</strong>,
-        where the next token is sampled from the probability distribution:
-      </p>
-      <pre>
+        <p>
+          The above methods that choose the most probable next token at each
+          step are called Deterministic methods. These methods produce output
+          text ensuring predictability but often at the expense of diversity. So
+          if you are looking for creative writing, we need some better
+          mechanisms.
+        </p>
+        <p>
+          To overcome the limitations of deterministic methods in generating
+          varied and creative text, stochastic methods introduce randomness into
+          the selection process. These methods reduce predictability, creating
+          outputs that are less repetitive and more diverse.
+        </p>
+        <p>
+          When generating text, stochastic methods often rely on strategies that
+          prioritize tokens with higher probabilities while maintaining a degree
+          of randomness. Popular approaches for achieving this balance are
+          ramdom sampling, temperature sampling, Top-k sampling and Top-p
+          sampling, each offering unique mechanisms for selecting the next
+          token.
+        </p>
+        <p>
+          The simplest stochastic approach is <strong>random sampling</strong>,
+          where the next token is sampled from the probability distribution:
+        </p>
+        <pre>
         <code class="language-python">
         def sample(p):
             return np.random.choice(np.arange(p.shape[-1]), p=p)</code>
             </pre>
-      <p>
-        With this method, each execution produces different outputs. However,
-        while less predictable, this approach may result in incoherent text. To
-        achieve varied yet coherent results, we need more refined strategies.
-      </p>
-      <p>
-        <strong>Temperature sampling</strong>, as discuss earlier, adjusts the
-        likelihood of selecting tokens by altering the temperature of the
-        softmax function, which transforms the model’s logits into
-        probabilities.
-      </p>
-      <p>
-        Consider tokens with logits [1, 2, 3, 4, 5]. The following code plots
-        the temperature-controlled softmax probability distribution:
-      </p>
-      <pre>
+        <p>
+          With this method, each execution produces different outputs. However,
+          while less predictable, this approach may result in incoherent text.
+          To achieve varied yet coherent results, we need more refined
+          strategies.
+        </p>
+        <p>
+          <strong>Temperature sampling</strong>, as discuss earlier, adjusts the
+          likelihood of selecting tokens by altering the temperature of the
+          softmax function, which transforms the model’s logits into
+          probabilities.
+        </p>
+        <p>
+          Consider tokens with logits [1, 2, 3, 4, 5]. The following code plots
+          the temperature-controlled softmax probability distribution:
+        </p>
+        <pre>
         <code class="language-python">
         from matplotlib import pyplot
         import torch
@@ -916,147 +948,159 @@
         pyplot.show()</code>
             </pre>
 
-      <img
-        src="../assets/visualization-temperature.webp"
-        alt="Temperature sampling visualization"
-        class="responsive-img"
-        width="620"
-        height="360"
-      />
+        <img
+          src="../assets/visualization-temperature.webp"
+          alt="Temperature sampling visualization"
+          class="responsive-img"
+          width="620"
+          height="360"
+        />
 
-      <p>
-        <strong>Top-k sampling</strong> limits selection to the
-        <strong>k</strong> most probable tokens. For instance, if
-        <span class="math">k=2</span> and token probabilities are:
-      </p>
-      <p class="responsive-math">
-        \( P(T_0) = 0.6, P(T_1) = 0.4, P(T_2) = 0.3, P(T_3) = 0.1, P(T_4) =
-        0.05, P(T_5) = 0.04 \)
-      </p>
+        <p>
+          <strong>Top-k sampling</strong> limits selection to the
+          <strong>k</strong> most probable tokens. For instance, if
+          <span class="math">k=2</span> and token probabilities are:
+        </p>
+        <p class="responsive-math">
+          \( P(T_0) = 0.6, P(T_1) = 0.4, P(T_2) = 0.3, P(T_3) = 0.1, P(T_4) =
+          0.05, P(T_5) = 0.04 \)
+        </p>
 
-      <p>
-        The tokens <span class="math">\( T_3, T_4, T_5 \)</span> are excluded,
-        and the remaining probabilities are redistributed.
-      </p>
-      <img
-        src="../assets/topk.png"
-        alt="Top-k sampling visualization"
-        class="responsive-img"
-        width="320"
-        height="160"
-      />
+        <p>
+          The tokens <span class="math">\( T_3, T_4, T_5 \)</span> are excluded,
+          and the remaining probabilities are redistributed.
+        </p>
+        <img
+          src="../assets/topk.png"
+          alt="Top-k sampling visualization"
+          class="responsive-img"
+          width="320"
+          height="160"
+        />
 
-      <p>
-        <strong>Top-p Sampling</strong> — chooses from the possible set of words
-        whose cumulative probability exceeds the probability p. The probability
-        mass is then redistributed among this set of words. For p = 0.95, Top-p
-        sampling picks the minimum number of tokens to exceed together p = 95%
-        of the probability mass. Unlike Top-k sampling which has a fixed number
-        of tokens k, this mechanism allows the number of tokens in a set to
-        dynamically increase or decrease according to the next word’s
-        probability distribution. Choosing a set of high-probability tokens
-        removes the very unlikely low-probability values, thus helping to
-        generate diverse and coherent text, making it very popular for text
-        generation. This Top-p sampling is also known as Nucleus sampling.
-      </p>
-      <img
-        src="../assets/topp.png"
-        alt="Top-p sampling visualization"
-        class="responsive-img"
-        width="320"
-        height="160"
-      />
-      <p>
-        Combining top-p and top-k sampling can further refine the balance
-        between randomness and coherence.
-      </p>
-
-      <h4>
+        <p>
+          <strong>Top-p Sampling</strong> — chooses from the possible set of
+          words whose cumulative probability exceeds the probability p. The
+          probability mass is then redistributed among this set of words. For p
+          = 0.95, Top-p sampling picks the minimum number of tokens to exceed
+          together p = 95% of the probability mass. Unlike Top-k sampling which
+          has a fixed number of tokens k, this mechanism allows the number of
+          tokens in a set to dynamically increase or decrease according to the
+          next word’s probability distribution. Choosing a set of
+          high-probability tokens removes the very unlikely low-probability
+          values, thus helping to generate diverse and coherent text, making it
+          very popular for text generation. This Top-p sampling is also known as
+          Nucleus sampling.
+        </p>
+        <img
+          src="../assets/topp.png"
+          alt="Top-p sampling visualization"
+          class="responsive-img"
+          width="320"
+          height="160"
+        />
+        <p>
+          Combining top-p and top-k sampling can further refine the balance
+          between randomness and coherence.
+        </p>
+      </div>
+      <h4 class="accordion">
         1.7 What are different ways you can define stopping criteria in large
-        language model?
+        language model?<span class="arrow" style="float: left">&#9660;</span>
       </h4>
+      <div>
+        <p>
+          One common approach is to set a
+          <strong>predefined token limit</strong>. By specifying the maximum
+          length of the output, we can ensure that the generated text doesn’t
+          exceed a certain number of tokens. This is particularly useful in
+          cases like generating headlines or summaries where brevity is
+          essential. For more structured tasks,
+          <strong>minimum and maximum length thresholds</strong> can be
+          combined. This ensures the output is neither too short to be
+          meaningful nor too long to remain concise. For example, when
+          generating summaries, you might require the output to be at least 30
+          tokens but no more than 100 tokens long.
+        </p>
 
-      <p>
-        One common approach is to set a <strong>predefined token limit</strong>.
-        By specifying the maximum length of the output, we can ensure that the
-        generated text doesn’t exceed a certain number of tokens. This is
-        particularly useful in cases like generating headlines or summaries
-        where brevity is essential. For more structured tasks,
-        <strong>minimum and maximum length thresholds</strong> can be combined.
-        This ensures the output is neither too short to be meaningful nor too
-        long to remain concise. For example, when generating summaries, you
-        might require the output to be at least 30 tokens but no more than 100
-        tokens long.
-      </p>
-
-      <pre>
+        <pre>
         <code class="language-python">
           response = model.generate(input, min_length=30, max_length=100)
         </code></pre>
 
-      <p>
-        Another widely used technique involves relying on the
-        <strong>end-of-sequence (EOS) token</strong>. The model generates tokens
-        until it predicts this special token, which signals that the sequence
-        has concluded naturally. This method is ideal for scenarios like
-        document generation or conversational models, where the model's training
-        data inherently includes a concept of when sequences should terminate.
-      </p>
-      <pre>
+        <p>
+          Another widely used technique involves relying on the
+          <strong>end-of-sequence (EOS) token</strong>. The model generates
+          tokens until it predicts this special token, which signals that the
+          sequence has concluded naturally. This method is ideal for scenarios
+          like document generation or conversational models, where the model's
+          training data inherently includes a concept of when sequences should
+          terminate.
+        </p>
+        <pre>
         <code class="language-python">
           if token == eos_token:
             break
       </code></pre>
 
-      <p>
-        To prevent outputs from becoming repetitive or looping endlessly, a
-        <strong>repetition-based stopping criterion</strong> or
-        <strong>frequency penalty</strong> is often applied. This involves
-        checking the sequence of tokens generated so far and ending the process
-        if significant repetition is detected.
-      </p>
-      <pre>
+        <p>
+          To prevent outputs from becoming repetitive or looping endlessly, a
+          <strong>repetition-based stopping criterion</strong> or
+          <strong>frequency penalty</strong> is often applied. This involves
+          checking the sequence of tokens generated so far and ending the
+          process if significant repetition is detected.
+        </p>
+        <pre>
         <code class="language-python">
           if sequence in history:
             break
           </code></pre>
 
-      <p>
-        In dynamic and real-time applications like chatbots, a
-        <strong>time-based stopping criterion</strong> might be more
-        appropriate. Here, the model ceases generation once a specified duration
-        has passed. This ensures timely responses and enhances the interactive
-        experience for users.
-      </p>
+        <p>
+          In dynamic and real-time applications like chatbots, a
+          <strong>time-based stopping criterion</strong> might be more
+          appropriate. Here, the model ceases generation once a specified
+          duration has passed. This ensures timely responses and enhances the
+          interactive experience for users.
+        </p>
 
-      <p>
-        Another advanced approach involves <strong>semantic analysis</strong>.
-        Instead of setting hard rules based on token counts or repetition, the
-        model evaluates the coherence and relevance of its generated tokens. If
-        the semantic quality drops below a specific threshold, the generation is
-        stopped. <strong>Probabilistic methods</strong> can also guide stopping
-        criteria. For instance, by monitoring the probabilities associated with
-        predicted tokens, you could stop when the highest-probability token
-        falls below a certain threshold, indicating that the model is uncertain.
-        This method is useful in precision-critical tasks.
-      </p>
+        <p>
+          Another advanced approach involves <strong>semantic analysis</strong>.
+          Instead of setting hard rules based on token counts or repetition, the
+          model evaluates the coherence and relevance of its generated tokens.
+          If the semantic quality drops below a specific threshold, the
+          generation is stopped. <strong>Probabilistic methods</strong> can also
+          guide stopping criteria. For instance, by monitoring the probabilities
+          associated with predicted tokens, you could stop when the
+          highest-probability token falls below a certain threshold, indicating
+          that the model is uncertain. This method is useful in
+          precision-critical tasks.
+        </p>
 
-      <p>
-        In many cases, a <strong>combination of criteria</strong> yields the
-        best results. For example, combining a token limit, EOS token detection,
-        and repetition-based stopping can create robust rules for most tasks.
-      </p>
-
-      <h4>1.8 How to use stop sequences in LLMs?</h4>
-      <p>
-        Once you've defined the stop sequence, you'll typically pass it as a
-        parameter when making the request to generate text from an LLM API.
-      </p>
-      <p>
-        If you’re using OpenAI's API to generate text, you can specify the stop
-        parameter in the API request.
-      </p>
-      <pre>
+        <p>
+          In many cases, a <strong>combination of criteria</strong> yields the
+          best results. For example, combining a token limit, EOS token
+          detection, and repetition-based stopping can create robust rules for
+          most tasks.
+        </p>
+      </div>
+      <h4 class="accordion">
+        1.8 How to use stop sequences in LLMs?<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
+      </h4>
+      <div>
+        <p>
+          Once you've defined the stop sequence, you'll typically pass it as a
+          parameter when making the request to generate text from an LLM API.
+        </p>
+        <p>
+          If you’re using OpenAI's API to generate text, you can specify the
+          stop parameter in the API request.
+        </p>
+        <pre>
         <code class="language-python">
           import openai
 
@@ -1069,113 +1113,121 @@
 
           print(response.choices[0].text.strip())
         </code></pre>
+      </div>
 
       <h2 id="prompt-engineering">2. Prompt Engineering</h2>
-      --------------------------------------------------
+      <h4 class="accordion">
+        2.1 Explain the basic structure of prompt engineering.<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
+      </h4>
 
-      <h4>2.1 Explain the basic structure of prompt engineering.</h4>
-      <p>
-        Effective prompting can unlock the full potential of large language
-        models (LLMs). While simple prompts can yield results, the quality of
-        the output improves with well-crafted instructions and sufficient
-        context.
-      </p>
-      <p>A prompt contains any of the following elements:</p>
-      <ul>
-        <li>
-          Instruction - a specific task or instruction you want the model to
-          perform
-        </li>
-        <li>
-          Context - external information or additional context that can steer
-          the model to better responses
-        </li>
-        <li>
-          Input Data - the input or question that we are interested to find a
-          response for
-        </li>
-        <li>Output Indicator - the type or format of the output.</li>
-      </ul>
-      <p>
-        To demonstrate the prompt elements better, here is a simple prompt that
-        aims to perform a text classification task:
-      </p>
-      <div class="responsive-code-container">
-        <pre><code>
+      <div>
+        <p>
+          Effective prompting can unlock the full potential of large language
+          models (LLMs). While simple prompts can yield results, the quality of
+          the output improves with well-crafted instructions and sufficient
+          context.
+        </p>
+        <p>A prompt contains any of the following elements:</p>
+        <ul>
+          <li>
+            Instruction - a specific task or instruction you want the model to
+            perform
+          </li>
+          <li>
+            Context - external information or additional context that can steer
+            the model to better responses
+          </li>
+          <li>
+            Input Data - the input or question that we are interested to find a
+            response for
+          </li>
+          <li>Output Indicator - the type or format of the output.</li>
+        </ul>
+        <p>
+          To demonstrate the prompt elements better, here is a simple prompt
+          that aims to perform a text classification task:
+        </p>
+        <div class="responsive-code-container">
+          <pre><code>
           Prompt: Classify the text into neutral, negative, or positive Text: I think the food was okay. Sentiment:
         </code></pre>
-      </div>
-      <p>
-        In the prompt example above, the instruction corresponds to the
-        classification task, "Classify the text into neutral, negative, or
-        positive". The input data corresponds to the "I think the food was
-        okay." part, and the output indicator used is "Sentiment:". Note that
-        this basic example doesn't use context but this can also be provided as
-        part of the prompt. For instance, the context for this text
-        classification prompt can be additional examples provided as part of the
-        prompt to help the model better understand the task and steer the type
-        of outputs that you expect. You do not need all four elements for a
-        prompt and the format depends on the task at hand. We will touch on more
-        concrete examples in upcoming guides.
-      </p>
-      <p>
-        As you get started with designing prompts, you should keep in mind that
-        it is really an iterative process that requires a lot of experimentation
-        to get optimal results. Using a simple playground from OpenAI or Cohere
-        is a good starting point. You can start with simple prompts and keep
-        adding more elements and context as you aim for better results.
-        Iterating your prompt along the way is vital for this reason. As you
-        read the guide, you will see many examples where specificity,
-        simplicity, and conciseness will often give you better results. When you
-        have a big task that involves many different subtasks, you can try to
-        break down the task into simpler subtasks and keep building up as you
-        get better results. This avoids adding too much complexity to the prompt
-        design process at the beginning.
-      </p>
+        </div>
+        <p>
+          In the prompt example above, the instruction corresponds to the
+          classification task, "Classify the text into neutral, negative, or
+          positive". The input data corresponds to the "I think the food was
+          okay." part, and the output indicator used is "Sentiment:". Note that
+          this basic example doesn't use context but this can also be provided
+          as part of the prompt. For instance, the context for this text
+          classification prompt can be additional examples provided as part of
+          the prompt to help the model better understand the task and steer the
+          type of outputs that you expect. You do not need all four elements for
+          a prompt and the format depends on the task at hand. We will touch on
+          more concrete examples in upcoming guides.
+        </p>
+        <p>
+          As you get started with designing prompts, you should keep in mind
+          that it is really an iterative process that requires a lot of
+          experimentation to get optimal results. Using a simple playground from
+          OpenAI or Cohere is a good starting point. You can start with simple
+          prompts and keep adding more elements and context as you aim for
+          better results. Iterating your prompt along the way is vital for this
+          reason. As you read the guide, you will see many examples where
+          specificity, simplicity, and conciseness will often give you better
+          results. When you have a big task that involves many different
+          subtasks, you can try to break down the task into simpler subtasks and
+          keep building up as you get better results. This avoids adding too
+          much complexity to the prompt design process at the beginning.
+        </p>
 
-      <p>
-        You can design effective prompts for various simple tasks by using
-        commands to instruct the model what you want to achieve, such as
-        "Write", "Classify", "Summarize", "Translate", "Order", etc. Keep in
-        mind that you also need to experiment a lot to see what works best. Try
-        different instructions with different keywords, contexts, and data and
-        see what works best for your particular use case and task. Usually, the
-        more specific and relevant the context is to the task you are trying to
-        perform, the better. We will touch on the importance of sampling and
-        adding more context in the upcoming guides. Others recommend that you
-        place instructions at the beginning of the prompt. Another
-        recommendation is to use some clear separator like "###" to separate the
-        instruction and context.
-      </p>
-      <p>Prompt:</p>
-      <div class="responsive-code-container">
-        <pre><code>
+        <p>
+          You can design effective prompts for various simple tasks by using
+          commands to instruct the model what you want to achieve, such as
+          "Write", "Classify", "Summarize", "Translate", "Order", etc. Keep in
+          mind that you also need to experiment a lot to see what works best.
+          Try different instructions with different keywords, contexts, and data
+          and see what works best for your particular use case and task.
+          Usually, the more specific and relevant the context is to the task you
+          are trying to perform, the better. We will touch on the importance of
+          sampling and adding more context in the upcoming guides. Others
+          recommend that you place instructions at the beginning of the prompt.
+          Another recommendation is to use some clear separator like "###" to
+          separate the instruction and context.
+        </p>
+        <p>Prompt:</p>
+        <div class="responsive-code-container">
+          <pre><code>
           ### Instruction ###
           Translate the text below to Spanish:
           Text: "hello!"
         </code></pre>
-      </div>
-      <p>Output: <code>¡Hola!</code></p>
+        </div>
+        <p>Output: <code>¡Hola!</code></p>
 
-      <p>
-        Be very specific about the instruction and task you want the model to
-        perform. The more descriptive and detailed the prompt is, the better the
-        results. This is particularly important when you have a desired outcome
-        or style of generation you are seeking. There aren't specific tokens or
-        keywords that lead to better results. It's more important to have a good
-        format and descriptive prompt. In fact, providing examples in the prompt
-        is very effective to get desired output in specific formats. When
-        designing prompts, you should also keep in mind the length of the prompt
-        as there are limitations regarding how long the prompt can be. Thinking
-        about how specific and detailed you should be. Including too many
-        unnecessary details is not necessarily a good approach. The details
-        should be relevant and contribute to the task at hand. This is something
-        you will need to experiment with a lot. We encourage a lot of
-        experimentation and iteration to optimize prompts for your applications.
-      </p>
-      <p>Prompt:</p>
-      <div class="responsive-code-container">
-        <pre><code>
+        <p>
+          Be very specific about the instruction and task you want the model to
+          perform. The more descriptive and detailed the prompt is, the better
+          the results. This is particularly important when you have a desired
+          outcome or style of generation you are seeking. There aren't specific
+          tokens or keywords that lead to better results. It's more important to
+          have a good format and descriptive prompt. In fact, providing examples
+          in the prompt is very effective to get desired output in specific
+          formats. When designing prompts, you should also keep in mind the
+          length of the prompt as there are limitations regarding how long the
+          prompt can be. Thinking about how specific and detailed you should be.
+          Including too many unnecessary details is not necessarily a good
+          approach. The details should be relevant and contribute to the task at
+          hand. This is something you will need to experiment with a lot. We
+          encourage a lot of experimentation and iteration to optimize prompts
+          for your applications.
+        </p>
+        <p>Prompt:</p>
+        <div class="responsive-code-container">
+          <pre><code>
           Extract the name of places in the following text. 
 
           Desired format:
@@ -1186,571 +1238,615 @@
           Henrique Veiga-Fernandes, a neuroimmunologist at the Champalimaud Centre for the Unknown in Lisbon. 
           “If we want to use it in the therapeutic context, we actually need to understand the mechanism.“"
         </code></pre>
-      </div>
+        </div>
 
-      <p>
-        Output: <code>Place: Champalimaud Centre for the Unknown, Lisbon</code>
-      </p>
+        <p>
+          Output:
+          <code>Place: Champalimaud Centre for the Unknown, Lisbon</code>
+        </p>
 
-      <p>
-        It's often better to be specific and direct. The more direct, the more
-        effective the message gets across. For example, you might be interested
-        in learning the concept of prompt engineering. You might try something
-        like:
-      </p>
-      <div class="responsive-code-container">
-        <pre><code>
+        <p>
+          It's often better to be specific and direct. The more direct, the more
+          effective the message gets across. For example, you might be
+          interested in learning the concept of prompt engineering. You might
+          try something like:
+        </p>
+        <div class="responsive-code-container">
+          <pre><code>
           ### Instruction ###
           Explain the concept prompt engineering. 
           Keep the explanation short, only a few sentences, and don't be too descriptive.
         </code></pre>
-      </div>
-      <p>
-        It's not clear from the prompt above how many sentences to use and what
-        style. You might still somewhat get good responses with the above
-        prompts but the better prompt would be one that is very specific,
-        concise, and to the point. Something like:
-      </p>
-      <div class="responsive-code-container">
-        <pre><code>
+        </div>
+        <p>
+          It's not clear from the prompt above how many sentences to use and
+          what style. You might still somewhat get good responses with the above
+          prompts but the better prompt would be one that is very specific,
+          concise, and to the point. Something like:
+        </p>
+        <div class="responsive-code-container">
+          <pre><code>
           Use 2-3 sentences to explain the concept of prompt engineering to a high school student.
         </code></pre>
+        </div>
+        <p>
+          Another common tip when designing prompts is to avoid saying what not
+          to do but say what to do instead. This encourages more specificity and
+          focuses on the details that lead to good responses from the model.
+        </p>
+
+        <p>
+          Sources:
+          <a
+            href="https://www.promptingguide.ai/introduction/basics"
+            target="_blank"
+            >https://www.promptingguide.ai/introduction/basics</a
+          >
+        </p>
       </div>
-      <p>
-        Another common tip when designing prompts is to avoid saying what not to
-        do but say what to do instead. This encourages more specificity and
-        focuses on the details that lead to good responses from the model.
-      </p>
-
-      <p>
-        Sources:
-        <a
-          href="https://www.promptingguide.ai/introduction/basics"
-          target="_blank"
-          >https://www.promptingguide.ai/introduction/basics</a
+      <h4 class="accordion">
+        2.2 Explain in-context learning.<span class="arrow" style="float: left"
+          >&#9660;</span
         >
-      </p>
+      </h4>
+      <div>
+        <p>
+          In-context learning is a capability of large language models (LMs) to
+          perform new tasks by conditioning on a few input-label pairs, known as
+          demonstrations, during inference without any gradient updates or model
+          retraining. This approach allows models to generalize to new tasks by
+          observing task examples within the input context, effectively learning
+          through inference alone
+        </p>
+        <p>Key Concepts of In-Context Learning:</p>
+        <ul>
+          <li>
+            Demonstrations: The model is presented with examples of input-label
+            pairs (e.g., question-answer pairs) that illustrate the task. These
+            are concatenated in the input prompt along with a test example for
+            which the model generates a prediction.
+          </li>
+          <li>
+            Zero-shot vs. Few-shot: In-context learning enhances zero-shot
+            methods, enabling models to perform tasks without prior exposure.
+            However, few-shot learning, which involves presenting the model with
+            a small set of task examples, typically leads to significantly
+            higher accuracy and generalization across diverse tasks by offering
+            context-specific guidance (but requires explicit
+            training/fine-tuning phase).
+          </li>
+        </ul>
+        <p>
+          A fascinating insight from seminal research (<a
+            href="https://arxiv.org/abs/2202.12837"
+            target="_blank"
+            >Min et al., 2022</a
+          >) challenges our understanding of how language models learn from
+          examples: the accuracy of labels in demonstrations appears to have
+          minimal impact on task performance. Their experiments showed that even
+          when correct labels are randomly replaced with incorrect ones, model
+          performance remains largely unchanged across various classification
+          and multiple-choice tasks. This counter-intuitive finding was
+          consistently observed across different model scales, including GPT-3.
+        </p>
 
-      <h4>2.2 Explain in-context learning.</h4>
-
-      <p>
-        In-context learning is a capability of large language models (LMs) to
-        perform new tasks by conditioning on a few input-label pairs, known as
-        demonstrations, during inference without any gradient updates or model
-        retraining. This approach allows models to generalize to new tasks by
-        observing task examples within the input context, effectively learning
-        through inference alone
-      </p>
-      <p>Key Concepts of In-Context Learning:</p>
-      <ul>
-        <li>
-          Demonstrations: The model is presented with examples of input-label
-          pairs (e.g., question-answer pairs) that illustrate the task. These
-          are concatenated in the input prompt along with a test example for
-          which the model generates a prediction.
-        </li>
-        <li>
-          Zero-shot vs. Few-shot: In-context learning enhances zero-shot
-          methods, enabling models to perform tasks without prior exposure.
-          However, few-shot learning, which involves presenting the model with a
-          small set of task examples, typically leads to significantly higher
-          accuracy and generalization across diverse tasks by offering
-          context-specific guidance (but requires explicit training/fine-tuning
-          phase).
-        </li>
-      </ul>
-      <p>
-        A fascinating insight from seminal research (<a
-          href="https://arxiv.org/abs/2202.12837"
-          target="_blank"
-          >Min et al., 2022</a
-        >) challenges our understanding of how language models learn from
-        examples: the accuracy of labels in demonstrations appears to have
-        minimal impact on task performance. Their experiments showed that even
-        when correct labels are randomly replaced with incorrect ones, model
-        performance remains largely unchanged across various classification and
-        multiple-choice tasks. This counter-intuitive finding was consistently
-        observed across different model scales, including GPT-3.
-      </p>
-
-      <p>
-        Through extensive experimentation, the researchers uncovered that large
-        language models heavily rely on superficial patterns rather than deep
-        semantic understanding. This suggests that in-context learning functions
-        more as sophisticated pattern matching than true learning - the model
-        uses provided input-output examples to retrieve and apply similar
-        patterns from its training data. However, this mechanism proves fragile:
-        even minor modifications to labeling formats or demonstration templates
-        can significantly degrade performance, revealing the brittle nature of
-        this capability.
-      </p>
-      <h4>2.3 Explain types of prompt engineering.</h4>
-      <p>
-        Prompt engineering is the process of crafting and refining prompts to
-        optimize the performance and accuracy of AI language models.
-      </p>
-      <ul>
-        <li>
-          <strong>Zero-shot Prompting</strong>
-          <p>
-            Description: This involves providing the model with a task or
-            question without giving any examples.
-          </p>
-          <p>
-            Use Case: When the model is expected to generalize from its
-            pre-existing knowledge.
-          </p>
-          <p>Example: "Write a summary of the following text."</p>
-        </li>
-        <li>
-          <strong>One-shot Prompting</strong>
-          <p>
-            Description: The model is given one example before performing the
-            task.
-          </p>
-          <p>
-            Use Case: Helps guide the model by offering a single reference
-            point.
-          </p>
-          <p>
-            Example: "Translate the following sentence into French. Example:
-            'Hello' -> 'Bonjour'. Now translate: 'Good morning'."
-          </p>
-        </li>
-        <li>
-          <strong>Few-shot Prompting</strong>
-          <p>
-            Description: The model receives multiple examples to learn the
-            pattern before completing the task.
-          </p>
-          <p>
-            Use Case: Useful for complex tasks requiring nuanced understanding.
-          </p>
-          <p>
-            Example: "Convert these active sentences to passive voice: 'John
-            eats an apple.' -> 'An apple is eaten by John.' 'Sarah writes a
-            book.' -> 'A book is written by Sarah.' Now convert: 'Tom kicks the
-            ball.'"
-          </p>
-        </li>
-        <li>
-          <strong>Chain-of-thought Prompting</strong>
-          <p>
-            Description: Encourages the model to explain its reasoning process
-            step by step.
-          </p>
-          <p>
-            Use Case: Useful for problem-solving and logical reasoning tasks.
-          </p>
-          <p>
-            Example: "Solve the following math problem by explaining each step.
-            What is 45 divided by 3?"
-          </p>
-        </li>
-        <li>
-          <strong>Instruction-based Prompting</strong>
-          <p>
-            Description: The model is explicitly instructed to perform a task in
-            a specific way.
-          </p>
-          <p>
-            Use Case: Ensures the output follows a strict format or guideline.
-          </p>
-          <p>Example: "List three benefits of exercise in bullet points."</p>
-        </li>
-        <li>
-          <strong>Persona-based Prompting</strong>
-          <p>
-            Description: The model is prompted to respond as if it were a
-            specific character or role.
-          </p>
-          <p>
-            Use Case: Enhances engagement or aligns the response with a
-            particular tone or expertise.
-          </p>
-          <p>
-            Example: "You are a nutritionist. Explain the benefits of a balanced
-            diet."
-          </p>
-        </li>
-        <li>
-          <strong>Contextual Prompting</strong>
-          <p>
-            Description: The model is provided with relevant context or
-            background information before answering.
-          </p>
-          <p>Use Case: Helps improve relevance and coherence of responses.</p>
-          <p>
-            Example: "Given that climate change is accelerating, suggest three
-            ways to reduce carbon emissions."
-          </p>
-        </li>
-        <li>
-          <strong>Iterative Prompting</strong>
-          <p>
-            Description: The prompt evolves based on feedback or prior outputs.
-          </p>
-          <p>Use Case: Improves performance through a refinement loop.</p>
-          <p>
-            Example: "Rewrite the following paragraph to make it clearer. If
-            necessary, suggest additional edits."
-          </p>
-        </li>
-      </ul>
-      <h4>
+        <p>
+          Through extensive experimentation, the researchers uncovered that
+          large language models heavily rely on superficial patterns rather than
+          deep semantic understanding. This suggests that in-context learning
+          functions more as sophisticated pattern matching than true learning -
+          the model uses provided input-output examples to retrieve and apply
+          similar patterns from its training data. However, this mechanism
+          proves fragile: even minor modifications to labeling formats or
+          demonstration templates can significantly degrade performance,
+          revealing the brittle nature of this capability.
+        </p>
+      </div>
+      <h4 class="accordion">
+        2.3 Explain types of prompt engineering.<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
+      </h4>
+      <div>
+        <p>
+          Prompt engineering is the process of crafting and refining prompts to
+          optimize the performance and accuracy of AI language models.
+        </p>
+        <ul>
+          <li>
+            <strong>Zero-shot Prompting</strong>
+            <p>
+              Description: This involves providing the model with a task or
+              question without giving any examples.
+            </p>
+            <p>
+              Use Case: When the model is expected to generalize from its
+              pre-existing knowledge.
+            </p>
+            <p>Example: "Write a summary of the following text."</p>
+          </li>
+          <li>
+            <strong>One-shot Prompting</strong>
+            <p>
+              Description: The model is given one example before performing the
+              task.
+            </p>
+            <p>
+              Use Case: Helps guide the model by offering a single reference
+              point.
+            </p>
+            <p>
+              Example: "Translate the following sentence into French. Example:
+              'Hello' -> 'Bonjour'. Now translate: 'Good morning'."
+            </p>
+          </li>
+          <li>
+            <strong>Few-shot Prompting</strong>
+            <p>
+              Description: The model receives multiple examples to learn the
+              pattern before completing the task.
+            </p>
+            <p>
+              Use Case: Useful for complex tasks requiring nuanced
+              understanding.
+            </p>
+            <p>
+              Example: "Convert these active sentences to passive voice: 'John
+              eats an apple.' -> 'An apple is eaten by John.' 'Sarah writes a
+              book.' -> 'A book is written by Sarah.' Now convert: 'Tom kicks
+              the ball.'"
+            </p>
+          </li>
+          <li>
+            <strong>Chain-of-thought Prompting</strong>
+            <p>
+              Description: Encourages the model to explain its reasoning process
+              step by step.
+            </p>
+            <p>
+              Use Case: Useful for problem-solving and logical reasoning tasks.
+            </p>
+            <p>
+              Example: "Solve the following math problem by explaining each
+              step. What is 45 divided by 3?"
+            </p>
+          </li>
+          <li>
+            <strong>Instruction-based Prompting</strong>
+            <p>
+              Description: The model is explicitly instructed to perform a task
+              in a specific way.
+            </p>
+            <p>
+              Use Case: Ensures the output follows a strict format or guideline.
+            </p>
+            <p>Example: "List three benefits of exercise in bullet points."</p>
+          </li>
+          <li>
+            <strong>Persona-based Prompting</strong>
+            <p>
+              Description: The model is prompted to respond as if it were a
+              specific character or role.
+            </p>
+            <p>
+              Use Case: Enhances engagement or aligns the response with a
+              particular tone or expertise.
+            </p>
+            <p>
+              Example: "You are a nutritionist. Explain the benefits of a
+              balanced diet."
+            </p>
+          </li>
+          <li>
+            <strong>Contextual Prompting</strong>
+            <p>
+              Description: The model is provided with relevant context or
+              background information before answering.
+            </p>
+            <p>Use Case: Helps improve relevance and coherence of responses.</p>
+            <p>
+              Example: "Given that climate change is accelerating, suggest three
+              ways to reduce carbon emissions."
+            </p>
+          </li>
+          <li>
+            <strong>Iterative Prompting</strong>
+            <p>
+              Description: The prompt evolves based on feedback or prior
+              outputs.
+            </p>
+            <p>Use Case: Improves performance through a refinement loop.</p>
+            <p>
+              Example: "Rewrite the following paragraph to make it clearer. If
+              necessary, suggest additional edits."
+            </p>
+          </li>
+        </ul>
+      </div>
+      <h4 class="accordion">
         2.4 What are some aspects to keep in mind while using few-shots
-        prompting?
+        prompting?<span class="arrow" style="float: left">&#9660;</span>
       </h4>
-      <p>
-        <strong>Few-shot prompting</strong> has emerged as a powerful technique
-        in natural language processing, particularly valuable when labeled data
-        is scarce. This approach, which involves providing a model with
-        carefully selected examples to guide its responses, requires thoughtful
-        consideration of several key elements to maximize its effectiveness. At
-        the foundation of successful few-shot prompting lies the art of
-        <strong>example selection</strong> and <strong>formatting</strong>. The
-        examples you choose should represent a diverse range of scenarios within
-        your task's scope while maintaining clarity and unambiguity. It's
-        crucial to establish a consistent format across all examples, clearly
-        delineating inputs from outputs to help the model understand the pattern
-        you want it to follow.
-      </p>
+      <div>
+        <p>
+          <strong>Few-shot prompting</strong> has emerged as a powerful
+          technique in natural language processing, particularly valuable when
+          labeled data is scarce. This approach, which involves providing a
+          model with carefully selected examples to guide its responses,
+          requires thoughtful consideration of several key elements to maximize
+          its effectiveness. At the foundation of successful few-shot prompting
+          lies the art of <strong>example selection</strong> and
+          <strong>formatting</strong>. The examples you choose should represent
+          a diverse range of scenarios within your task's scope while
+          maintaining clarity and unambiguity. It's crucial to establish a
+          consistent format across all examples, clearly delineating inputs from
+          outputs to help the model understand the pattern you want it to
+          follow.
+        </p>
 
-      <p>
-        The question of <strong>quantity</strong> often arises in few-shot
-        prompting. While there's no universal rule, experience shows that three
-        to five examples typically provide a sweet spot between sufficient
-        context and avoiding cognitive overload. This number can be adjusted
-        based on your specific task's complexity and requirements. The
-        <strong>arrangement</strong> of these examples matters significantly -
-        starting with simpler cases and progressively moving to more complex
-        ones helps the model build understanding gradually, much like how humans
-        learn new concepts.
-      </p>
+        <p>
+          The question of <strong>quantity</strong> often arises in few-shot
+          prompting. While there's no universal rule, experience shows that
+          three to five examples typically provide a sweet spot between
+          sufficient context and avoiding cognitive overload. This number can be
+          adjusted based on your specific task's complexity and requirements.
+          The <strong>arrangement</strong> of these examples matters
+          significantly - starting with simpler cases and progressively moving
+          to more complex ones helps the model build understanding gradually,
+          much like how humans learn new concepts.
+        </p>
 
-      <p>
-        <strong>Task clarity</strong> plays a vital role in the success of
-        few-shot prompting. Before presenting any examples, it's essential to
-        establish a clear definition of the task or objective. For complex
-        tasks, explicit instructions can serve as valuable guardrails, helping
-        the model stay on track and deliver more accurate results.
-      </p>
+        <p>
+          <strong>Task clarity</strong> plays a vital role in the success of
+          few-shot prompting. Before presenting any examples, it's essential to
+          establish a clear definition of the task or objective. For complex
+          tasks, explicit instructions can serve as valuable guardrails, helping
+          the model stay on track and deliver more accurate results.
+        </p>
 
-      <p>
-        The <strong>sensitivity</strong> of language models to subtle variations
-        in prompting cannot be overstated. Minor changes in phrasing or example
-        order can significantly impact performance. This characteristic makes it
-        essential to experiment with different approaches and validate outputs
-        regularly. Whether through manual review, automated testing, or
-        cross-validation, consistent <strong>output verification</strong> helps
-        ensure the model maintains alignment with expected outcomes.
-      </p>
+        <p>
+          The <strong>sensitivity</strong> of language models to subtle
+          variations in prompting cannot be overstated. Minor changes in
+          phrasing or example order can significantly impact performance. This
+          characteristic makes it essential to experiment with different
+          approaches and validate outputs regularly. Whether through manual
+          review, automated testing, or cross-validation, consistent
+          <strong>output verification</strong> helps ensure the model maintains
+          alignment with expected outcomes.
+        </p>
 
-      <p>
-        <strong>Domain adaptation</strong> represents another crucial aspect of
-        effective few-shot prompting. The examples you provide should reflect
-        the specific context and terminology of your target domain. This
-        alignment between examples and domain context significantly enhances the
-        relevance and accuracy of the model's outputs, leading to more practical
-        and applicable results.
-      </p>
-      <h4>2.5 What are certain strategies to write good prompts?</h4>
+        <p>
+          <strong>Domain adaptation</strong> represents another crucial aspect
+          of effective few-shot prompting. The examples you provide should
+          reflect the specific context and terminology of your target domain.
+          This alignment between examples and domain context significantly
+          enhances the relevance and accuracy of the model's outputs, leading to
+          more practical and applicable results.
+        </p>
+      </div>
+      <h4 class="accordion">
+        2.5 What are certain strategies to write good prompts?<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
+      </h4>
 
-      <p>
-        Craft effective prompts to elicit clear, relevant, and creative
-        responses. Be specific to avoid vagueness.
-      </p>
-      <ul>
-        <li>
-          Use "Describe a smartphone for seniors with usability features"
-          instead of "Describe a product."
-        </li>
-        <li>
-          Provide context, e.g., "You are a marketing manager launching an
-          energy drink. Write an ad for college students."
-        </li>
-        <li>
-          Ask open-ended questions, like "What are the benefits and challenges
-          of remote work?" to encourage detailed answers.
-        </li>
-        <li>
-          Guide responses with examples and constraints, such as "Summarize a
-          novel in 100 words with a plot twist."
-        </li>
-        <li>
-          Specify tone and style for the audience: "Write a persuasive letter
-          advocating for public transportation expansion."
-        </li>
-        <li>
-          Break down complex tasks: "List three waste-reduction strategies and
-          explain their implementation."
-        </li>
-        <li>
-          Test and refine prompts by adjusting phrasing. Clarify by adding
-          details, e.g., "Describe a futuristic city in 2050 focusing on
-          technology and sustainability."
-        </li>
-      </ul>
-
-      <h4>
+      <div>
+        <p>
+          Craft effective prompts to elicit clear, relevant, and creative
+          responses. Be specific to avoid vagueness.
+        </p>
+        <ul>
+          <li>
+            Use "Describe a smartphone for seniors with usability features"
+            instead of "Describe a product."
+          </li>
+          <li>
+            Provide context, e.g., "You are a marketing manager launching an
+            energy drink. Write an ad for college students."
+          </li>
+          <li>
+            Ask open-ended questions, like "What are the benefits and challenges
+            of remote work?" to encourage detailed answers.
+          </li>
+          <li>
+            Guide responses with examples and constraints, such as "Summarize a
+            novel in 100 words with a plot twist."
+          </li>
+          <li>
+            Specify tone and style for the audience: "Write a persuasive letter
+            advocating for public transportation expansion."
+          </li>
+          <li>
+            Break down complex tasks: "List three waste-reduction strategies and
+            explain their implementation."
+          </li>
+          <li>
+            Test and refine prompts by adjusting phrasing. Clarify by adding
+            details, e.g., "Describe a futuristic city in 2050 focusing on
+            technology and sustainability."
+          </li>
+        </ul>
+      </div>
+      <h4 class="accordion">
         2.6 What is hallucination, and how can it be controlled using prompt
-        engineering?
+        engineering?<span class="arrow" style="float: left">&#9660;</span>
       </h4>
-      <p>
-        Hallucination in AI refers to the generation of incorrect, nonsensical,
-        or fabricated outputs by models, particularly in NLP and generative
-        tasks. These outputs are not grounded in data but appear plausible. This
-        occurs when models misinterpret input or overgeneralize patterns.
-      </p>
-      <p>
-        Manifestations include:
-        <strong>Factual inaccuracies</strong> (False information),
-        <strong>Logical inconsistencies</strong> (Contradictions or errors), and
-        <strong>Fabrication</strong> (Nonexistent references or data).
-      </p>
-      <p>
-        Causes of hallucination include incomplete or biased training data, the
-        complexity of models that generate diverse but occasionally erroneous
-        outputs, vague or ambiguous input that prompts fabrication, and
-        overfitting, where models memorize data instead of effectively
-        generalizing.
-      </p>
-      <p>
-        Prompt engineering refines input to guide AI toward accurate outputs,
-        minimizing hallucinations.
-      </p>
-      <p>Key Techniques to optimize outputs:</p>
-      <ul>
-        <li>
-          <strong>Precise Language:</strong> Use specific prompts. For example,
-          instead of a vague prompt, say, "List NASA space milestones from 1960
-          to 2020." This helps the model understand exactly what information you
-          are seeking.
-        </li>
-        <li>
-          <strong>Context:</strong> Add relevant background. For instance, if
-          you want a summary of a report, say, "Summarize the 2022 IPCC climate
-          report." Providing context helps the model generate more accurate and
-          relevant information.
-        </li>
-        <li>
-          <strong>Scope Limitation:</strong> Limit the scope of the response.
-          For example, ask, "Give five facts about renewable energy, excluding
-          fossil fuels." This focuses the model's output and avoids unnecessary
-          information.
-        </li>
-        <li>
-          <strong>Break Down Queries:</strong> Enhance clarity by breaking down
-          queries into parts. For example, ask, "Explain the greenhouse effect,
-          then describe CO2's role." This step-by-step approach guides the model
-          through complex topics more effectively.
-        </li>
-        <li>
-          <strong>Request Sources:</strong> Add credibility by requesting
-          sources or citations. For example, say, "List three studies on
-          meditation reducing stress." This encourages the model to provide
-          verifiable information.
-        </li>
-      </ul>
-      <p>
-        Regular monitoring, feedback, and iterative prompt refinement reduce
-        hallucinations. In critical tasks, human oversight ensures accuracy.
-      </p>
-      <h4>
+      <div>
+        <p>
+          Hallucination in AI refers to the generation of incorrect,
+          nonsensical, or fabricated outputs by models, particularly in NLP and
+          generative tasks. These outputs are not grounded in data but appear
+          plausible. This occurs when models misinterpret input or
+          overgeneralize patterns.
+        </p>
+        <p>
+          Manifestations include:
+          <strong>Factual inaccuracies</strong> (False information),
+          <strong>Logical inconsistencies</strong> (Contradictions or errors),
+          and <strong>Fabrication</strong> (Nonexistent references or data).
+        </p>
+        <p>
+          Causes of hallucination include incomplete or biased training data,
+          the complexity of models that generate diverse but occasionally
+          erroneous outputs, vague or ambiguous input that prompts fabrication,
+          and overfitting, where models memorize data instead of effectively
+          generalizing.
+        </p>
+        <p>
+          Prompt engineering refines input to guide AI toward accurate outputs,
+          minimizing hallucinations.
+        </p>
+        <p>Key Techniques to optimize outputs:</p>
+        <ul>
+          <li>
+            <strong>Precise Language:</strong> Use specific prompts. For
+            example, instead of a vague prompt, say, "List NASA space milestones
+            from 1960 to 2020." This helps the model understand exactly what
+            information you are seeking.
+          </li>
+          <li>
+            <strong>Context:</strong> Add relevant background. For instance, if
+            you want a summary of a report, say, "Summarize the 2022 IPCC
+            climate report." Providing context helps the model generate more
+            accurate and relevant information.
+          </li>
+          <li>
+            <strong>Scope Limitation:</strong> Limit the scope of the response.
+            For example, ask, "Give five facts about renewable energy, excluding
+            fossil fuels." This focuses the model's output and avoids
+            unnecessary information.
+          </li>
+          <li>
+            <strong>Break Down Queries:</strong> Enhance clarity by breaking
+            down queries into parts. For example, ask, "Explain the greenhouse
+            effect, then describe CO2's role." This step-by-step approach guides
+            the model through complex topics more effectively.
+          </li>
+          <li>
+            <strong>Request Sources:</strong> Add credibility by requesting
+            sources or citations. For example, say, "List three studies on
+            meditation reducing stress." This encourages the model to provide
+            verifiable information.
+          </li>
+        </ul>
+        <p>
+          Regular monitoring, feedback, and iterative prompt refinement reduce
+          hallucinations. In critical tasks, human oversight ensures accuracy.
+        </p>
+      </div>
+      <h4 class="accordion">
         2.7 How to improve the reasoning ability of LLM through prompt
-        engineering?
+        engineering?<span class="arrow" style="float: left">&#9660;</span>
       </h4>
-      <p>
-        Improving the reasoning ability of large language models (LLMs) through
-        prompt engineering involves using specific strategies to guide the
-        model's thought process. Here are some effective techniques:
-      </p>
-      <ol>
-        <li>
-          <strong>Chain-of-Thought Prompting:</strong> Enable step-by-step
-          reasoning by explicitly asking the model to break down its thinking
-          process. For example, instead of "What's 13 x 27?", use "Let's solve
-          13 x 27 step by step. Think through each part of the calculation."
-          Chain-of-thought (CoT) prompting, as originally outlined by Wei et.
-          al. in their paper
-          <a href="https://arxiv.org/abs/2201.11903" target="_blank"
-            >"Chain of Thought Prompting Elicits Reasoning in Large Language
-            Models"</a
-          >, is a form of few-shot prompting. Few-shot prompting, in contrast to
-          zero-shot prompting, involves providing an “exemplar” (example) of a
-          similar question and answer pair before posing the question which the
-          LLM should solve. In CoT prompting, the exemplar answer walks through
-          the problem step-by-step. This compels the LLM to then respond to the
-          real question step-by-step, mimicking the exemplar answer.
-        </li>
-        <li>
-          <strong>Zero-Shot Chain-of-Thought:</strong> Zero-shot
-          chain-of-thought prompting, as outlined by Kojima et. al. in their
-          paper
-          <a href="https://arxiv.org/abs/2205.11916" target="_blank"
-            >"Large Language Models are Zero-Shot Reasoners"</a
-          >, attempts to emulate this effect by simply appending the phrase
-          “let’s think step by step” to the prompt, without providing an
-          exemplar. It is crucial to understand that this zero-shot
-          chain-of-thought prompting is the form of CoT prompting which this
-          novel method seeks to improve, not the original “few-shot” CoT
-          prompting.
-        </li>
-        <img
-          src="../assets/cot.webp"
-          alt="Visualization of CoR and LoT prompting"
-          class="responsive-img"
-          width="720"
-          height="480"
-        />
-        <li>
-          <strong>LoT Prompting (Logic of Thought Prompting):</strong>
-
-          LoT prompting begins by asking the LLM to solve the problem step by
-          step, similar to zero-shot chain-of-thought prompting. After the LLM
-          provides its initial step-by-step solution, follow-up prompts instruct
-          it to verify each step. Specifically, the LLM is asked to give both a
-          positive and negative review for each step, then justify the correct
-          part of the reasoning and criticize the incorrect one, based on the
-          original problem’s premises. If necessary, the LLM is directed to
-          revise the step according to its own critique. Once a step is revised
-          or confirmed, the original problem is restated, along with the
-          verified or updated steps, to ensure the solution is coherent and
-          accurate.
-        </li>
-        <br />
-        <img
-          src="../assets/LoT.webp"
-          alt="LoT mechanism"
-          class="responsive-img"
-          width="720"
-          height="480"
-        />
-        <li>
-          <strong>Self-Consistency:</strong> Ask the model to approach the
-          problem from multiple angles and cross-check its reasoning. For
-          instance, "Solve this problem using two different methods and verify
-          that they give the same result."
-        </li>
-        <li>
-          <strong>Program of Thoughts (PoT):</strong>
-          Program of Thoughts (PoT) is a prompting technique that combines the
-          strengths of Chain-of-Thought (CoT) and program synthesis. It involves
-          generating a program or a sequence of instructions that the model can
-          follow to solve a problem. This approach leverages the model's ability
-          to understand and execute structured instructions, leading to more
-          accurate and reliable reasoning. In PoT, the large language models
-          (LLMs) are primarily responsible for expressing the ‘reasoning
-          process’ in a programming language, while the computation is delegated
-          to an external process, such as a Python interpreter. By disentangling
-          computation from reasoning, PoT addresses challenges LLMs face in
-          generating complex equations, such as those involving cubes or
-          polynomials. Key aspects of PoT include:
-          <ol>
-            <li>Breaking down problems into a multi-step ‘thought’ process.</li>
-            <li>
-              Binding semantic meanings to variables. By using semantically
-              meaningful variable names (e.g., <code>interest_rate</code> or
-              <code>sum_in_two_years_with_interest</code>), PoT creates a
-              structured representation that aligns with human reasoning.
-            </li>
-          </ol>
-          This structured approach enhances the model's ability to solve tasks
-          involving numerical reasoning and logical inference.
-
-          <p>PoT Evaluation:</p>
-          <ul>
-            <li>
-              PoT has been tested across multiple datasets, including
-              mathematical word problems (MWP) and financial datasets.
-            </li>
-            <li>
-              In few-shot settings, PoT showed an average gain of 8% over CoT on
-              MWP datasets and 15% on financial datasets. In zero-shot settings,
-              it achieved a 12% average gain on MWP datasets.
-            </li>
-            <li>
-              Combining PoT with self-consistency (SC) decoding further improved
-              performance, outperforming CoT+SC by an average of 10%.
-            </li>
-            <li>
-              PoT+SC achieved the best-known results on MWP datasets and
-              near-best results on financial datasets (excluding GPT-4).
-            </li>
-          </ul>
-
-          <p>
-            The following diagram illustrates how PoT resolves complex problems
-            that traditional CoT approaches fail to address, utilizing Python
-            programs to express reasoning and relying on a Python interpreter
-            for computation.
-          </p>
+      <div>
+        <p>
+          Improving the reasoning ability of large language models (LLMs)
+          through prompt engineering involves using specific strategies to guide
+          the model's thought process. Here are some effective techniques:
+        </p>
+        <ol>
+          <li>
+            <strong>Chain-of-Thought Prompting:</strong> Enable step-by-step
+            reasoning by explicitly asking the model to break down its thinking
+            process. For example, instead of "What's 13 x 27?", use "Let's solve
+            13 x 27 step by step. Think through each part of the calculation."
+            Chain-of-thought (CoT) prompting, as originally outlined by Wei et.
+            al. in their paper
+            <a href="https://arxiv.org/abs/2201.11903" target="_blank"
+              >"Chain of Thought Prompting Elicits Reasoning in Large Language
+              Models"</a
+            >, is a form of few-shot prompting. Few-shot prompting, in contrast
+            to zero-shot prompting, involves providing an “exemplar” (example)
+            of a similar question and answer pair before posing the question
+            which the LLM should solve. In CoT prompting, the exemplar answer
+            walks through the problem step-by-step. This compels the LLM to then
+            respond to the real question step-by-step, mimicking the exemplar
+            answer.
+          </li>
+          <li>
+            <strong>Zero-Shot Chain-of-Thought:</strong> Zero-shot
+            chain-of-thought prompting, as outlined by Kojima et. al. in their
+            paper
+            <a href="https://arxiv.org/abs/2205.11916" target="_blank"
+              >"Large Language Models are Zero-Shot Reasoners"</a
+            >, attempts to emulate this effect by simply appending the phrase
+            “let’s think step by step” to the prompt, without providing an
+            exemplar. It is crucial to understand that this zero-shot
+            chain-of-thought prompting is the form of CoT prompting which this
+            novel method seeks to improve, not the original “few-shot” CoT
+            prompting.
+          </li>
           <img
-            src="../assets/pot.jpg"
-            alt="PoT mechanism"
+            src="../assets/cot.webp"
+            alt="Visualization of CoR and LoT prompting"
             class="responsive-img"
             width="720"
             height="480"
           />
-          <p>
-            Source:
-            <a href="https://arxiv.org/pdf/2211.12588.pdf"
-              >arxiv.org/2211.12588</a
-            >
-          </p>
-        </li>
+          <li>
+            <strong>LoT Prompting (Logic of Thought Prompting):</strong>
 
-        <li>
-          <strong>Structure Decomposition:</strong> Break complex problems into
-          smaller sub-problems. For example, instead of "Analyze this investment
-          strategy," use "Let's analyze this investment strategy by first
-          examining the risk factors, then calculating potential returns, and
-          finally evaluating market conditions."
-        </li>
-        <li>
-          <strong>Explicit Constraints and Requirements:</strong> Clearly state
-          what constitutes valid reasoning. For example, "Your solution must
-          include clear assumptions, mathematical justification, and potential
-          edge cases."
-        </li>
-        <li>
-          <strong>Role Prompting:</strong> Assign a specific expert role to
-          encourage domain-specific reasoning. For example, "As a mathematical
-          logician, explain why..."
-        </li>
-        <li>
-          <strong>Meta-Cognition Prompting:</strong> Ask the model to evaluate
-          its own reasoning. For example, "After providing your solution,
-          explain which parts of your reasoning you're most and least confident
-          about."
-        </li>
-      </ol>
-      <h4>2.8 How to improve LLM reasoning if your COT prompt fails?</h4>
-      <p>
-        CoT prompts help guide logical steps, but their effectiveness depends
-        heavily on their design and context.
-      </p>
-      <p>
-        <strong>Clarity</strong> in the prompt is crucial. Specific instructions
-        tailored to the problem often yield better results than vague requests.
-        Breaking problems into smaller parts makes reasoning more manageable,
-        particularly when combined with illustrative examples. For instance,
-        guiding the model to identify known quantities, apply formulas, and
-        simplify step-by-step enhances accuracy. <strong>Context</strong> is
-        another key factor. Prompts lacking sufficient information can confuse
-        the model. Including necessary background or providing structured inputs
-        such as diagrams or tables helps clarify expectations.
-        <strong>Rephrasing</strong> questions or representing problems visually
-        can also aid reasoning. Experimenting with different phrasings often
-        reveals what works best for the model.
-        <strong> Self-verification </strong> is a valuable technique. Prompts
-        that ask the model to review and justify its solutions can uncover
-        errors and fill gaps in logic. Integrating
-        <strong> external tools </strong>can further support structured
-        reasoning. For example, pairing the LLM with symbolic solvers or
-        computation platforms like WolframAlpha ensures precision in tasks
-        requiring formal logic or accurate calculations.
-      </p>
+            LoT prompting begins by asking the LLM to solve the problem step by
+            step, similar to zero-shot chain-of-thought prompting. After the LLM
+            provides its initial step-by-step solution, follow-up prompts
+            instruct it to verify each step. Specifically, the LLM is asked to
+            give both a positive and negative review for each step, then justify
+            the correct part of the reasoning and criticize the incorrect one,
+            based on the original problem’s premises. If necessary, the LLM is
+            directed to revise the step according to its own critique. Once a
+            step is revised or confirmed, the original problem is restated,
+            along with the verified or updated steps, to ensure the solution is
+            coherent and accurate.
+          </li>
+          <br />
+          <img
+            src="../assets/LoT.webp"
+            alt="LoT mechanism"
+            class="responsive-img"
+            width="720"
+            height="480"
+          />
+          <li>
+            <strong>Self-Consistency:</strong> Ask the model to approach the
+            problem from multiple angles and cross-check its reasoning. For
+            instance, "Solve this problem using two different methods and verify
+            that they give the same result."
+          </li>
+          <li>
+            <strong>Program of Thoughts (PoT):</strong>
+            Program of Thoughts (PoT) is a prompting technique that combines the
+            strengths of Chain-of-Thought (CoT) and program synthesis. It
+            involves generating a program or a sequence of instructions that the
+            model can follow to solve a problem. This approach leverages the
+            model's ability to understand and execute structured instructions,
+            leading to more accurate and reliable reasoning. In PoT, the large
+            language models (LLMs) are primarily responsible for expressing the
+            ‘reasoning process’ in a programming language, while the computation
+            is delegated to an external process, such as a Python interpreter.
+            By disentangling computation from reasoning, PoT addresses
+            challenges LLMs face in generating complex equations, such as those
+            involving cubes or polynomials. Key aspects of PoT include:
+            <ol>
+              <li>
+                Breaking down problems into a multi-step ‘thought’ process.
+              </li>
+              <li>
+                Binding semantic meanings to variables. By using semantically
+                meaningful variable names (e.g., <code>interest_rate</code> or
+                <code>sum_in_two_years_with_interest</code>), PoT creates a
+                structured representation that aligns with human reasoning.
+              </li>
+            </ol>
+            This structured approach enhances the model's ability to solve tasks
+            involving numerical reasoning and logical inference.
+
+            <p>PoT Evaluation:</p>
+            <ul>
+              <li>
+                PoT has been tested across multiple datasets, including
+                mathematical word problems (MWP) and financial datasets.
+              </li>
+              <li>
+                In few-shot settings, PoT showed an average gain of 8% over CoT
+                on MWP datasets and 15% on financial datasets. In zero-shot
+                settings, it achieved a 12% average gain on MWP datasets.
+              </li>
+              <li>
+                Combining PoT with self-consistency (SC) decoding further
+                improved performance, outperforming CoT+SC by an average of 10%.
+              </li>
+              <li>
+                PoT+SC achieved the best-known results on MWP datasets and
+                near-best results on financial datasets (excluding GPT-4).
+              </li>
+            </ul>
+
+            <p>
+              The following diagram illustrates how PoT resolves complex
+              problems that traditional CoT approaches fail to address,
+              utilizing Python programs to express reasoning and relying on a
+              Python interpreter for computation.
+            </p>
+            <img
+              src="../assets/pot.jpg"
+              alt="PoT mechanism"
+              class="responsive-img"
+              width="720"
+              height="480"
+            />
+            <p>
+              Source:
+              <a href="https://arxiv.org/pdf/2211.12588.pdf"
+                >arxiv.org/2211.12588</a
+              >
+            </p>
+          </li>
+
+          <li>
+            <strong>Structure Decomposition:</strong> Break complex problems
+            into smaller sub-problems. For example, instead of "Analyze this
+            investment strategy," use "Let's analyze this investment strategy by
+            first examining the risk factors, then calculating potential
+            returns, and finally evaluating market conditions."
+          </li>
+          <li>
+            <strong>Explicit Constraints and Requirements:</strong> Clearly
+            state what constitutes valid reasoning. For example, "Your solution
+            must include clear assumptions, mathematical justification, and
+            potential edge cases."
+          </li>
+          <li>
+            <strong>Role Prompting:</strong> Assign a specific expert role to
+            encourage domain-specific reasoning. For example, "As a mathematical
+            logician, explain why..."
+          </li>
+          <li>
+            <strong>Meta-Cognition Prompting:</strong> Ask the model to evaluate
+            its own reasoning. For example, "After providing your solution,
+            explain which parts of your reasoning you're most and least
+            confident about."
+          </li>
+        </ol>
+      </div>
+      <h4 class="accordion">
+        2.8 How to improve LLM reasoning if your COT prompt fails?<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
+      </h4>
+      <div>
+        <p>
+          CoT prompts help guide logical steps, but their effectiveness depends
+          heavily on their design and context.
+        </p>
+        <p>
+          <strong>Clarity</strong> in the prompt is crucial. Specific
+          instructions tailored to the problem often yield better results than
+          vague requests. Breaking problems into smaller parts makes reasoning
+          more manageable, particularly when combined with illustrative
+          examples. For instance, guiding the model to identify known
+          quantities, apply formulas, and simplify step-by-step enhances
+          accuracy. <strong>Context</strong> is another key factor. Prompts
+          lacking sufficient information can confuse the model. Including
+          necessary background or providing structured inputs such as diagrams
+          or tables helps clarify expectations.
+          <strong>Rephrasing</strong> questions or representing problems
+          visually can also aid reasoning. Experimenting with different
+          phrasings often reveals what works best for the model.
+          <strong> Self-verification </strong> is a valuable technique. Prompts
+          that ask the model to review and justify its solutions can uncover
+          errors and fill gaps in logic. Integrating
+          <strong> external tools </strong>can further support structured
+          reasoning. For example, pairing the LLM with symbolic solvers or
+          computation platforms like WolframAlpha ensures precision in tasks
+          requiring formal logic or accurate calculations.
+        </p>
+      </div>
       <h2 id="rag">3. Retrieval Augmented Generation (RAG)</h2>
       <h4>
         3.1 How to increase accuracy, reliability, and make answers verifiable
@@ -1872,6 +1968,23 @@
       // Apply dark mode immediately if needed
       if (isDarkMode) {
         applyDarkMode(true);
+      }
+
+      var accordions = document.getElementsByClassName("accordion");
+
+      for (var i = 0; i < accordions.length; i++) {
+        var panel = accordions[i].nextElementSibling;
+        panel.style.display = "none";
+
+        accordions[i].addEventListener("click", function () {
+          this.classList.toggle("active");
+          var panel = this.nextElementSibling;
+          if (panel.style.display === "block") {
+            panel.style.display = "none";
+          } else {
+            panel.style.display = "block";
+          }
+        });
       }
     </script>
 
