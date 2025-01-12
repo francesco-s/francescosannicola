@@ -1848,17 +1848,778 @@
         </p>
       </div>
       <h2 id="rag">3. Retrieval Augmented Generation (RAG)</h2>
-      <h4>
+      <h4 class="accordion">
         3.1 How to increase accuracy, reliability, and make answers verifiable
-        in LLM?
+        in LLM?<span class="arrow" style="float: left">&#9660;</span>
       </h4>
-      <h4>3.2 How does RAG work?</h4>
-      <h4>3.3 What are some benefits of using the RAG system?</h4>
-      <h4>3.4 When should I use Fine-tuning instead of RAG?</h4>
-      <h4>
+      <div>
+        <p>
+          Before diving into specific improvements, it's essential to understand
+          that LLM accuracy and reliability stem from three core components: the
+          model's architecture, its training process, and its deployment
+          framework.
+        </p>
+        <p><strong>Data Quality Optimization</strong></p>
+        <p>
+          The cornerstone of any reliable LLM lies in its training data.
+          High-quality data requires both breadth and depth, starting with
+          comprehensive data selection. Breadth ensures representation of
+          diverse perspectives and writing styles, such as technical manuals,
+          academic papers, and creative works, while depth focuses on in-depth
+          exploration within specific knowledge domains for richer context. This
+          includes materials ranging from academic publications and
+          peer-reviewed research to technical documentation and professional
+          guides, all carefully vetted for accuracy and relevance.
+        </p>
+        <p>
+          Raw data must undergo careful cleaning and preprocessing to ensure its
+          utility. This process begins with deduplication to prevent
+          overrepresentation of certain viewpoints, followed by content
+          filtering to remove problematic or incorrect information. The data
+          then undergoes standardization of formatting and structure, enrichment
+          with metadata for better context understanding, and implementation of
+          version control for tracking provenance.
+        </p>
+        <p><strong>Enhanced Training Methodologies</strong></p>
+        <p>
+          Modern LLM training demands sophisticated approaches that go beyond
+          basic supervised learning. Constitutional AI training helps instill
+          reliable behavior patterns, while multi-task learning improves the
+          model's ability to generalize across different domains. Curriculum
+          learning introduces concepts progressively, moving from simple to
+          complex topics in a structured manner that mirrors human learning
+          patterns. For example, training could begin with foundational grammar
+          and syntax exercises, proceed to intermediate text comprehension
+          tasks, and culminate in advanced applications such as contextual
+          reasoning or creative content generation.
+        </p>
+        <p>
+          Fine-tuning represents another critical aspect of training. This
+          process requires careful attention to task-specific data collection
+          and curation, coupled with meticulous hyperparameter optimization.
+        </p>
+        <p><strong>Knowledge Integration Systems</strong></p>
+        <p>
+          Retrieval-Augmented Generation (RAG) serves for enhancing LLM accuracy
+          by combining a language model with external knowledge retrieval.
+          Unlike traditional methods that rely solely on static training data,
+          RAG dynamically fetches relevant information from up-to-date knowledge
+          bases during the generation process, improving the timeliness and
+          relevance of outputs. This system provides real-time access to
+          verified knowledge bases, enabling dynamic fact-checking during
+          generation. Knowledge graph integration further improves reliability
+          by providing structured representation of information. This approach
+          enables explicit modeling of relationships between concepts, creating
+          a hierarchical organization that facilitates cross-reference
+          verification and logical consistency checking.
+        </p>
+        <p><strong>Verification and Control Systems</strong></p>
+        <p>
+          A robust verification framework implements multi-stage verification
+          pipelines, such as source-based validation workflows or AI-enhanced
+          fact-checking mechanisms, that perform fact-checking against trusted
+          sources while maintaining consistency across responses. Uncertainty
+          quantification helps identify areas where the model might be less
+          confident, while source attribution tracking ensures transparency in
+          the model's decision-making process.
+        </p>
+        <p>
+          By carefully managing temperature and sampling parameters, these
+          systems help ensure consistent output quality. They also enforce topic
+          boundaries and confidence thresholds, preventing the model from
+          generating responses in areas where it lacks sufficient knowledge or
+          confidence.
+        </p>
+        <p><strong>Monitoring and Maintenance</strong></p>
+        <p>
+          Automated accuracy assessments can run regularly to identify and log
+          discrepancies in performance, while user feedback analysis systems
+          track and prioritize common concerns or suggestions. Regular
+          maintenance includes scheduled knowledge base updates, model
+          retraining sessions, and fine-tuning refinement. System optimization
+          occurs continuously, informed by performance metrics and user
+          feedback.
+        </p>
+        <p><strong>Expert Collaboration Framework</strong></p>
+        <p>
+          Maintaining high accuracy and reliability necessitates ongoing human
+          oversight. This involves streamlined workflows for expert review and
+          feedback, ensuring human expertise guides training data validation,
+          output quality assessment, and the overall model development process.
+        </p>
+      </div>
+
+      <h4 class="accordion">
+        3.2 How does RAG work?<span class="arrow" style="float: left"
+          >&#9660;</span
+        >
+      </h4>
+
+      <div>
+        <p>
+          Think of RAG as a smart assistant with both a powerful memory
+          (retrieval) and the ability to generate thoughtful responses
+          (generation). Just like how you might look up references before
+          writing an essay, RAG enhances language model outputs by first
+          consulting relevant information from a knowledge base.
+        </p>
+        <img
+          src="../assets/base-rag.webp"
+          alt="RAG Workflow"
+          class="responsive-img"
+          width="720"
+          height="480"
+        />
+        <p>
+          Upon receiving a user query, RAG employs parsing techniques to dissect
+          the input into salient components optimized for retrieval. For
+          instance, a query like, "What are the health benefits of green tea?"
+          would be parsed to emphasize terms such as "health benefits" and
+          "green tea," which then serve as anchors for the subsequent retrieval
+          process.
+        </p>
+        <p>
+          The retrieval subsystem uses vectorized representations, commonly
+          referred to as embeddings, which are computed using neural models
+          (e.g., SentenceTransformers). These embeddings encapsulate semantic
+          relationships within the dataset, enabling the efficient
+          identification of highly relevant information. The retrieval phase
+          systematically measures the semantic proximity between the query
+          embedding and pre-encoded document embeddings, returning a curated
+          subset of information most pertinent to the query.
+        </p>
+        <img
+          src="../assets/rag-workflow.webp"
+          alt="RAG Retrieval"
+          class="responsive-img"
+          width="720"
+          height="480"
+        />
+        <p>
+          In the generative phase, the model synthesizes the retrieved context
+          with the original query. Unlike standalone generative models that rely
+          exclusively on pre-existing training corpora, RAG dynamically
+          incorporates retrieved information, significantly mitigating the risk
+          of hallucination.
+        </p>
+        <p>
+          A defining feature of RAG is its modular retrieval system, enabling
+          dynamic updates to the knowledge repository without necessitating
+          exhaustive retraining of the underlying generative model. This
+          modularity ensures scalability and adaptability, rendering RAG highly
+          suitable for domains characterized by rapid knowledge evolution.
+        </p>
+        <p>
+          To elucidate the mechanics of RAG, consider the following Python-based
+          implementation:
+        </p>
+        <pre>
+  <code class="language-python">
+      # First, we create embeddings for our knowledge base 
+      from sentence_transformers import SentenceTransformer 
+      from vectorstore import VectorStore  # Hypothetical vector store 
+
+      # Initialize the embedding model 
+      embedder = SentenceTransformer('all-mpnet-base-v2') 
+
+      # Create embeddings for our documents 
+      documents = ["Green tea contains antioxidants...", "Studies show green tea may..."] 
+      document_embeddings = embedder.encode(documents) 
+
+      # Store embeddings in vector database 
+      vector_store = VectorStore() 
+      vector_store.add(document_embeddings, documents) 
+
+      # When a query comes in: 
+      def rag_response(query, llm): 
+          # 1. Create embedding for the query 
+          query_embedding = embedder.encode(query) 
+
+          # 2. Retrieve relevant documents   
+          relevant_docs = vector_store.similarity_search(query_embedding, k=3) 
+
+          # 3. Combine query and retrieved docs into prompt 
+          context = "\n".join(relevant_docs) 
+          prompt = f"Context: {context}\nQuestion: {query}\nAnswer:" 
+
+          # 4. Generate response using language model 
+          response = llm.generate(prompt) 
+          return response
+  </code>
+</pre>
+        <p>
+          This code snippet illustrates a simplified RAG implementation. The
+          system first creates embeddings for the knowledge base documents,
+          retrieves relevant information based on the user query, and then
+          generates a response by combining the query with the retrieved
+          context.
+        </p>
+        <p>
+          The real power of RAG comes from its ability to combine the broad
+          capabilities of large language models with specific, retrievable
+          knowledge.
+        </p>
+        <p>
+          Image sources:
+          <a
+            href="https://medium.com/@sahin.samia/what-is-retrieval-augmented-generation-rag-in-llm-and-how-it-works-a8c79e35a172"
+            target="_blank"
+            >What is Retrieval-Augmented Generation (RAG) in LLM and How It
+            Works?
+          </a>
+        </p>
+      </div>
+
+      <h4 class="accordion">
+        3.3 What are some benefits of using the RAG system?<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
+      </h4>
+      <div>
+        <p>
+          Retrieval-Augmented Generation (RAG) systems mitigate the propensity
+          for hallucination by anchoring generated responses in specific,
+          retrievable source documents. This mechanism ensures output
+          reliability and diminishes the dissemination of inaccuracies.
+        </p>
+        <p>Here some key benefits of employing RAG systems:</p>
+        <ul>
+          <li>
+            <strong>Cost-Effective Knowledge Updates:</strong> The modular
+            architecture of RAG systems permits seamless integration of updated
+            knowledge without necessitating comprehensive model retraining. This
+            paradigm presents a cost-efficient alternative to traditional
+            fine-tuning, particularly salient for contexts necessitating
+            frequent updates.
+          </li>
+          <li>
+            <strong>Improved Transparency and Auditability:</strong> RAG systems
+            can trace their responses back to specific source documents, making
+            the decision-making process more transparent. Organizations can
+            verify the sources of information and maintain clear documentation
+            of how responses are generated.
+          </li>
+          <li>
+            <strong>Customization Without Complex Training:</strong>
+            Organizations can tailor the system's knowledge to their specific
+            domain by curating the retrieval database. Companies can incorporate
+            proprietary information, internal documentation, and
+            industry-specific knowledge while maintaining the base model's
+            general capabilities.
+          </li>
+          <li>
+            <strong>Lower Computational Requirements:</strong> Compared to
+            expanding the size of language models to incorporate more knowledge,
+            RAG systems often require less computational power to operate
+            effectively. This results in lower infrastructure costs and faster
+            response times.
+          </li>
+          <li>
+            <strong>Enhanced Privacy and Control:</strong> Organizations
+            maintain greater control over sensitive information by managing
+            their own retrieval database. This allows them to implement proper
+            data governance and ensure compliance with privacy regulations while
+            still leveraging the capabilities of large language models.
+          </li>
+        </ul>
+      </div>
+
+      <h4 class="accordion">
+        3.4 When should I use Fine-tuning instead of RAG?<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
+      </h4>
+      <div>
+        <p>
+          Fine-tuning is recommended when it is necessary to modify the model's
+          core behavior—such as its ability to prioritize certain types of
+          tasks, interpret input data differently, or refine output
+          generation—or adapt its style to specific requirements.
+        </p>
+        <p>
+          Moreover, fine-tuning is valuable for integrating niche terminologies
+          or domain-specific knowledge deeply into the model’s understanding,
+          such as by adjusting embeddings to prioritize relevant terms or
+          modifying loss functions to enhance performance on specialized
+          datasets.
+        </p>
+        <p><strong>When to Prefer RAG</strong></p>
+        <p>
+          RAG is generally the better choice if the primary goal is to
+          incorporate up-to-date factual information or align the model with
+          evolving knowledge. This approach is useful when referencing specific
+          documents, ensuring accuracy for dynamic data, or providing responses
+          supported by citations.
+        </p>
+        <p><strong>Cost and Resource Considerations</strong></p>
+        <p>
+          The choice between these approaches often depends on practical
+          considerations, including scalability and maintainability. Fine-tuning
+          might be less scalable due to the need for repeated retraining as new
+          data becomes available, whereas RAG systems can adapt more flexibly by
+          updating the knowledge base. Additionally, maintainability can be a
+          challenge for fine-tuning, as it often requires ongoing supervision to
+          ensure relevance, while RAG generally simplifies long-term upkeep.
+          Fine-tuning requires significant computational resources.
+          Additionally, it requires a substantial and high-quality dataset for
+          optimal results. In contrast, RAG can be updated by simply modifying
+          the underlying knowledge base, making it more cost-effective and
+          easier to maintain for many applications.
+        </p>
+        <img
+          src="../assets/rag-ft.png"
+          alt="RAG vs Fine-tuning"
+          class="responsive-img"
+          width="520"
+          height="280"
+        />
+        <p>
+          In some cases, combining both approaches may provide the best
+          solution. For example, a hybrid customer support system could use
+          fine-tuning to maintain a consistent and professional tone in
+          interactions, while leveraging RAG to provide accurate and current
+          responses by retrieving the latest product or policy information from
+          an external database. In this case, it will be necessary to maintain
+          both systems. Taking everything into account, RAG is generally the
+          preferred choice in most scenarios.
+        </p>
+      </div>
+
+      <h4 class="accordion">
         3.5 What are the architecture patterns for customizing LLM with
-        proprietary data?
+        proprietary data?<span class="arrow" style="float: left">&#9660;</span>
       </h4>
+      <div>
+        <p>
+          Retrieval-Augmented Generation (RAG) integrates external data
+          retrieval into the generation process of Large Language Models (LLMs),
+          enhancing their ability to provide accurate and contextually relevant
+          responses. When customizing LLMs with proprietary data, several RAG
+          architecture patterns can be employed:
+        </p>
+
+        <p><strong>Simple RAG</strong></p>
+        <p>
+          In this basic configuration, the model retrieves relevant documents
+          from a static proprietary database in response to a query and
+          generates an output based on the retrieved information.
+        </p>
+        <div class="workflow">
+          <p>Workflow:</p>
+          <ul>
+            <li>
+              <strong>Query Input:</strong> The user provides a prompt or
+              question.
+            </li>
+            <li>
+              <strong>Document Retrieval:</strong> The model searches a fixed
+              database to find relevant information.
+            </li>
+            <li>
+              <strong>Generation:</strong> Based on the retrieved documents, the
+              model generates a response grounded in real-world data.
+            </li>
+          </ul>
+        </div>
+        <img
+          src="../assets/simple-rag.png"
+          alt="Simple RAG"
+          class="responsive-img"
+          width="720"
+          height="480"
+        />
+
+        <p><strong>Simple RAG with Memory</strong></p>
+        <p>
+          This configuration includes a memory component, allowing the model to
+          retain and utilize information from previous interactions. It is
+          particularly useful for continuous conversations or tasks requiring
+          contextual awareness across multiple queries.
+        </p>
+        <div class="workflow">
+          <p>Workflow:</p>
+          <ul>
+            <li>
+              <strong>Query Input:</strong> The user submits a query or prompt.
+            </li>
+            <li>
+              <strong>Memory Access:</strong> The model retrieves past
+              interactions or data stored in its memory.
+            </li>
+            <li>
+              <strong>Document Retrieval:</strong> It searches the external
+              database for new relevant information.
+            </li>
+            <li>
+              <strong>Generation:</strong> The model generates a response by
+              combining retrieved documents with stored memory.
+            </li>
+          </ul>
+        </div>
+        <img
+          src="../assets/simple-rag-with-memory.png"
+          alt="Simple RAG with memory"
+          class="responsive-img"
+          width="720"
+          height="480"
+        />
+
+        <p><strong>Branched RAG</strong></p>
+        <p>
+          This pattern enables the model to dynamically select specific data
+          sources based on the input query, retrieving information from the most
+          relevant proprietary databases. It’s ideal for complex queries that
+          require specialized knowledge from distinct domains.
+        </p>
+        <div class="workflow">
+          <p>Workflow:</p>
+          <ul>
+            <li><strong>Query Input:</strong> The user submits a prompt.</li>
+            <li>
+              <strong>Branch Selection:</strong> The model evaluates multiple
+              retrieval sources and selects the most relevant one based on the
+              query.
+            </li>
+            <li>
+              <strong>Single Retrieval:</strong> The model retrieves documents
+              from the selected source.
+            </li>
+            <li>
+              <strong>Generation:</strong> The model generates a response based
+              on the retrieved information from the chosen source.
+            </li>
+          </ul>
+        </div>
+        <img
+          src="../assets/branched-rag.png"
+          alt="Branched RAG"
+          class="responsive-img"
+          width="720"
+          height="480"
+        />
+
+        <p><strong>HyDe (Hypothetical Document Embedding)</strong></p>
+        <p>
+          In this approach, the model generates a hypothetical document based on
+          the query, embeds it, and retrieves actual documents similar to this
+          embedding from the proprietary data. This method enhances retrieval
+          effectiveness, especially when direct matches are scarce.
+        </p>
+        <div class="workflow">
+          <p>Workflow:</p>
+          <ul>
+            <li>
+              <strong>Query Input:</strong> The user provides a prompt or
+              question.
+            </li>
+            <li>
+              <strong>Hypothetical Document Creation:</strong> The model
+              generates an embedded representation of an ideal response.
+            </li>
+            <li>
+              <strong>Document Retrieval:</strong> Using the hypothetical
+              document, the model retrieves actual documents from a knowledge
+              base.
+            </li>
+            <li>
+              <strong>Generation:</strong> The model generates an output based
+              on the retrieved documents, influenced by the hypothetical
+              document.
+            </li>
+          </ul>
+        </div>
+        <img
+          src="../assets/HyDe.png"
+          alt="HyDe RAG"
+          class="responsive-img"
+          width="820"
+          height="480"
+        />
+
+        <p>
+          HyDe is especially useful for research and development, where queries
+          may be vague, and retrieving data based on ideal or hypothetical
+          responses helps refine complex answers. It also applies to creative
+          content generation when more flexible, imaginative outputs are needed.
+        </p>
+
+        <p><strong>Adaptive RAG</strong></p>
+        <p>
+          Adaptive RAG dynamically adjusts its retrieval strategy based on the
+          complexity or nature of the query. For simple queries, it might
+          retrieve documents from a single source, while for more complex
+          queries, it may access multiple data sources or employ sophisticated
+          retrieval techniques.
+        </p>
+        <div class="workflow">
+          <p>Workflow:</p>
+          <ul>
+            <li><strong>Query Input:</strong> The user submits a prompt.</li>
+            <li>
+              <strong>Adaptive Retrieval:</strong> Based on the query's
+              complexity, the model decides whether to retrieve documents from
+              one or multiple sources, or to adjust the retrieval method.
+            </li>
+            <li>
+              <strong>Generation:</strong> The model processes the retrieved
+              information and generates a tailored response, optimizing the
+              retrieval process for each specific query.
+            </li>
+          </ul>
+        </div>
+        <img
+          src="../assets/adaptive-rag.png"
+          alt="Adaptive RAG"
+          class="responsive-img"
+          width="820"
+          height="480"
+        />
+        <p>
+          Adaptive RAG is useful for enterprise search systems, where the nature
+          of the queries can vary significantly. It ensures both simple and
+          complex queries are handled efficiently, providing the best balance of
+          speed and depth.
+        </p>
+
+        <p><strong>Corrective RAG (CRAG)</strong></p>
+        <p>
+          This pattern introduces a self-reflection mechanism, evaluating
+          retrieved documents to improve response accuracy. For instance, a
+          retrieved document might be split into "knowledge strips" such as key
+          paragraphs or sentences. Each strip is then scored for relevance on a
+          scale (e.g., 1 to 5), with highly relevant strips prioritized for
+          response generation.
+        </p>
+        <div class="workflow">
+          <p>Workflow:</p>
+          <ul>
+            <li>
+              <strong>Query Input:</strong> The user submits a query or prompt.
+            </li>
+            <li>
+              <strong>Document Retrieval:</strong> The model retrieves documents
+              from the knowledge base and evaluates their relevance.
+            </li>
+            <li>
+              <strong>Knowledge Stripping and Grading:</strong> The retrieved
+              documents are broken down into "knowledge strips" — smaller
+              sections of information. Each strip is graded based on relevance.
+            </li>
+            <li>
+              <strong>Knowledge Refinement:</strong> Irrelevant strips are
+              filtered out. If no strip meets the relevance threshold, the model
+              seeks additional information.
+            </li>
+            <li>
+              <strong>Generation:</strong> Once a satisfactory set of knowledge
+              strips is obtained, the model generates a final response based on
+              the most relevant and accurate information.
+            </li>
+          </ul>
+        </div>
+        <img
+          src="../assets/corrective-rag.png"
+          alt="Corrective RAG"
+          class="responsive-img"
+          width="820"
+          height="480"
+        />
+        <p>
+          Corrective RAG is ideal for applications requiring high factual
+          accuracy, where even minor inaccuracies can lead to significant
+          consequences.
+        </p>
+
+        <p><strong>Self-RAG</strong></p>
+        <p>
+          Self-RAG autonomously generates retrieval queries during the
+          generation process. For example, in an exploratory research scenario,
+          a researcher might ask about "recent trends in renewable energy
+          storage." Initially, the model retrieves documents on general energy
+          storage. As gaps are identified—such as a lack of information on
+          specific materials or recent breakthroughs—the model generates
+          targeted queries like "advances in lithium-sulfur batteries" or
+          "policy impacts on renewable storage in 2023," iteratively refining
+          the response with more precise and relevant details.
+        </p>
+        <div class="workflow">
+          <p>Workflow:</p>
+          <ul>
+            <li><strong>Query Input:</strong> The user submits a prompt.</li>
+            <li>
+              <strong>Initial Retrieval:</strong> The model retrieves documents
+              based on the user’s query.
+            </li>
+            <li>
+              <strong>Self-Retrieval Loop:</strong> During the generation
+              process, the model identifies gaps in the information and issues
+              new retrieval queries to find additional data.
+            </li>
+            <li>
+              <strong>Generation:</strong> The model generates a final response,
+              iteratively improving it by retrieving further documents as
+              needed.
+            </li>
+          </ul>
+        </div>
+        <img
+          src="../assets/self-rag.png"
+          alt="Self RAG"
+          class="responsive-img"
+          width="820"
+          height="480"
+        />
+        <p>
+          Self-RAG is highly effective in exploratory research or long-form
+          content creation, where the model needs to pull in more information
+          dynamically as the response evolves.
+        </p>
+
+        <p><strong>Agentic RAG</strong></p>
+        <p>
+          This implementation provides agent-like behavior, where the model
+          proactively interacts with multiple data sources or APIs to gather
+          information. It uses a Meta-Agent to manage interactions between
+          individual Document Agents, enabling sophisticated decision-making for
+          complex tasks.
+        </p>
+        <div class="workflow">
+          <p>Workflow:</p>
+          <ul>
+            <li>
+              <strong>Query Input:</strong> The user submits a complex query or
+              task.
+            </li>
+            <li>
+              <strong>Agent Activation:</strong> The model activates multiple
+              agents. Each Document Agent is responsible for a specific
+              document.
+            </li>
+            <li>
+              <strong>Multi-step Retrieval:</strong> The Meta-Agent manages and
+              coordinates the interactions between the various Document Agents.
+            </li>
+            <li>
+              <strong>Synthesis and Generation:</strong> The Meta-Agent
+              integrates the outputs from the individual Document Agents and
+              generates a comprehensive response.
+            </li>
+          </ul>
+        </div>
+        <img
+          src="../assets/agentic-rag.png"
+          alt="Agentic RAG"
+          class="responsive-img"
+          width="820"
+          height="480"
+        />
+        <p>
+          Agentic RAG is perfect for tasks like automated research, multi-source
+          data aggregation, or executive decision support, where the model needs
+          to autonomously pull together and synthesise information from various
+          systems.
+        </p>
+
+        <p><strong>Graph RAG</strong></p>
+        <p>
+          A baseline RAG usually integrates a vector database and an LLM, where
+          the vector database stores and retrieves contextual information for
+          user queries, and the LLM generates answers based on the retrieved
+          context. While this approach works well in many cases, it struggles
+          with complex tasks like multi-hop reasoning or answering questions
+          that require connecting disparate pieces of information.
+        </p>
+        <p>
+          For example, consider this question: “What name was given to the son
+          of the man who defeated the usurper Allectus?”
+        </p>
+        <ul>
+          <li>Identify the Man: Determine who defeated Allectus.</li>
+          <li>
+            Research the Man’s Son: Look up information about this person’s
+            family, specifically his son.
+          </li>
+          <li>Find the Name: Identify the name of the son.</li>
+        </ul>
+        <p>
+          The challenge usually arises at the first step because a baseline RAG
+          retrieves text based on semantic similarity, not directly answering
+          complex queries where specific details may not be explicitly mentioned
+          in the dataset. To address such challenges, Microsoft Research
+          introduced GraphRAG, a brand-new method that augments RAG retrieval
+          and generation with knowledge graphs.
+        </p>
+
+        <p>
+          Graph RAG incorporates graph-based data structures into the retrieval
+          process, allowing the model to retrieve and organize information based
+          on entity relationships. This approach is particularly useful in
+          contexts where the data structure is crucial for understanding, such
+          as knowledge graphs, social networks, or semantic web applications.
+        </p>
+        <figure>
+          <img
+            src="../assets/graphrag-pipeline.webp"
+            alt="Graph RAG"
+            class="responsive-img"
+            width="720"
+            height="480"
+          />
+          <figcaption>
+            Create a graph-based RAG (retrieval-augmented generation) pipeline
+            using a graph index built from the text of source documents. This
+            index includes nodes (like entities), edges (such as relationships),
+            and covariates (like claims), all identified, extracted, and
+            summarized using LLM (large language model) prompts specific to the
+            dataset's domain. Community detection methods are used to group
+            these elements (nodes, edges, and covariates) into clusters. The LLM
+            can summarize these clusters in parallel during both indexing and
+            query phases. The final answer to a query is created by summarizing
+            relevant information from each cluster, focusing on the query at
+            hand.
+          </figcaption>
+        </figure>
+
+        <div class="workflow">
+          <p>Workflow:</p>
+          <ul>
+            <li><strong>Query Input:</strong> The user submits a query.</li>
+            <li>
+              <strong>Graph Navigation:</strong> The model traverses the graph
+              to retrieve both isolated information and the relationships
+              between entities.
+            </li>
+            <li>
+              <strong>Generation:</strong> The model synthesizes a response that
+              reflects both the retrieved data and its relational context.
+            </li>
+          </ul>
+        </div>
+
+        <p>
+          Graph RAG excels in domains requiring deep relational understanding.
+          It is also valuable in legal contexts, retrieving relevant case law
+          and the precedents that connect those cases. Ensuring that graph
+          structures are updated and maintained accurately, as outdated or
+          incomplete graphs could lead to incorrect or incomplete responses.
+        </p>
+        <p>
+          Sources: <br />
+          <a
+            href="https://humanloop.com/blog/rag-architectures?utm_source=chatgpt.com"
+            target="_blank"
+            >RAG Architectures - Humanloop Blog</a
+          >, <br />
+          <a href="https://arxiv.org/pdf/2404.16130" target="_blank"
+            >From Local to Global: A Graph RAG Approach to Query-Focused
+            Summarization</a
+          >
+        </p>
+      </div>
 
       <h2 id="fine-tuning">4. Fine-tuning of LLMs</h2>
 
