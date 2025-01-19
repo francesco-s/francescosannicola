@@ -2602,10 +2602,9 @@
 
         <p>
           Graph RAG excels in domains requiring deep relational understanding.
-          It is also valuable in legal contexts, retrieving relevant case law
-          and the precedents that connect those cases. Ensuring that graph
-          structures are updated and maintained accurately, as outdated or
-          incomplete graphs could lead to incorrect or incomplete responses.
+          Ensuring that graph structures are updated and maintained accurately,
+          as outdated or incomplete graphs could lead to incorrect or incomplete
+          responses.
         </p>
         <p>
           Sources: <br />
@@ -2622,15 +2621,602 @@
       </div>
 
       <h2 id="fine-tuning">4. Fine-tuning of LLMs</h2>
-
-      <h4>4.1 What is fine-tuning, and why is it needed?</h4>
-      <h4>4.2 Which scenario do we need to fine-tune LLM?</h4>
-      <h4>4.3 How to make the decision of fine-tuning?</h4>
-      <h4>
-        4.4 How do you improve the model to answer only if there is sufficient
-        context for doing so?
+      <h4 class="accordion">
+        4.1 What is fine-tuning, and why is it needed?<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
       </h4>
-      <h4>4.5 How to create fine-tuning datasets for Q&A?</h4>
+      <div>
+        <p>
+          Fine-tuning, in the context of machine learning, refers to the process
+          of adapting a pre-trained model to perform specific tasks or meet
+          particular needs. This technique, which falls under the domain of
+          transfer learning, is a fundamental tool for training foundational
+          models used in generative AI and other deep learning applications.
+        </p>
+        <p>
+          Training a machine learning model from scratch can be extremely
+          resource-intensive and time-consuming, especially for models with
+          millions or billions of parameters. Fine-tuning addresses this
+          challenge by using the knowledge already acquired by a pre-trained
+          model. Starting from a model with a general knowledge base, the
+          adaptation process requires significantly less computational power and
+          fewer labeled data compared to training a new model entirely from
+          scratch.
+        </p>
+        <p>
+          Although fine-tuning is part of the broader training process, it is
+          distinct from what is traditionally referred to as "training." For
+          clarity, the initial training phase of a model is commonly termed
+          pre-training. At the beginning of pre-training, a model starts with
+          randomly initialized parameters, including weights and biases. The
+          training process iteratively adjusts these parameters in two phases:
+          <strong>Forward Pass and Backpropagation.</strong> In contrast, LLMs
+          typically employ self-supervised learning (SSL) for pre-training. SSL
+          uses unlabeled data and pretext tasks designed to derive ground truth
+          from the data's inherent structure.
+        </p>
+        <p>Fine-tuning is versatile and applicable across many fields:</p>
+        <ul>
+          <li>
+            <strong>Natural Language Processing (NLP):</strong> Adjusting the
+            conversational tone or enhancing the domain-specific knowledge of
+            LLMs.
+          </li>
+          <li>
+            <strong>Computer Vision:</strong> Adapting pre-trained convolutional
+            neural networks (CNNs) or Vision Transformers (ViTs) for tasks such
+            as image segmentation, object detection, or domain-specific
+            classification.
+          </li>
+          <li>
+            <strong>Generative Models:</strong> Modifying the style or
+            content-generation capabilities of pre-trained models to meet
+            specific requirements.
+          </li>
+          <li>
+            <strong>Specialized Domains:</strong> Incorporating proprietary or
+            domain-specific datasets into models.
+          </li>
+        </ul>
+      </div>
+      <h4 class="accordion">
+        4.2 Which scenario do we need to fine-tune LLM?<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
+      </h4>
+      <div>
+        <p>
+          Fine-tuning is necessary in the following scenarios to adapt large
+          language models (LLMs) to specific requirements or use cases:
+        </p>
+
+        <p><strong>1. Tone, Style, and Format Customization</strong></p>
+        <p>
+          Fine-tuning is beneficial for tailoring an LLM to adhere to a
+          particular persona, tone, or style that resonates with a specific
+          audience. It is also helpful for structuring output in a preferred
+          format like JSON, YAML, or Markdown. Custom datasets enable the LLM to
+          generate responses that closely align with the intended user
+          experience or expectations.
+        </p>
+
+        <p><strong>2. Increasing Accuracy and Handling Edge Cases</strong></p>
+        <p>
+          LLMs may struggle with certain challenges, such as hallucinations,
+          subtle errors, or complex instructions that are not adequately
+          addressed by prompt engineering or in-context learning. Fine-tuning
+          can significantly improve accuracy in specific tasks, such as
+          sentiment analysis, by leveraging a relatively small set of examples:
+        </p>
+        <ul>
+          <li>
+            For example, Phi-2's accuracy on financial data sentiment analysis
+            increased from 34% to 85%.
+          </li>
+          <li>
+            ChatGPT's Reddit comment sentiment analysis accuracy improved from
+            48% to 73% with just 100 examples. Fine-tuning is particularly
+            effective for cases where baseline accuracy is under 50%, often
+            yielding significant improvements with only a few hundred data
+            samples.
+          </li>
+        </ul>
+
+        <p><strong>3. Addressing Underrepresented Domains</strong></p>
+        <p>
+          LLMs are often trained on general data and might lack proficiency in
+          specific or niche domains such as medical, legal, or financial
+          sectors. Fine-tuning helps models to:
+        </p>
+        <ul>
+          <li>Adapt to domain-specific jargon and terminology.</li>
+          <li>
+            Perform tasks like summarizing sensitive medical histories or
+            handling data in underrepresented languages.
+          </li>
+          <li>
+            Example: Fine-tuning with Parameter Efficient Fine-Tuning (PEFT)
+            techniques improved performance across all tasks in Indic languages.
+          </li>
+        </ul>
+
+        <p><strong>4. Cost Reduction</strong></p>
+        <p>
+          Fine-tuning can optimize a smaller model by transferring knowledge
+          from a larger model, like GPT-4 distilled into GPT-3.5 or Llama 2 70B
+          compressed into Llama 2 7B. This process reduces computational costs
+          and latency while maintaining high quality. Fine-tuning also minimizes
+          the need for detailed prompt engineering, leading to token savings and
+          reduced operating costs.
+        </p>
+
+        <p><strong>5. Enabling New Tasks or Abilities</strong></p>
+        <p>
+          Fine-tuning can enable capabilities beyond the pretrained
+          functionality of an LLM. For example:
+        </p>
+        <ul>
+          <li>
+            Utilizing or ignoring the context retrieved by external systems.
+          </li>
+          <li>
+            Enhancing evaluation metrics such as compliance, helpfulness, or
+            groundedness when fine-tuned as an LLM judge.
+          </li>
+          <li>
+            Extending the model's context window to handle larger inputs
+            efficiently.
+          </li>
+        </ul>
+
+        <p>
+          <strong>
+            Comparison with In-Context Learning (ICL) and Retrieval-Augmented
+            Generation (RAG)
+          </strong>
+        </p>
+        <p>
+          In-context learning is a simpler alternative that involves providing
+          examples within the prompt to guide the LLM's response. While
+          effective, it has limitations:
+        </p>
+        <ul>
+          <li>
+            As the number of examples increases, inference cost and latency
+            grow.
+          </li>
+          <li>
+            With too many examples, LLMs may ignore some, necessitating systems
+            like RAG to retrieve the most relevant examples.
+          </li>
+          <li>
+            LLMs may reproduce the knowledge from examples verbatim, a concern
+            shared with fine-tuning. ICL serves as a valuable preliminary
+            approach to assess whether fine-tuning could enhance performance on
+            downstream tasks.
+          </li>
+        </ul>
+
+        <p>
+          RAG systems incorporate external knowledge retrieval to supplement
+          LLMs, making them suitable for dynamic data or knowledge-intensive
+          tasks. Key considerations include:
+        </p>
+        <ul>
+          <li>
+            <strong>External Knowledge:</strong> RAG excels in injecting
+            external information dynamically, whereas fine-tuning embeds static
+            knowledge.
+          </li>
+          <li>
+            <strong>Custom Requirements:</strong> Fine-tuning is ideal for
+            aligning tone, behavior, or vocabulary.
+          </li>
+          <li>
+            <strong>Hallucination Mitigation:</strong> RAG provides built-in
+            mechanisms to reduce hallucinations, making it preferable in
+            applications requiring high factual accuracy.
+          </li>
+          <li>
+            <strong>Adaptability:</strong> Fine-tuning struggles with rapidly
+            changing data, while RAG leverages live data sources.
+          </li>
+          <li>
+            <strong>Interpretability:</strong> RAG inherently offers
+            transparency with references, aiding in interpretability.
+          </li>
+          <li>
+            <strong>Cost and Expertise:</strong> Building RAG systems may demand
+            expertise in search systems, while fine-tuning necessitates robust
+            data gathering and improvement strategies.
+          </li>
+        </ul>
+
+        <p>
+          Often, combining fine-tuning and RAG yields the best results.
+          Fine-tuning customizes the model's behavior, while RAG supplements it
+          with dynamic, up-to-date knowledge. Cost, complexity, and additional
+          benefits should guide the decision to adopt either or both approaches,
+          with experimentation and error analysis providing critical insights
+          for optimization.
+        </p>
+        <p>
+          Source:
+          <a
+            href="https://ai.meta.com/blog/when-to-fine-tune-llms-vs-other-techniques/"
+            target="_blank"
+            >https://ai.meta.com/blog/when-to-fine-tune-llms-vs-other-techniques/</a
+          >
+        </p>
+      </div>
+
+      <h4 class="accordion">
+        4.3 How to decide if fine-tuning is necessary?<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
+      </h4>
+      <div>
+        <p>
+          Fine-tuning adapts LLMs to specific tasks or domains, often yielding
+          significant performance gains. However, it's not always necessary or
+          beneficial. Understanding when fine-tuning is required is critical for
+          optimizing project success and resource allocation. Here's how to
+          approach the decision:
+        </p>
+
+        <p><strong>Task Suitability</strong></p>
+        <p>
+          Fine-tuning is most effective for tasks requiring specialized domain
+          knowledge. It also helps tailor models for highly specific tasks like
+          structured data extraction, content moderation, or generating
+          consistent brand-aligned content.
+        </p>
+        <figure>
+          <img
+            src="../assets/fine-tuning.jpg"
+            alt="Fine-tuning Baseline"
+            class="responsive-img"
+            width="720"
+            height="480"
+          />
+          <figcaption style="text-align: center">
+            Average model performance for GPT-3.5, GPT-4, and 310 LLMs, before
+            and after fine-tuning with LoRA, accross 31 different tasks and 10
+            different base models. Zephyr-7b and Mistral7b models exhibit the
+            best performance after LoRA-base fine-tuning.
+          </figcaption>
+        </figure>
+
+        <p>
+          General-purpose models like GPT-4 and Llama 3 offer strong baseline
+          performance. However, they can fall short for domain-specific tasks
+          (e.g., clinical note analysis), specialized skills (e.g., advanced
+          mathematics), or language-specific nuances (e.g., low-resource
+          dialects).
+        </p>
+
+        <p><strong>Data Considerations</strong></p>
+        <p>
+          High-quality, task-specific data is essential for effective
+          fine-tuning. For continual pre-training, terabytes of text data may be
+          required, especially when introducing new domain-specific knowledge.
+          Supervised fine-tuning typically needs fewer examples, ranging from
+          hundreds for simple tasks to thousands for complex ones. Regardless of
+          the approach, ensure data relevance, cleanliness, and proper
+          licensing, and address privacy concerns where applicable.
+        </p>
+
+        <p><strong>Resource and Expertise Requirements</strong></p>
+        <p>Fine-tuning can be resource-intensive, necessitating:</p>
+        <ul>
+          <li><strong>Hardware:</strong> High-performance GPUs or TPUs.</li>
+          <li>
+            <strong>Financial investment:</strong> Costs for hosting a
+            fine-tuned model may outweigh the benefits for low-volume
+            applications.
+          </li>
+          <li>
+            <strong>Expertise:</strong> Domain knowledge for prompt crafting,
+            machine learning for evaluation metrics, and engineering for
+            inference optimization in real-time applications.
+          </li>
+        </ul>
+        <p>
+          Recent innovations in fine-tuning techniques have made working with
+          large models more accessible. A key example is QLoRA (Quantized
+          Low-Rank Adaptation), which significantly reduces memory requirements
+          compared to traditional fine-tuning approaches. To illustrate this,
+          consider the peak GPU memory usage when fine-tuning Llama 2 7B using
+          different methods:
+        </p>
+        <table class="w-full border-collapse">
+          <thead>
+            <tr>
+              <th class="p-2 border text-left">Fine-tuning Method</th>
+              <th class="p-2 border text-left">Peak GPU Memory (GB)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="p-2 border">Full fine-tuning</td>
+              <td class="p-2 border">24.1</td>
+            </tr>
+            <tr>
+              <td class="p-2 border">LoRA</td>
+              <td class="p-2 border">21.3</td>
+            </tr>
+            <tr>
+              <td class="p-2 border">QLoRA</td>
+              <td class="p-2 border">12.3</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          <em
+            >Note: QLoRA achieves these results using 4-bit NormalFloat
+            quantization.</em
+          >
+        </p>
+
+        <p><strong>Task Complexity and Specificity</strong></p>
+        <p>
+          Fine-tuning offers the most value for tasks with narrow, well-defined
+          scopes. For example, sentiment analysis for a specific product
+          category benefits more from fine-tuning than general text
+          classification. Metrics like input/output lengths, data
+          compressibility, and content diversity can help assess task
+          complexity.
+        </p>
+        <p>
+          Highly specific formats, such as JSON extraction or summarization for
+          particular document types, also often benefit from fine-tuning.
+        </p>
+
+        <p><strong>Maintenance and Operational Complexity</strong></p>
+        <p>
+          Fine-tuned models require ongoing updates and version management,
+          adding operational complexity. While ideal for stable, high-volume
+          tasks, this approach may not suit rapidly evolving requirements or
+          prototypes.
+        </p>
+
+        <p>
+          Before fine-tuning, consider these simpler and less costly
+          alternatives:
+        </p>
+        <ul>
+          <li>
+            <strong>Prompt engineering:</strong> Optimize prompts to leverage
+            existing model capabilities without modifying weights.
+          </li>
+          <li>
+            <strong>Feature extraction:</strong> Use pre-trained models as
+            feature extractors, adding lightweight task-specific layers.
+          </li>
+          <li>
+            <strong>Few-shot learning:</strong> Leverage in-context learning
+            with a small number of examples.
+          </li>
+          <li>
+            <strong>Small-scale testing:</strong> Pilot fine-tuning on a subset
+            of data to evaluate performance gains and justify the added
+            complexity and cost compared to baseline models.
+          </li>
+        </ul>
+      </div>
+
+      <h4 class="accordion">
+        4.4 How do you improve the model to answer only if there is sufficient
+        context for doing so?<span class="arrow" style="float: left"
+          >&#9660;</span
+        >
+      </h4>
+      <div>
+        <p>
+          When enhancing a language model's ability to respond based on context
+          sufficiency, we should focus on four key areas to ensure reliable and
+          accurate responses.
+        </p>
+
+        <p><strong>Contextual Assessment Framework</strong></p>
+        <p>
+          Implementation of a robust system that evaluates context completeness
+          before generating responses is essential. This involves developing
+          sophisticated keyword matching algorithms, applying semantic analysis
+          through topic modeling, and establishing minimum context length
+          requirements. The system should utilize sentence embeddings to
+          comprehend the overall topic relevance and ensure all necessary
+          information is present for generating accurate responses.
+        </p>
+
+        <p><strong>Response Generation Controls</strong></p>
+        <p>
+          The development of a controlled response mechanism requires two
+          primary methods:
+        </p>
+        <p>
+          First, implementing reinforcement learning strategies that reward the
+          model for generating accurate responses when context is sufficient
+          while penalizing responses based on incomplete information. Second,
+          conducting targeted fine-tuning sessions to adjust the model's
+          parameters, emphasizing the importance of context-aware responses and
+          appropriate abstention when information is insufficient.
+        </p>
+
+        <p><strong>Context Signaling System</strong></p>
+        <p>
+          Establishing clear signaling mechanisms within the input structure is
+          crucial for optimal performance. This includes incorporating distinct
+          context markers that clearly delineate relevant information
+          boundaries, adding explicit contextual indicators that help the model
+          assess information completeness, and developing a standardized format
+          for context presentation that ensures consistent evaluation across all
+          inputs.
+        </p>
+
+        <p><strong>Feedback Integration Pipeline</strong></p>
+        <p>
+          A comprehensive feedback system is vital for continuous improvement.
+          This system should collect and analyze user feedback regarding
+          response quality and context sufficiency, continuously refine the
+          contextual filtering mechanisms based on real-world usage patterns,
+          and provide transparent feedback to users about context limitations
+          while suggesting ways to improve input quality.
+        </p>
+
+        <p>
+          For successful implementation, organizations should prioritize
+          rigorous testing of these components and ensure regular calibration
+          based on performance metrics. This systematic approach will lead to
+          more reliable and contextually appropriate responses from the language
+          model.
+        </p>
+      </div>
+
+      <h4 class="accordion">
+        4.5 How to create fine-tuning datasets for Q&A?<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
+      </h4>
+      <div>
+        <p>
+          Creating fine-tuning datasets for Question Answering (Q&A) requires a
+          structured process to ensure the dataset is high-quality,
+          representative of specific needs, and correctly formatted. Here's a
+          comprehensive guide to the process:
+        </p>
+
+        <p><strong>1. Define Objectives and Scope</strong></p>
+        <p>
+          The first step involves clearly defining the purpose of your Q&A
+          system. A well-defined scope ensures that the dataset includes
+          relevant and representative samples, while clear objectives help in
+          selecting appropriate metrics to assess model performance. Key
+          considerations include domain specificity, which determines the area
+          of knowledge your system will focus on (such as medical, legal, or
+          technical fields); question types, including factual, explanatory, or
+          hypothetical questions; and answer format, whether they should be
+          short spans, longer paragraphs, or yes/no responses.
+        </p>
+
+        <p><strong>2. Gather Source Material</strong></p>
+        <p>
+          Source material should be collected from reliable sources aligned with
+          your project's scope. Existing datasets like SQuAD, Natural Questions,
+          or TriviaQA can serve as valuable starting points. SQuAD focuses on
+          extractive questions with well-defined answer spans, while Natural
+          Questions includes longer passages and unanswerable questions.
+          Domain-specific texts can be retrieved from documents, books,
+          articles, and databases including FAQs and knowledge bases.
+        </p>
+
+        <p><strong>3. Structure the Dataset</strong></p>
+        <p>
+          Each data point in the dataset should include three essential
+          components: a clear and well-phrased query, the context containing the
+          answer, and the specific answer to the question. For extractive Q&A,
+          the answer should include start and end positions, while generative
+          Q&A requires only the answer text.
+        </p>
+
+        <p>Example format for extractive Q&A:</p>
+        <pre class="p-4 bg-gray-100 rounded">
+        {
+          "context": "The mitochondrion is the powerhouse of the cell, generating energy in the form of ATP.",
+          "question": "What is the mitochondrion known as?",
+          "answers": [
+            {
+              "text": "the powerhouse of the cell",
+              "start": 4,
+              "end": 29
+            }
+          ]
+        }
+        </pre>
+
+        <p><strong>4. Annotate the Data</strong></p>
+        <p>
+          Data annotation requires manual review to ensure accuracy. This
+          process involves selecting relevant passages, formulating appropriate
+          questions, and marking answer locations within the text. Tools like
+          Label Studio or custom scripts can assist in this process, and
+          multiple annotators should be involved to enhance quality and resolve
+          discrepancies through consensus.
+        </p>
+
+        <p><strong>5. Format the Data</strong></p>
+        <p>
+          The SQuAD format has become a standard in the industry, consisting of
+          JSON objects that include the context passage, an array of
+          question-answer pairs, and specific answer locations within the text.
+          Alternative formats may be suitable depending on specific needs, but
+          maintaining a consistent and well-defined structure is crucial.
+        </p>
+
+        <p><strong>6. Dataset Augmentation</strong></p>
+        <p>
+          For smaller datasets, augmentation techniques can be valuable. These
+          include paraphrasing existing questions and answers, using back
+          translation to create new phrasings, and applying contextual
+          perturbation to create more challenging examples while maintaining
+          answer integrity.
+        </p>
+
+        <p><strong>7. Dataset Organization</strong></p>
+        <p>
+          The dataset should be divided into distinct subsets for training,
+          validation, and testing. This division enables proper model evaluation
+          and prevents overfitting. The preprocessing stage involves normalizing
+          text, tokenizing content, and validating data integrity to ensure each
+          question has corresponding context and answers.
+        </p>
+
+        <p><strong>8. Quality Control</strong></p>
+        <p>
+          Quality control measures should include inter-annotator agreement
+          assessment when using manual annotations. This involves multiple
+          annotators reviewing the same data portions to ensure consistency.
+          Regular data reviews help identify and address any errors or
+          inconsistencies in the dataset.
+        </p>
+
+        <p><strong>9. Technical Implementation</strong></p>
+        <p>
+          The final dataset should be saved in compatible formats, typically
+          JSON or JSONL, ensuring compliance with framework requirements such as
+          Hugging Face Transformers. Before proceeding with full-scale
+          fine-tuning, it's advisable to test the dataset by training a small
+          model to verify correct formatting and consistent results.
+        </p>
+
+        <p><strong>10. Ethical Considerations</strong></p>
+        <p>
+          Ethical considerations must be prioritized throughout the dataset
+          creation process. This includes ensuring data privacy by avoiding
+          sensitive information, maintaining diversity to prevent bias, and
+          respecting the usage rights and licenses of source materials.
+        </p>
+
+        <p><strong>Tools and Resources</strong></p>
+        <p>
+          Several tools and resources are available to support the dataset
+          creation process. Annotation tools like Label Studio and Prodigy can
+          streamline the annotation process. Public datasets such as SQuAD,
+          TriviaQA, and Natural Questions provide valuable reference points.
+          Model frameworks including Hugging Face Transformers and OpenAI
+          Fine-tuning offer robust platforms for implementation.
+        </p>
+      </div>
+
       <h4>4.6 How to set hyperparameters for fine-tuning?</h4>
       <h4>
         4.7 How to estimate infrastructure requirements for fine-tuning LLM?
