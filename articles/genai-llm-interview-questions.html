@@ -3217,14 +3217,1225 @@
         </p>
       </div>
 
-      <h4>4.6 How to set hyperparameters for fine-tuning?</h4>
-      <h4>
-        4.7 How to estimate infrastructure requirements for fine-tuning LLM?
+      <h4 class="accordion">
+        4.6 How to set hyperparameters for fine-tuning?<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
       </h4>
-      <h4>4.8 How do you fine-tune LLM on consumer hardware?</h4>
-      <h4>4.9 What are the different categories of the PEFT method?</h4>
-      <h4>4.10 What is catastrophic forgetting in LLMs?</h4>
-      <h4>4.11 What are different re-parameterized methods for fine-tuning?</h4>
+      <div>
+        <p>
+          Hyperparameters misconfigurations can lead to problems such as
+          overfitting, underfitting, or inefficient resource utilization. These
+          challenges are particularly significant in large language models
+          (LLMs) due to their architectural complexity and high computational
+          cost.
+        </p>
+
+        <p><strong>Key Hyperparameters for LLM Fine-Tuning</strong></p>
+
+        <ul>
+          <li>
+            <strong>Learning Rate:</strong> This parameter controls the
+            magnitude of weight updates during training. A poorly chosen
+            learning rate can result in instability or excessively slow
+            convergence. Typical ranges are between 2e-5 and 0.001. Best
+            practices include starting with a small value and adjusting based on
+            performance, often using adaptive optimizers like AdamW and
+            schedulers like cosine decay or linear warm-up.
+          </li>
+          <li>
+            <strong>Batch Size:</strong> The batch size specifies the number of
+            samples processed per iteration. Larger batches stabilize gradients
+            and reduce noise but require more memory. Common values are 16, 32,
+            or 64. Smaller batches are computationally lighter but noisier.
+          </li>
+          <li>
+            <strong>Weight Decay:</strong> This parameter helps prevent
+            overfitting by penalizing excessively large parameter values.
+            Recommended values range from 0.01 to 0.1. Experimentation using
+            grid search can help fine-tune this parameter for the task at hand.
+          </li>
+          <li>
+            <strong>Number of Epochs:</strong> This represents the number of
+            complete passes over the training dataset. Setting it too low can
+            result in underfitting, while too high may cause overfitting. Early
+            stopping mechanisms based on validation metrics are useful to
+            optimize training duration.
+          </li>
+          <li>
+            <strong>Dropout Rate:</strong> Dropout prevents overfitting by
+            randomly disabling a fraction of neurons during training. Common
+            values are between 0.1 and 0.5. Adjust this rate based on the
+            model's performance and the presence of overfitting signs.
+          </li>
+          <li>
+            <strong>Gradient Clipping:</strong> Gradient clipping limits the
+            magnitude of gradients to maintain stability during backpropagation.
+            Typical thresholds include 1.0 or 5.0, especially useful in deep
+            networks.
+          </li>
+          <li>
+            <strong>Top-P and Temperature:</strong> Top-P, or nucleus sampling,
+            controls randomness in token selection, with a range from 0
+            (deterministic) to 1 (maximum diversity). Temperature affects
+            creativity in output generation, with lower values yielding
+            conservative outputs and higher values promoting diversity.
+          </li>
+          <li>
+            <strong>Maximum Length:</strong> This limits the number of tokens in
+            the model's output to prevent overly verbose responses. Tailor the
+            maximum length according to the task.
+          </li>
+        </ul>
+
+        <p>
+          <strong>Structured Approach to Hyperparameter Optimization</strong>
+        </p>
+        <p>
+          A systematic approach is essential for effectively exploring
+          hyperparameters. Start by defining realistic ranges based on prior
+          research. Combine manual experiments with systematic strategies, such
+          as grid search, random search, or Bayesian optimization. Validate
+          configurations iteratively using clear metrics to monitor progress.
+        </p>
+
+        <p><strong>Effective Tuning Strategies</strong></p>
+        <ul>
+          <li>
+            <strong>Grid Search:</strong> Evaluates predefined combinations
+            exhaustively, effective for smaller parameter spaces but
+            computationally demanding.
+          </li>
+          <li>
+            <strong>Random Search:</strong> Explores hyperparameter space
+            randomly, often yielding comparable results to grid search with
+            fewer resources.
+          </li>
+          <li>
+            <strong>Bayesian Optimization:</strong> Models relationships between
+            hyperparameters and performance to guide an efficient search. This
+            approach works well when model evaluations are costly.
+          </li>
+          <li>
+            <strong>Population-Based Training (PBT):</strong> Manages a
+            population of models, periodically adapting hyperparameters based on
+            performance. Ideal for large-scale fine-tuning tasks.
+          </li>
+          <li>
+            <strong>Hyperparameter Transfer Learning:</strong> Leverages
+            pre-optimized configurations for related tasks to reduce search
+            space and computation time.
+          </li>
+        </ul>
+
+        <p><strong>Practical Considerations</strong></p>
+        <p>
+          For limited resources, cloud platforms like Google Colab or AWS
+          provide scalable solutions. Use clear evaluation metrics—accuracy,
+          F1-score, or perplexity—to assess model performance objectively. For
+          code-generation tasks, add linting checks, syntax validation, and
+          runtime tests to measure output quality.
+        </p>
+        <p>
+          Ensure reproducibility by documenting configurations, random seeds,
+          and training workflows to facilitate collaboration and consistency.
+        </p>
+      </div>
+
+      <h4 class="accordion">
+        4.7 How to estimate infrastructure requirements for fine-tuning
+        LLM?<span class="arrow" style="float: left">&#9660;</span>
+      </h4>
+      <div>
+        <p>
+          As Stephen Covey explains in his book, "The 7 Habits of Highly
+          Effective People," having a clear vision of your ultimate goal enables
+          you to align your actions, decisions, and efforts more effectively.
+          This principle is especially relevant when planning complex systems,
+          as clarity around objectives serves as a compass for navigating
+          challenges and trade-offs.
+        </p>
+
+        <p>
+          In this context, it is crucial to clearly define key requirements such
+          as use cases, user counts, storage needs, and performance
+          expectations. These parameters provide the foundation for informed
+          decision-making and strategic resource allocation.
+        </p>
+
+        <p>
+          This level of foresight is particularly important when planning
+          on-premise setups. Unlike cloud environments, which can often be
+          scaled seamlessly, on-premise infrastructure typically has more rigid
+          limitations. Misaligned expectations or underestimated requirements
+          can result in costly reconfigurations and delays. By starting with a
+          well-defined vision, you can design a solution that not only meets
+          immediate needs but also accommodates future growth.
+        </p>
+
+        <p><strong>What type of LLM use cases are there?</strong></p>
+
+        <p>Usually LLM workloads falls into one of these three categories:</p>
+        <ul>
+          <li>Inference</li>
+          <li>Finetuning</li>
+          <li>Pretraining</li>
+        </ul>
+
+        <p>
+          Inference refers to the process where a trained model applies its
+          learned knowledge to make predictions or classifications on new,
+          unseen data. For example, in natural language processing, inference
+          can involve tasks like generating text, answering questions, sentiment
+          analysis, or language translation.
+        </p>
+
+        <p>
+          Finetuning involves taking a pretrained machine learning model,
+          already trained on a large dataset, and further training it on a
+          smaller, task-specific dataset to adapt its learned representations
+          for improved performance on a specific task or domain. This process
+          adjusts the model's parameters based on new data while retaining the
+          general knowledge gained during pre-training, enhancing its
+          effectiveness in specialized applications.
+        </p>
+
+        <p>
+          Pretraining involves initially training a model on a large corpus of
+          text data in an unsupervised or self-supervised manner. This phase
+          allows the model to learn general language patterns, syntactic
+          structures, and semantic relationships without specific task labels.
+          For instance, models like GPT undergo pretraining to grasp broad
+          linguistic contexts, enabling them to later adapt and specialize
+          through fine-tuning.
+        </p>
+
+        <p>
+          We will not focus much on the infrastructure required for pretraining
+          as that is a very niche area and will pretty much require an
+          on-premise setup unless you have unlimited money to burn on the cloud.
+        </p>
+
+        <p><strong>Can I use the cloud?</strong></p>
+
+        <p>
+          There will always be scenarios where the cloud is not suitable, quite
+          often due to the fact that it cannot support the necessary data
+          sovereignty or data classification requirements.
+        </p>
+
+        <p>
+          Even though the Government-on-Commercial-Cloud (GCC) environment
+          supports data up to Confidential-Cloud-Eligible (C-CE), this may not
+          necessarily be applicable to cloud LLMs. This is because very often
+          you will find that whilst you find LLMs-as-a-service endpoints in
+          Singapore, the model itself is hosted elsewhere (usually in the US).
+        </p>
+
+        <p>
+          An alternative to using such services would be to host your own models
+          in local regions with local compute resources such as AWS EC2 or
+          Google Compute Engine. This however locks you out of proprietary
+          models such as GPT, Gemini and Claude.
+        </p>
+
+        <p>
+          I generally recommend avoiding using resources in European regions due
+          to complications with GDPR.
+        </p>
+
+        <p><strong>Key Considerations for AI Infrastructure</strong></p>
+
+        <p>
+          Regardless of your requirement type, there will always be some
+          considerations that are applicable to all infrastructure setups, LLM
+          or not. These are:
+        </p>
+        <ul>
+          <li>
+            Scalability: The ability for your infrastructure to grow, which is
+            important in providing the ability to accommodate growing demands of
+            LLM and Generative AI applications.
+          </li>
+          <li>
+            Performance: How well can your setup serve your users, and its
+            ability to maintain this level of service as it scales. This also
+            includes requirements for high-performance computing (HPC) to train
+            and deploy models efficiently.
+          </li>
+          <li>
+            Storage: Needs for large-scale data storage and efficient access for
+            training and inference.
+          </li>
+          <li>
+            Networking: Considerations for high-speed networking to support
+            data-intensive tasks.
+          </li>
+        </ul>
+
+        <p><strong>Estimating Infrastructure Needs</strong></p>
+
+        <p>
+          The foundation of your planning revolves around understanding the
+          intricate relationship between your model's characteristics, training
+          data, and computational resources.
+        </p>
+
+        <p>
+          Model size forms the primary consideration in this planning. Larger
+          models with hundreds of billions of parameters require substantially
+          more computational resources compared to their smaller counterparts. A
+          7 billion parameter model might comfortably fit on a high-end consumer
+          GPU, while a 70 billion parameter model would demand multiple
+          enterprise-grade GPUs or sophisticated distributed computing setups. A
+          massive dataset spanning terabytes of text will naturally require more
+          computational horsepower compared to a more modest collection. The
+          complexity isn't just about size, but also about the diversity and
+          preprocessing requirements of your data.
+        </p>
+
+        <p>
+          The fine-tuning method you choose dramatically influences
+          infrastructure needs. Techniques like LoRA (Low-Rank Adaptation) can
+          significantly reduce computational overhead by focusing on a smaller
+          subset of trainable parameters. Full fine-tuning, in contrast,
+          requires training the entire model, consuming exponentially more
+          resources.
+        </p>
+
+        <p>
+          Start by carefully analyzing your base model's architecture,
+          understanding its memory footprint, and identifying the precision of
+          weights you'll be working with. Will you use float16 for memory
+          efficiency or float32 for higher precision? Each choice carries
+          computational trade-offs.
+        </p>
+
+        <p>
+          Hardware selection becomes a nuanced decision. Data center GPUs like
+          NVIDIA's A100 offer extraordinary computational capabilities, but they
+          come with substantial costs. You'll need to balance performance
+          requirements with budget constraints. Cloud platforms provide flexible
+          options, allowing you to scale resources dynamically based on your
+          specific needs. Cost modeling is more than just calculating GPU hours.
+          Consider the entire ecosystem – data transfer costs, storage
+          requirements, potential interruption expenses, and the value of your
+          team's time. Sometimes, investing in more powerful infrastructure can
+          dramatically reduce overall project timelines.
+        </p>
+
+        <p>
+          An illustrative scenario might help crystallize these concepts.
+          Imagine you're fine-tuning a 13 billion parameter model on 500
+          gigabytes of specialized text data using a LoRA approach. You might
+          find that a configuration of two to four A100 GPUs with 40 or 80
+          gigabytes of memory could complete your training in 24 to 72 hours,
+          with estimated cloud computing expenses ranging between $1,000 and
+          $3,000.
+        </p>
+
+        <p>
+          Emerging trends in the field are continuously reshaping infrastructure
+          considerations. Specialized AI training hardware, more
+          memory-efficient training techniques, and advanced cloud
+          infrastructures are making sophisticated model fine-tuning
+          increasingly accessible. A mental exercise I recommend is to create a
+          detailed profile of your specific project:
+        </p>
+
+        <ul>
+          <li>What are your model's exact specifications?</li>
+          <li>What unique characteristics define your training dataset?</li>
+          <li>What performance improvements are you targeting?</li>
+        </ul>
+
+        <p>
+          By answering these questions methodically, you'll develop a much more
+          accurate infrastructure estimation strategy.
+        </p>
+      </div>
+
+      <h4 class="accordion">
+        4.8 How do you fine-tune LLM on consumer hardware?<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
+      </h4>
+
+      <div>
+        <p>
+          LLMs are large by design and require a large number of GPUs to be
+          fine-tuned.
+        </p>
+
+        <p>
+          Let’s focus on a specific example by trying to fine-tune a Llama model
+          on a free-tier Google Colab instance (1x NVIDIA T4 16GB, a consumer
+          GPU). Llama-2 7B has 7 billion parameters, with a total of 28GB in
+          case the model is loaded in full-precision. Given our GPU memory
+          constraint (16GB), the model cannot even be loaded, much less trained
+          on our GPU. This memory requirement can be divided by two with
+          negligible performance degradation. You can read more about running
+          models in half-precision and mixed precision for training
+          <a
+            href="https://huggingface.co/docs/transformers/v4.15.0/performance#forward-vs-backward-execution-speed>"
+            >here</a
+          >.
+        </p>
+
+        <p>
+          In the case of full fine-tuning with Adam optimizer using a
+          half-precision model and mixed-precision mode, we need to allocate per
+          parameter:
+        </p>
+        <ul>
+          <li>2 bytes for the weight</li>
+          <li>2 bytes for the gradient</li>
+          <li>4 + 8 bytes for the Adam optimizer states</li>
+        </ul>
+
+        <p>
+          With a total of 16 bytes per trainable parameter, this makes a total
+          of 112GB (excluding the intermediate hidden states). Given that the
+          largest GPU available today can have up to 80GB GPU VRAM, it makes
+          fine-tuning challenging and less accessible to everyone. To bridge
+          this gap, Parameter Efficient Fine-Tuning (PEFT) methods are largely
+          adopted today by the community.
+        </p>
+
+        <p>
+          PEFT methods aim at drastically reducing the number of trainable
+          parameters of a model while keeping the same performance as full
+          fine-tuning. They can be differentiated by their conceptual framework:
+          does the method fine-tune a subset of existing parameters, introduce
+          new parameters, introduce trainable prompts, etc.? I will discuss and
+          compare PEFTs methods in the next question.
+        </p>
+
+        <figure>
+          <img
+            src="../assets/peft-methods.png"
+            alt="PEFT methods"
+            class="responsive-img"
+            width="720"
+            height="480"
+          />
+          <figcaption style="text-align: center">
+            Image taken from the paper:
+            <a href="https://arxiv.org/pdf/2303.15647.pdf"
+              >Scaling Down to Scale Up: A Guide to Parameter-Efficient
+              Fine-Tuning</a
+            >
+          </figcaption>
+        </figure>
+
+        <p>
+          For this post, we will focus on Low-Rank Adaption for Large Language
+          Models (LoRA), as it is one of the most adopted PEFT methods by the
+          community.
+        </p>
+
+        <p>
+          The LoRA method by Hu et al (<a
+            href="https://arxiv.org/pdf/2106.09685.pdf"
+            >link</a
+          >). from the Microsoft team came out in 2021, and works by attaching
+          extra trainable parameters into a model (that we will denote by base
+          model).
+        </p>
+
+        <p>
+          To make fine-tuning more efficient, LoRA decomposes a large weight
+          matrix into two smaller, low-rank matrices (called update matrices).
+          These new matrices can be trained to adapt to the new data while
+          keeping the overall number of changes low. The original weight matrix
+          remains frozen and doesn’t receive any further adjustments. To produce
+          the final results, both the original and the adapted weights are
+          combined.
+        </p>
+
+        <p>This approach has several advantages:</p>
+        <ul>
+          <li>
+            LoRA makes fine-tuning more efficient by drastically reducing the
+            number of trainable parameters.
+          </li>
+          <li>
+            The original pre-trained weights are kept frozen, which means you
+            can have multiple lightweight and portable LoRA models for various
+            downstream tasks built on top of them.
+          </li>
+          <li>
+            LoRA is orthogonal to many other parameter-efficient methods and can
+            be combined with many of them.
+          </li>
+          <li>
+            The performance of models fine-tuned using LoRA is comparable to the
+            performance of fully fine-tuned models.
+          </li>
+          <li>
+            LoRA does not add any inference latency when adapter weights are
+            merged with the base model.
+          </li>
+        </ul>
+        <p>
+          In principle, LoRA can be applied to any subset of weight matrices in
+          a neural network to reduce the number of trainable parameters.
+          However, for simplicity and further parameter efficiency, in
+          Transformer models LoRA is typically applied to attention blocks only.
+          The resulting number of trainable parameters in a LoRA model depends
+          on the size of the low-rank update matrices, which is determined
+          mainly by the rank r and the shape of the original weight matrix.
+        </p>
+
+        <figure>
+          <img
+            src="../assets/lora.gif"
+            alt="LoRA"
+            class="responsive-img"
+            width="720"
+            height="480"
+          />
+          <figcaption style="text-align: center">
+            Animated diagram that show how LoRA works in practice.
+          </figcaption>
+        </figure>
+
+        <div class="responsive-code-container">
+          <pre><code class="language-python">
+    from transformers import AutoTokenizer, AutoModelForCausalLM 
+    from peft import LoraConfig, TaskType, get_peft_model 
+    
+    # Base model 
+    model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-2-7b-hf") 
+    
+    # Create peft config 
+    lora_config = LoraConfig( 
+        r=8, 
+        target_modules=["q_proj", "o_proj", "k_proj", "v_proj", "gate_proj", "up_proj", "down_proj"], 
+        bias="none", 
+        task_type=TaskType.CAUSAL_LM, 
+    ) 
+    
+    # Create PeftModel which inserts LoRA adapters using the above config 
+    model = get_peft_model(model, lora_config) 
+    
+    # Train the model using HF Trainer/ HF Accelerate/ custom loop 
+    # Save the adapter weights 
+    model.save_pretrained("my_awesome_adapter")
+        </code></pre>
+        </div>
+
+        <h4>Leveraging SOTA LLM Quantization</h4>
+        <p>
+          To further optimize the fine-tuning process, the base model is loaded
+          in 4-bit precision using the bitsandbytes library. This approach,
+          known as QLoRA, combines quantized model weights with LoRA,
+          drastically reducing the memory footprint and enabling the fine-tuning
+          of state-of-the-art models on consumer-grade hardware without
+          compromising performance.
+        </p>
+
+        <figure>
+          <img
+            src="../assets/qlora.png"
+            alt="LoRA"
+            class="responsive-img"
+            width="720"
+            height="480"
+          />
+          <figcaption style="text-align: center">
+            Comparison of Full Fine-tuning, LoRA and QLoRA.
+          </figcaption>
+        </figure>
+
+        <p>
+          These SOTA quantization methods come packaged in the bitsandbytes
+          library and are conveniently integrated with HuggingFace 🤗
+          Transformers. For instance, to use LLM.int8 and QLoRA algorithms,
+          respectively, simply pass <code>load_in_8bit</code> and
+          <code>load_in_4bit</code> to the <code>from_pretrained</code> method.
+        </p>
+
+        <div class="responsive-code-container">
+          <pre><code class="language-python">
+      from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig 
+      from peft import LoraConfig, TaskType, get_peft_model 
+      
+      # Create the quantization configuration 
+      quantization_config = BitsAndBytesConfig( 
+         load_in_4bit=True, 
+         bnb_4bit_compute_dtype=torch.float16, 
+         bnb_4bit_quant_type="nf4" 
+      ) 
+      
+      # Load the base model in 4-bit precision 
+      model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-2-7b-hf", quantization_config=quantization_config) 
+      
+      # Prepare the model for 4-bit training 
+      model = prepare_model_for_kbit_training(model) 
+      
+      # Configure the LoRA adapters 
+      lora_config = LoraConfig( 
+         r=8, 
+         target_modules=["q_proj", "o_proj", "k_proj", "v_proj", "gate_proj", "up_proj", "down_proj"], 
+         bias="none", 
+         task_type=TaskType.CAUSAL_LM 
+      ) 
+      
+      # Insert the LoRA adapters into the model 
+      model = get_peft_model(model, lora_config) 
+      
+      # Train the model using a training loop (e.g., HuggingFace Trainer, HuggingFace Accelerate, or a custom loop) 
+      # ... 
+      
+      # Save the adapter weights for later use 
+      model.save_pretrained("my_awesome_adapter")
+          </code></pre>
+        </div>
+
+        <p>
+          When using QLoRA with Adam optimizer using a 4-bit base model and
+          mixed-precision mode, we need to allocate per parameter:
+        </p>
+        <ul>
+          <li>~0.5 bytes for the weight</li>
+          <li>2 bytes for the gradient</li>
+          <li>4 + 8 bytes for the Adam optimizer states</li>
+        </ul>
+
+        <p>
+          Giving a total of 14 bytes per trainable parameter times 0.0029 as we
+          end up having only 0.29% trainable parameters with QLoRA, this makes
+          the QLoRA training setup cost around 4.5GB to fit, but requires in
+          practice ~7-10GB to include intermediate hidden states which are
+          always in half-precision (7 GB for a sequence length of 512 and 10GB
+          for a sequence length of 1024) in the Google Colab demo shared in the
+          next section.
+        </p>
+
+        <h4>Incorporating TRL for Efficient LLM Training</h4>
+        <p>
+          In addition to the methodologies outlined for fine-tuning LLMs using
+          Parameter Efficient Fine-Tuning (PEFT) methods and quantization
+          techniques, it is imperative to address another significant
+          advancement in LLM training: the use of Reinforcement Learning from
+          Human Feedback (RLHF). As exemplified by models such as ChatGPT,
+          GPT-4, and Claude, RLHF has been instrumental in aligning LLMs more
+          closely with human expectations and desired behaviors. This process
+          involves three key steps:
+        </p>
+        <ul>
+          <li>Supervised Fine-tuning (SFT)</li>
+          <li>Reward / Preference Modeling (RM)</li>
+          <li>Reinforcement Learning from Human Feedback (RLHF)</li>
+        </ul>
+
+        <figure>
+          <img
+            src="../assets/TRL.png"
+            alt="TRL"
+            class="responsive-img"
+            width="720"
+            height="480"
+          />
+          <figcaption style="text-align: center">
+            From InstructGPT paper: Ouyang, Long, et al. “Training language
+            models to follow instructions with human feedback.” arXiv preprint
+            arXiv:2203.02155 (2022).
+          </figcaption>
+        </figure>
+
+        <p>
+          Here, we will only focus on the supervised fine-tuning step. We train
+          the model on the new dataset following a process similar to that of
+          pretraining. The objective is to predict the next token (causal
+          language modeling). Multiple techniques can be applied to make the
+          training more efficient:
+        </p>
+        <ul>
+          <li>
+            <strong>Packing:</strong> Instead of having one text per sample in
+            the batch and then padding to either the longest text or the maximal
+            context of the model, we concatenate a lot of texts with an
+            End-Of-Sentence (EOS) token in between and cut chunks of the context
+            size to fill the batch without any padding. This approach
+            significantly improves training efficiency as each token processed
+            by the model contributes to training. <br /><br />
+            <img
+              src="../assets/packing.png"
+              alt="TRL"
+              class="responsive-img"
+              width="720"
+              height="480"
+            />
+          </li>
+          <br />
+          <li>
+            <strong>Train on completion only:</strong> We want the model to be
+            able to understand the prompt and generate an answer/. Instead of
+            training the model on the whole input (prompt + answer), the
+            training will be more efficient if we only train the model on
+            completion.
+          </li>
+        </ul>
+
+        <p>
+          You can perform supervised fine-tuning with these techniques using
+          SFTTrainer:
+        </p>
+        <div class="responsive-code-container">
+          <pre><code class="language-python">
+        from trl import SFTTrainer 
+
+        trainer = SFTTrainer( 
+            model=model, 
+            args=training_arguments, 
+            train_dataset=train_dataset, 
+            dataset_text_field="text", 
+            max_seq_length=1024, 
+            packing=True, 
+        
+        ) 
+          </code></pre>
+        </div>
+        <p>
+          If you have 2 GPUs, you can perform Distributed Data Parallel training
+          with using the following command:
+        </p>
+        <div class="responsive-code-container">
+          <pre><code class="language-python">
+        accelerate launch --num_processes=2 training_llama_script.py 
+          </code></pre>
+        </div>
+        <p>
+          Incorporating TRL methodologies into the training of LLMs presents an
+          efficient way to fine-tune models on consumer hardware. The
+          combination of LoRA, advanced quantization techniques, and Supervised
+          Fine-Tuning through TRL, forms a comprehensive framework for
+          developing high-performance LLMs accessible to a wider audience.
+        </p>
+
+        <p>
+          Source:
+          <a href="https://pytorch.org/blog/finetune-llms/ " target="_blank"
+            >https://pytorch.org/blog/finetune-llms/</a
+          >
+        </p>
+      </div>
+
+      <h4 class="accordion">
+        4.9 What are the different categories of the PEFT method?<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
+      </h4>
+
+      <div>
+        <p>
+          Parameter-Efficient Fine-Tuning (PEFT) is an innovative strategy for
+          optimizing large-scale transformer models to perform specific tasks
+          with minimal computational and memory resources. By fine-tuning only a
+          small fraction of a pre-trained model's parameters, PEFT achieves
+          task-specific adaptation efficiently while maintaining strong
+          performance. The main PEFT techniques are described below.
+        </p>
+
+        <ol type="a">
+          <li>
+            <strong>Adapters</strong>
+            <br /><br />
+            <img
+              src="../assets/Fine-tuning-using-an-adapter.svg"
+              alt="TRL"
+              class="responsive-img"
+              width="720"
+              height="480"
+            />
+            <br />
+            <p>
+              Adapters introduce task-specific submodules into transformer
+              layers to adjust hidden representations during fine-tuning. Key
+              characteristics include:
+            </p>
+            <ul>
+              <li>
+                <strong>Training Efficiency:</strong> Only the adapter
+                parameters and task-specific layers are updated; the pre-trained
+                model remains frozen.
+              </li>
+              <li>
+                <strong>Structure:</strong> Adapters consist of two feed-forward
+                layers with a non-linear activation function, integrated via a
+                skip connection to preserve the original representations.
+              </li>
+              <li>
+                <strong>Functionality:</strong>
+                <ul>
+                  <li>
+                    Input hidden states (<code>h</code>) pass through two paths:
+                    the skip connection (unchanged) and a low-dimensional
+                    representation that adds an incremental adjustment
+                    (<code>Δh</code>).
+                  </li>
+                  <li>
+                    The final representation, <code>h + Δh</code>, is
+                    task-optimized while retaining the pre-trained model’s core
+                    capabilities.
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>LoRA (Low-Rank Adaptation)</strong>
+            <p>
+              LoRA enhances fine-tuning efficiency by incorporating low-rank
+              trainable matrices within transformer layers. Key points include:
+            </p>
+            <ul>
+              <li>
+                <strong>Reduced Parameters:</strong> LoRA introduces only a
+                minimal number of trainable parameters, lowering computational
+                and memory costs.
+              </li>
+              <li>
+                <strong>Implementation:</strong>
+                <ul>
+                  <li>
+                    LoRA modules operate alongside feed-forward layers,
+                    comprising a projection to a low-dimensional space and a
+                    subsequent projection back.
+                  </li>
+                  <li>
+                    The changes (<code>Δh</code>) are added to the original
+                    representation, enabling task-specific adaptation without
+                    altering model weights.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <strong>Advantages:</strong>
+                <ul>
+                  <li>
+                    LoRA enables efficient task-switching and minimizes training
+                    resource demands.
+                  </li>
+                  <li>
+                    It supports high performance with little or no impact on
+                    inference speed.
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Prefix Tuning</strong>
+            <br /><br />
+            <img
+              src="../assets/Prefix-tuning.svg"
+              alt="TRL"
+              class="responsive-img"
+              width="720"
+              height="480"
+            />
+            <br />
+            <p>
+              Prefix tuning is a lightweight alternative for adapting language
+              models to specific natural language generation tasks, such as
+              creative writing or question generation. Unlike traditional
+              fine-tuning, it optimizes small, task-specific vectors (prefixes)
+              while freezing the base model. Highlights include:
+            </p>
+
+            <ul>
+              <li>
+                <strong>Mechanics:</strong>
+                <ul>
+                  <li>
+                    Prefixes, analogous to “virtual tokens,” adjust model hidden
+                    states by introducing incremental changes (<code>Δh</code>).
+                  </li>
+                  <li>
+                    These prefixes steer the model toward task-relevant outputs.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <strong>Performance:</strong>
+                <ul>
+                  <li>
+                    Prefix tuning matches full fine-tuning in data-rich
+                    scenarios and outperforms it in low-data settings.
+                  </li>
+                  <li>
+                    Only about 0.1% of the model's parameters are updated,
+                    enhancing efficiency.
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Prompt Tuning</strong>
+            <br /><br />
+            <img
+              src="../assets/Prompt-tuning.svg"
+              alt="TRL"
+              class="responsive-img"
+              width="720"
+              height="480"
+            />
+            <br />
+            <p>
+              Prompt tuning fine-tunes “soft prompts” instead of full model
+              parameters, streamlining task-specific adaptations. Key features
+              include:
+            </p>
+            <ul>
+              <li>
+                <strong>How It Works:</strong>
+                <ul>
+                  <li>
+                    Pre-trained transformers process input sequences augmented
+                    with trainable prompt vectors prepended at the input layer.
+                  </li>
+                  <li>
+                    Only prompt embeddings are tuned, preserving the rest of the
+                    model.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <strong>Advantages:</strong>
+                <ul>
+                  <li>
+                    The approach reduces computational costs and risk of
+                    overfitting, producing robust, generalizable outputs.
+                  </li>
+                  <li>
+                    It supports tasks requiring domain transfer, multi-task
+                    adaptation, and ensemble prompts.
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>P-tuning</strong>
+            <p>
+              P-tuning enhances pre-trained models like GPTs for nuanced Natural
+              Language Understanding (NLU) tasks by training continuous prompt
+              embeddings. Key points include:
+            </p>
+            <ul>
+              <li>
+                <strong>Applications:</strong>
+                <ul>
+                  <li>
+                    Tasks such as sentence classification and reasoning
+                    challenges.
+                  </li>
+                  <li>
+                    Benchmarks like SuperGLUE show improved precision and task
+                    adaptability.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <strong>Mechanics:</strong> Input embeddings are modified using
+                a prompt encoder to generate optimized task-specific prompts.
+              </li>
+              <li>
+                <strong>Benefits:</strong> By eliminating the need for manual
+                prompt crafting, P-tuning delivers robust performance on tasks
+                requiring contextual precision.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong
+              >IA3 (Infused Adapter by Inhibiting and Amplifying Inner
+              Activations)</strong
+            >
+            <p>
+              IA3 introduces a novel way of rescaling transformer activations
+              during fine-tuning, offering a parameter-efficient alternative to
+              LoRA. Key details:
+            </p>
+            <ul>
+              <li>
+                <strong>Mechanics:</strong> Learned vectors rescale activations
+                within transformer layers, influencing task-specific outputs
+                without altering pre-trained weights.
+              </li>
+              <li>
+                <strong>Advantages:</strong>
+                <ul>
+                  <li>
+                    IA3 combines adaptability with efficiency, reducing
+                    trainable parameters while maintaining performance.
+                  </li>
+                  <li>
+                    Compatible with various downstream tasks, it ensures fast
+                    inference and flexible implementation.
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ol>
+
+        <p><strong>Comparative Analysis of PEFT Techniques</strong></p>
+        <div class="responsive-table-container">
+          <table border="1" cellspacing="0" cellpadding="5">
+            <thead>
+              <tr>
+                <th>Technique</th>
+                <th>Description</th>
+                <th>Best Use Cases</th>
+                <th>Computational Cost</th>
+                <th>Memory Efficiency</th>
+                <th>Task Versatility</th>
+                <th>Performance Impact</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Adapters</td>
+                <td>
+                  Inserts neural modules between a model’s layers; only adapter
+                  weights are updated during fine-tuning.
+                </td>
+                <td>
+                  To perform multiple tasks on one model. Flexibility required.
+                </td>
+                <td>Moderate</td>
+                <td>Good (only adapters are fine-tuned)</td>
+                <td>High (can be added for multiple tasks)</td>
+                <td>Positive if well-tuned</td>
+              </tr>
+              <tr>
+                <td>LoRA</td>
+                <td>
+                  Introduces a low-rank matrix into the attention mechanism to
+                  learn task-specific patterns.
+                </td>
+                <td>
+                  Tasks with specialized attention requirements. Limited
+                  resources.
+                </td>
+                <td>Low-moderate</td>
+                <td>Good</td>
+                <td>Moderate</td>
+                <td>High with proper tuning</td>
+              </tr>
+              <tr>
+                <td>Prefix Tuning</td>
+                <td>
+                  Adds a trainable prefix to modify the model’s learned
+                  representation.
+                </td>
+                <td>Task-specific adaptation. Limited resources.</td>
+                <td>Low</td>
+                <td>Moderate</td>
+                <td>Moderate</td>
+                <td>Strong with effective tuning</td>
+              </tr>
+              <tr>
+                <td>Prompt Tuning</td>
+                <td>
+                  Modifies the model’s hidden states with trainable parameters
+                  in response to task-specific prompts.
+                </td>
+                <td>Large pre-trained model. Adaptation to multiple tasks.</td>
+                <td>Low</td>
+                <td>Moderate</td>
+                <td>High</td>
+                <td>Depends on prompt quality</td>
+              </tr>
+              <tr>
+                <td>P-tuning</td>
+                <td>
+                  Employs trainable prompt embeddings that encapsulate
+                  task-specific information for better adaptability.
+                </td>
+                <td>
+                  Situations requiring precise, contextual modifications without
+                  extensive model retraining.
+                </td>
+                <td>Low</td>
+                <td>Moderate</td>
+                <td>High</td>
+                <td>Superior for nuanced applications</td>
+              </tr>
+              <tr>
+                <td>IA3</td>
+                <td>
+                  Uses an iterative algorithm to adaptively adjust the
+                  importance of attributes in model fine-tuning.
+                </td>
+                <td>Complex scenarios where attribute significance varies.</td>
+                <td>Moderate</td>
+                <td>Good</td>
+                <td>High</td>
+                <td>Strong and efficient</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          By focusing on selective parameter updates, PEFT methods enable
+          scalable and efficient model fine-tuning for diverse applications.
+          Each technique provides trade-offs in terms of task adaptability,
+          computational cost, and performance. Choosing the right method depends
+          on the specific use case and resources available.
+        </p>
+        <p>
+          Sources:
+          <a
+            href="https://www.leewayhertz.com/parameter-efficient-fine-tuning/ "
+            target="_blank"
+            >https://www.leewayhertz.com/parameter-efficient-fine-tuning/
+          </a>
+        </p>
+      </div>
+
+      <h4 class="accordion">
+        4.10 What is catastrophic forgetting in LLMs?<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
+      </h4>
+      <div>
+        <div>
+          <p>
+            The term Catastrophic Forgetting (<a
+              href="https://arxiv.org/abs/2308.08747"
+              target="_blank"
+              >https://arxiv.org/abs/2308.08747</a
+            >) was coined in a recent study, and refers to the tendency of LLMs,
+            to lose or forget previously learned information as the model is
+            fine-tuned for specific tasks.
+          </p>
+          <p>
+            This phenomenon may occur due to the limitations of the training
+            process, as model training usually prioritises recent data or tasks
+            at the expense of earlier data.
+          </p>
+          <p>
+            As a result, the model’s representations of certain concepts or
+            knowledge may degrade or be overwritten by newer information,
+            leading to a loss of overall performance or accuracy on tasks that
+            require a broad understanding of diverse topics.
+          </p>
+          <p>
+            This can pose challenges in scenarios where continual learning or
+            adaptation is necessary, as the model may struggle to maintain a
+            balanced and comprehensive understanding over time.
+          </p>
+        </div>
+
+        <p><strong>LLM Drift</strong></p>
+        <div>
+          <p>
+            GPT-3.5 and GPT-4 are two widely used large language model (LLM)
+            services and updates to these models over time are not transparent.
+          </p>
+          <p>
+            This evaluation conducted on March 2023 and June 2023 covers
+            versions of both models across diverse tasks.
+          </p>
+          <p>
+            Performance and behaviour of GPT-3.5 and GPT-4 varied significantly
+            over time:
+          </p>
+          <ul>
+            <li>
+              GPT-4 (March 2023) performed well in identifying prime versus
+              composite numbers (84% accuracy), but GPT-4 (June 2023) showed
+              poor performance (51% accuracy), attributed partly to a decline in
+              following chain-of-thought prompting.
+            </li>
+            <li>
+              GPT-3.5 improved in June compared to March in certain tasks.
+            </li>
+            <li>
+              GPT-4 became less willing to answer sensitive and opinion survey
+              questions in June compared to March.
+            </li>
+            <li>
+              GPT-4 performed better at multi-hop questions in June, while
+              GPT-3.5’s performance dropped.
+            </li>
+            <li>
+              Both models had more formatting mistakes in code generation in
+              June compared to March.
+            </li>
+          </ul>
+          <p>
+            The study emphasises the need for continuous monitoring of LLMs due
+            to their changing behaviour over time.
+          </p>
+        </div>
+
+        <p>
+          The table below shows Chain-Of-Thought (CoT) effectiveness drifts over
+          time for prime testing:
+        </p>
+
+        <figure>
+          <img
+            src="../assets/LLMdrift.webp"
+            alt="TRL"
+            class="responsive-img"
+            width="720"
+            height="480"
+          />
+          <figcaption style="text-align: center">
+            Image taken from
+            <a href="How is ChatGPT's behavior changing over time?"
+              >How is ChatGPT's behavior changing over time?</a
+            >
+          </figcaption>
+        </figure>
+        <p>
+          With CoT prompting, GPT-4 in March achieved a 24.4% accuracy
+          improvement, which dropped by -0.1% in June. It does seem like GPT-4
+          loss the ability to optimise the CoT prompting technique.
+        </p>
+        <p>
+          Considering GPT-3.5 , the CoT boost increased from 6.3% in March to
+          15.8% in June.
+        </p>
+        <p>
+          The schematic below shows the fluctuation in model accuracy over a
+          period of four months. In some cases the deprecation is quite stark,
+          being more than 60% loss in accuracy.
+        </p>
+        <figure>
+          <img
+            src="../assets/CatastrophicForgetting.webp"
+            alt="TRL"
+            class="responsive-img"
+            width="720"
+            height="480"
+          />
+          <figcaption style="text-align: center">
+            From
+            <a href="How is ChatGPT's behavior changing over time?"
+              >How is ChatGPT's behavior changing over time?</a
+            >
+          </figcaption>
+        </figure>
+      </div>
+
+      <!--<h4>4.11 What are different re-parameterized methods for fine-tuning?</h4>-->
 
       <h2 id="agent-based">5. Agent-Based System</h2>
       <h4>
