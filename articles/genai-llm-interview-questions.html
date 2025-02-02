@@ -4438,22 +4438,1307 @@
       <!--<h4>4.11 What are different re-parameterized methods for fine-tuning?</h4>-->
 
       <h2 id="agent-based">5. Agent-Based System</h2>
-      <h4>
+
+      <h4 class="accordion">
         5.1 Explain the basic concepts of an agent and the types of strategies
-        available to implement agents.
+        available to implement agents.<span class="arrow" style="float: left"
+          >&#9660;</span
+        >
       </h4>
-      <h4>
+
+      <div>
+        <p>
+          AI agents are autonomous systems designed to perceive, reason, and act
+          within an environment to achieve specific goals. Unlike traditional
+          automation, these agents can adapt and tackle complex tasks
+          autonomously, significantly reducing human intervention.
+        </p>
+
+        <p>
+          Setting well-defined goals is the foundation of successful AI agent
+          implementation. Consider a scenario where a company aims to enhance
+          relationships with its VIP clients. They need a clear objective
+          aligned with broader business goals. The best way to ensure success is
+          to implement a S.M.A.R.T. goal.
+        </p>
+
+        <p>
+          For example, what if the company set a goal to increase client
+          outreach and engagement by building LLM-powered automation? The aim is
+          to identify notable events related to VIPs from a predefined list
+          (starting with a HubSpot VIP list) and notify the team via Slack.
+        </p>
+
+        <p>
+          This goal can be structured to be Specific, Measurable, Achievable,
+          Relevant, and Time-bound:
+        </p>
+
+        <ul>
+          <li>
+            <strong>Specific:</strong> The automation should identify notable
+            events related to VIPs and send alerts to the team.
+          </li>
+          <li>
+            <strong>Measurable:</strong> Track at least 5-10 notable events
+            weekly.
+          </li>
+          <li>
+            <strong>Achievable:</strong> Use data from key sources like
+            LinkedIn, company blogs, and Google News.
+          </li>
+          <li>
+            <strong>Relevant:</strong> Strengthen client relationships through
+            timely outreach.
+          </li>
+          <li>
+            <strong>Time-bound:</strong> Set a timeframe to achieve this, such
+            as within six months of deployment.
+          </li>
+        </ul>
+
+        <p>
+          There are several strategies for designing and implementing agents,
+          each varying in complexity and application. Below is a comparative
+          table that highlights the key aspects of different agent
+          implementation strategies:
+        </p>
+
+        <div class="responsive-table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Strategy</th>
+                <th>Main Idea</th>
+                <th>Advantages</th>
+                <th>Limitations</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Simple Reflex Agents</td>
+                <td>
+                  Act solely on the current percept using condition-action
+                  rules.
+                </td>
+                <td>
+                  <ul>
+                    <li>Fast and efficient</li>
+                    <li>Simple to implement</li>
+                  </ul>
+                </td>
+                <td>
+                  <ul>
+                    <li>No memory or context awareness</li>
+                    <li>Limited to simple, static environments</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Model-Based Agents</td>
+                <td>
+                  Maintain an internal representation of the environment to
+                  handle partially observable scenarios.
+                </td>
+                <td>
+                  <ul>
+                    <li>
+                      Better at dealing with incomplete or changing information
+                    </li>
+                    <li>Can reason about unseen aspects</li>
+                  </ul>
+                </td>
+                <td>
+                  <ul>
+                    <li>More computationally intensive</li>
+                    <li>
+                      Requires accurate model construction and maintenance
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Goal-Based Agents</td>
+                <td>
+                  Choose actions based on whether they will lead to a specified
+                  goal or desired end state.
+                </td>
+                <td>
+                  <ul>
+                    <li>Flexible decision-making</li>
+                    <li>
+                      Suitable for complex tasks where achieving a particular
+                      goal is essential
+                    </li>
+                  </ul>
+                </td>
+                <td>
+                  <ul>
+                    <li>Planning can be resource intensive</li>
+                    <li>
+                      May struggle in highly dynamic or uncertain environments
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Utility-Based Agents</td>
+                <td>
+                  Evaluate actions based on a utility function that measures the
+                  desirability of outcomes.
+                </td>
+                <td>
+                  <ul>
+                    <li>Enables nuanced decision-making with trade-offs</li>
+                    <li>Maximizes overall satisfaction or performance</li>
+                  </ul>
+                </td>
+                <td>
+                  <ul>
+                    <li>
+                      Defining an appropriate utility function can be
+                      challenging
+                    </li>
+                    <li>Increased computational complexity</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Learning Agents</td>
+                <td>
+                  Improve performance over time by learning from interactions
+                  and experiences (often using ML techniques).
+                </td>
+                <td>
+                  <ul>
+                    <li>Adaptable to new or unforeseen situations</li>
+                    <li>
+                      Can optimize behavior without explicit reprogramming
+                    </li>
+                  </ul>
+                </td>
+                <td>
+                  <ul>
+                    <li>
+                      Requires substantial data and computational resources
+                    </li>
+                    <li>Learning process may be slow or unstable</li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Source:
+          <a
+            href="https://www.bitovi.com/blog/ai-agents-a-comprehensive-guide"
+            target="_blank"
+            >https://www.bitovi.com/blog/ai-agents-a-comprehensive-guide</a
+          >
+        </p>
+      </div>
+
+      <h4 class="accordion">
         5.2 Why do we need agents and what are some common strategies to
-        implement agents?
+        implement agents?<span class="arrow" style="float: left">&#9660;</span>
       </h4>
-      <h4>
-        5.3 Explain ReAct prompting with a code example and its advantages.
+
+      <div>
+        <p>
+          In an era where efficiency and scalability are paramount, traditional
+          automation systems often fall short. They rely on rigid workflows,
+          require frequent maintenance, and struggle to adapt to novel
+          challenges. This inflexibility can lead to higher operational costs,
+          slower response times, and an increased need for human intervention.
+        </p>
+
+        <figure>
+          <img
+            src="../assets/traditionalworkflow.webp"
+            alt="Traditional Workflow"
+            class="responsive-img"
+            width="720"
+            height="480"
+          />
+          <figcaption style="text-align: center">
+            Traditional Workflow
+          </figcaption>
+        </figure>
+
+        <p>
+          AI agents address these shortcomings by introducing adaptive
+          intelligence into automation. Unlike static scripts, AI agents use
+          reasoning, learning, and contextual awareness to make informed
+          decisions in real-time. Their ability to interact using natural
+          language, handle exceptions dynamically, and improve over time makes
+          them a powerful tool for businesses looking to streamline operations
+          and reduce manual workload.
+        </p>
+
+        <figure>
+          <img
+            src="../assets/AIAgentVirtues.webp"
+            alt="Basic Agent Workflow"
+            class="responsive-img"
+            width="720"
+            height="480"
+          />
+          <figcaption style="text-align: center">
+            Basic Agent Workflow
+          </figcaption>
+        </figure>
+
+        <p>
+          One of the most compelling use cases of AI agents is in IT support.
+          Traditional automation follows predefined workflows, such as
+          restarting a server in response to an error. However, if the issue is
+          unfamiliar, human intervention is required. AI agents, on the other
+          hand, can analyze the problem contextually, determine the root cause,
+          and implement a suitable fix without needing explicit instructions.
+        </p>
+
+        <figure>
+          <img
+            src="../assets/Common-Challenges-and-Strategies-in-AI-Agent-Development.jpg"
+            alt="Common challenges and strategies in AI agent development"
+            class="responsive-img"
+            width="720"
+            height="480"
+          />
+          <figcaption style="text-align: center">
+            Common challenges and strategies in AI agent development
+          </figcaption>
+        </figure>
+
+        <p>
+          <strong
+            >Common Challenges and Strategies in AI Agent Development</strong
+          >
+        </p>
+
+        <p>
+          To effectively develop and deploy AI agents, organizations must follow
+          best practices that enhance their reliability, efficiency, and
+          adaptability. Below are some fundamental strategies:
+        </p>
+
+        <p><strong>1. Defining Clear Objectives and Use Cases</strong></p>
+
+        <p>
+          Establishing well-defined objectives is critical for AI agent
+          development. Clearly articulating the intended functionality—whether
+          optimizing customer support, enhancing personalized recommendations,
+          or automating complex workflows—ensures focused development and
+          alignment with business goals. For instance, virtual assistants like
+          Amazon's Alexa were designed with clear objectives: executing user
+          commands, managing smart devices, and providing contextual
+          information.
+        </p>
+
+        <p><strong>2. Ensuring High-Quality and Bias-Free Data</strong></p>
+
+        <p>
+          AI agents derive their intelligence from data; thus, data quality
+          significantly influences system performance. Poor-quality or biased
+          datasets can lead to erroneous outputs and ethical concerns.
+          Implementing rigorous data preprocessing techniques and leveraging
+          diverse, representative datasets mitigates these risks. Historical
+          cases, such as gender bias in job recommendation algorithms, highlight
+          the necessity of employing fairness-driven data strategies.
+        </p>
+
+        <p>
+          <strong
+            >3. Adopting Iterative and Agile Development Approaches</strong
+          >
+        </p>
+
+        <p>
+          Iterative cycles of development, testing, and refinement—such as those
+          used in Scrum or Kanban frameworks—facilitate incremental
+          improvements. A/B testing, real-world feedback loops, and continuous
+          performance monitoring enable AI agents to refine their
+          decision-making processes dynamically. Companies like Spotify utilize
+          such methodologies to continuously enhance their recommendation
+          engines.
+        </p>
+
+        <p>
+          <strong
+            >4. Integrating Robust Security and Compliance Protocols</strong
+          >
+        </p>
+
+        <p>
+          AI agents frequently handle sensitive data, necessitating stringent
+          cybersecurity measures. Encryption, multi-factor authentication, and
+          compliance with regulations such as GDPR and HIPAA are fundamental to
+          ensuring data integrity and user privacy. Case studies from the
+          healthcare sector demonstrate that AI-driven diagnostic tools require
+          proactive security frameworks to safeguard patient data and prevent
+          unauthorized access.
+        </p>
+
+        <p>
+          <strong
+            >5. Using Natural Language Processing (NLP) for Enhanced
+            Interaction</strong
+          >
+        </p>
+
+        <p>
+          AI agents employing NLP enable seamless human-AI interactions. By
+          understanding user intent, context, and semantics, NLP-powered agents
+          facilitate intuitive conversations. Examples include virtual
+          assistants like Google Assistant and Apple's Siri, which leverage
+          sophisticated language models to interpret and respond to user queries
+          effectively.
+        </p>
+
+        <p>
+          <strong
+            >6. Continuous Performance Monitoring and Bias Mitigation</strong
+          >
+        </p>
+
+        <p>
+          To maintain optimal functionality, AI agents require ongoing
+          evaluation. Performance monitoring tools can detect system drift,
+          inefficiencies, and emerging biases. Regular auditing and updating of
+          training data help prevent issues such as algorithmic discrimination.
+        </p>
+
+        <p>
+          Source:
+          <a
+            href="https://oyelabs.com/common-challenges-solutions-in-ai-agent-development/#Best_Practices_in_Developing_AI_Agents"
+            target="_blank"
+          >
+            https://oyelabs.com/common-challenges-solutions-in-ai-agent-development/#Best_Practices_in_Developing_AI_Agents
+          </a>
+        </p>
+      </div>
+
+      <h4 class="accordion">
+        5.3 Explain ReAct prompting with a code example and its advantages.<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
       </h4>
-      <h4>5.4 Explain Plan and Execute prompting strategy.</h4>
-      <h4>5.5 Explain OpenAI functions strategy with code examples.</h4>
-      <h4>
-        5.6 Explain the difference between OpenAI functions vs LangChain Agents.
+
+      <div>
+        <p>
+          Yao et al., 2022 introduced a framework named ReAct where LLMs are
+          used to generate both reasoning traces and task-specific actions in an
+          interleaved manner.
+          <a href="https://arxiv.org/abs/2210.03629">Read more</a>.
+        </p>
+
+        <p>
+          Generating reasoning traces enables models to induce, track, and
+          update action plans while handling exceptions. The action step allows
+          them to interface with external sources, such as knowledge bases or
+          environments, to gather relevant information.
+        </p>
+
+        <p>
+          The ReAct framework empowers large language models (LLMs) to interact
+          with external tools, retrieving additional information for more
+          reliable and factual responses. Experimental results demonstrate that
+          ReAct outperforms several state-of-the-art baselines in language and
+          decision-making tasks. It also enhances human interpretability and
+          trust in LLM outputs. The authors found that the most effective
+          approach combines ReAct with chain-of-thought (CoT) reasoning,
+          leveraging both internal knowledge and external information acquired
+          during reasoning.
+        </p>
+
+        <p>
+          ReAct is inspired by the interplay between "acting" and "reasoning,"
+          which enables humans to learn new tasks, make decisions, and refine
+          their thought processes.
+        </p>
+
+        <p>
+          Chain-of-thought (CoT) prompting has proven effective in guiding LLMs
+          through reasoning traces for tasks such as arithmetic and commonsense
+          reasoning (Wei et al., 2022). However, its inability to access
+          external information or update knowledge can lead to fact
+          hallucination and error propagation.
+        </p>
+
+        <p>
+          ReAct addresses these limitations by integrating reasoning and acting
+          within LLMs. It prompts models to generate both reasoning traces and
+          actions, allowing dynamic decision-making, plan adjustments, and
+          interaction with external environments (e.g., Wikipedia) to refine
+          reasoning. The figure below illustrates the ReAct framework and its
+          step-by-step approach to question answering.
+        </p>
+
+        <figure>
+          <img
+            src="../assets/react.png"
+            alt="ReAct Example"
+            class="responsive-img"
+            width="720"
+            height="480"
+          />
+          <figcaption style="text-align: center">
+            Source:
+            <a href="https://arxiv.org/abs/2210.03629">Yao et al., 2022</a>
+          </figcaption>
+        </figure>
+
+        <p>
+          In the example above, we pass a prompt like the following question
+          from HotpotQA:
+        </p>
+
+        <div class="responsive-code-container">
+          <pre><code>
+            Aside from the Apple Remote, what other devices can control the
+            program Apple Remote was originally designed to interact with?
+        </code></pre>
+        </div>
+
+        <p>
+          Note that in-context examples are also added to the prompt but we
+          exclude that here for simplicity. We can see that the model generates
+          task solving trajectories (Thought, Act). Obs corresponds to
+          observation from the environment that's being interacted with (e.g.,
+          Search engine). In essence, ReAct can retrieve information to support
+          reasoning, while reasoning helps to target what to retrieve next.
+        </p>
+
+        <p>
+          To illustrate how ReAct prompting works, let's walk through an example
+          from the paper.
+        </p>
+
+        <p>
+          The process begins by selecting cases from a training set (e.g.,
+          HotPotQA) and constructing ReAct-format trajectories. These
+          trajectories serve as few-shot exemplars in the prompts. Each
+          trajectory consists of multiple thought-action-observation steps, as
+          shown in the figure above. The free-form reasoning steps help
+          accomplish various tasks, such as decomposing questions, extracting
+          relevant information, performing commonsense or arithmetic reasoning,
+          guiding search formulation, and synthesizing the final answer.
+        </p>
+
+        <p>
+          Here is an example of what the ReAct prompt exemplars look like
+          (obtained from the paper and shortened to one example for simplicity):
+        </p>
+
+        <div class="responsive-code-container">
+          <pre><code>
+            Question: What is the elevation range for the area that the eastern
+            sector of the Colorado orogeny extends into?
+            Thought 1 I need to search Colorado orogeny, find the area that the
+            eastern sector of the Colorado orogeny extends into, then find the
+            elevation range of the area.
+            Action 1 Search[Colorado orogeny]
+            Observation 1 The Colorado orogeny was an episode of mountain building
+            (an orogeny) in Colorado and surrounding areas.
+
+            Thought 2 It does not mention the eastern sector. So I need to look up
+            eastern sector.
+            Action 2 Lookup[eastern sector]
+            Observation 2 (Result 1 / 1) The eastern sector extends into the High
+            Plains and is called the Central Plains orogeny.
+
+            Thought 3 The eastern sector of Colorado orogeny extends into the High
+            Plains. So I need to search High Plains and find its elevation range.
+            Action 3 Search[High Plains]
+            Observation 3 High Plains refers to one of two distinct land regions
+
+            Thought 4 I need to instead search High Plains (United States).
+            Action 4 Search[High Plains (United States)]
+            Observation 4 The High Plains are a subregion of the Great Plains.
+            From east to west, the High Plains rise in elevation from around 1,800
+            to 7,000 ft (550 to 2,130 m).[3]
+
+            Thought 5 High Plains rise in elevation from around 1,800 to 7,000 ft,
+            so the answer is 1,800 to 7,000 ft.
+            Action 5 Finish[1,800 to 7,000 ft]
+        </code></pre>
+        </div>
+
+        <p>
+          Note that different prompts setups are used for different types of
+          tasks. For tasks where reasoning is of primary importance (e.g.,
+          HotpotQA), multiple thought-action-observation steps are used for the
+          task-solving trajectory. For decision making tasks involving lots of
+          action steps, thoughts are used sparsely.
+        </p>
+
+        <p>
+          The paper first evaluates ReAct on knowledge-intensive reasoning tasks
+          such as question answering (HotpotQA) and fact verification (<a
+            href="https://fever.ai/resources.html"
+            >Fever</a
+          >). PaLM-540B is used as the base model for prompting.
+        </p>
+
+        <figure>
+          <img
+            src="../assets/react_perf.png"
+            alt="ReAct Performance"
+            class="responsive-img"
+            width="720"
+            height="480"
+          />
+          <figcaption style="text-align: center">
+            Source:
+            <a href="https://arxiv.org/abs/2210.03629">Yao et al., 2022</a>
+          </figcaption>
+        </figure>
+
+        <p>
+          Experimental results on HotpotQA and FEVER using different prompting
+          methods indicate that ReAct generally outperforms Act (which relies
+          solely on actions) on both tasks.
+        </p>
+
+        <p>
+          Notably, ReAct surpasses CoT on FEVER but falls slightly behind CoT on
+          HotPotQA. A detailed error analysis in the paper highlights key
+          insights:
+        </p>
+
+        <ul>
+          <li>CoT is prone to fact hallucination.</li>
+          <li>
+            ReAct introduces structural constraints that limit flexibility in
+            reasoning.
+          </li>
+          <li>
+            ReAct heavily depends on retrieved information—when search results
+            are non-informative, the model struggles to recover and reformulate
+            its reasoning.
+          </li>
+        </ul>
+
+        <p>
+          Overall, prompting methods that allow dynamic switching between ReAct
+          and CoT+Self-Consistency achieve the best performance, outperforming
+          all other approaches.
+        </p>
+
+        <p>
+          The paper also reports results demonstrating ReAct's performance on
+          decision making tasks. ReAct is evaluated on two benchmarks called
+          ALFWorld (text-based game) and WebShop (online shopping website
+          environment). Both involve complex environments that require reasoning
+          to act and explore effectively.
+        </p>
+
+        <p>
+          Below is an example for an ALFWorld problem involving ReAct prompting.
+        </p>
+
+        <figure>
+          <img
+            src="../assets/react_example.png"
+            alt="ReAct Example"
+            class="responsive-img"
+            width="720"
+            height="480"
+          />
+          <figcaption style="text-align: center">
+            Source:
+            <a href="https://arxiv.org/abs/2210.03629">Yao et al., 2022</a>
+          </figcaption>
+        </figure>
+
+        <p>
+          ReAct outperforms Act on both ALFWorld and Webshop. Act, without any
+          thoughts, fails to correctly decompose goals into subgoals. Reasoning
+          seems to be advantageous in ReAct for these types of tasks but current
+          prompting-based methods are still far from the performance of expert
+          humans on these tasks.
+        </p>
+
+        <p><strong>LangChain ReAct Usage</strong></p>
+
+        <p>
+          Below is a high-level example of how the ReAct prompting approach
+          works in practice. We will be using OpenAI for the LLM and LangChainas
+          it already has built-in functionality that leverages the ReAct
+          framework to build agents that perform tasks by combining the power of
+          LLMs and different tools.
+        </p>
+
+        <p>First, let's install and import the necessary libraries:</p>
+
+        <div class="responsive-code-container">
+          <pre><code class="language-python">
+          !pip install --upgrade openai
+          !pip install --upgrade langchain
+          !pip install --upgrade python-dotenv
+          !pip install google-search-results</code></pre>
+
+          <pre><code class="language-python">
+          import openai
+          import os
+          from langchain.llms import OpenAI
+          from langchain.agents import load_tools
+          from langchain.agents import initialize_agent
+          from dotenv import load_dotenv
+          load_dotenv()</code></pre>
+        </div>
+
+        <p>Load API keys; you will need to obtain these if you haven't yet</p>
+
+        <div class="responsive-code-container">
+          <pre><code class="language-python">
+          os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
+          os.environ["SERPER_API_KEY"] = os.getenv("SERPER_API_KEY")</code></pre>
+        </div>
+
+        <p>
+          Now we can configure the LLM, the tools we will use, and the agent
+          that allows us to leverage the ReAct framework together with the LLM
+          and tools. Note that we are using a search API for searching external
+          information and LLM as a math tool.
+        </p>
+
+        <div class="responsive-code-container">
+          <pre><code  class="language-python">
+            llm = OpenAI(model_name="text-davinci-003" ,temperature=0)
+            tools = load_tools(["google-serper", "llm-math"], llm=llm)
+            agent = initialize_agent(tools, llm, agent="zero-shot-react-description", verbose=True)
+            agent.run("Who is Olivia Wilde's boyfriend? What is his current age raised to the 0.23 power?")</code></pre>
+        </div>
+        <div class="responsive-code-container">
+          <pre><code>
+            > Entering new AgentExecutor chain...
+            I need to find out who Olivia Wilde's boyfriend is and then calculate his age raised to the 0.23 power.
+            Action: Search
+            Action Input: "Olivia Wilde boyfriend"
+            Observation: Olivia Wilde started dating Harry Styles after ending her years-long engagement to Jason Sudeikis — see their relationship timeline.
+            Thought: I need to find out Harry Styles' age.
+            Action: Search
+            Action Input: "Harry Styles age"
+            Observation: 29 years
+            Thought: I need to calculate 29 raised to the 0.23 power.
+            Action: Calculator
+            Action Input: 29^0.23
+            Observation: Answer: 2.169459462491557
+            
+            Thought: I now know the final answer.
+            Final Answer: Harry Styles, Olivia Wilde's boyfriend, is 29 years old and his age raised to the 0.23 power is 2.169459462491557.
+            
+            > Finished chain.</code></pre>
+        </div>
+
+        <p>
+          You can find the notebook for this code here:
+          <a
+            href="https://github.com/dair-ai/Prompt-Engineering-Guide/blob/main/notebooks/react.ipynb"
+            target="_blank"
+            >https://github.com/dair-ai/Prompt-Engineering-Guide/blob/main/notebooks/react.ipynb</a
+          >
+        </p>
+      </div>
+
+      <h4 class="accordion">
+        5.4 How does Plan and Execute prompting strategy work?<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
       </h4>
+
+      <div>
+        <p>
+          Zero-Shot Chain-of-Thought (CoT) (<a
+            href="https://learnprompting.org/docs/intermediate/zero_shot_cot"
+            >Read more</a
+          >) Prompting improves the reasoning and accuracy of LLM by enabling
+          them to generate intermediate reasoning steps before predicting the
+          final answer. While this improves the performance in multi-step
+          reasoning tasks, the experiments show that Zero-Shot CoT has three
+          pitfalls:
+        </p>
+
+        <ul>
+          <li>Calculation errors</li>
+          <li>Missing Step errors</li>
+          <li>Semantic misunderstanding</li>
+        </ul>
+
+        <figure>
+          <img
+            src="../assets/prompt_zero_cot_error_analysis.webp"
+            alt="CoT Error Analysis"
+            class="responsive-img"
+            width="720"
+            height="480"
+          />
+          <figcaption style="text-align: center">
+            Categorization of errors made by Zero-Shot CoT
+          </figcaption>
+        </figure>
+
+        <p>
+          Plan-and-Solve (PS) prompting aims to solve the issue of missing step
+          errors in Zero-Shot CoT Prompting. To achieve its goal, PS prompting
+          replaces the phrase "Let's think step by step" used in Zero-Shot CoT
+          with "Let's first understand the problem and devise a plan to solve
+          the problem. Then, let's carry out the plan and solve the problem step
+          by step". The example below shows the difference between Zero-Shot CoT
+          and PS prompting.
+        </p>
+
+        <p><strong>Zero-Shot CoT Prompting:</strong></p>
+        <p>Input:</p>
+        <div class="responsive-code-container">
+          <pre><code>
+          Q: In a dance class of 20 students, 20% enrolled in contemporary
+          dance, 25% of the remaining enrolled in jazz dance, and the rest
+          enrolled in hip-hop dance. What percentage of the entire students
+          enrolled in hip-hop dance?<br />
+          A: Let's think step by step.
+        </code></pre>
+        </div>
+
+        <p>Output:</p>
+        <div class="responsive-code-container">
+          <pre><code>
+          First, 20% of the class enrolled in contemporary dance, so that means
+          that 80% of the class is left.<br /><br />
+          Next, 25% of the remaining 80% enrolled in jazz dance, so that means
+          that 25% of the original class enrolled in jazz dance. That leaves 55%
+          of the original class.<br /><br />
+          Finally, the rest of the class (55%) enrolled in hip-hop dance. So,
+          55% of the entire class enrolled in hip-hop dance.
+        </code></pre>
+        </div>
+
+        <p><strong>Plan-and-Solve (PS) Prompting:</strong></p>
+        <p>Input:</p>
+        <div class="responsive-code-container">
+          <pre><code>
+          Q: In a dance class of 20 students, 20% enrolled in contemporary
+          dance, 25% of the remaining enrolled in jazz dance, and the rest
+          enrolled in hip-hop dance. What percentage of the entire students
+          enrolled in hip-hop dance?<br />
+          A: Let's first understand the problem and devise a plan to solve the
+          problem. Then, let's carry out the plan and solve the problem step by
+          step.
+        </code></pre>
+        </div>
+
+        <p>Output:</p>
+        <div class="responsive-code-container">
+          <pre><code>
+          <strong>Plan:</strong><br />
+          Step 1: Calculate the total number of students who enrolled in
+          contemporary and jazz dance.<br />
+          Step 2: Calculate the total number of students who enrolled in hip-hop
+          dance.<br />
+          Step 3: Calculate the percentage of students who enrolled in hip-hop
+          dance.
+        </code></pre>
+        </div>
+
+        <div class="responsive-code-container">
+          <pre><code>
+          <strong>Solution:</strong><br />
+          Step 1: 20% of 20 students is 4 students. 25% of the remaining 16
+          students is 4 students. So, a total of 8 students enrolled in
+          contemporary and jazz dance.<br />
+          Step 2: The remaining 12 students enrolled in hip-hop dance.<br />
+          Step 3: The percentage of students who enrolled in hip-hop dance is
+          12/20 = 60%.
+        </code></pre>
+        </div>
+
+        <p>
+          From the example, it is evident that for complex problems, the
+          reasoning steps generated using the Zero-Shot CoT prompt ("Let's think
+          step by step") may still lead to errors. A more effective approach is
+          Plan-and-Solve (PS) prompting, where the LLM first devises a
+          structured plan before executing it. This method helps reduce errors
+          caused by missing steps.
+        </p>
+
+        <p>
+          Notably, the Zero-Shot prompt in PS prompting is flexible and can take
+          various forms, as long as it meets these key criteria:
+        </p>
+
+        <ul>
+          <li>
+            It prompts the LLM to identify and complete necessary subtasks.
+          </li>
+          <li>
+            It encourages the LLM to focus on calculations and intermediate
+            results, ensuring a more accurate final response.
+          </li>
+        </ul>
+
+        <p>
+          While PS prompting helps minimize the missing steps error, PS+
+          prompting, an extension of PS prompting, aims to reduce calculation
+          errors of Zero-Shot-CoT along with improving the generated reasoning
+          steps. PS+ prompt extends the PS prompt with additional details
+          instructing the LLM to compute intermediate results and pay more
+          attention to calculation and common sense.
+        </p>
+
+        <p>
+          Plan-and-Solve (PS) prompting has been shown to outperform Zero-Shot
+          CoT in various reasoning tasks, including symbolic reasoning (e.g.,
+          last letters), commonsense reasoning (CSQA, StrategyQA), and
+          mathematical reasoning. By structuring the reasoning process into
+          planning and execution phases, PS+ prompting effectively reduces
+          errors related to missing steps and semantic understanding.
+        </p>
+
+        <p>However, the approach comes with certain limitations:</p>
+        <ul>
+          <li>
+            Models like GPT-3 are sensitive to expressions in the prompt hence,
+            designing the prompt to guide LLMs in generating correct reasoning
+            steps takes considerable effort.
+          </li>
+          <li>
+            PS prompting addresses calculation and missing-reasoning-step errors
+            but doesn't pacify semantic misunderstanding errors.
+          </li>
+        </ul>
+
+        <p>
+          Source:
+          <a
+            href="https://www.promptingguide.ai/techniques/react"
+            target="_blank"
+            >https://www.promptingguide.ai/techniques/react</a
+          >
+        </p>
+      </div>
+
+      <h4 class="accordion">
+        5.5 Explain OpenAI functions strategy with code examples.<span
+          class="arrow"
+          style="float: left"
+          >&#9660;</span
+        >
+      </h4>
+
+      <div>
+        <p>
+          Function calling enables OpenAI models to interact seamlessly with
+          your code or external services. It serves two primary purposes:
+        </p>
+
+        <ul>
+          <li>
+            <strong>Fetching Data</strong>: Retrieve real-time information to
+            enhance responses, such as querying knowledge bases or fetching API
+            data (e.g., current weather updates).
+          </li>
+          <li>
+            <strong>Taking Action</strong>: Execute tasks like submitting forms,
+            calling APIs, modifying UI/backend states, or managing workflows
+            (e.g., conversation handoffs).
+          </li>
+        </ul>
+
+        <p><strong>Example: Using get_weather Function</strong></p>
+        <div class="responsive-code-container">
+          <pre><code class="language-python">
+      from openai import OpenAI   
+      
+      client = OpenAI()   
+      
+      tools = [{   
+          "type": "function",   
+          "function": {   
+              "name": "get_weather",   
+              "description": "Retrieve the current temperature for a specified location.",   
+              "parameters": {   
+                  "type": "object",   
+                  "properties": {   
+                      "location": {   
+                          "type": "string",   
+                          "description": "City and country (e.g., Paris, France)"   
+                      }   
+                  },   
+                  "required": ["location"],   
+                  "additionalProperties": False   
+              },   
+              "strict": True   
+          }   
+      }]   
+      
+      completion = client.chat.completions.create(   
+          model="gpt-4o",   
+          messages=[{"role": "user", "content": "What's the weather like in Paris today?"}],   
+          tools=tools   
+      )   
+      
+      print(completion.choices[0].message.tool_calls)   
+          </code></pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+        <div class="responsive-code-container">
+          <pre><code>
+      [{ 
+          "id": "call_12345xyz", 
+          "type": "function", 
+          "function": { 
+              "name": "get_weather", 
+              "arguments": "{\"location\":\"Paris, France\"}" 
+          } 
+      }] 
+          </code></pre>
+        </div>
+
+        <p>You can extend OpenAI models with two types of tools:</p>
+        <ul>
+          <li>Function Calling: Custom developer-defined functions.</li>
+          <li>
+            Hosted Tools: OpenAI-built tools (e.g., file search, code
+            interpreter), available only in the Assistants API.
+          </li>
+        </ul>
+
+        <p>
+          This guide focuses on integrating your own functions via function
+          calling. Based on system prompts and user messages, the model may
+          choose to invoke these functions instead of—or alongside—generating
+          text or audio.
+        </p>
+
+        <p>
+          Once invoked, you execute the function, return the results, and the
+          model incorporates them into its final response.
+        </p>
+
+        <figure>
+          <img
+            src="../assets/function-calling-diagram-steps.png"
+            alt="Function Calling Diagram Steps"
+            class="responsive-img"
+            width="720"
+            height="480"
+          />
+          <figcaption style="text-align: center">
+            Function Calling Diagram Steps
+          </figcaption>
+        </figure>
+
+        <p>
+          Let's walk through the process of enabling an OpenAI model to use a
+          real get_weather function in your codebase.
+        </p>
+
+        <p><strong>Step 1: Implement the get_weather Function</strong></p>
+        <p>
+          This function retrieves the current temperature using latitude and
+          longitude coordinates:
+        </p>
+
+        <div class="responsive-code-container">
+          <pre><code class="language-python">
+      import requests
+      
+      def get_weather(latitude, longitude):
+          response = requests.get(
+              f"https://api.open-meteo.com/v1/forecast?"
+              f"latitude={latitude}&longitude={longitude}"
+              f"&current=temperature_2m"
+          )
+          data = response.json()
+          return data['current']['temperature_2m']
+          </code></pre>
+        </div>
+
+        <p>
+          Unlike previous examples using a general location string, this
+          function requires precise coordinates. Fortunately, OpenAI models can
+          automatically determine them for many locations!
+        </p>
+
+        <p><strong>Step 2: Define the Function for Model Usage</strong></p>
+        <p><strong>Best practices:</strong></p>
+
+        <ul>
+          <li>
+            <strong
+              >Write Clear and Detailed Function Names and Descriptions</strong
+            >
+          </li>
+          <p>
+            Clearly describe each function's purpose, input parameters, and
+            expected output. Use system prompts to specify when and when not to
+            use a function. Provide examples and edge cases to prevent common
+            errors.
+          </p>
+
+          <li><strong>Follow Software Engineering Best Practices</strong></li>
+          <p>
+            Use intuitive, predictable function names and parameters. Utilize
+            enums and structured objects to prevent invalid states. Apply the
+            "intern test": Could a new developer understand and use the function
+            correctly with only the provided schema? If not, improve the
+            description.
+          </p>
+
+          <li><strong>Optimize for Efficiency</strong></li>
+          <p>
+            Avoid requesting arguments that can be inferred (e.g., don't require
+            order_id if it's already available). Merge functions that are always
+            used together. For example, instead of calling query_location()
+            followed by mark_location(), integrate the marking logic into
+            query_location().
+          </p>
+
+          <li>
+            <strong>Limit the Number of Functions for Better Accuracy</strong>
+          </li>
+          <p>
+            Keep function definitions under 20 where possible to maintain
+            optimal performance. Experiment with different function counts to
+            assess accuracy impact.
+          </p>
+
+          <li><strong>Leverage OpenAI Resources</strong></li>
+          <p>
+            Test function schemas in OpenAI's Playground. Consider fine-tuning
+            models for complex workflows with multiple functions.
+          </p>
+        </ul>
+
+        <p>For example, define get_weather as an available tool:</p>
+
+        <div class="responsive-code-container">
+          <pre><code class="language-python">
+      from openai import OpenAI
+      import json
+      
+      client = OpenAI()
+      
+      tools = [{
+          "type": "function",
+          "function": {
+              "name": "get_weather",
+              "description": "Retrieve the current temperature (°C) for specific coordinates.",
+              "parameters": {
+                  "type": "object",
+                  "properties": {
+                      "latitude": {"type": "number"},
+                      "longitude": {"type": "number"}
+                  },
+                  "required": ["latitude", "longitude"],
+                  "additionalProperties": False
+              },
+              "strict": True
+          }
+      }]
+      
+      messages = [{"role": "user", "content": "What's the weather like in Paris today?"}]
+      
+      completion = client.chat.completions.create(
+          model="gpt-4o",
+          messages=messages,
+          tools=tools
+      )
+          </code></pre>
+        </div>
+
+        <p><strong>Step 3: Model Determines Function Call</strong></p>
+        <p>
+          When the model identifies that it needs to call get_weather, it
+          responds with the function name and required arguments:
+        </p>
+
+        <div class="responsive-code-container">
+          <pre><code>
+      [{
+          "id": "call_12345xyz",
+          "type": "function",
+          "function": {
+              "name": "get_weather",
+              "arguments": "{\"latitude\":48.8566,\"longitude\":2.3522}"
+          }
+      }]
+          </code></pre>
+        </div>
+
+        <p>
+          <strong>Step 4: Execute the Function and Return the Result</strong>
+        </p>
+        <div class="responsive-code-container">
+          <pre><code class="language-python">
+      tool_call = completion.choices[0].message.tool_calls[0]
+      args = json.loads(tool_call.function.arguments)
+      
+      result = get_weather(args["latitude"], args["longitude"])
+          </code></pre>
+        </div>
+
+        <p><strong>Step 5: Send the Result Back to the Model</strong></p>
+        <div class="responsive-code-container">
+          <pre><code class="language-python">
+      messages.append(completion.choices[0].message)  # Append function call message
+      messages.append({  # Append the function result
+          "role": "tool",
+          "tool_call_id": tool_call.id,
+          "content": result
+      })
+      
+      completion_2 = client.chat.completions.create(
+          model="gpt-4o",
+          messages=messages,
+          tools=tools
+      )
+          </code></pre>
+        </div>
+
+        <p><strong>Step 6: Model Generates Final Response</strong></p>
+        <div class="responsive-code-container">
+          <pre><code class="language-python">
+      completion_2.choices[0].message.content
+          </code></pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+        <div class="responsive-code-container">
+          <pre><code>
+      "The current temperature in Paris is 14°C (57.2°F)."
+          </code></pre>
+        </div>
+
+        <p>
+          For further information, consult the openAI documentation:
+          <a
+            href="https://platform.openai.com/docs/guides/function-calling?example=get-weather"
+            target="_blank"
+          >
+            https://platform.openai.com/docs/guides/function-calling?example=get-weather
+          </a>
+        </p>
+      </div>
+
+      <h4 class="accordion">
+        5.6 Explain the difference between OpenAI functions vs LangChain
+        Agents<span class="arrow" style="float: left">&#9660;</span>
+      </h4>
+
+      <div>
+        <p>
+          When working with large language models, developers often need to
+          decide between <strong>LangChain Agents</strong> and
+          <strong>OpenAI Function Calling</strong>. While both approaches
+          enhance automation and structured interactions, they serve different
+          purposes and excel in distinct use cases.
+        </p>
+
+        <p>
+          <strong
+            >LangChain Agents: Automation with Multi-Step Reasoning</strong
+          >
+        </p>
+        <p>
+          LangChain Agents are designed for sophisticated automation. They allow
+          models to interact with multiple tools and follow
+          <strong>self-determined sequences</strong> to complete tasks. This
+          makes them great for:
+        </p>
+        <ul>
+          <li>
+            <strong>Multi-step workflows</strong> (e.g., running a search,
+            summarizing results, and then querying a database).
+          </li>
+          <li>
+            <strong>Debugging complex systems</strong> with observability
+            features like LangSmith.
+          </li>
+          <li>
+            <strong>Recovering from errors</strong> and adapting dynamically to
+            input changes.
+          </li>
+        </ul>
+        <p>
+          LangChain Agents are best for those who need
+          <strong>intelligent, multi-tool automation</strong> where the AI
+          decides how to proceed based on context.
+        </p>
+
+        <p>
+          <strong
+            >OpenAI Function Calling: Structured Data & API Integration</strong
+          >
+        </p>
+        <p>
+          OpenAI Function Calling, on the other hand, is optimized for
+          <strong>structured data interactions</strong> and
+          <strong>API-driven workflows</strong>. Instead of letting the model
+          determine the process, it simply converts
+          <strong>natural language into structured function calls</strong>
+          (often in JSON format).
+        </p>
+        <p>This is particularly useful for:</p>
+        <ul>
+          <li>
+            <strong>Interacting with APIs</strong> by translating text into
+            precise function calls.
+          </li>
+          <li>
+            <strong>Extracting structured data</strong> from unstructured
+            inputs.
+          </li>
+          <li>
+            <strong>Reliably connecting AI to external tools</strong> without
+            needing extensive prompt engineering.
+          </li>
+        </ul>
+        <p>
+          Unlike LangChain Agents, OpenAI Function Calling is
+          <strong>more controlled and predictable</strong>, ensuring that
+          outputs align precisely with API expectations.
+        </p>
+
+        <p><strong>Which One Should You Use?</strong></p>
+        <ul>
+          <li>
+            If you need an agent that can handle
+            <strong>complex, multi-step automation</strong> and interact with
+            various tools, go with <strong>LangChain Agents</strong>.
+          </li>
+          <li>
+            If your goal is to
+            <strong>connect AI to structured APIs</strong> and ensure reliable
+            function execution, <strong>OpenAI Function Calling</strong> is the
+            better fit.
+          </li>
+        </ul>
+        <p>
+          Both technologies complement each other, and the choice ultimately
+          depends on whether you need a <strong>flexible AI agent</strong> or a
+          <strong>structured API integration</strong>.
+        </p>
+
+        <p>
+          Source:
+          <a
+            href="https://medium.com/@adi4u.aditya/langchain-agents-vs-openai-function-calling-cb7a58e7e42f"
+            target="_blank"
+            >https://medium.com/@adi4u.aditya/langchain-agents-vs-openai-function-calling-cb7a58e7e42f
+          </a>
+        </p>
+      </div>
+
       <h2 id="miscellaneous">6. Miscellaneous</h2>
       <h4>6.1 How to optimize the cost of the overall LLM system?</h4>
       <h4>6.2 What are mixture of expert models (MoE)?</h4>
