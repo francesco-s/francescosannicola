@@ -184,99 +184,243 @@
         <a href="about.html"> <i class="fas fa-user"></i>About </a>
       </div>
     </div>
+    <style>
+      .timeline {
+        padding-top: 20px;
+        position: relative;
+        max-width: 900px;
+        margin: 0 auto;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        line-height: 1.6;
+      }
 
-    <div class="article-container">
-      <div class="info-column">
-        <h2 style="margin-left: 0px; margin-right: 0px">About</h2>
+      .timeline::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 134px;
+        width: 2px;
+        height: 100%;
+        background-color: #ccc;
+      }
+
+      .entry {
+        display: flex;
+        margin-bottom: 30px;
+        align-items: flex-start;
+      }
+
+      .timespan {
+        width: 120px;
+        color: #999;
+        font-size: 14px;
+        padding-top: 3px;
+        text-align: right;
+      }
+
+      .ico {
+        width: 60px;
+        position: relative;
+        margin-right: 20px;
+      }
+
+      .ico img {
+        width: 48px;
+        height: 48px;
+        border-radius: 4px;
+        background: #fff;
+        margin-left: 30px;
+      }
+
+      .entry-dot {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        left: 9px;
+        background: #ccc;
+        border-radius: 50%;
+        top: 9px;
+      }
+
+      .desc {
+        flex: 1;
+        padding-top: 3px;
+        padding-left: 20px;
+        padding-right: 25px;
+      }
+
+      a {
+        color: #0066cc;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .htxt {
+        margin-bottom: 20px;
+      }
+
+      /* Responsive layout */
+      @media (max-width: 950px) {
+        .portfolio-sections {
+          flex-direction: column;
+        }
+
+        .section-column {
+          flex: 0 0 100%;
+        }
+      }
+    </style>
+
+    <div class="projects-container">
+      <!-- <div class="section-header">
+        <h2>Top Projects</h2>
+      </div> -->
+      <div class="portfolio-sections">
+        <div class="section-column articles">
+          <div class="section-header">
+            <h2>README.md</h2>
+          </div>
+          <p style="padding-left: 20px; line-height: 1.8">
+            Alright, so, me? Basically, I'm that friend who's always tinkering
+            with something techy. Code's my jam, like, seriously, I get a kick
+            out of figuring out how to fix stuff with it. If it's not making a
+            real difference, what's the point, right? <br />
+            When I'm not glued to a screen, I'm probably at the gym, throwing
+            some weights around. Gotta stay strong, you know? And to keep my
+            energy up, I'm a huge house music fan. Like, obsessively so. I even
+            try my hand at mixing tracks when I get the chance, though I'm
+            definitely still learning the ropes. <br /><br />
+            If you're passionate about machine learning, software development,
+            and the ever-evolving world of tech, you're in the right place!
+            Here, I share insights, useful resources, and cool discoveries.
+            Let’s build a community together—don’t hesitate to reach out!
+            <br />
+
+            Connect with me on
+            <a
+              href="https://www.linkedin.com/in/francesco-sannicola"
+              target="_blank"
+              >LinkedIn</a
+            >
+            or drop me an
+            <a href="mailto:francescosannicola1997@gmail.com">email</a>. Let's
+            build something great! 🚀
+          </p>
+        </div>
+        <!-- Projects Section - First 2 columns -->
+        <div class="section-column portfolio-projects">
+          <div class="section-header">
+            <h2>Career Timeline</h2>
+          </div>
+          <div class="timeline">
+            <div class="entry">
+              <div class="timespan">03/2023</div>
+              <div class="ico">
+                <div class="entry-dot"></div>
+                <img src="./assets/linksmt.png" alt="Links" />
+              </div>
+              <div class="desc">
+                <strong>Machine Learning Engineer</strong> at
+                <a href="https://www.linksmt.it/" target="_blank"
+                  >Links Management & Technology</a
+                >, driving AI & IoT innovation. Focused on Generative AI,
+                NLP-driven solutions, predictive maintenance, and advanced
+                analytics.
+                <br />
+                Recently obtained
+                <a
+                  href="https://www.credly.com/badges/ab41e8bd-32a3-49ce-a7a5-e3106f58beab/public_url"
+                  target="_blank"
+                  >AWS Certified Machine Learning - Specialty</a
+                >
+                certification.
+              </div>
+            </div>
+
+            <div class="entry">
+              <div class="timespan">10/2022 - 03/2023</div>
+              <div class="ico">
+                <div class="entry-dot"></div>
+                <img src="./assets/deloitte.png" alt="Deloitte" />
+              </div>
+              <div class="desc">
+                As an <strong>AI Analyst</strong> in
+                <a href="https://www2.deloitte.com/">Deloitte</a>'s Big Data and
+                Insight-Driven Organization division, developed automated data
+                workflows and visual analytics to improve employee performance
+                tracking and retention.
+              </div>
+            </div>
+
+            <div class="entry">
+              <div class="timespan">12/2021 - 05/2022</div>
+              <div class="ico">
+                <div class="entry-dot"></div>
+                <img src="./assets/isp.png" alt="Intesa Sanpaolo" />
+              </div>
+              <div class="desc">
+                <strong>AI Engineer and System Administrator</strong> Intern at
+                <a href="https://www.intesasanpaolo.com/">Intesa Sanpaolo</a>.
+                Developed real-time forecasting and anomaly detection systems
+                for infrastructure monitoring. <br />
+                Certified in
+                <a
+                  href="https://www.coursera.org/account/accomplishments/verify/GCCEPUHES7UC"
+                  target="_blank"
+                  >GCP Core Infrastructure</a
+                >
+                and
+                <a
+                  href="https://www.coursera.org/account/accomplishments/verify/KFC43YVQX5ZS"
+                  target="_blank"
+                  >GCP Big Data and ML</a
+                >
+                with hands-on platform experience.
+              </div>
+            </div>
+
+            <div class="entry">
+              <div class="timespan">01/2020 - 04/2022</div>
+              <div class="ico">
+                <div class="entry-dot"></div>
+                <img src="./assets/unito.svg" alt="University of Turin" />
+              </div>
+              <div class="desc">
+                Master's degree in Computer Science (AI Specialization) from the
+                <a href="https://www.unito.it/">University of Turin</a>.
+                <!-- <br />
+            Thesis:
+            <em
+              >Real-Time Time Series Anomaly Detection for Fault Support in PaaS
+              Infrastructure.</em
+            > -->
+              </div>
+            </div>
+
+            <div class="entry">
+              <div class="timespan">10/2016 - 12/2019</div>
+              <div class="ico">
+                <div class="entry-dot"></div>
+                <img src="./assets/uniba.png" alt="University of Bari" />
+              </div>
+              <div class="desc">
+                Bachelor's degree in Computer Science from the
+                <a href="https://www.uniba.it/">University of Bari</a>.
+                <!-- <br />
+            Thesis:
+            <em
+              >Content-Based Recommendation System Integrated with Positioning
+              Technology.</em
+            > -->
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <p>
-        I am a passionate IT professional with a deep-rooted interest in Machine
-        Learning, blending ambition and pragmatism to solve complex problems
-        through innovative solutions. My unquenchable curiosity drives me to
-        explore the evolving tech landscape, continuously improving my skills
-        and contributing cutting-edge solutions to the field of artificial
-        intelligence.
-      </p>
-      <p>
-        Beyond the professional sphere, I find inspiration in the energetic
-        beats of house music, which stimulates my creativity. To balance mental
-        and physical well-being, I practice bodybuilding, nurturing strength and
-        resilience in both mind and body.
-      </p>
-      <p>
-        Currently, I work as a Machine Learning Engineer at
-        <strong>Links Management & Technology</strong>, where I am part of the
-        Competence Center AI & IoT. My responsibilities include developing and
-        optimizing AI-powered applications to ensure peak performance and
-        reliability. Noteworthy projects I've worked on include:
-      </p>
-      <ul>
-        <li>
-          Extracting ESG insights from investment fund reports using Generative
-          AI.
-        </li>
-        <li>
-          Enhancing web browsing through NLP-powered voice and text interaction.
-        </li>
-        <li>
-          Implementing predictive maintenance for electric vehicle charging
-          stations.
-        </li>
-        <li>
-          Predicting loan defaults by identifying critical factors in
-          non-performing loans.
-        </li>
-      </ul>
-
-      <p>
-        Previously, I worked at <strong>Deloitte</strong> in the Big Data and
-        Insight Driven Organization division. There, I developed an ETL workflow
-        with automated data visualization to track employee KPIs from survey
-        data. This project significantly improved employee engagement,
-        retention, and satisfaction by enabling data-driven decision-making.
-      </p>
-
-      <p>
-        During my internship at <strong>Intesa Sanpaolo</strong> as an AI
-        Engineer and System Administrator Intern, I built a real-time time
-        series forecasting and anomaly detection system. The system evolved from
-        basic statistical models to advanced recurrent neural networks and
-        autoencoders, helping system engineers detect and address potential
-        infrastructure failures swiftly.
-      </p>
-
-      <p>
-        On the academic front, I hold a
-        <strong>Master’s degree in Computer Science</strong> specializing in
-        Artificial Intelligence from the University of Turin, where I graduated
-        in April 2022. Earlier, I earned my
-        <strong>Bachelor’s degree in Computer Science</strong> from the
-        University of Bari, completing it in December 2019.
-      </p>
-
-      <p>
-        To strengthen my technical expertise, I pursued industry-recognized
-        certifications. I am an
-        <strong>AWS Certified Machine Learning - Specialty</strong> professional
-        (<a
-          href="https://www.credly.com/badges/ab41e8bd-32a3-49ce-a7a5-e3106f58beab/public_url"
-          target="_blank"
-          >View Credentials</a
-        >), having earned this certification from Amazon Web Services in April
-        2024. While at Intesa Sanpaolo, I gained hands-on experience with Google
-        Cloud Platform (GCP), earning certifications in
-        <a
-          href="https://www.coursera.org/account/accomplishments/verify/GCCEPUHES7UC"
-          target="_blank"
-          >Google Cloud Fundamentals: Core Infrastructure</a
-        >
-        and
-        <a
-          href="https://www.coursera.org/account/accomplishments/verify/KFC43YVQX5ZS"
-          target="_blank"
-          >Google Cloud Big Data and ML Fundamentals</a
-        >.
-      </p>
     </div>
     <script>
       // Get stored dark mode state
