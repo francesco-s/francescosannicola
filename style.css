@@ -562,6 +562,34 @@ Other sections like accordions can also be styled
   font-style: italic;
 }
 
+#sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 2000; /* so it stays on top */
+  background-color: #f5f5f5; /*ensure background covers content underneath */
+}
+
+/* Back to Top Button Styling */
+#backToTopButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+  z-index: 1000;
+  padding: 10px 15px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1.2em; /* Bigger text */
+}
+
+#backToTopButton:hover {
+  background-color: #555;
+}
+
 .dark-mode .portfolio-item a:hover,
 .dark-mode .article-column a:hover {
   background-color: #555; /* Darker background for dark mode */

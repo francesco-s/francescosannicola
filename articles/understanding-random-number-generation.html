@@ -948,6 +948,10 @@
       </p>
     </div>
 
+    <button id="backToTopButton" onclick="scrollToTop()">
+      <i class="fa fa-arrow-up"></i>
+    </button>
+
     <script>
       // Get stored dark mode state
       let isDarkMode = localStorage.getItem("darkMode") === "true";
@@ -998,6 +1002,20 @@
       if (isDarkMode) {
         applyDarkMode(true);
       }
+
+      // Back to Top Button Script
+      function scrollToTop() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+      }
+      window.addEventListener("scroll", () => {
+        const button = document.getElementById("backToTopButton");
+        if (window.scrollY > 500) {
+          button.style.display = "block";
+        } else {
+          button.style.display = "none";
+        }
+      });
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>

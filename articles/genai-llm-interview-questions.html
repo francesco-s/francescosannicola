@@ -7150,7 +7150,7 @@
 
       <div>
         <p>
-          <strong>1. Positional Encoding:</strong>
+          <strong>Positional Encoding:</strong>
           Transformers lack inherent sequence information, so positional
           encodings are added to the input embeddings to provide information
           about the position of each token in the sequence. This helps the model
@@ -7176,7 +7176,7 @@
         </code></pre>
 
         <p>
-          <strong>2. Attention Mechanism:</strong>
+          <strong>Attention Mechanism:</strong>
           The self-attention mechanism allows the model to weigh the importance
           of different tokens in the input sequence when generating the
           representation for a particular token. This helps the model focus on
@@ -7218,7 +7218,7 @@
         </code></pre>
 
         <p>
-          <strong>3. Multi-Head Attention:</strong>
+          <strong>Multi-Head Attention:</strong>
           Multi-head attention allows the model to attend to different parts of
           the input simultaneously. Each head learns to focus on different
           aspects of the input, providing a richer representation.
@@ -7259,7 +7259,7 @@
         </code></pre>
 
         <p>
-          <strong>4. Masking:</strong>
+          <strong>Masking:</strong>
           In tasks like language modeling, where the model should not attend to
           future tokens, masking is used to prevent the attention mechanism from
           considering certain positions. This ensures that the model only
@@ -7275,7 +7275,7 @@
         </code></pre>
 
         <p>
-          <strong>5. Layer Normalization:</strong>
+          <strong>Layer Normalization:</strong>
           Layer normalization helps stabilize the training process and ensures
           that the attention mechanism focuses on the right parts of the input
           by normalizing the inputs to each layer.
@@ -7295,6 +7295,10 @@
         </code></pre>
       </div>
     </div>
+
+    <button id="backToTopButton" onclick="scrollToTop()">
+      <i class="fa fa-arrow-up"></i>
+    </button>
 
     <script>
       // Get stored dark mode state
@@ -7363,6 +7367,20 @@
           }
         });
       }
+
+      // Back to Top Button Script
+      function scrollToTop() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+      }
+      window.addEventListener("scroll", () => {
+        const button = document.getElementById("backToTopButton");
+        if (window.scrollY > 500) {
+          button.style.display = "block";
+        } else {
+          button.style.display = "none";
+        }
+      });
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
