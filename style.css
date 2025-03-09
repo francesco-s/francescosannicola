@@ -543,6 +543,25 @@ Other sections like accordions can also be styled
   border-radius: 5px; /* Optional: Adds a smooth look */
 }
 
+.last-updated {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+
+.last-updated-label {
+  margin-right: 5px;
+  font-weight: 500;
+}
+
+.last-updated time {
+  font-style: italic;
+}
+
 .dark-mode .portfolio-item a:hover,
 .dark-mode .article-column a:hover {
   background-color: #555; /* Darker background for dark mode */

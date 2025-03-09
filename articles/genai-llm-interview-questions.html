@@ -186,9 +186,13 @@
     </div>
     <div class="article-container">
       <h1>
-        <span style="font-size: 16px">./articles/</span> GenAI and LLM Interview
-        Questions with In-Depth Answers (Work in Progress)
+        <span style="font-size: 16px">./articles/</span> GenAI and LLM Questions
+        with In-Depth Answers
       </h1>
+      <div class="last-updated">
+        <span class="last-updated-label">Last modified:</span>
+        <time datetime="2025-03-09">March 9, 2025</time>
+      </div>
 
       <p>
         The rapid advancements in Generative AI and Large Language Models (LLMs)
@@ -205,6 +209,7 @@
         questions in this guide are derived from the repository
         <a
           href="https://github.com/llmgenai/LLMInterviewQuestions/tree/main?tab=readme-ov-file#deployment-of-llm"
+          target="_blank"
         >
           LLM Interview Questions</a
         >, a community-driven resource dedicated to fostering knowledge and
@@ -7178,13 +7183,24 @@
           relevant parts of the input.
         </p>
         <p>
-          <p>Use Appropriate Attention Mechanism:</p>
-          <ul>
-            <li><strong>Self-Attention:</strong> For understanding dependencies within a sequence (e.g., Transformers).</li>
-            <li><strong>Cross-Attention:</strong> For aligning different inputs (e.g., in multimodal models like image-captioning).</li>
-            <li><strong>Soft vs. Hard Attention:</strong> Soft attention assigns weights continuously, while hard attention forces discrete focus (requires reinforcement learning).</li>
-          </ul>
+          Select the right type of attention mechanism based on the task
+          requirements:
         </p>
+        <ul>
+          <li>
+            <strong>Self-Attention:</strong> For understanding dependencies
+            within a sequence (e.g., Transformers).
+          </li>
+          <li>
+            <strong>Cross-Attention:</strong> For aligning different inputs
+            (e.g., in multimodal models like image-captioning).
+          </li>
+          <li>
+            <strong>Soft vs. Hard Attention:</strong> Soft attention assigns
+            weights continuously, while hard attention forces discrete focus
+            (requires reinforcement learning).
+          </li>
+        </ul>
         <pre><code class="language-python">
     import torch.nn.functional as F
 
