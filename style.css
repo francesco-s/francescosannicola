@@ -1,3 +1,4 @@
+/* Base Styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -5,175 +6,194 @@ body {
   background-color: #f5f5f5;
   color: #333;
 }
-header {
-  background-color: transparent;
-  color: #fff;
-  padding: 10px 0;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-.profile {
-  width: 135px;
-  height: 135px;
-  border-radius: 50%;
-  margin-right: 40px;
-}
-header h1 {
-  font-size: 2rem;
-  color: black;
-}
+
+/* Typography */
+h1,
 h2,
 h3,
 h4 {
   color: rgb(96, 125, 138);
 }
+
 h2,
 h3 {
   border-bottom: 2px solid rgb(96, 125, 138);
   padding-bottom: 5px;
   font-weight: normal;
 }
+
 h4 {
   font-weight: normal;
 }
+
 p {
-  margin-bottom: 1.2em; /* Increase spacing between paragraphs */
-  line-height: 1.5; /* Increase line spacing within paragraphs */
+  margin-bottom: 1.2em;
+  line-height: 1.5;
+}
+
+/* Header Styles */
+header {
+  background-color: transparent;
+  color: #fff;
+  padding: 0px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  flex-wrap: wrap;
+  padding-top: 0px;
+  position: relative;
+}
+
+.header-left {
+  text-align: left;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  flex: 2;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-right: 20px;
+  flex: 1;
+}
+
+header h1 {
+  font-size: 2.2rem;
+  color: #333;
+  margin: 0 0 5px 0;
+  padding: 0;
+  margin-left: 20px;
+  font-weight: bold;
+}
+
+.profile {
+  width: 135px;
+  height: 135px;
+  border-radius: 50%;
+  margin-right: 40px;
 }
 
 .role {
-  color: #000;
-}
-.responsive-math {
-  display: block;
-  overflow-x: auto; /* Allow horizontal scrolling if necessary */
-  white-space: nowrap; /* Prevent wrapping of the math expression */
-  text-align: left; /* Align left to maintain readability */
-  font-size: 1rem; /* Set a responsive font size */
-  margin: 1em 0;
-  padding: 0.5em;
-  box-sizing: border-box;
-}
-
-.responsive-table-container {
-  display: block;
-  overflow-x: auto; /* Allows horizontal scrolling if necessary */
-  white-space: wrap; /* Prevent table cells from wrapping */
-  margin: 1em 0; /* Adds margin around the table */
-  box-sizing: border-box;
-}
-
-table {
-  border-collapse: collapse;
-  width: 90%;
-}
-
-th,
-td {
-  border: 1px solid #ddd;
-  padding: 8px;
+  color: #555;
+  margin: 0;
   text-align: left;
-  font-size: 1rem; /* Ensure text is readable at all screen sizes */
+  font-weight: normal;
+  font-size: 1.1rem; /* Adjust size as needed */
+  line-height: 1.4; /* Adjust line height if needed */
+  margin-left: 20px;
 }
 
-.responsive-code-container {
-  display: block;
-  overflow-x: auto; /* Allows horizontal scrolling if necessary */
-  white-space: nowrap; /* Prevent wrapping of the code */
-  margin: 1em 0; /* Adds margin around the code block */
-  box-sizing: border-box;
-}
-
-.responsive-img,
-svg {
-  max-width: 100%;
-  height: auto;
-  display: block; /* Removes inline gaps, especially when inside a parent container */
-  margin: 0 auto;
-}
-
-/* For smaller devices, scale the font size
-@media (max-width: 600px) {
-   .responsive-math {
-       font-size: 0.85rem;
-   }
-}
-*/
+/* Contact Information */
 .contact-info {
-  display: flex;
-  justify-content: center;
-  align-items: left;
-  gap: 15px;
-  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 20px;
+  color: #333;
+  justify-content: end;
+  align-items: center;
+  width: auto;
 }
-/*.contact-info {
-   position: absolute; 
-   top: 10px; 
-   right: 60px; 
-   display: flex;
-   justify-content: flex-end;
-   align-items: center;
-   gap: 15px;
-   margin-top: 0;
-}*/
+
 .contact-info a {
   display: flex;
-  align-items: left;
+  align-items: center;
   text-decoration: none;
   color: inherit;
+  gap: 6px;
+  transition: transform 0.2s ease;
+  justify-content: flex-start;
+  white-space: nowrap;
+  color: rgb(96, 125, 138); /* Same color as links in light mode */
+  transition: color 0.2s ease;
 }
+
 .contact-info a .icon {
   width: 20px;
   height: 20px;
   margin-right: 10px;
 }
-.main-container {
+
+.contact-info a:hover .contact-label {
+  color: #000000; /* Same hover color as links in light mode */
+}
+
+.contact-info a svg {
+  fill: rgb(96, 125, 138);
+  transition: fill 0.2s ease;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  vertical-align: middle;
+}
+
+.contact-info a:hover .contact-label {
+  color: #000;
+}
+
+.contact-info a:hover svg {
+  fill: #000000;
+}
+
+.contact-info a[aria-label="GitHub"] svg {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+}
+
+.contact-label {
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+/* Container Styles */
+.main-container,
+.info-container,
+.link-container,
+.projects-container,
+.portfolio-container,
+.article-container {
   max-width: 1500px;
   margin: 7px auto;
-  padding: 10px;
+  padding: 12px;
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+/* Info Columns */
+.info-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.info-column {
+  flex: 1;
+  margin: 10px;
+}
+
 .left-column,
 .right-column {
   flex: 1;
   min-width: 300px;
   padding: 0px;
 }
-.info-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  max-width: 1500px;
-  margin: 0px auto;
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-.info-column {
-  flex: 1;
-  margin: 10px;
-}
 
+/* Link Container */
 .link-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  max-width: 1500px;
-  margin: 0px auto;
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 .link-column {
   flex: 1;
-  margin: 7px;
+  margin: 0px;
   text-align: center;
 }
 
@@ -184,22 +204,24 @@ svg {
   font-weight: bold;
   text-decoration: none;
 }
+
 .link-container a i {
-  margin-right: 10px; /* Adds space between the icon and text */
+  margin-right: 10px;
 }
 
-ul {
-  padding: 0;
-}
+/* Lists */
+ul,
 ol {
   padding: 0;
 }
+
 ul li {
   list-style-type: disc;
   margin-top: 5px;
   margin-bottom: 5px;
   margin-left: 15px;
 }
+
 ol {
   list-style-type: disc;
   margin-top: 5px;
@@ -207,38 +229,74 @@ ol {
   margin-left: 15px;
 }
 
-.accordion.active .arrow {
-  transform: rotate(180deg);
-  transition: transform 0.3s ease;
-}
+/* Accordion Styles */
 .accordion {
   position: relative;
   font-size: 16px;
 }
+
+.accordion.active .arrow {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
 .arrow {
   display: inline-block;
   position: absolute;
   right: 0;
   font-size: 0.65em;
 }
-.projects-container {
-  max-width: 1500px;
-  margin: 7px auto;
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+/* Project Styles */
+.project-columns {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.article-container {
-  max-width: 1500px;
-  margin: 7px auto;
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.project-column {
+  flex-basis: calc(25% - 5px);
+  padding: 2px;
+  box-sizing: border-box;
 }
 
+.project-column ul {
+  list-style-type: none;
+  margin: 0;
+}
+
+.project-column ul li {
+  margin-bottom: 30px;
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  align-items: left;
+  text-align: left;
+}
+
+.project-column img {
+  width: 100%;
+  height: 200px;
+  margin-bottom: 0px;
+}
+
+.project-column strong {
+  font-size: 1.1em;
+}
+
+.project-column ul li a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.project-column ul li:hover {
+  background-color: #ccd4d8;
+  transition: all 0.3s ease;
+  z-index: 1;
+  border-radius: 5px;
+}
+
+/* Article Container */
 .article-container h1,
 .article-container h2,
 .article-container h3,
@@ -251,250 +309,57 @@ ol {
   margin-right: 20px;
 }
 
-.project-columns {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.project-column {
-  flex-basis: calc(25% - 5px);
-  padding: 2px;
+/* Responsive Elements */
+.responsive-math {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  text-align: left;
+  font-size: 1rem;
+  margin: 1em 0;
+  padding: 0.5em;
   box-sizing: border-box;
 }
-.project-column ul {
-  list-style-type: none;
-  margin: 0;
-}
-.project-column ul li {
-  margin-bottom: 30px;
-  display: flex;
-  padding: 10px;
-  flex-direction: column;
-  align-items: left;
-  text-align: left;
-}
-.project-column img {
-  width: 100%;
-  height: 200px;
-  margin-bottom: 0px;
-}
-.project-column strong {
-  font-size: 1.1em;
-}
-.project-column ul li a {
-  display: block; /* Rende l'intero contenitore cliccabile */
-  text-decoration: none; /* Rimuove la sottolineatura dal testo */
-  color: inherit; /* Mantiene il colore del testo */
-}
-.project-column ul li:hover {
-  background-color: #ccd4d8; /* Dark, elegant color (you can customize this further) */
-  /*color: white;  Ensure text is white for contrast */
-  transition: all 0.3s ease; /* Smooth transition for hover effects */
-  z-index: 1; /* Ensures the hovered item stays above others */
-  border-radius: 5px; /* Optional: Adds a smooth look */
+
+.responsive-table-container {
+  display: block;
+  overflow-x: auto;
+  white-space: wrap;
+  margin: 1em 0;
+  box-sizing: border-box;
 }
 
-@media screen and (max-width: 1300px) {
-  .project-columns {
-    justify-content: left; /* Centra le colonne quando lo schermo è stretto */
-  }
-  .project-column {
-    flex-basis: calc(
-      33% - 5px
-    ); /* Imposta la larghezza delle colonne al 50% del contenitore con uno spazio tra le colonne */
-  }
+.responsive-code-container {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  margin: 1em 0;
+  box-sizing: border-box;
 }
-/* Media query per adattare il layout quando la larghezza dello schermo è inferiore a 1200px */
-@media screen and (max-width: 1000px) {
-  .project-columns {
-    justify-content: left; /* Centra le colonne quando lo schermo è stretto */
-  }
 
-  .project-column {
-    flex-basis: calc(
-      50% - 20px
-    ); /* Imposta la larghezza delle colonne al 50% del contenitore con uno spazio tra le colonne */
-  }
-  .info-column {
-    flex-basis: calc(
-      50% - 20px
-    ); /* Imposta la larghezza delle colonne al 50% del contenitore con uno spazio tra le colonne */
-  }
-}
-/* Media query per adattare ulteriormente il layout quando la larghezza dello schermo è inferiore a 600px */
-@media screen and (max-width: 600px) {
-  .project-column {
-    flex-basis: calc(
-      100% - 20px
-    ); /* Imposta la larghezza delle colonne al 100% del contenitore con uno spazio tra le colonne */
-  }
-  .info-column {
-    flex-basis: calc(
-      100% - 20px
-    ); /* Imposta la larghezza delle colonne al 100% del contenitore con uno spazio tra le colonne */
-  }
-  .link-column {
-    flex-basis: calc(
-      50% - 20px
-    ); /* Imposta la larghezza delle colonne al 50% del contenitore con uno spazio tra le colonne */
-  }
-}
-/* Dark Mode Styles */
-body.dark-mode {
-  background-color: #1e1e1e;
-  color: white;
-}
-header.dark-mode {
-  background-color: #1e1e1e;
-}
-header h1.dark-mode {
-  color: #fff;
-}
-.dark-mode svg {
-  fill: rgb(207, 216, 220);
-}
-.dark-mode svg:hover {
-  fill: #ffffff;
-}
-svg:hover {
-  fill: rgb(0, 0, 0);
-}
+.responsive-img,
 svg {
-  fill: rgb(96, 125, 138);
-}
-/* Update container styles */
-.main-container.dark-mode {
-  background-color: #29363d; /* Dark background */
-  color: #fff; /* Light text */
-}
-.info-container.dark-mode {
-  background-color: #29363d; /* Dark background */
-  color: #fff; /* Light text */
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
-.link-container.dark-mode {
-  background-color: #29363d; /* Dark background */
-  color: #fff; /* Light text */
+/* Table Styles */
+table {
+  border-collapse: collapse;
+  width: 90%;
 }
 
-.projects-container.dark-mode {
-  background-color: #29363d; /* Dark background */
-  color: #fff; /* Light text */
-}
-.portfolio-container.dark-mode {
-  background-color: #29363d; /* Dark background */
-  color: #fff; /* Light text */
-}
-.article-container.dark-mode {
-  background-color: #29363d; /* Dark background */
-  color: #fff; /* Light text */
-}
-.dark-mode h4 {
-  color: rgb(207, 216, 220);
-}
-.dark-mode h1 {
-  color: rgb(255, 255, 255);
-}
-.dark-mode h2,
-.dark-mode h3 {
-  color: rgb(207, 216, 220);
-  border-bottom: 2px solid rgb(207, 216, 220);
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  font-size: 1rem;
 }
 
-.projects-container.dark-mode a:hover {
-  color: #000000;
-}
-body a {
-  color: rgb(96, 125, 138); /* Light blue for contrast in dark mode */
-}
-body a:hover {
-  color: #000000; /* Light blue for contrast in dark mode */
-}
-
-body.dark-mode a {
-  color: rgb(207, 216, 220);
-}
-body.dark-mode a:hover {
-  color: #ffffff; /* Light blue for contrast in dark mode */
-}
-
-/* 
-Other sections like accordions can also be styled 
-.accordion.dark-mode {
-  color: #fff;
-}
-*/
-/* Toggle Switch Styles */
-.switch {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  cursor: pointer;
-}
-.switch input {
-  display: none;
-}
-.switch-label {
-  background-color: #ccc;
-  width: 40px;
-  height: 20px;
-  border-radius: 20px;
-  display: inline-block;
-  transition: background-color 0.3s ease;
-  position: relative;
-}
-.switch-label:before {
-  content: "";
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background-color: #fff;
-  transition: transform 0.3s ease;
-}
-/* Sun and Moon Icons */
-.sun-icon,
-.moon-icon {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 14px;
-  color: #fff;
-  transition: opacity 0.3s ease;
-}
-.sun-icon {
-  left: 5px;
-  opacity: 0;
-}
-.moon-icon {
-  right: 5px;
-  opacity: 1;
-}
-/* When the toggle is checked (Dark mode) */
-.switch input:checked + .switch-label {
-  background-color: #333;
-}
-.switch input:checked + .switch-label:before {
-  transform: translateX(20px);
-}
-.switch input:checked + .switch-label .sun-icon {
-  opacity: 1;
-}
-.switch input:checked + .switch-label .moon-icon {
-  opacity: 0;
-}
-
-.portfolio-container {
-  max-width: 1500px;
-  margin: 7px auto;
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
+/* Portfolio Styles */
 .portfolio-sections {
   display: flex;
   gap: 20px;
@@ -530,70 +395,15 @@ Other sections like accordions can also be styled
   flex-direction: column;
   align-items: left;
   text-align: left;
-
   margin-left: 15px;
 }
 
 .portfolio-item a:hover,
 .article-column a:hover {
-  background-color: #ccd4d8; /* Dark, elegant color (you can customize this further) */
-  /*color: white;  Ensure text is white for contrast */
-  transition: all 0.3s ease; /* Smooth transition for hover effects */
-  z-index: 1; /* Ensures the hovered item stays above others */
-  border-radius: 5px; /* Optional: Adds a smooth look */
-}
-
-.last-updated {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-right: 20px;
-}
-
-.last-updated-label {
-  margin-right: 5px;
-  font-weight: 500;
-}
-
-.last-updated time {
-  font-style: italic;
-}
-
-#sticky-header {
-  position: sticky;
-  top: 0;
-  z-index: 2000; /* so it stays on top */
-  background-color: #f5f5f5; /*ensure background covers content underneath */
-}
-
-/* Back to Top Button Styling */
-#backToTopButton {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: none;
-  z-index: 1000;
-  padding: 10px 15px;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 1.2em; /* Bigger text */
-}
-
-#backToTopButton:hover {
-  background-color: #555;
-}
-
-.dark-mode .portfolio-item a:hover,
-.dark-mode .article-column a:hover {
-  background-color: #555; /* Darker background for dark mode */
-  color: #fff; /* Ensure text is white for contrast */
+  background-color: #ccd4d8;
+  transition: all 0.3s ease;
+  z-index: 1;
+  border-radius: 5px;
 }
 
 .portfolio-item img,
@@ -622,6 +432,7 @@ Other sections like accordions can also be styled
   color: #666;
 }
 
+/* View All Button */
 .view-all-container {
   display: flex;
   justify-content: center;
@@ -636,7 +447,6 @@ Other sections like accordions can also be styled
   border-radius: 4px;
   transition: background-color 0.3s ease;
   text-align: center;
-
   font-size: 1em;
   font-weight: bold;
 }
@@ -646,48 +456,229 @@ Other sections like accordions can also be styled
   font-size: 0.9em;
 }
 
-/* Responsive layout */
-@media (max-width: 568px) {
-  .portfolio-sections {
-    flex-direction: column;
-  }
-
-  .section-column {
-    flex: 0 0 100%;
-  }
+/* Last Updated Section */
+.last-updated {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 20px;
 }
 
-@media (max-width: 1300px) {
-  .portfolio-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .portfolio-grid-4 {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.last-updated-label {
+  margin-right: 5px;
+  font-weight: 500;
 }
 
-@media (max-width: 1050px) {
-  .portfolio-grid {
-    grid-template-columns: repeat(1, 1fr);
-  }
-
-  .portfolio-grid-4 {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.last-updated time {
+  font-style: italic;
 }
 
-@media (max-width: 568px) {
-  .portfolio-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .portfolio-grid-4 {
-    grid-template-columns: repeat(1, 1fr);
-  }
+/* Sticky Header */
+#sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+  background-color: #f5f5f5;
 }
 
-/* Dark mode styles */
+/* Back to Top Button */
+#backToTopButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+  z-index: 1000;
+  padding: 10px 15px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1.2em;
+}
+
+#backToTopButton:hover {
+  background-color: #555;
+}
+
+/* Link Styles */
+body a {
+  color: rgb(96, 125, 138);
+}
+
+body a:hover {
+  color: #000000;
+}
+
+/* SVG Styles */
+svg {
+  fill: rgb(96, 125, 138);
+}
+
+svg:hover {
+  fill: rgb(0, 0, 0);
+}
+
+/* Dark Mode Toggle */
+.switch {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  /* margin: 0; */
+  /* z-index: 100; */
+}
+
+.switch input {
+  display: none;
+}
+
+.switch-label {
+  background-color: #ccc;
+  width: 40px;
+  height: 20px;
+  border-radius: 20px;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+  position: relative;
+}
+
+.switch-label:before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #fff;
+  transition: transform 0.3s ease;
+}
+
+.sun-icon,
+.moon-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #fff;
+  transition: opacity 0.3s ease;
+}
+
+.sun-icon {
+  left: 5px;
+  opacity: 0;
+}
+
+.moon-icon {
+  right: 5px;
+  opacity: 1;
+}
+
+.switch input:checked + .switch-label {
+  background-color: #333;
+}
+
+.switch input:checked + .switch-label:before {
+  transform: translateX(20px);
+}
+
+.switch input:checked + .switch-label .sun-icon {
+  opacity: 1;
+}
+
+.switch input:checked + .switch-label .moon-icon {
+  opacity: 0;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background-color: #1e1e1e;
+  color: white;
+}
+
+header.dark-mode {
+  background-color: #1e1e1e;
+}
+
+header h1.dark-mode {
+  color: #fff;
+}
+
+.dark-mode svg {
+  fill: rgb(207, 216, 220);
+}
+
+.dark-mode svg:hover {
+  fill: #ffffff;
+}
+
+.main-container.dark-mode,
+.info-container.dark-mode,
+.link-container.dark-mode,
+.projects-container.dark-mode,
+.portfolio-container.dark-mode,
+.article-container.dark-mode {
+  background-color: #29363d;
+  color: #fff;
+}
+
+.dark-mode h4 {
+  color: rgb(207, 216, 220);
+}
+
+.dark-mode h1 {
+  color: rgb(255, 255, 255);
+}
+
+.dark-mode h2,
+.dark-mode h3 {
+  color: rgb(207, 216, 220);
+  border-bottom: 2px solid rgb(207, 216, 220);
+}
+
+.projects-container.dark-mode a:hover {
+  color: #000000;
+}
+
+body.dark-mode a {
+  color: rgb(207, 216, 220);
+}
+
+body.dark-mode a:hover {
+  color: #ffffff;
+}
+
+/* Dark Mode Text Colors */
+body.dark-mode .contact-info a .contact-label {
+  color: rgb(207, 216, 220);
+}
+
+body.dark-mode .contact-info a:hover .contact-label {
+  color: #ffffff;
+}
+
+/* SVG Color in Dark Mode */
+body.dark-mode .contact-info a svg {
+  fill: rgb(207, 216, 220); /* Match the text color in dark mode */
+}
+
+body.dark-mode .contact-info a:hover svg {
+  fill: #ffffff; /* Pure white on hover, matching text hover */
+}
+
+/* Apply similar treatment to other SVGs in dark mode for consistency */
+body.dark-mode svg {
+  fill: rgb(207, 216, 220);
+}
+
+body.dark-mode svg:hover {
+  fill: #ffffff;
+}
+
 .dark-mode .portfolio-item,
 .dark-mode .article-column {
   color: #000000;
@@ -700,4 +691,175 @@ Other sections like accordions can also be styled
 .dark-mode .portfolio-item p,
 .dark-mode .article-column p {
   color: #ccc;
+}
+
+.dark-mode .portfolio-item a:hover,
+.dark-mode .article-column a:hover {
+  background-color: #555;
+  color: #fff;
+}
+
+/* Media Queries */
+@media screen and (max-width: 1300px) {
+  .project-columns {
+    justify-content: left;
+  }
+
+  .project-column {
+    flex-basis: calc(33% - 5px);
+  }
+
+  .portfolio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .portfolio-grid-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .portfolio-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .portfolio-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .project-columns {
+    justify-content: left;
+  }
+
+  .project-column {
+    flex-basis: calc(50% - 20px);
+  }
+
+  .info-column {
+    flex-basis: calc(50% - 20px);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .project-column {
+    flex-basis: calc(100% - 20px);
+  }
+
+  .info-column {
+    flex-basis: calc(100% - 20px);
+  }
+
+  .link-column {
+    flex-basis: calc(50% - 20px);
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .portfolio-sections {
+    flex-direction: column;
+  }
+
+  .section-column {
+    flex: 0 0 100%;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-grid-4 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 992px) {
+  .contact-info {
+    gap: 15px;
+  }
+
+  .contact-info a svg {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+  }
+
+  .contact-label {
+    font-size: 0.95rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  /* Switch to 2 columns on medium screens */
+  .contact-info {
+    grid-template-columns: repeat(2, auto);
+    gap: 12px 20px; /* row-gap column-gap */
+    margin-bottom: 10px;
+  }
+
+  .header-left {
+    flex: 1 0 100%;
+    margin-bottom: 15px;
+  }
+
+  .header-right {
+    justify-content: flex-start;
+    margin-left: 20px;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .link-column {
+    font-size: 0.95rem;
+  }
+
+  .contact-label {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .contact-info {
+    grid-template-columns: repeat(2, auto);
+    gap: 15px 12px;
+    justify-content: start;
+    width: 100%;
+  }
+
+  /* .switch {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+  } */
+
+  header h1 {
+    font-size: 1.8rem;
+  }
+
+  .role {
+    font-size: 0.95rem;
+  }
+
+  .link-column {
+    font-size: 0.9rem;
+  }
+}
+
+/* Additional responsive adjustments for very small screens */
+@media screen and (max-width: 340px) {
+  .contact-info {
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+  }
+
+  .contact-label {
+    font-size: 0.85rem;
+  }
+
+  /* .switch {
+    margin-left: 10px;
+    margin-right: 10px;
+  } */
 }
