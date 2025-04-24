@@ -1,6 +1,6 @@
 # Francesco Sannicola – Portfolio Website
 
-[![Website Status](https://img.shields.io/website-up-down-green-red/https/francescosannicola.it.svg)](https://francescosannicola.it) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Website Status](https://img.shields.io/website-up-down-green-red/https/francescosannicola.it.svg)](https://francescosannicola.it)
 
 Welcome to the source code for my personal portfolio website, where I showcase my background, featured projects, and technical articles.
 
