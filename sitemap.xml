@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <!-- Home page -->
+    <url>
+        <loc>https://www.francescosannicola.com/</loc>
+        <lastmod>2025-05-10</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>1.00</priority>
+    </url>
+
+    <!-- About page -->
+    <url>
+        <loc>https://www.francescosannicola.com/about.html</loc>
+        <lastmod>2025-05-10</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.80</priority>
+    </url>
+
+    <!-- Projects overview -->
+    <url>
+        <loc>https://francescosannicola.com/projects/overview.html</loc>
+        <lastmod>2025-05-10</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.80</priority>
+    </url>
+
+    <!-- Articles overview -->
+    <url>
+        <loc>https://francescosannicola.com/articles/overview.html</loc>
+        <lastmod>2025-05-10</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.80</priority>
+    </url>
+
+    <!-- Individual articles -->
+    <url>
+        <loc>https://francescosannicola.com/articles/genai-llm-interview-questions.html</loc>
+        <lastmod>2025-05-10</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.64</priority>
+    </url>
+    <url>
+        <loc>https://francescosannicola.com/articles/understanding-random-number-generation.html</loc>
+        <lastmod>2025-05-10</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.64</priority>
+    </url>
+
+</urlset>
