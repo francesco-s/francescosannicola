@@ -1,10 +1,10 @@
 # Francesco Sannicola – Portfolio Website
 
-[![Website Status](https://img.shields.io/website-up-down-green-red/https/francescosannicola.it.svg)](https://francescosannicola.it)
+[![Website Status](https://img.shields.io/website-up-down-green-red/https/francescosannicola.com.svg)](https://francescosannicola.com)
 
 Welcome to the source code for my personal portfolio website, where I showcase my background, featured projects, and technical articles.
 
-🔗 **Live Site**: [francescosannicola.it](https://francescosannicola.it)
+🔗 **Live Site**: [francescosannicola.com](https://francescosannicola.com)
 
 ---
 
@@ -89,10 +89,8 @@ Contributions are welcome! Feel free to:
 
 👤 **Francesco Sannicola**
 
-- Website: [francescosannicola.it](https://francescosannicola.it)
+- Website: [francescosannicola.com](https://francescosannicola.com)
 - GitHub: [@francesco-s](https://github.com/francesco-s)
 - Email: francescosannicola1997@gmail.com
 
 Feel free to reach out for feedback, collaboration, or just to say hello!
-
-Happy browsing! ✨
