@@ -4,7 +4,7 @@
 
     <!-- Home page -->
     <url>
-        <loc>https://www.francescosannicola.com/</loc>
+        <loc>https://francescosannicola.com/</loc>
         <lastmod>2025-05-10</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.00</priority>
@@ -12,7 +12,7 @@
 
     <!-- About page -->
     <url>
-        <loc>https://www.francescosannicola.com/about.html</loc>
+        <loc>https://francescosannicola.com/about.html</loc>
         <lastmod>2025-05-10</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.80</priority>
