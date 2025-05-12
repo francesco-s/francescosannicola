@@ -20,7 +20,7 @@
 
     <!-- Projects overview -->
     <url>
-        <loc>https://francescosannicola.com/projects/overview.html</loc>
+        <loc>https://francescosannicola.com/projects/</loc>
         <lastmod>2025-05-10</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.80</priority>
@@ -28,7 +28,7 @@
 
     <!-- Articles overview -->
     <url>
-        <loc>https://francescosannicola.com/articles/overview.html</loc>
+        <loc>https://francescosannicola.com/articles/</loc>
         <lastmod>2025-05-10</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.80</priority>
