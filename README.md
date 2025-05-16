@@ -28,9 +28,9 @@ A lightweight, performant, and framework-free portfolio website built to highlig
 
 This site is engineered for speed:
 
-- 📄 **Minimal Overhead**: Pure HTML, CSS, and just enough JavaScript.
-- 🌐 **Global Delivery**: Served via CloudFront with edge caching.
-- 🔄 **Automatic Cache Invalidation**: New deploys purge stale content.
+* 📄 **Minimal Overhead**: Pure HTML, CSS, and just enough JavaScript – inspired by the provocative philosophy of [justfuckingusehtml.com](https://justfuckingusehtml.com/).
+* 🌐 **Global Delivery**: Served via CloudFront with edge caching.
+* 🔄 **Automatic Cache Invalidation**: New deploys purge stale content.
 
 ---
 
