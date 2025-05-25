@@ -398,6 +398,26 @@ td {
   margin-left: 15px;
 }
 
+.article-column .article-date {
+  display: block;
+  font-size: 0.8em;
+  color: #888;
+  font-style: italic;
+  text-align: right;
+  margin-top: 3.5px;
+  margin-right: 10px;
+}
+
+.portfolio-item .article-date {
+  display: block;
+  font-size: 0.8em;
+  color: #888;
+  font-style: italic;
+  text-align: right;
+  margin-top: 3.5px;
+  margin-right: 10px;
+}
+
 .portfolio-item a:hover,
 .article-column a:hover {
   background-color: #ccd4d8;
