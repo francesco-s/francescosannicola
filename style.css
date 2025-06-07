@@ -695,10 +695,6 @@ header h1.dark-mode {
   border-bottom: 2px solid rgb(207, 216, 220);
 }
 
-.projects-container.dark-mode a:hover {
-  color: #000000;
-}
-
 body.dark-mode a {
   color: rgb(207, 216, 220);
 }
