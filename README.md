@@ -1,6 +1,6 @@
 # Francesco Sannicola – Portfolio Website
 
-[![Website Status](https://img.shields.io/website-up-down-green-red/https/francescosannicola.com.svg)](https://francescosannicola.com)
+[![Website Status](https://img.shields.io/website-up-down-green-red/https/francescosannicola.com.svg)](https://francescosannicola.com) &nbsp;
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/francesco-s/francescosannicola)
 
 Welcome to the source code for my personal portfolio website, where I showcase my background, featured projects, and technical articles.
