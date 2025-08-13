@@ -11,7 +11,8 @@ body {
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5 {
   color: rgb(96, 125, 138);
 }
 
@@ -26,9 +27,194 @@ h4 {
   font-weight: normal;
 }
 
+h5 {
+  font-weight: 600;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgb(96, 125, 138);
+  padding-bottom: 3px;
+}
+
 p {
   margin-bottom: 1.2em;
   line-height: 1.5;
+}
+
+/* Mathematical Equations */
+.math-equation {
+  text-align: center;
+  margin: 15px 0;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-left: 4px solid rgb(96, 125, 138);
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.math-equation p {
+  margin: 5px 0;
+  color: #555;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+/* Comparison Grids and Cards */
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 20px 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.comparison-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #fafafa;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease;
+  overflow-x: auto;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.comparison-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.comparison-card h5 {
+  margin-top: 0;
+  color: rgb(96, 125, 138);
+  border-bottom: 2px solid rgb(96, 125, 138);
+  padding-bottom: 5px;
+  font-size: 1.1em;
+}
+
+.comparison-card ul {
+  margin: 10px 0;
+  padding-left: 0;
+}
+
+.comparison-card li {
+  margin: 8px 0;
+  padding-left: 15px;
+  position: relative;
+}
+
+/* .comparison-card li::before {
+  content: "•";
+  color: rgb(96, 125, 138);
+  position: absolute;
+  left: 0;
+  top: 0;
+} */
+
+/* Highlight Boxes */
+.highlight-box {
+  background-color: #e8f4f8;
+  border: 1px solid #bee5eb;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.highlight-box p {
+  margin-bottom: 10px;
+}
+
+.highlight-box ul {
+  margin: 10px 0;
+}
+
+/* Key Insights */
+.key-insight {
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.key-insight::before {
+  content: "💡 ";
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.key-insight strong {
+  color: #856404;
+}
+
+/* Summary Boxes */
+.summary {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.summary h4 {
+  margin-top: 0;
+  color: rgb(96, 125, 138);
+  border-bottom: 2px solid rgb(96, 125, 138);
+  padding-bottom: 5px;
+}
+
+/* Workflow Steps */
+.workflow-step {
+  background-color: #f8f9fa;
+  border-left: 4px solid rgb(96, 125, 138);
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.workflow-step h6 {
+  margin: 0 0 15px 0;
+  color: rgb(96, 125, 138);
+  font-size: 1.1em;
+  font-weight: bold;
+  border-bottom: 1px solid rgb(96, 125, 138);
+  padding-bottom: 5px;
+}
+
+.workflow-step p {
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+.workflow-step ul {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.workflow-step li {
+  margin: 5px 0;
+  list-style-type: disc;
 }
 
 /* Header Styles */
@@ -83,8 +269,8 @@ header h1 {
   margin: 0;
   text-align: left;
   font-weight: normal;
-  font-size: 1.1rem; /* Adjust size as needed */
-  line-height: 1.4; /* Adjust line height if needed */
+  font-size: 1.1rem;
+  line-height: 1.4;
   margin-left: 20px;
 }
 
@@ -108,7 +294,7 @@ header h1 {
   transition: transform 0.2s ease;
   justify-content: flex-start;
   white-space: nowrap;
-  color: rgb(96, 125, 138); /* Same color as links in light mode */
+  color: rgb(96, 125, 138);
   transition: color 0.2s ease;
 }
 
@@ -119,7 +305,7 @@ header h1 {
 }
 
 .contact-info a:hover .contact-label {
-  color: #000000; /* Same hover color as links in light mode */
+  color: #000000;
 }
 
 .contact-info a svg {
@@ -322,12 +508,28 @@ ol {
 .article-container h2,
 .article-container h3,
 .article-container h4,
+.article-container h5,
+.article-container h6,
 .article-container p,
 .article-container li,
 .article-container table,
 .article-container ul {
   margin-left: 20px;
   margin-right: 20px;
+}
+
+/* Special handling for comparison elements */
+.article-container .comparison-grid,
+.article-container .comparison-card,
+.article-container .highlight-box,
+.article-container .key-insight,
+.article-container .math-equation,
+.article-container .summary,
+.article-container .workflow-step {
+  margin-left: 20px;
+  margin-right: 20px;
+  max-width: calc(100% - 40px);
+  box-sizing: border-box;
 }
 
 /* Responsive Elements */
@@ -370,14 +572,32 @@ svg {
 table {
   border-collapse: collapse;
   width: 90%;
+  margin: 20px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 th,
 td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 12px;
   text-align: left;
   font-size: 1rem;
+}
+
+th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+  color: rgb(96, 125, 138);
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #f0f8ff;
 }
 
 /* Portfolio Styles */
@@ -492,20 +712,6 @@ td {
   font-weight: bold;
 }
 
-/* .view-all-btn {
-  padding: 10px 24px;
-  color: white;
-  background-color: rgb(96, 125, 138);
-  border-radius: 8px;
-  font-weight: bold;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-} */
-
-/* .view-all-btn:hover {
-  background-color: rgb(55, 85, 100);
-} */
-
 .view-all-btn i {
   margin-left: 8px;
   font-size: 0.9em;
@@ -583,8 +789,6 @@ svg:hover {
   position: fixed;
   top: 20px;
   right: 20px;
-  /* margin: 0; */
-  /* z-index: 100; */
 }
 
 .switch input {
@@ -681,7 +885,9 @@ header h1.dark-mode {
   color: #fff;
 }
 
-.dark-mode h4 {
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode h6 {
   color: rgb(207, 216, 220);
 }
 
@@ -695,12 +901,112 @@ header h1.dark-mode {
   border-bottom: 2px solid rgb(207, 216, 220);
 }
 
+.dark-mode h5 {
+  border-bottom: 1px solid rgb(207, 216, 220);
+}
+
+/* Dark Mode for Workflow Steps */
+.dark-mode .workflow-step {
+  background-color: #2a3a4a;
+  border-left-color: rgb(207, 216, 220);
+  color: #e0e0e0;
+}
+
+.dark-mode .workflow-step h6 {
+  color: rgb(207, 216, 220);
+  border-bottom-color: rgb(207, 216, 220);
+}
+
+.dark-mode .workflow-step p {
+  color: #e0e0e0;
+}
+
+.dark-mode .workflow-step strong {
+  color: rgb(207, 216, 220);
+}
+
 body.dark-mode a {
   color: rgb(207, 216, 220);
 }
 
 body.dark-mode a:hover {
   color: #ffffff;
+}
+
+/* Dark Mode for Comparison Elements */
+.dark-mode .comparison-card {
+  background-color: #3a4a54;
+  border-color: #5a6a74;
+}
+
+.dark-mode .comparison-card h5 {
+  color: rgb(207, 216, 220);
+  border-bottom-color: rgb(207, 216, 220);
+}
+
+.dark-mode .comparison-card li::before {
+  color: rgb(207, 216, 220);
+}
+
+.dark-mode .highlight-box {
+  background-color: #2a4a5a;
+  border-color: #4a6a7a;
+  color: #e0e0e0;
+}
+
+.dark-mode .key-insight {
+  background-color: #4a4a2a;
+  border-color: #6a6a4a;
+  color: #e0e0e0;
+}
+
+.dark-mode .key-insight strong {
+  color: #ffd700;
+}
+
+.dark-mode .math-equation {
+  background-color: #2a3a4a;
+  border-left-color: rgb(207, 216, 220);
+  color: #e0e0e0;
+}
+
+.dark-mode .math-equation p {
+  color: #cccccc;
+}
+
+.dark-mode .summary {
+  background-color: #2a3a4a;
+  border-color: #4a5a6a;
+  color: #e0e0e0;
+}
+
+.dark-mode .summary h4 {
+  color: rgb(207, 216, 220);
+  border-bottom-color: rgb(207, 216, 220);
+}
+
+/* Dark Mode Table Styles */
+.dark-mode table {
+  background-color: #2a3a4a;
+}
+
+.dark-mode th {
+  background-color: #3a4a5a;
+  color: rgb(207, 216, 220);
+  border-color: #5a6a7a;
+}
+
+.dark-mode td {
+  color: #e0e0e0;
+  border-color: #5a6a7a;
+}
+
+.dark-mode tr:nth-child(even) {
+  background-color: #3a4a5a;
+}
+
+.dark-mode tr:hover {
+  background-color: #4a5a6a;
 }
 
 /* Dark Mode Text Colors */
@@ -714,11 +1020,11 @@ body.dark-mode .contact-info a:hover .contact-label {
 
 /* SVG Color in Dark Mode */
 body.dark-mode .contact-info a svg {
-  fill: rgb(207, 216, 220); /* Match the text color in dark mode */
+  fill: rgb(207, 216, 220);
 }
 
 body.dark-mode .contact-info a:hover svg {
-  fill: #ffffff; /* Pure white on hover, matching text hover */
+  fill: #ffffff;
 }
 
 /* Apply similar treatment to other SVGs in dark mode for consistency */
@@ -758,12 +1064,12 @@ body.dark-mode svg:hover {
   border-top: 1px solid #e0e0e0;
 }
 
-/* Stile per dark mode */
+/* Dark mode for Disqus */
 .dark-mode #disqus_thread {
   border-top-color: #444;
 }
 
-/* Personalizzazione per mobile */
+/* Mobile customization for Disqus */
 @media (max-width: 768px) {
   #disqus_thread {
     margin-top: 30px;
@@ -811,6 +1117,65 @@ body.dark-mode svg:hover {
 
   .info-column {
     flex-basis: calc(50% - 20px);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  /* Responsive Comparison Grid */
+  .comparison-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin: 15px 0;
+  }
+
+  .comparison-card {
+    padding: 15px;
+    margin: 0;
+    overflow-x: auto;
+  }
+
+  .math-equation {
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 0.85em;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-align: left;
+  }
+
+  .highlight-box,
+  .key-insight,
+  .summary {
+    padding: 15px;
+    margin: 15px 0;
+    overflow-x: auto;
+  }
+
+  /* Switch to 2 columns on medium screens */
+  .contact-info {
+    grid-template-columns: repeat(2, auto);
+    gap: 12px 20px;
+    margin-bottom: 10px;
+  }
+
+  .header-left {
+    flex: 1 0 100%;
+    margin-bottom: 15px;
+  }
+
+  .header-right {
+    justify-content: flex-start;
+    margin-left: 20px;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .link-column {
+    font-size: 0.95rem;
+  }
+
+  .contact-label {
+    font-size: 0.9rem;
   }
 }
 
@@ -863,35 +1228,6 @@ body.dark-mode svg:hover {
   }
 }
 
-@media screen and (max-width: 768px) {
-  /* Switch to 2 columns on medium screens */
-  .contact-info {
-    grid-template-columns: repeat(2, auto);
-    gap: 12px 20px; /* row-gap column-gap */
-    margin-bottom: 10px;
-  }
-
-  .header-left {
-    flex: 1 0 100%;
-    margin-bottom: 15px;
-  }
-
-  .header-right {
-    justify-content: flex-start;
-    margin-left: 20px;
-    flex-wrap: wrap;
-    width: 100%;
-  }
-
-  .link-column {
-    font-size: 0.95rem;
-  }
-
-  .contact-label {
-    font-size: 0.9rem;
-  }
-}
-
 @media screen and (max-width: 480px) {
   .contact-info {
     grid-template-columns: repeat(2, auto);
@@ -899,12 +1235,6 @@ body.dark-mode svg:hover {
     justify-content: start;
     width: 100%;
   }
-
-  /* .switch {
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 10px;
-  } */
 
   header h1 {
     font-size: 1.8rem;
@@ -916,6 +1246,43 @@ body.dark-mode svg:hover {
 
   .link-column {
     font-size: 0.9rem;
+  }
+
+  /* Smaller spacing for mobile */
+  .comparison-grid {
+    margin: 10px 0;
+    gap: 10px;
+  }
+
+  .comparison-card {
+    padding: 12px;
+    margin: 0;
+  }
+
+  .math-equation {
+    padding: 8px;
+    font-size: 0.8em;
+    margin: 8px 0;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-align: left;
+  }
+
+  .highlight-box,
+  .key-insight,
+  .summary {
+    padding: 12px;
+    margin: 12px 0;
+  }
+
+  .workflow-step {
+    padding: 12px;
+    margin: 12px 0;
+  }
+
+  .workflow-step h6 {
+    font-size: 1em;
+    margin-bottom: 10px;
   }
 }
 
@@ -929,9 +1296,4 @@ body.dark-mode svg:hover {
   .contact-label {
     font-size: 0.85rem;
   }
-
-  /* .switch {
-    margin-left: 10px;
-    margin-right: 10px;
-  } */
 }
