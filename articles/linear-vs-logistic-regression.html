@@ -1,0 +1,3100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A comprehensive guide to understanding Linear Regression vs Logistic Regression - covering key differences, mathematical foundations, use cases, and practical implementations."
+    />
+
+    <meta
+      name="keywords"
+      content="machine learning, linear regression, logistic regression, statistics, data science, predictive modeling"
+    />
+    <meta name="author" content="Francesco Sannicola" />
+    <meta
+      property="og:title"
+      content="Francesco Sannicola - Machine Learning Engineer"
+    />
+    <meta
+      property="og:description"
+      content="Discover Francesco Sannicola's portfolio showcasing software engineering expertise and cutting-edge Artificial Intelligence (AI) projects."
+    />
+    <meta
+      property="og:url"
+      content="https://www.francescosannicola.com/articles"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="./assets/francescosannicola.jpg" />
+    <title>Linear vs Logistic Regression - Francesco Sannicola</title>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+    <script
+      type="text/javascript"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+
+    <link rel="stylesheet" type="text/css" href="../style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="left-column">
+        <header>
+          <div class="header-left">
+            <h1>Francesco Sannicola</h1>
+            <h4 class="role">Machine Learning | Software Engineering</h4>
+          </div>
+
+          <div class="header-right">
+            <div class="contact-info">
+              <a href="../resume.pdf" target="_blank" aria-label="View Resume">
+                <svg
+                  fill="#000000"
+                  version="1.1"
+                  id="Capa_1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 45.057 45.057"
+                  xml:space="preserve"
+                >
+                  <title>Resume</title>
+                  <g>
+                    <g id="_x35_8_24_">
+                      <g>
+                        <path
+                          d="M19.558,25.389c-0.067,0.176-0.155,0.328-0.264,0.455c-0.108,0.129-0.24,0.229-0.396,0.301
+                                       c-0.156,0.072-0.347,0.107-0.57,0.107c-0.313,0-0.572-0.068-0.78-0.203c-0.208-0.137-0.374-0.316-0.498-0.541
+                                       c-0.124-0.223-0.214-0.477-0.27-0.756c-0.057-0.279-0.084-0.564-0.084-0.852c0-0.289,0.027-0.572,0.084-0.853
+                                       c0.056-0.281,0.146-0.533,0.27-0.756c0.124-0.225,0.29-0.404,0.498-0.541c0.208-0.137,0.468-0.203,0.78-0.203
+                                       c0.271,0,0.494,0.051,0.666,0.154c0.172,0.105,0.31,0.225,0.414,0.361c0.104,0.137,0.176,0.273,0.216,0.414
+                                       c0.04,0.139,0.068,0.25,0.084,0.33h2.568c-0.112-1.08-0.49-1.914-1.135-2.502c-0.644-0.588-1.558-0.887-2.741-0.895
+                                       c-0.664,0-1.263,0.107-1.794,0.324c-0.532,0.215-0.988,0.52-1.368,0.912c-0.38,0.392-0.672,0.863-0.876,1.416
+                                       c-0.204,0.551-0.307,1.165-0.307,1.836c0,0.631,0.097,1.223,0.288,1.77c0.192,0.549,0.475,1.021,0.847,1.422
+                                       s0.825,0.717,1.361,0.949c0.536,0.23,1.152,0.348,1.849,0.348c0.624,0,1.18-0.105,1.668-0.312
+                                       c0.487-0.209,0.897-0.482,1.229-0.822s0.584-0.723,0.756-1.146c0.172-0.422,0.259-0.852,0.259-1.283h-2.593
+                                       C19.68,25.023,19.627,25.214,19.558,25.389z"
+                        />
+                        <polygon
+                          points="26.62,24.812 26.596,24.812 25.192,19.616 22.528,19.616 25.084,28.184 28.036,28.184 30.713,19.616 28,19.616"
+                        />
+                        <path
+                          d="M33.431,0H5.179v45.057h34.699V6.251L33.431,0z M36.878,42.056H8.179V3h23.706v4.76h4.992L36.878,42.056L36.878,42.056z"
+                        />
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+                <span class="contact-label">Resume</span>
+              </a>
+
+              <a
+                href="mailto:francescosannicola1997@gmail.com"
+                aria-label="Send Email"
+              >
+                <svg
+                  width="18"
+                  height="21"
+                  fill="#000000"
+                  viewBox="0 0 1920 1920"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>Email</title>
+                  <path
+                    d="M0 1694.235h1920V226H0v1468.235ZM112.941 376.664V338.94H1807.06v37.723L960 1111.233l-847.059-734.57ZM1807.06 526.198v950.513l-351.134-438.89-88.32 70.475 378.353 472.998H174.042l378.353-472.998-88.32-70.475-351.134 438.89V526.198L960 1260.768l847.059-734.57Z"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+                <span class="contact-label">Email</span>
+              </a>
+
+              <a
+                href="https://www.linkedin.com/in/francesco-sannicola"
+                target="_blank"
+                aria-label="View LinkedIn Profile"
+              >
+                <svg
+                  fill="#000000"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 1920 1920"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>LinkedIn</title>
+                  <path
+                    d="M1168 601.321v74.955c72.312-44.925 155.796-71.11 282.643-71.11 412.852 0 465.705 308.588 465.705 577.417v733.213L1438.991 1920v-701.261c0-117.718-42.162-140.06-120.12-140.06-74.114 0-120.12 23.423-120.12 140.06V1920l-483.604-4.204V601.32H1168Zm-687.52-.792v1318.918H0V600.53h480.48Zm-120.12 120.12H120.12v1078.678h240.24V720.65Zm687.52.792H835.267v1075.316l243.364 2.162v-580.18c0-226.427 150.51-260.18 240.24-260.18 109.55 0 240.24 45.165 240.24 260.18v580.18l237.117-2.162v-614.174c0-333.334-93.573-457.298-345.585-457.298-151.472 0-217.057 44.925-281.322 98.98l-16.696 14.173H1047.88V721.441ZM240.24 0c132.493 0 240.24 107.748 240.24 240.24 0 132.493-107.747 240.24-240.24 240.24C107.748 480.48 0 372.733 0 240.24 0 107.748 107.748 0 240.24 0Zm0 120.12c-66.186 0-120.12 53.934-120.12 120.12s53.934 120.12 120.12 120.12 120.12-53.934 120.12-120.12-53.934-120.12-120.12-120.12Z"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+                <span class="contact-label">LinkedIn</span>
+              </a>
+
+              <a
+                href="https://github.com/francesco-s"
+                target="_blank"
+                aria-label="View GitHub Profile"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  x="0px"
+                  y="0px"
+                  width="100"
+                  height="100"
+                  viewBox="0 0 24 24"
+                >
+                  <title>GitHub</title>
+                  <path
+                    d="M 12 1.9921875 C 6.4855957 1.9921875 2 6.4769321 2 12 C 2 16.599161 5.1205653 20.490345 9.3671875 21.642578 A 0.50005 0.50005 0 0 0 9.9980469 21.160156 L 9.9980469 17.583984 A 0.50005 0.50005 0 0 0 9.9980469 17.398438 L 9.9980469 17 C 9.9980469 16.463435 10.20474 15.989016 10.550781 15.621094 A 0.50005 0.50005 0 0 0 10.310547 14.794922 C 8.3191985 14.288505 7 12.945349 7 11.492188 C 7 10.73278 7.3615845 9.9960348 8.015625 9.3925781 A 0.50005 0.50005 0 0 0 8.1679688 8.9277344 C 8.066665 8.41934 8.082645 7.8782734 8.0742188 7.34375 C 8.6127591 7.5825374 9.1625862 7.7923277 9.640625 8.1757812 A 0.50005 0.50005 0 0 0 10.09375 8.265625 C 10.683558 8.0925899 11.325263 7.9921875 12 7.9921875 C 12.673669 7.9921875 13.314937 8.0917915 13.904297 8.265625 A 0.50005 0.50005 0 0 0 14.359375 8.1777344 C 14.837054 7.7945694 15.386932 7.5824899 15.925781 7.34375 C 15.916981 7.8785794 15.933881 8.4199143 15.832031 8.9277344 A 0.50005 0.50005 0 0 0 15.982422 9.3945312 C 16.637666 9.9982795 17.001953 10.733923 17.001953 11.494141 C 17.001953 12.945944 15.680991 14.28753 13.689453 14.794922 A 0.50005 0.50005 0 0 0 13.449219 15.623047 C 13.794633 15.990353 14.001953 16.464434 14.001953 17 L 13.998047 21.160156 A 0.50005 0.50005 0 0 0 14.630859 21.642578 C 18.878428 20.490372 22 16.599237 22 12 C 22 6.4769321 17.514404 1.9921875 12 1.9921875 z M 12 2.9921875 C 16.973596 2.9921875 21 7.0170679 21 12 C 21 15.899732 18.470363 19.145081 14.998047 20.388672 L 15.001953 17 C 15.001953 16.421513 14.688987 15.964437 14.404297 15.505859 C 16.432596 14.813419 18.001953 13.369173 18.001953 11.494141 C 18.001953 10.506223 17.528746 9.6094427 16.826172 8.8808594 C 16.963004 8.0965535 17.032667 7.2949738 16.970703 6.4570312 A 0.50005 0.50005 0 0 0 16.3125 6.0214844 C 15.491527 6.300863 14.703446 6.7215379 13.960938 7.2734375 C 13.34208 7.110241 12.692308 6.9921875 12 6.9921875 C 11.30618 6.9921875 10.656139 7.1108109 10.037109 7.2734375 C 9.2949426 6.7217093 8.5094793 6.2989123 7.6894531 6.0195312 A 0.50005 0.50005 0 0 0 7.0292969 6.4550781 C 6.9654142 7.294134 7.0380099 8.0939393 7.1738281 8.8769531 C 6.4709034 9.6061723 6 10.504427 6 11.492188 C 6 13.367279 7.5663139 14.813867 9.59375 15.505859 C 9.3112432 15.962509 9.0029789 16.419068 9 16.992188 L 7.5 16.992188 C 7.2241522 16.992188 7.0052524 16.845238 6.7363281 16.513672 C 6.4674039 16.182105 6.2065255 15.697988 5.9277344 15.234375 A 0.50005 0.50005 0 0 0 5.46875 14.988281 A 0.50005 0.50005 0 0 0 5.0722656 15.75 C 5.3304745 16.179387 5.5979086 16.697395 5.9589844 17.142578 C 6.3200601 17.587762 6.8328478 17.992188 7.5 17.992188 L 8.9980469 17.992188 L 8.9980469 20.388672 C 5.5278881 19.144471 3 15.898951 3 12 C 3 7.0170679 7.0264043 2.9921875 12 2.9921875 z"
+                  ></path>
+                </svg>
+                <span class="contact-label">GitHub</span>
+              </a>
+            </div>
+          </div>
+          <div class="switch">
+            <input type="checkbox" id="darkModeToggle" />
+            <label for="darkModeToggle" class="switch-label">
+              <span class="sun-icon">&#9728;</span>
+              <!-- Sun icon (Light Mode) -->
+              <span class="moon-icon">&#9790;</span>
+              <!-- Moon icon (Dark Mode) -->
+            </label>
+          </div>
+        </header>
+      </div>
+    </div>
+    <div class="link-container">
+      <div class="link-column">
+        <a href="../"> <i class="fas fa-home"></i>Home </a>
+      </div>
+      <div class="link-column">
+        <a href="../projects/">
+          <i class="fas fa-project-diagram"></i>Projects
+        </a>
+      </div>
+      <div class="link-column">
+        <a href="../articles/"> <i class="fas fa-newspaper"></i>Articles </a>
+      </div>
+      <div class="link-column">
+        <a href="../about.html"> <i class="fas fa-user"></i>About </a>
+      </div>
+    </div>
+    <div class="article-container">
+      <h1>
+        <span style="font-size: 16px">./articles/</span> Machine Learning
+        Essentials: Linear vs. Logistic Regression
+      </h1>
+      <div class="last-updated">
+        <span class="last-updated-label">Last modified:</span>
+        <time datetime="2025-01-02">August 13, 2025</time>
+      </div>
+
+      <p>
+        Linear regression and logistic regression are two fundamental machine
+        learning algorithms that form the backbone of statistical modeling and
+        predictive analytics. While both are regression techniques, they serve
+        different purposes and are applied to different types of problems.
+      </p>
+
+      <p>
+        This comprehensive guide explores both algorithms in detail, covering
+        their mathematical foundations, key differences, practical applications,
+        and implementation considerations.
+      </p>
+
+      <div class="summary">
+        <h4>Quick Navigation</h4>
+        <ol>
+          <li><a href="#overview">Overview and Key Differences</a></li>
+          <li><a href="#linear-regression">Linear Regression Deep Dive</a></li>
+          <li>
+            <a href="#logistic-regression">Logistic Regression Deep Dive</a>
+          </li>
+          <li><a href="#comparison">Detailed Comparison</a></li>
+          <li>
+            <a href="#practical-considerations">Practical Considerations</a>
+          </li>
+          <li><a href="#implementation">Implementation Examples</a></li>
+          <li><a href="#extensions">Advanced Topics and Extensions</a></li>
+        </ol>
+      </div>
+
+      <h2 id="overview">1. Overview and Key Differences</h2>
+
+      <h4>What are Linear and Logistic Regression?</h4>
+
+      <p>
+        <strong>Linear Regression</strong> is a statistical method used to model
+        the relationship between a dependent variable and one or more
+        independent variables by fitting a linear equation to observed data. It
+        assumes a linear relationship between the input features and the
+        continuous target variable.
+      </p>
+
+      <p>
+        <strong>Logistic Regression</strong>, despite its name, is actually a
+        classification algorithm that uses the logistic function to model the
+        probability of binary or categorical outcomes. It transforms the linear
+        combination of features using the sigmoid function to produce
+        probabilities between 0 and 1.
+      </p>
+
+      <p>The fundamental equation for Linear Regression is:</p>
+      <p class="responsive-math">
+        \[y = \beta_0 + \beta_1x_1 + \beta_2x_2 + ... + \beta_nx_n + \epsilon\]
+      </p>
+
+      <p>The fundamental equation for Logistic Regression is:</p>
+      <p class="responsive-math">
+        \[P(y=1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1x_1 + \beta_2x_2 + ... +
+        \beta_nx_n)}}\]
+      </p>
+
+      <figure>
+        <img
+          src="../assets/linear_logistic.png"
+          alt="Regression methods"
+          class="responsive-img"
+          width="720"
+          height="480"
+        />
+        <figcaption style="text-align: center">
+          Visual comparison of Linear Regression and Logistic Regression
+        </figcaption>
+      </figure>
+
+      <h4>When to Use Each Algorithm?</h4>
+
+      <p><strong>Use Linear Regression when:</strong></p>
+      <ul>
+        <li>
+          Your target variable is <strong>continuous</strong> (e.g., price,
+          temperature, height)
+        </li>
+        <li>You want to predict <strong>numerical values</strong></li>
+        <li>
+          The relationship between features and target appears
+          <strong>linear</strong>
+        </li>
+        <li>
+          You need to understand <strong>feature importance</strong> and
+          interpretability
+        </li>
+      </ul>
+
+      <p><strong>Use Logistic Regression when:</strong></p>
+      <ul>
+        <li>
+          Your target variable is <strong>categorical</strong> (binary or
+          multinomial)
+        </li>
+        <li>
+          You want to predict <strong>probabilities</strong> of class membership
+        </li>
+        <li>
+          You need a <strong>probabilistic output</strong> for decision making
+        </li>
+        <li>
+          You require model <strong>interpretability</strong> for classification
+          tasks
+        </li>
+      </ul>
+
+      <div class="responsive-table-container">
+        <table border="1">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Linear Regression</th>
+              <th>Logistic Regression</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Problem Type</td>
+              <td>Regression</td>
+              <td>Classification</td>
+            </tr>
+            <tr>
+              <td>Output Variable</td>
+              <td>Continuous</td>
+              <td>Categorical (Probabilities)</td>
+            </tr>
+            <tr>
+              <td>Output Range</td>
+              <td>(-∞, +∞)</td>
+              <td>[0, 1]</td>
+            </tr>
+            <tr>
+              <td>Function Used</td>
+              <td>Linear Function</td>
+              <td>Sigmoid Function</td>
+            </tr>
+            <tr>
+              <td>Cost Function</td>
+              <td>Mean Squared Error</td>
+              <td>Log-Likelihood</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        If you want to keep reading, I’ll now dive deeper into each strategy,
+        then compare them, and finally explore some advanced strategies based on
+        them.
+      </p>
+
+      <h2 id="linear-regression">2. Linear Regression Deep Dive</h2>
+
+      <h4>Mathematical Foundation of Linear Regression</h4>
+
+      <p>
+        Linear regression finds the best-fitting straight line through a set of
+        data points by minimizing the sum of squared residuals. The mathematical
+        foundation involves several key components:
+      </p>
+
+      <p><strong>Simple Linear Regression (One Feature):</strong></p>
+      <p class="responsive-math">\[y = \beta_0 + \beta_1x + \epsilon\]</p>
+      <p>Where:</p>
+      <ul>
+        <li>\(y\) = dependent variable (target)</li>
+        <li>\(x\) = independent variable (feature)</li>
+        <li>\(\beta_0\) = y-intercept</li>
+        <li>\(\beta_1\) = slope (coefficient)</li>
+        <li>\(\epsilon\) = error term</li>
+      </ul>
+
+      <svg
+        viewBox="0 0 600 400"
+        width="600"
+        height="400"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <text
+          x="300"
+          y="30"
+          text-anchor="middle"
+          font-size="16"
+          font-weight="bold"
+        >
+          Linear Regression
+        </text>
+        <!-- Axes -->
+        <line
+          x1="50"
+          y1="350"
+          x2="550"
+          y2="350"
+          stroke="black"
+          stroke-width="2"
+        />
+        <line
+          x1="50"
+          y1="350"
+          x2="50"
+          y2="50"
+          stroke="black"
+          stroke-width="2"
+        />
+        <!-- Grid lines -->
+        <line
+          x1="50"
+          y1="300"
+          x2="550"
+          y2="300"
+          stroke="lightgray"
+          stroke-width="1"
+          stroke-dasharray="5,5"
+        />
+        <line
+          x1="50"
+          y1="250"
+          x2="550"
+          y2="250"
+          stroke="lightgray"
+          stroke-width="1"
+          stroke-dasharray="5,5"
+        />
+        <line
+          x1="50"
+          y1="200"
+          x2="550"
+          y2="200"
+          stroke="lightgray"
+          stroke-width="1"
+          stroke-dasharray="5,5"
+        />
+        <line
+          x1="50"
+          y1="150"
+          x2="550"
+          y2="150"
+          stroke="lightgray"
+          stroke-width="1"
+          stroke-dasharray="5,5"
+        />
+        <line
+          x1="50"
+          y1="100"
+          x2="550"
+          y2="100"
+          stroke="lightgray"
+          stroke-width="1"
+          stroke-dasharray="5,5"
+        />
+        <!-- Vertical grid lines -->
+        <line
+          x1="150"
+          y1="50"
+          x2="150"
+          y2="350"
+          stroke="lightgray"
+          stroke-width="1"
+          stroke-dasharray="5,5"
+        />
+        <line
+          x1="250"
+          y1="50"
+          x2="250"
+          y2="350"
+          stroke="lightgray"
+          stroke-width="1"
+          stroke-dasharray="5,5"
+        />
+        <line
+          x1="350"
+          y1="50"
+          x2="350"
+          y2="350"
+          stroke="lightgray"
+          stroke-width="1"
+          stroke-dasharray="5,5"
+        />
+        <line
+          x1="450"
+          y1="50"
+          x2="450"
+          y2="350"
+          stroke="lightgray"
+          stroke-width="1"
+          stroke-dasharray="5,5"
+        />
+        <!-- Data points -->
+        <circle cx="120" cy="320" r="4" fill="red" />
+        <circle cx="180" cy="280" r="4" fill="red" />
+        <circle cx="220" cy="240" r="4" fill="red" />
+        <circle cx="280" cy="220" r="4" fill="red" />
+        <circle cx="320" cy="180" r="4" fill="red" />
+        <circle cx="380" cy="160" r="4" fill="red" />
+        <circle cx="420" cy="120" r="4" fill="red" />
+        <circle cx="480" cy="100" r="4" fill="red" />
+        <!-- Linear regression line -->
+        <line
+          x1="70"
+          y1="340"
+          x2="520"
+          y2="80"
+          stroke="blue"
+          stroke-width="3"
+        />
+        <!-- Labels -->
+        <text x="300" y="380" text-anchor="middle" font-size="12">
+          x (Feature)
+        </text>
+        <text
+          x="20"
+          y="200"
+          text-anchor="middle"
+          font-size="12"
+          transform="rotate(-90 20 200)"
+        >
+          y (Target)
+        </text>
+        <!-- Y-axis labels -->
+        <text x="35" y="355" text-anchor="middle" font-size="10">0</text>
+        <text x="35" y="305" text-anchor="middle" font-size="10">10</text>
+        <text x="35" y="255" text-anchor="middle" font-size="10">20</text>
+        <text x="35" y="205" text-anchor="middle" font-size="10">30</text>
+        <text x="35" y="155" text-anchor="middle" font-size="10">40</text>
+        <text x="35" y="105" text-anchor="middle" font-size="10">50</text>
+        <text x="35" y="55" text-anchor="middle" font-size="10">60</text>
+        <!-- X-axis labels -->
+        <text x="50" y="365" text-anchor="middle" font-size="10">0</text>
+        <text x="150" y="365" text-anchor="middle" font-size="10">2</text>
+        <text x="250" y="365" text-anchor="middle" font-size="10">4</text>
+        <text x="350" y="365" text-anchor="middle" font-size="10">6</text>
+        <text x="450" y="365" text-anchor="middle" font-size="10">8</text>
+        <text x="550" y="365" text-anchor="middle" font-size="10">10</text>
+        <!-- Legend -->
+        <circle cx="480" cy="70" r="4" fill="red" />
+        <text x="490" y="75" font-size="10">Data Points</text>
+        <line
+          x1="470"
+          y1="90"
+          x2="490"
+          y2="90"
+          stroke="blue"
+          stroke-width="3"
+        />
+        <text x="495" y="95" font-size="10">Best Fit Line</text>
+      </svg>
+
+      <p><strong>Multiple Linear Regression:</strong></p>
+      <p class="responsive-math">
+        \[y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \dots + \beta_nx_n +
+        \epsilon\]
+      </p>
+      <p>
+        This equation extends simple linear regression to multiple features. It
+        says that the predicted value \(y\) is given by an intercept \(\beta_0\)
+        plus the sum of each feature \(x_j\) multiplied by its coefficient
+        \(\beta_j\), and an error term \(\epsilon\) that captures noise or
+        factors not explained by the model. Each coefficient \(\beta_j\)
+        represents the average change in \(y\) when \(x_j\) increases by one
+        unit, keeping all other variables fixed.
+      </p>
+
+      <p><strong>Matrix Form:</strong></p>
+      <p class="responsive-math">
+        \[\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}\]
+      </p>
+      <p>
+        This is the same model rewritten in compact matrix notation. Here,
+        \(\mathbf{X}\) is a matrix where each row corresponds to one training
+        example and each column to a feature, with the first column being all
+        ones for the intercept term. Multiplying \(\mathbf{X}\) by the parameter
+        vector \(\boldsymbol{\beta}\) produces all predicted values at once. The
+        vector \(\boldsymbol{\epsilon}\) contains the residuals — the
+        differences between actual outputs and predictions — for all \(m\)
+        observations.
+      </p>
+
+      <p>In matrix form:</p>
+      <ul>
+        <li>
+          \(\mathbf{y}\): column vector of observed outputs (\(m \times 1\))
+        </li>
+        <li>
+          \(\mathbf{X}\): design matrix of features with an intercept column
+          (\(m \times (n+1)\))
+        </li>
+        <li>
+          \(\boldsymbol{\beta}\): column vector of parameters (\((n+1) \times
+          1\))
+        </li>
+        <li>\(\boldsymbol{\epsilon}\): residuals vector (\(m \times 1\))</li>
+      </ul>
+      <p>
+        This compact representation makes it possible to apply linear algebra
+        methods to solve for \(\boldsymbol{\beta}\) efficiently.
+      </p>
+
+      <p><strong>Cost Function (Mean Squared Error):</strong></p>
+      <p class="responsive-math">
+        \[J(\boldsymbol{\beta}) = \frac{1}{2m} \sum_{i=1}^{m} \big(
+        h_{\boldsymbol{\beta}}(x^{(i)}) - y^{(i)} \big)^2\]
+      </p>
+      <p>
+        The cost function measures how far the model’s predictions
+        \(h_{\boldsymbol{\beta}}(x^{(i)})\) are from the actual outputs
+        \(y^{(i)}\), by averaging the squared differences across all examples.
+        The division by \(2m\) is used for convenience, as it simplifies
+        derivative expressions in optimization. Minimizing
+        \(J(\boldsymbol{\beta})\) finds the parameters that make predictions as
+        close as possible to actual values in the least squares sense.
+      </p>
+
+      <h4>Assumptions of Linear Regression</h4>
+
+      <p>
+        Linear regression relies on several key assumptions. Violations can lead
+        to unreliable predictions and misleading interpretations. The table
+        below summarizes each assumption, its meaning, how to check it, and
+        practical examples:
+      </p>
+
+      <div class="responsive-table-container">
+        <table border="1">
+          <thead>
+            <tr>
+              <th>Assumption</th>
+              <th>Description</th>
+              <th>How to Check</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Linearity</td>
+              <td>
+                The relationship between predictors and the target is linear.<br />
+                Model predicts a straight line or plane.
+              </td>
+              <td>
+                Scatter plot of residuals vs. fitted values should show no
+                pattern.<br />
+                Residuals should be randomly scattered.
+              </td>
+              <td>
+                Predicting house price from size: price increases proportionally
+                with size.<br />
+                If price jumps at certain sizes, linearity is violated.
+              </td>
+            </tr>
+            <tr>
+              <td>Independence</td>
+              <td>
+                Observations are not related to each other.<br />
+                No autocorrelation in errors.
+              </td>
+              <td>
+                Durbin-Watson test for autocorrelation.<br />
+                Time series: plot residuals over time.
+              </td>
+              <td>
+                Predicting sales per store: each store's sales should not depend
+                on another's.<br />
+                If stores are in the same mall, independence may be violated.
+              </td>
+            </tr>
+            <tr>
+              <td>Homoscedasticity</td>
+              <td>
+                Residuals have constant variance across all levels of
+                predictors.<br />
+                No "fanning out" or "funneling" in residuals.
+              </td>
+              <td>
+                Residual plot: variance should be similar for all fitted
+                values.<br />
+                Look for equal spread.
+              </td>
+              <td>
+                Predicting exam scores: error spread should be similar for low
+                and high scores.<br />
+                If errors increase for higher scores, assumption is violated.
+              </td>
+            </tr>
+            <tr>
+              <td>Normality of Residuals</td>
+              <td>
+                Residuals are normally distributed.<br />
+                Important for valid confidence intervals and hypothesis tests.
+              </td>
+              <td>
+                Q-Q plot of residuals.<br />
+                Histogram of residuals should look bell-shaped.
+              </td>
+              <td>
+                Predicting height: residuals should cluster around zero.<br />
+                If residuals are skewed, normality is violated.
+              </td>
+            </tr>
+            <tr>
+              <td>No Multicollinearity</td>
+              <td>
+                Predictors are not highly correlated with each other.<br />
+                High correlation makes coefficients unstable.
+              </td>
+              <td>
+                Correlation matrix of predictors.<br />
+                Variance Inflation Factor (VIF) &gt; 5-10 indicates a problem.
+              </td>
+              <td>
+                Predicting salary from years of experience and age: if age and
+                experience are highly correlated, multicollinearity exists.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Step-by-Step Example: Normal Equation (Closed-form Solution)</h3>
+
+      <div class="math-equation">
+        <p class="responsive-math">
+          \[\boldsymbol{\beta} =
+          (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\]
+        </p>
+      </div>
+      <p>
+        Derived by setting the gradient of the cost function to zero, this
+        equation gives the exact parameters that minimize the MSE without
+        iterative optimization. It is efficient for problems with a small to
+        moderate number of features, as it uses matrix operations to compute the
+        optimal solution in one step.
+      </p>
+
+      <p>
+        Let's solve a simple regression problem step-by-step using the normal
+        equation. Suppose we have 3 training examples with 1 feature (\(x_1\))
+        and an intercept:
+      </p>
+      <div class="math-equation">
+        <p class="responsive-math">
+          \[ \mathbf{X} = \begin{bmatrix} 1 & 1 \\ 1 & 2 \\ 1 & 3 \end{bmatrix}
+          \quad (3 \times 2), \quad \mathbf{y} = \begin{bmatrix} 1 \\ 2 \\ 2
+          \end{bmatrix} \quad (3 \times 1) \]
+        </p>
+      </div>
+
+      <div class="workflow-step">
+        <h6>Step 1 – Compute \( \mathbf{X}^T \mathbf{X} \)</h6>
+        <p class="responsive-math">
+          \[ \mathbf{X}^T = \begin{bmatrix} 1 & 1 & 1 \\ 1 & 2 & 3 \end{bmatrix}
+          \quad (2 \times 3) \]
+        </p>
+        <p class="responsive-math">
+          \[ \mathbf{X}^T \mathbf{X} = \begin{bmatrix} 1 & 1 & 1 \\ 1 & 2 & 3
+          \end{bmatrix} \begin{bmatrix} 1 & 1 \\ 1 & 2 \\ 1 & 3 \end{bmatrix} =
+          \begin{bmatrix} 3 & 6 \\ 6 & 14 \end{bmatrix} \quad (2 \times 2) \]
+        </p>
+      </div>
+
+      <div class="workflow-step">
+        <h6>Step 2 – Compute \( (\mathbf{X}^T \mathbf{X})^{-1} \)</h6>
+        <p>Determinant: \[ \det = (3)(14) - (6)(6) = 42 - 36 = 6 \]</p>
+        <p>Inverse:</p>
+        <div class="math-equation">
+          <p class="responsive-math">
+            \[ (\mathbf{X}^T \mathbf{X})^{-1} = \frac{1}{6} \begin{bmatrix} 14 &
+            -6 \\ -6 & 3 \end{bmatrix} = \begin{bmatrix} 2.333\ldots & -1 \\ -1
+            & 0.5 \end{bmatrix} \]
+          </p>
+        </div>
+      </div>
+
+      <div class="workflow-step">
+        <h6>Step 3 – Compute \( \mathbf{X}^T \mathbf{y} \)</h6>
+        <p class="responsive-math">
+          \[ \mathbf{X}^T \mathbf{y} = \begin{bmatrix} 1 & 1 & 1 \\ 1 & 2 & 3
+          \end{bmatrix} \begin{bmatrix} 1 \\ 2 \\ 2 \end{bmatrix} =
+          \begin{bmatrix} 5 \\ 11 \end{bmatrix} \]
+        </p>
+      </div>
+
+      <div class="workflow-step">
+        <h6>Step 4 – Multiply to find \( \boldsymbol{\beta} \)</h6>
+        <p class="responsive-math">
+          \[ \boldsymbol{\beta} = \begin{bmatrix} 2.333\ldots & -1 \\ -1 & 0.5
+          \end{bmatrix} \begin{bmatrix} 5 \\ 11 \end{bmatrix} = \begin{bmatrix}
+          11.666\ldots - 11 \\ -5 + 5.5 \end{bmatrix} = \begin{bmatrix}
+          0.666\ldots \\ 0.5 \end{bmatrix} \]
+        </p>
+      </div>
+
+      <div class="workflow-step">
+        <h6>Step 5 – Final model</h6>
+        <p>
+          Estimated coefficients: \[ \beta_0 \approx 0.667, \quad \beta_1 = 0.5
+          \]
+        </p>
+        <p>Final equation: \[ \hat{y} = 0.667 + 0.5 x_1 \]</p>
+        <p>
+          Interpretation: when \(x_1\) increases by 1, the predicted \(y\)
+          increases by 0.5 on average, starting from a baseline of about 0.667.
+        </p>
+      </div>
+
+      <h3>Step-by-Step Example: Gradient Descent</h3>
+
+      <p>
+        While the Normal Equation provides an exact solution, Gradient Descent
+        offers an iterative approach that's more scalable for large datasets.
+        Let's apply it to the same toy example to compare both methods.
+      </p>
+
+      <p>
+        We will use the same dataset as before, with 3 training examples and 1
+        feature (\(x_1\)). Here's the python code:
+      </p>
+
+      <script src="https://gist.github.com/francesco-s/89ad656f8b2b2f4e136335161e575896.js"></script>
+
+      <h3>Convergence Analysis</h3>
+
+      <p>
+        The gradient descent algorithm iteratively updates the parameters using
+        the formula:
+      </p>
+      <p class="responsive-math">
+        \[\boldsymbol{\beta}^{(t+1)} = \boldsymbol{\beta}^{(t)} - \alpha \nabla
+        J(\boldsymbol{\beta}^{(t)})\]
+      </p>
+      <p>
+        where \(\alpha\) is the learning rate and \(\nabla J\) is the gradient
+        of the cost function.
+      </p>
+
+      <div class="output-section">
+        <div class="output-title">
+          <p>Gradient Descent Results (α = 0.1, 500 iterations)</p>
+        </div>
+        <div class="responsive-table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Iteration</th>
+                <th>β₀</th>
+                <th>β₁</th>
+                <th>Cost J(β)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0</td>
+                <td>0.000000</td>
+                <td>0.000000</td>
+                <td>1.500000</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>0.166667</td>
+                <td>0.366667</td>
+                <td>0.327593</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>0.243333</td>
+                <td>0.528889</td>
+                <td>0.094871</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>0.309218</td>
+                <td>0.643345</td>
+                <td>0.037130</td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>0.334922</td>
+                <td>0.645692</td>
+                <td>0.035668</td>
+              </tr>
+              <tr>
+                <td>50</td>
+                <td>0.462202</td>
+                <td>0.589945</td>
+                <td>0.030776</td>
+              </tr>
+              <tr>
+                <td>100</td>
+                <td>0.554972</td>
+                <td>0.549135</td>
+                <td>0.028673</td>
+              </tr>
+              <tr>
+                <td>250</td>
+                <td>0.648458</td>
+                <td>0.508010</td>
+                <td>0.027802</td>
+              </tr>
+              <tr>
+                <td>500</td>
+                <td>0.665781</td>
+                <td>0.500390</td>
+                <td>0.027778</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="output-section">
+        <div class="output-title">
+          <p>Gradient Descent Results (α = 0.01, 10,000 iterations)</p>
+        </div>
+        <div class="responsive-table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Iteration</th>
+                <th>β₀</th>
+                <th>β₁</th>
+                <th>Cost J(β)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0</td>
+                <td>0.000000</td>
+                <td>0.000000</td>
+                <td>1.500000</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>0.016667</td>
+                <td>0.036667</td>
+                <td>1.342276</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>0.032433</td>
+                <td>0.071289</td>
+                <td>1.201560</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>0.074819</td>
+                <td>0.163992</td>
+                <td>0.864088</td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>0.131609</td>
+                <td>0.287039</td>
+                <td>0.504637</td>
+              </tr>
+              <tr>
+                <td>50</td>
+                <td>0.297364</td>
+                <td>0.616713</td>
+                <td>0.041550</td>
+              </tr>
+              <tr>
+                <td>100</td>
+                <td>0.333821</td>
+                <td>0.643781</td>
+                <td>0.035694</td>
+              </tr>
+              <tr>
+                <td>1000</td>
+                <td>0.554236</td>
+                <td>0.549458</td>
+                <td>0.028684</td>
+              </tr>
+              <tr>
+                <td>5000</td>
+                <td>0.665751</td>
+                <td>0.500403</td>
+                <td>0.027778</td>
+              </tr>
+              <tr>
+                <td>10000</td>
+                <td>0.666664</td>
+                <td>0.500001</td>
+                <td>0.027778</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="key-insight">
+        <strong>Note on Learning Rate:</strong> The learning rate α
+        significantly affects convergence speed. With α = 0.1, we reach
+        near-optimal values in ~500 iterations, while α = 0.01 requires ~10,000
+        iterations for the same accuracy. However, too large a learning rate can
+        cause divergence.
+      </div>
+
+      <h3>Method Comparison</h3>
+      <div class="responsive-table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>β₀</th>
+              <th>β₁</th>
+              <th>Final Cost</th>
+              <th>Iterations</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Normal Equation</strong></td>
+              <td>0.666667</td>
+              <td>0.500000</td>
+              <td>0.027777777778</td>
+              <td>N/A (closed-form)</td>
+            </tr>
+            <tr>
+              <td>Gradient Descent (α=0.1)</td>
+              <td>0.665781</td>
+              <td>0.500390</td>
+              <td>0.027777834064</td>
+              <td>500</td>
+            </tr>
+            <tr>
+              <td>Gradient Descent (α=0.01)</td>
+              <td>0.666664</td>
+              <td>0.500001</td>
+              <td>0.027777777778</td>
+              <td>10,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The same results were achieved using different methods.</p>
+
+      <h3>Key Insights</h3>
+
+      <div class="comparison-grid">
+        <div class="comparison-card">
+          <h5>Normal Equation</h5>
+          <ul>
+            <li><strong>Pros:</strong></li>
+            <li>Instant exact solution</li>
+            <li>No hyperparameters to tune</li>
+            <li>Guaranteed global minimum</li>
+            <li><strong>Cons:</strong></li>
+            <li>O(n³) complexity (matrix inversion)</li>
+            <li>Memory intensive for large datasets</li>
+            <li>Not suitable when n > 10,000</li>
+          </ul>
+        </div>
+        <div class="comparison-card">
+          <h5>Gradient Descent</h5>
+          <ul>
+            <li><strong>Pros:</strong></li>
+            <li>O(mn) per iteration</li>
+            <li>Works with huge datasets</li>
+            <li>Memory efficient</li>
+            <li><strong>Cons:</strong></li>
+            <li>Requires many iterations</li>
+            <li>Learning rate tuning needed</li>
+            <li>May converge to local minimum</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- <h4>Step-by-Step Linear Regression Example</h4> -->
+
+      <!-- <p>
+        Let's work through a complete linear regression example step by step to
+        understand how the algorithm works in practice.
+      </p>
+
+      <p>
+        <strong>Problem:</strong> Predict house prices based on size (square
+        feet).
+      </p>
+
+      <p><strong>Dataset:</strong></p>
+      <div class="responsive-table-container">
+        <table border="1">
+          <thead>
+            <tr>
+              <th>House Size (sq ft)</th>
+              <th>Price ($1000s)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1000</td>
+              <td>200</td>
+            </tr>
+            <tr>
+              <td>1500</td>
+              <td>250</td>
+            </tr>
+            <tr>
+              <td>2000</td>
+              <td>300</td>
+            </tr>
+            <tr>
+              <td>2500</td>
+              <td>350</td>
+            </tr>
+            <tr>
+              <td>3000</td>
+              <td>400</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><strong>Step 1: Set up the problem</strong></p>
+      <p>We want to find the linear relationship: \(y = \beta_0 + \beta_1x\)</p>
+      <p>Where:</p>
+      <ul>
+        <li>\(x\) = house size (input feature)</li>
+        <li>\(y\) = house price (target variable)</li>
+        <li>\(\beta_0\) = intercept (price when size = 0)</li>
+        <li>\(\beta_1\) = slope (price increase per sq ft)</li>
+      </ul>
+
+      <p><strong>Step 2: Create the design matrix</strong></p>
+      <p>Add a column of ones for the intercept term:</p>
+      <p class="responsive-math">
+        \[\mathbf{X} = \begin{bmatrix} 1 & 1000 \\ 1 & 1500 \\ 1 & 2000 \\ 1 &
+        2500 \\ 1 & 3000 \end{bmatrix}, \quad \mathbf{y} = \begin{bmatrix} 200
+        \\ 250 \\ 300 \\ 350 \\ 400 \end{bmatrix}\]
+      </p>
+
+      <p><strong>Step 3: Apply the normal equation</strong></p>
+      <p>
+        Calculate \(\boldsymbol{\beta} =
+        (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)
+      </p>
+
+      <p>First, compute \(\mathbf{X}^T\mathbf{X}\):</p>
+      <p class="responsive-math">
+        \[\mathbf{X}^T\mathbf{X} = \begin{bmatrix} 1 & 1 & 1 & 1 & 1 \\ 1000 &
+        1500 & 2000 & 2500 & 3000 \end{bmatrix} \begin{bmatrix} 1 & 1000 \\ 1 &
+        1500 \\ 1 & 2000 \\ 1 & 2500 \\ 1 & 3000 \end{bmatrix} = \begin{bmatrix}
+        5 & 10000 \\ 10000 & 22500000 \end{bmatrix}\]
+      </p>
+
+      <p>Next, compute \(\mathbf{X}^T\mathbf{y}\):</p>
+      <p class="responsive-math">
+        \[\mathbf{X}^T\mathbf{y} = \begin{bmatrix} 1 & 1 & 1 & 1 & 1 \\ 1000 &
+        1500 & 2000 & 2500 & 3000 \end{bmatrix} \begin{bmatrix} 200 \\ 250 \\
+        300 \\ 350 \\ 400 \end{bmatrix} = \begin{bmatrix} 1500 \\ 3250000
+        \end{bmatrix}\]
+      </p>
+
+      <p>Calculate the inverse of \(\mathbf{X}^T\mathbf{X}\):</p>
+      <p class="responsive-math">
+        \[(\mathbf{X}^T\mathbf{X})^{-1} = \frac{1}{5 \times 22500000 - 10000^2}
+        \begin{bmatrix} 22500000 & -10000 \\ -10000 & 5 \end{bmatrix} =
+        \begin{bmatrix} 0.18 & -0.0008 \\ -0.0008 & 0.000004 \end{bmatrix}\]
+      </p>
+
+      <p>Finally, compute \(\boldsymbol{\beta}\):</p>
+      <p class="responsive-math">
+        \[\boldsymbol{\beta} = \begin{bmatrix} 0.18 & -0.0008 \\ -0.0008 &
+        0.000004 \end{bmatrix} \begin{bmatrix} 1500 \\ 3250000 \end{bmatrix} =
+        \begin{bmatrix} 50 \\ 0.1 \end{bmatrix}\]
+      </p>
+
+      <p><strong>Step 4: Interpret the results</strong></p>
+      <p>Our linear regression equation is: \(y = 50 + 0.1x\)</p>
+      <ul>
+        <li>\(\beta_0 = 50\): Base price is $50,000</li>
+        <li>
+          \(\beta_1 = 0.1\): Each additional square foot increases price by $100
+        </li>
+      </ul>
+
+      <p><strong>Step 5: Make predictions</strong></p>
+      <p>
+        For a 1800 sq ft house: \(y = 50 + 0.1 \times 1800 = 230\) (i.e.,
+        $230,000)
+      </p>
+
+      <p><strong>Step 6: Evaluate the model</strong></p>
+      <p>Calculate R² to measure how well our model fits the data:</p>
+      <p class="responsive-math">
+        \[R^2 = 1 - \frac{\sum(y_i - \hat{y}_i)^2}{\sum(y_i - \bar{y})^2} = 1 -
+        \frac{0}{50000} = 1.0\]
+      </p>
+      <p>
+        Perfect fit! (This is because we have a perfectly linear relationship in
+        our simple example)
+      </p> -->
+
+      <h4>Evaluation Metrics for Linear Regression</h4>
+
+      <p>
+        Evaluating linear regression models requires metrics that quantify how
+        well the model predicts the target variable. The table below summarizes
+        common metrics, their formulas, and when to use them:
+      </p>
+
+      <div class="responsive-table-container">
+        <table border="1">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Formula</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mean Squared Error (MSE)</td>
+              <td>\[MSE = \frac{1}{m}\sum_{i=1}^{m}(y_i - \hat{y}_i)^2\]</td>
+              <td>
+                Average squared difference between actual and predicted
+                values.<br />
+                <strong>Use it when:</strong> Penalizing larger errors is
+                important, useful for model optimization.<br />
+                <strong>Don't use it when:</strong> Data has outliers or you
+                need more interpretable error units.
+              </td>
+            </tr>
+            <tr>
+              <td>Root Mean Squared Error (RMSE)</td>
+              <td>
+                \[RMSE = \sqrt{\frac{1}{m}\sum_{i=1}^{m}(y_i - \hat{y}_i)^2}\]
+              </td>
+              <td>
+                Square root of MSE, interpretable in original units.<br />
+                <strong>Use it when:</strong> You want error in the same units
+                as the target variable.<br />
+                <strong>Don't use it when:</strong> Outliers dominate or you
+                need error direction.
+              </td>
+            </tr>
+            <tr>
+              <td>Mean Absolute Error (MAE)</td>
+              <td>\[MAE = \frac{1}{m}\sum_{i=1}^{m}|y_i - \hat{y}_i|\]</td>
+              <td>
+                Average absolute difference between actual and predicted
+                values.<br />
+                <strong>Use it when:</strong> You want a direct error measure
+                and less sensitivity to outliers.<br />
+                <strong>Don't use it when:</strong> Penalizing large errors is
+                critical or for optimization.
+              </td>
+            </tr>
+            <tr>
+              <td>R-squared (R²)</td>
+              <td>
+                \[R^2 = 1 - \frac{\sum_{i=1}^{m}(y_i -
+                \hat{y}_i)^2}{\sum_{i=1}^{m}(y_i - \bar{y})^2}\]
+              </td>
+              <td>
+                Proportion of variance explained by the model.<br />
+                <strong>Use it when:</strong> Assessing overall model fit and
+                explanatory power.<br />
+                <strong>Don't use it when:</strong> Model is non-linear or has
+                many predictors; does not indicate overfitting.
+              </td>
+            </tr>
+            <tr>
+              <td>Adjusted R-squared</td>
+              <td>\[R^2_{adj} = 1 - \frac{(1-R^2)(m-1)}{m-p-1}\]</td>
+              <td>
+                R² adjusted for number of predictors (\(m\): samples, \(p\):
+                predictors).<br />
+                <strong>Use it when:</strong> Comparing models with different
+                numbers of predictors.<br />
+                <strong>Don't use it when:</strong> Interpretation needs to be
+                intuitive or predictors are irrelevant.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="logistic-regression">3. Logistic Regression Deep Dive</h2>
+
+      <h4>Mathematical Foundation of Logistic Regression</h4>
+
+      <p>
+        Logistic regression uses the sigmoid (logistic) function to map any
+        real-valued input to a value between 0 and 1, making it perfect for
+        probability estimation and binary classification.
+      </p>
+
+      <p><strong>Sigmoid Function:</strong></p>
+      <p class="responsive-math">\[\sigma(z) = \frac{1}{1 + e^{-z}}\]</p>
+      <p>
+        The sigmoid (or logistic) function maps any real-valued input \(z\) into
+        the range \((0, 1)\), making it ideal for modeling probabilities. When
+        \(z\) is large and positive, \(\sigma(z) \approx 1\); when \(z\) is
+        large and negative, \(\sigma(z) \approx 0\); and when \(z = 0\), the
+        output is exactly \(0.5\). Its smooth, S-shaped curve ensures small
+        changes in \(z\) near zero cause significant changes in \(\sigma(z)\),
+        which is useful for classification.
+      </p>
+
+      <p><strong>Linear Combination:</strong></p>
+      <p class="responsive-math">
+        \[z = \beta_0 + \beta_1x_1 + \beta_2x_2 + \dots + \beta_nx_n\]
+      </p>
+      <p>
+        This is the weighted sum of input features used in logistic regression.
+        Each feature \(x_j\) is multiplied by its corresponding coefficient
+        \(\beta_j\), and \(\beta_0\) is the intercept (bias term). The value
+        \(z\) is not yet constrained between 0 and 1 — it can be any real number
+        — and will be passed through the sigmoid function to obtain a
+        probability.
+      </p>
+
+      <p><strong>Probability of Positive Class:</strong></p>
+      <p class="responsive-math">
+        \[P(y=1 \mid x) = \frac{1}{1 + e^{-(\beta_0 + \beta_1x_1 + \dots +
+        \beta_nx_n)}}\]
+      </p>
+      <p>
+        This applies the sigmoid function to the linear combination \(z\) to get
+        the probability that the output class \(y\) equals 1, given the features
+        \(x\). The exponent term flips sign depending on the direction of \(z\),
+        producing probabilities near 1 when \(z\) is strongly positive and near
+        0 when \(z\) is strongly negative.
+      </p>
+
+      <p><strong>Odds and Log-Odds:</strong></p>
+      <p>
+        The odds of an event is the ratio between the probability of the event
+        occurring and the probability of it not occurring:
+      </p>
+      <p class="responsive-math">
+        \[Odds = \frac{P(y=1)}{P(y=0)} = \frac{P(y=1)}{1 - P(y=1)}\]
+      </p>
+      <p>
+        If \(P(y=1)\) is 0.75, the odds are \(0.75 / 0.25 = 3\), meaning the
+        event is three times as likely to happen than not.
+      </p>
+
+      <p>
+        Taking the natural logarithm of the odds gives the log-odds (logit),
+        which in logistic regression is a linear function of the input:
+      </p>
+      <p class="responsive-math">
+        \[\text{logit}(p) = \ln\left(\frac{p}{1-p}\right) = \beta_0 + \beta_1x_1
+        + \dots + \beta_nx_n\]
+      </p>
+      <p>
+        This equation shows that while probabilities themselves are not linear
+        in the inputs, their log-odds are — making the model suitable for
+        estimation with linear methods while still producing probabilistic
+        outputs.
+      </p>
+
+      <p>
+        This shows that logistic regression is actually modeling the log-odds as
+        a linear function of the features.
+      </p>
+
+      <svg
+        viewBox="0 0 600 400"
+        width="600"
+        height="400"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <text
+          x="300"
+          y="30"
+          text-anchor="middle"
+          font-size="16"
+          font-weight="bold"
+        >
+          Sigmoid Function
+        </text>
+
+        <!-- Axes -->
+        <line
+          x1="50"
+          y1="350"
+          x2="550"
+          y2="350"
+          stroke="black"
+          stroke-width="2"
+        />
+        <line
+          x1="300"
+          y1="350"
+          x2="300"
+          y2="50"
+          stroke="black"
+          stroke-width="2"
+        />
+
+        <!-- Grid lines -->
+        <line
+          x1="50"
+          y1="200"
+          x2="550"
+          y2="200"
+          stroke="lightgray"
+          stroke-width="1"
+          stroke-dasharray="5,5"
+        />
+        <line
+          x1="50"
+          y1="125"
+          x2="550"
+          y2="125"
+          stroke="lightgray"
+          stroke-width="1"
+          stroke-dasharray="5,5"
+        />
+        <line
+          x1="50"
+          y1="275"
+          x2="550"
+          y2="275"
+          stroke="lightgray"
+          stroke-width="1"
+          stroke-dasharray="5,5"
+        />
+
+        <!-- Sigmoid curve -->
+        <path
+          d="M 50 340 Q 150 340 200 300 Q 250 250 300 200 Q 350 150 400 100 Q 450 60 550 60"
+          stroke="blue"
+          stroke-width="3"
+          fill="none"
+        />
+
+        <!-- Labels -->
+        <text x="300" y="380" text-anchor="middle" font-size="12">
+          z (Linear Combination)
+        </text>
+        <text
+          x="20"
+          y="200"
+          text-anchor="middle"
+          font-size="12"
+          transform="rotate(-90 20 200)"
+        >
+          σ(z)
+        </text>
+
+        <!-- Value labels -->
+        <text x="25" y="65" text-anchor="middle" font-size="10">1.0</text>
+        <text x="25" y="130" text-anchor="middle" font-size="10">0.75</text>
+        <text x="25" y="205" text-anchor="middle" font-size="10">0.5</text>
+        <text x="25" y="280" text-anchor="middle" font-size="10">0.25</text>
+        <text x="25" y="345" text-anchor="middle" font-size="10">0.0</text>
+
+        <!-- z-axis labels -->
+        <text x="100" y="365" text-anchor="middle" font-size="10">-4</text>
+        <text x="200" y="365" text-anchor="middle" font-size="10">-2</text>
+        <text x="300" y="365" text-anchor="middle" font-size="10">0</text>
+        <text x="400" y="365" text-anchor="middle" font-size="10">2</text>
+        <text x="500" y="365" text-anchor="middle" font-size="10">4</text>
+      </svg>
+
+      <h4>Maximum Likelihood Estimation</h4>
+
+      <p>
+        Unlike linear regression, logistic regression doesn't have a closed-form
+        solution. Instead, it uses Maximum Likelihood Estimation (MLE) to find
+        the optimal parameters. This means we look for the values of
+        \(\boldsymbol{\beta}\) that make the observed training data most
+        probable.
+      </p>
+
+      <p><strong>Likelihood Function:</strong></p>
+      <p>
+        For a binary classification problem, the likelihood of observing the
+        data given the parameters is:
+      </p>
+      <p class="responsive-math">
+        \[L(\boldsymbol{\beta}) = \prod_{i=1}^{m} P(y^{(i)} \mid
+        x^{(i)};\boldsymbol{\beta})\]
+      </p>
+      <p>
+        This formula says the likelihood \( L(\boldsymbol{\beta}) \) is the
+        product, over all \( m \) training examples, of the predicted
+        probability of the actual observed class. If \( y^{(i)} = 1 \), the term
+        is \( h_{\boldsymbol{\beta}}(x^{(i)}) \); if \( y^{(i)} = 0 \), it is \(
+        1 - h_{\boldsymbol{\beta}}(x^{(i)}) \). Multiplying these terms gives
+        the joint probability of the dataset under the model.
+      </p>
+
+      <p><strong>Log-Likelihood Function:</strong></p>
+      <p>Taking the logarithm makes the optimization easier:</p>
+      <p class="responsive-math">
+        \[\ell(\boldsymbol{\beta}) = \sum_{i=1}^{m} \left[ y^{(i)}
+        \log(h_{\boldsymbol{\beta}}(x^{(i)})) +
+        (1-y^{(i)})\log(1-h_{\boldsymbol{\beta}}(x^{(i)})) \right]\]
+      </p>
+      <p>
+        The log transforms the product into a sum, helping numerical stability
+        and simplifying derivatives. When \( y^{(i)} = 1 \), only the first log
+        term remains; when \( y^{(i)} = 0 \), only the second term remains.
+        Adding these over all samples yields the log-probability of the data
+        given \(\boldsymbol{\beta}\).
+      </p>
+
+      <p><strong>Cost Function (Negative Log-Likelihood):</strong></p>
+      <p class="responsive-math">
+        \[J(\boldsymbol{\beta}) = -\frac{1}{m} \sum_{i=1}^{m} \left[
+        y^{(i)}\log(h_{\boldsymbol{\beta}}(x^{(i)})) +
+        (1-y^{(i)})\log(1-h_{\boldsymbol{\beta}}(x^{(i)})) \right]\]
+      </p>
+      <p>
+        Maximizing the log-likelihood is equivalent to minimizing the negative
+        log-likelihood. This is our cost function. The minus sign converts the
+        maximization problem into a minimization problem suitable for gradient
+        descent, and dividing by \( m \) gives the average cost per training
+        example.
+      </p>
+
+      <p><strong>Gradient Descent Update:</strong></p>
+      <p>The parameters are updated using gradient descent:</p>
+      <p class="responsive-math">
+        \[\beta_j := \beta_j - \alpha \frac{\partial
+        J(\boldsymbol{\beta})}{\partial \beta_j}\]
+      </p>
+      <p>
+        Starting from initial values, each parameter \(\beta_j\) is adjusted in
+        the opposite direction of the gradient of the cost function to reduce
+        it. Here, \(\alpha\) is the learning rate, controlling step size.
+      </p>
+
+      <p>Where the gradient is:</p>
+      <p class="responsive-math">
+        \[\frac{\partial J(\boldsymbol{\beta})}{\partial \beta_j} =
+        \frac{1}{m}\sum_{i=1}^{m} \left( h_{\boldsymbol{\beta}}(x^{(i)}) -
+        y^{(i)} \right) x_j^{(i)}\]
+      </p>
+      <p>
+        This derivative measures the average prediction error
+        \((h_{\boldsymbol{\beta}}(x^{(i)}) - y^{(i)})\) multiplied by the \(
+        j^{th} \) feature value \( x_j^{(i)} \). If the predictions are perfect,
+        the gradient becomes zero and the parameters stop changing.
+      </p>
+
+      <!-- MathJax script -->
+      <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [
+              ["$", "$"],
+              ["\\(", "\\)"],
+            ],
+          },
+          svg: { fontCache: "global" },
+        };
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+      <h3>Step-by-Step Logistic Regression Example</h3>
+
+      <p>
+        Let's walk through a simple logistic regression example to illustrate
+        how the algorithm works in practice.
+      </p>
+
+      <p>
+        <strong>Problem:</strong> Predict whether a student passes (1) or fails
+        (0) an exam based on hours studied.
+      </p>
+
+      <p><strong>Dataset:</strong></p>
+      <div class="responsive-table-container">
+        <table border="1">
+          <thead>
+            <tr>
+              <th>Hours Studied</th>
+              <th>Pass (1) / Fail (0)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><strong>Step 1: Set up the logistic regression model</strong></p>
+      <p>
+        The logistic regression equation is:<br />
+        \( P(y=1|x) = \frac{1}{1 + e^{-(\beta_0 + \beta_1x)}} \)
+      </p>
+      <ul>
+        <li>\(x\) = hours studied (feature)</li>
+        <li>\(y\) = pass/fail (target)</li>
+        <li>\(\beta_0\) = intercept</li>
+        <li>\(\beta_1\) = coefficient</li>
+      </ul>
+
+      <p><strong>Step 2: Initialize parameters</strong></p>
+      <p>
+        Start with random values for \(\beta_0\) and \(\beta_1\), e.g.,
+        \(\beta_0 = 0\), \(\beta_1 = 0\).
+      </p>
+
+      <p><strong>Step 3: Compute predictions</strong></p>
+      <p>
+        For each student, calculate the predicted probability using the sigmoid
+        function.
+      </p>
+      <p>
+        Example for 4 hours studied:<br />
+        \( z = \beta_0 + \beta_1 \times 4 \)<br />
+        \( P(y=1|x=4) = \frac{1}{1 + e^{-z}} \)
+      </p>
+
+      <p><strong>Step 4: Calculate the cost (log-loss)</strong></p>
+      <p>
+        Use the log-loss function to measure prediction error:<br />
+        \( J(\beta_0, \beta_1) = -\frac{1}{m} \sum_{i=1}^{m}
+        [y^{(i)}\log(p^{(i)}) + (1-y^{(i)})\log(1-p^{(i)})] \)
+      </p>
+
+      <p><strong>Step 5: Update parameters using gradient descent</strong></p>
+      <p>
+        Compute gradients and update parameters:<br />
+        \( \beta_j := \beta_j - \alpha \frac{\partial J}{\partial \beta_j} \)
+      </p>
+      <ul>
+        <li>Repeat steps 3–5 until convergence (cost stops decreasing).</li>
+      </ul>
+
+      <p><strong>Step 6: Make predictions</strong></p>
+      <p>
+        After training, use the learned parameters to predict the probability of
+        passing for any number of hours studied.<br />
+        For example, if \(\beta_0 = -6\), \(\beta_1 = 1.2\):<br />
+        For 5 hours: \( z = -6 + 1.2 \times 5 = 0 \)<br />
+        \( P(y=1|x=5) = \frac{1}{1 + e^{0}} = 0.5 \)
+      </p>
+      <p>
+        For 7 hours: \( z = -6 + 1.2 \times 7 = 2.4 \)<br />
+        \( P(y=1|x=7) = \frac{1}{1 + e^{-2.4}} \approx 0.92 \)
+      </p>
+
+      <p><strong>Step 7: Classification</strong></p>
+      <p>
+        If predicted probability &gt; 0.5, classify as "pass" (1); otherwise,
+        "fail" (0).
+      </p>
+
+      <p>
+        This step-by-step process shows how logistic regression models the
+        probability of a binary outcome and makes decisions based on a
+        threshold.
+      </p>
+
+      <h4>Evaluation Metrics for Logistic Regression</h4>
+      <div class="responsive-table-container">
+        <table border="1">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Formula</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Accuracy</td>
+              <td>\[Accuracy = \frac{TP + TN}{TP + TN + FP + FN}\]</td>
+              <td>
+                Proportion of correct predictions.<br />
+                <strong>Use it when:</strong> Dataset is balanced and all errors
+                are equally important.<br />
+                <strong>Don't use it when:</strong> Classes are imbalanced.
+              </td>
+            </tr>
+            <tr>
+              <td>Precision</td>
+              <td>\[Precision = \frac{TP}{TP + FP}\]</td>
+              <td>
+                Fraction of predicted positives that are correct.<br />
+                <strong>Use it when:</strong> False positives are costly (e.g.,
+                spam detection).<br />
+                <strong>Don't use it when:</strong> False negatives matter more.
+              </td>
+            </tr>
+            <tr>
+              <td>Recall (Sensitivity)</td>
+              <td>\[Recall = \frac{TP}{TP + FN}\]</td>
+              <td>
+                Fraction of actual positives detected.<br />
+                <strong>Use it when:</strong> Missing positives is costly (e.g.,
+                disease detection).<br />
+                <strong>Don't use it when:</strong> False positives matter more.
+              </td>
+            </tr>
+            <tr>
+              <td>F1-Score</td>
+              <td>
+                \[F1 = 2 \times \frac{Precision \times Recall}{Precision +
+                Recall}\]
+              </td>
+              <td>
+                Harmonic mean of precision and recall.<br />
+                <strong>Use it when:</strong> Data is imbalanced and you want a
+                balance between precision and recall.<br />
+                <strong>Don't use it when:</strong> You need a metric that's
+                easy to interpret or when classes are balanced.
+              </td>
+            </tr>
+            <tr>
+              <td>ROC-AUC</td>
+              <td>\[ROC\text{-}AUC = \int_{0}^{1} TPR(FPR) \, dFPR\]</td>
+              <td>
+                Measures ability to distinguish classes.<br />
+                Consider: <br />
+                <strong>TPR (True Positive Rate):</strong> \(TPR = \frac{TP}{TP
+                + FN}\) — proportion of actual positives correctly
+                identified.<br />
+                <strong>FPR (False Positive Rate):</strong> \(FPR = \frac{FP}{FP
+                + TN}\) — proportion of actual negatives incorrectly identified
+                as positive. <br />
+                <strong>Use it when:</strong> You want a threshold-independent
+                metric for ranking models.<br />
+                <strong>Don't use it when:</strong> Practical decision
+                thresholds are more important.<br />
+              </td>
+            </tr>
+            <tr>
+              <td>Log-Loss</td>
+              <td>
+                \[Log Loss = -\frac{1}{m}\sum_{i=1}^{m} [y_i\log(p_i) +
+                (1-y_i)\log(1-p_i)]\]
+              </td>
+              <td>
+                Penalizes confident wrong predictions.<br />
+                <strong>Use it when:</strong> You care about probability
+                calibration and penalizing overconfident errors.<br />
+                <strong>Don't use it when:</strong> You want a simple,
+                interpretable metric.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="comparison">4. Detailed Comparison</h2>
+
+      <p>
+        Understanding the fundamental differences between linear and logistic
+        regression is crucial for choosing the right algorithm for your specific
+        problem. This comprehensive comparison examines mathematical
+        foundations, practical considerations, and performance characteristics.
+      </p>
+
+      <h4>Mathematical Foundations Comparison</h4>
+
+      <h5>Hypothesis Functions and Transformations</h5>
+
+      <div class="comparison-grid">
+        <div class="comparison-card">
+          <h5>Linear Regression</h5>
+          <div class="math-equation">
+            \[h_{\boldsymbol{\theta}}(x) = \boldsymbol{\theta}^T x = \theta_0 +
+            \theta_1x_1 + ... + \theta_nx_n\]
+          </div>
+          <p>
+            <strong>Interpretation:</strong> Direct linear combination of
+            features. The output is unbounded and represents the predicted
+            continuous value.
+          </p>
+          <p>
+            <strong>Mathematical Nature:</strong> Linear function mapping
+            features to real-valued outputs.
+          </p>
+        </div>
+
+        <div class="comparison-card">
+          <h5>Logistic Regression</h5>
+          <div class="math-equation">
+            \[h_{\boldsymbol{\theta}}(x) = \sigma(\boldsymbol{\theta}^T x) =
+            \frac{1}{1 + e^{-\boldsymbol{\theta}^T x}}\]
+          </div>
+          <p>
+            <strong>Interpretation:</strong> Linear combination passed through
+            sigmoid function. Output represents probability of positive class.
+          </p>
+          <p>
+            <strong>Mathematical Nature:</strong> Non-linear function (due to
+            sigmoid) mapping features to probabilities [0,1].
+          </p>
+        </div>
+      </div>
+
+      <p>
+        While both use linear combinations of features, logistic regression
+        applies a non-linear transformation (sigmoid) that fundamentally changes
+        the problem from regression to classification.
+      </p>
+
+      <h5>Output Characteristics and Interpretation</h5>
+
+      <div class="responsive-table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Characteristic</th>
+              <th>Linear Regression</th>
+              <th>Logistic Regression</th>
+              <th>Practical Implication</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Output Range</strong></td>
+              <td>(-∞, +∞)</td>
+              <td>(0, 1)</td>
+              <td>
+                Linear can predict any value; Logistic bounded to probabilities
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Output Type</strong></td>
+              <td>Continuous numerical value</td>
+              <td>Probability/likelihood</td>
+              <td>Different interpretation and use cases</td>
+            </tr>
+            <tr>
+              <td><strong>Threshold</strong></td>
+              <td>Not applicable</td>
+              <td>Typically 0.5 for binary decisions</td>
+              <td>Logistic requires decision threshold for classification</td>
+            </tr>
+            <tr>
+              <td><strong>Confidence</strong></td>
+              <td>Prediction intervals</td>
+              <td>Probability scores</td>
+              <td>Different ways to express uncertainty</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h5>Cost Functions and Optimization</h5>
+
+      <div class="comparison-grid">
+        <div class="comparison-card">
+          <h5>Linear Regression Cost Function</h5>
+          <div class="math-equation">
+            \[J(\boldsymbol{\theta}) =
+            \frac{1}{2m}\sum_{i=1}^{m}(h_{\boldsymbol{\theta}}(x^{(i)}) -
+            y^{(i)})^2\]
+          </div>
+          <p><strong>Properties:</strong></p>
+          <ul>
+            <li>Convex function (single global minimum)</li>
+            <li>Quadratic in parameters</li>
+            <li>Sensitive to outliers (squared error)</li>
+            <li>Has closed-form solution (Normal Equation)</li>
+          </ul>
+        </div>
+
+        <div class="comparison-card">
+          <h5>Logistic Regression Cost Function</h5>
+          <div class="math-equation">
+            \[J(\boldsymbol{\theta}) =
+            -\frac{1}{m}\sum_{i=1}^{m}[y^{(i)}\log(h_{\boldsymbol{\theta}}(x^{(i)}))
+            + (1-y^{(i)})\log(1-h_{\boldsymbol{\theta}}(x^{(i)}))]\]
+          </div>
+          <p><strong>Properties:</strong></p>
+          <ul>
+            <li>Convex function (due to log-concave likelihood)</li>
+            <li>Logarithmic penalty structure</li>
+            <li>More robust to outliers</li>
+            <li>No closed-form solution (requires iterative methods)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <p><strong>Why Different Cost Functions?</strong></p>
+        <p>
+          Linear regression uses MSE because it's the maximum likelihood
+          estimator under Gaussian noise assumptions. Logistic regression uses
+          cross-entropy because it's the negative log-likelihood of the
+          Bernoulli distribution, making it the natural choice for binary
+          classification problems.
+        </p>
+      </div>
+
+      <h5>Parameter Estimation Methods</h5>
+
+      <div class="responsive-table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>Linear Regression</th>
+              <th>Logistic Regression</th>
+              <th>Computational Complexity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Closed-form Solution</strong></td>
+              <td>
+                ✓ Normal Equation: \(\boldsymbol{\theta} = (X^TX)^{-1}X^Ty\)
+              </td>
+              <td>✗ No closed-form solution</td>
+              <td>O(n³) for matrix inversion</td>
+            </tr>
+            <tr>
+              <td><strong>Gradient Descent</strong></td>
+              <td>✓ Optional (useful for large datasets)</td>
+              <td>✓ Required method</td>
+              <td>O(mn) per iteration</td>
+            </tr>
+            <tr>
+              <td><strong>Newton's Method</strong></td>
+              <td>✓ Rarely used (MSE is quadratic)</td>
+              <td>✓ Often used (Newton-Raphson)</td>
+              <td>O(n³) per iteration (Hessian)</td>
+            </tr>
+            <tr>
+              <td><strong>Convergence</strong></td>
+              <td>One-step (Normal Eq.) or linear convergence</td>
+              <td>Quadratic convergence (Newton's method)</td>
+              <td>Varies by method</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>Decision Boundaries and Geometric Interpretation</h4>
+
+      <div class="comparison-grid">
+        <div class="comparison-card">
+          <h5>Linear Regression</h5>
+          <p>
+            <strong>Geometric Interpretation:</strong> Finds the best-fitting
+            hyperplane that minimizes perpendicular distances to data points.
+          </p>
+          <p>
+            <strong>Decision Boundary:</strong> No explicit boundary - it's a
+            regression task. If forced into classification (threshold at some
+            value), creates a linear boundary.
+          </p>
+          <p>
+            <strong>Margin Concept:</strong> Not applicable - focuses on
+            minimizing prediction error.
+          </p>
+        </div>
+
+        <div class="comparison-card">
+          <h5>Logistic Regression</h5>
+          <p>
+            <strong>Geometric Interpretation:</strong> Creates a linear decision
+            boundary in feature space where \(P(y=1|x) = 0.5\).
+          </p>
+          <p>
+            <strong>Decision Boundary:</strong> Explicitly defined where
+            \(\boldsymbol{\theta}^T x = 0\). Points on one side have \(P >
+            0.5\), others have \(P < 0.5\).
+          </p>
+          <p>
+            <strong>Margin Concept:</strong> Soft margin - probability gradually
+            changes across the boundary.
+          </p>
+        </div>
+      </div>
+
+      <div class="math-equation">
+        <strong>Logistic Regression Decision Boundary:</strong><br />
+        \[\boldsymbol{\theta}^T x = 0 \Rightarrow \theta_0 + \theta_1x_1 + ... +
+        \theta_nx_n = 0\]
+        <p>
+          This hyperplane separates the feature space into regions of different
+          class predictions.
+        </p>
+      </div>
+
+      <h4>Comprehensive Assumptions Analysis</h4>
+
+      <div class="responsive-table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Assumption</th>
+              <th>Linear Regression</th>
+              <th>Logistic Regression</th>
+              <th>Violation Consequences</th>
+              <th>Diagnostic Methods</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Linearity</strong></td>
+              <td>Linear relationship between X and Y</td>
+              <td>Linear relationship between X and log-odds</td>
+              <td>Biased estimates, poor predictions</td>
+              <td>Residual plots, scatter plots</td>
+            </tr>
+            <tr>
+              <td><strong>Independence</strong></td>
+              <td>Observations must be independent</td>
+              <td>Observations must be independent</td>
+              <td>Underestimated standard errors</td>
+              <td>Durbin-Watson test, ACF plots</td>
+            </tr>
+            <tr>
+              <td><strong>Normality</strong></td>
+              <td>Residuals should be normal</td>
+              <td>Not required</td>
+              <td>Invalid confidence intervals</td>
+              <td>Q-Q plots, Shapiro-Wilk test</td>
+            </tr>
+            <tr>
+              <td><strong>Homoscedasticity</strong></td>
+              <td>Constant variance of residuals</td>
+              <td>Not strictly required</td>
+              <td>Inefficient estimates, wrong SEs</td>
+              <td>Breusch-Pagan test, residual plots</td>
+            </tr>
+            <tr>
+              <td><strong>No Multicollinearity</strong></td>
+              <td>Features should not be highly correlated</td>
+              <td>Features should not be highly correlated</td>
+              <td>Unstable coefficients, inflated SEs</td>
+              <td>VIF, correlation matrix</td>
+            </tr>
+            <tr>
+              <td><strong>Sample Size</strong></td>
+              <td>At least 10-15 obs per predictor</td>
+              <td>At least 10-20 events per predictor</td>
+              <td>Overfitting, unreliable estimates</td>
+              <td>Power analysis, cross-validation</td>
+            </tr>
+            <tr>
+              <td><strong>No Perfect Separation</strong></td>
+              <td>Not applicable</td>
+              <td>No feature perfectly separates classes</td>
+              <td>Non-convergence, infinite coefficients</td>
+              <td>Check for separation, regularization</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>Performance Characteristics and Trade-offs</h4>
+
+      <h5>Computational Efficiency</h5>
+
+      <div class="responsive-table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Linear Regression</th>
+              <th>Logistic Regression</th>
+              <th>Practical Impact</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Training Time</strong></td>
+              <td>O(n³) normal equation, O(mn) gradient descent</td>
+              <td>O(mn×iterations) gradient descent</td>
+              <td>Linear often faster for small datasets</td>
+            </tr>
+            <tr>
+              <td><strong>Prediction Time</strong></td>
+              <td>O(n) - simple dot product</td>
+              <td>O(n) - dot product + sigmoid</td>
+              <td>Nearly identical in practice</td>
+            </tr>
+            <tr>
+              <td><strong>Memory Usage</strong></td>
+              <td>Stores coefficient vector</td>
+              <td>Stores coefficient vector</td>
+              <td>Identical memory requirements</td>
+            </tr>
+            <tr>
+              <td><strong>Scalability</strong></td>
+              <td>Excellent for large datasets</td>
+              <td>Good, requires iterative training</td>
+              <td>Both scale well with modern optimizers</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h5>Robustness and Sensitivity Analysis</h5>
+
+      <div class="comparison-grid">
+        <div class="comparison-card">
+          <h5>Linear Regression Robustness</h5>
+          <p>
+            <strong>Outlier Sensitivity:</strong> High - squared error amplifies
+            outliers
+          </p>
+          <p>
+            <strong>Feature Scaling:</strong> Not required for basic algorithm,
+            but recommended for gradient descent
+          </p>
+          <p>
+            <strong>Missing Data:</strong> Requires complete cases or imputation
+          </p>
+          <p>
+            <strong>Noise Tolerance:</strong> Moderate - Gaussian noise
+            assumption
+          </p>
+        </div>
+
+        <div class="comparison-card">
+          <h5>Logistic Regression Robustness</h5>
+          <p>
+            <strong>Outlier Sensitivity:</strong> Lower - logarithmic cost
+            function is more robust
+          </p>
+          <p>
+            <strong>Feature Scaling:</strong> Highly recommended for proper
+            convergence
+          </p>
+          <p>
+            <strong>Missing Data:</strong> Requires complete cases or imputation
+          </p>
+          <p>
+            <strong>Noise Tolerance:</strong> Good - no distributional
+            assumptions on features
+          </p>
+        </div>
+      </div>
+
+      <h4>Advantages and Limitations</h4>
+
+      <h5>Linear Regression: Detailed Analysis</h5>
+
+      <div class="highlight-box">
+        <p><strong>Unique Advantages:</strong></p>
+        <ul>
+          <li>
+            <strong>Interpretability:</strong> Coefficients directly represent
+            marginal effects
+          </li>
+          <li>
+            <strong>Prediction Intervals:</strong> Can provide confidence bounds
+            for predictions
+          </li>
+          <li>
+            <strong>Statistical Testing:</strong> Rich framework for hypothesis
+            testing (t-tests, F-tests)
+          </li>
+          <li>
+            <strong>Extrapolation:</strong> Can reasonably extrapolate beyond
+            training data range
+          </li>
+          <li>
+            <strong>Feature Importance:</strong> Coefficient magnitude indicates
+            feature importance
+          </li>
+          <li>
+            <strong>Simplicity:</strong> Easy to implement, debug, and explain
+            to stakeholders
+          </li>
+        </ul>
+
+        <p><strong>Critical Limitations:</strong></p>
+        <ul>
+          <li>
+            <strong>Linearity Assumption:</strong> Cannot capture non-linear
+            relationships without feature engineering
+          </li>
+          <li>
+            <strong>Outlier Vulnerability:</strong> Single extreme points can
+            skew entire model
+          </li>
+          <li>
+            <strong>Heteroscedasticity Issues:</strong> Violates assumptions
+            when error variance changes
+          </li>
+          <li>
+            <strong>Multicollinearity Problems:</strong> Unstable coefficients
+            with correlated features
+          </li>
+          <li>
+            <strong>Distribution Sensitivity:</strong> Assumes Gaussian errors
+            for inference
+          </li>
+          <li>
+            <strong>Limited Flexibility:</strong> Cannot handle categorical
+            targets or complex patterns
+          </li>
+        </ul>
+      </div>
+
+      <h5>Logistic Regression: Detailed Analysis</h5>
+
+      <div class="highlight-box">
+        <p><strong>Unique Advantages:</strong></p>
+        <ul>
+          <li>
+            <strong>Probabilistic Output:</strong> Provides uncertainty
+            quantification via probabilities
+          </li>
+          <li>
+            <strong>No Distributional Assumptions:</strong> More flexible
+            regarding data distributions
+          </li>
+          <li>
+            <strong>Outlier Resistance:</strong> Logarithmic loss is less
+            sensitive to extreme values
+          </li>
+          <li>
+            <strong>Natural Classification:</strong> Designed specifically for
+            categorical outcomes
+          </li>
+          <li>
+            <strong>Interpretable Odds Ratios:</strong> Coefficients represent
+            log-odds ratios
+          </li>
+          <li>
+            <strong>Extension to Multi-class:</strong> Naturally extends to
+            multinomial classification
+          </li>
+          <li>
+            <strong>Regularization Friendly:</strong> Works well with L1/L2
+            regularization
+          </li>
+        </ul>
+
+        <p><strong>Critical Limitations:</strong></p>
+        <ul>
+          <li>
+            <strong>Linear Decision Boundary:</strong> Cannot capture complex
+            non-linear separations
+          </li>
+          <li>
+            <strong>Sample Size Requirements:</strong> Needs large samples for
+            stable estimates
+          </li>
+          <li>
+            <strong>Perfect Separation Issues:</strong> Fails when classes are
+            perfectly separable
+          </li>
+          <li>
+            <strong>Feature Scaling Dependency:</strong> Requires careful
+            preprocessing for optimal performance
+          </li>
+          <li>
+            <strong>Convergence Challenges:</strong> May not converge with
+            poorly conditioned data
+          </li>
+          <li>
+            <strong>Limited Extrapolation:</strong> Probabilities can become
+            extreme outside training range
+          </li>
+        </ul>
+      </div>
+
+      <h2 id="practical-considerations">5. Practical Considerations</h2>
+
+      <p>
+        Successfully implementing linear and logistic regression requires moving
+        beyond theory into careful data preparation, feature engineering, and
+        rigorous model validation. This section provides a comprehensive guide
+        to the practical steps that distinguish a mediocre model from a
+        high-performing, reliable one.
+      </p>
+
+      <h4>Data Preprocessing Pipeline</h4>
+
+      <h5>Essential Preprocessing Steps for Both Algorithms</h5>
+
+      <div class="workflow-step">
+        <h6>Step 1: Data Quality Assessment</h6>
+        <p>
+          <strong>Missing Values Analysis:</strong> Before imputation, diagnose
+          the mechanism of missingness. Is it Missing Completely At Random
+          (MCAR), where there's no pattern? Missing At Random (MAR), where
+          missingness depends on other observed features? Or Missing Not At
+          Random (MNAR), where it depends on the missing value itself? The
+          mechanism dictates valid handling strategies and potential biases.
+        </p>
+        <p>
+          <strong>Outlier Detection:</strong> Use statistical methods (IQR,
+          Z-score) and robust techniques (Isolation Forest) alongside
+          visualization (box plots, scatter plots) to identify extreme values.
+          Outliers can disproportionately influence coefficient estimates in
+          linear regression and decision boundaries in logistic regression.
+        </p>
+        <p>
+          <strong>Data Distribution Analysis:</strong> Analyze the skewness and
+          kurtosis of each feature and the target variable. This informs
+          decisions on transformations (e.g., log, Box-Cox) needed to meet model
+          assumptions or improve performance.
+        </p>
+      </div>
+
+      <div class="workflow-step">
+        <h6>Step 2: Feature Scaling and Normalization</h6>
+        <p>
+          <strong>Why It Matters:</strong> Essential for models using gradient
+          descent or regularization. Without scaling, features with larger
+          numeric ranges can dominate the cost function, leading to slow
+          convergence and preventing regularization from working as intended, as
+          the penalty term would be unevenly applied.
+        </p>
+        <p>
+          <strong>When to Apply:</strong> Critical for logistic regression and
+          any linear regression solved with gradient descent or regularization
+          (Ridge, Lasso, Elastic Net). Less critical for simple linear
+          regression with an analytical solution (Normal Equation), but still
+          good practice.
+        </p>
+        <p>
+          <strong>Methods:</strong> Use <strong>StandardScaler</strong> (for
+          algorithms assuming a normal distribution),
+          <strong>MinMaxScaler</strong> (when you need a fixed [0, 1] range), or
+          <strong>RobustScaler</strong> (when dealing with significant outliers,
+          as it uses the interquartile range).
+        </p>
+      </div>
+
+      <div class="workflow-step">
+        <h6>Step 3: Missing Value Handling</h6>
+        <p>
+          <strong>Numerical Features:</strong> Simple methods include
+          mean/median/mode imputation. More advanced approaches like K-Nearest
+          Neighbors (KNN) imputation or model-based imputation (e.g., using a
+          regression model to predict the missing value) can capture
+          relationships in the data more effectively.
+        </p>
+        <p>
+          <strong>Categorical Features:</strong> Impute with the mode, create a
+          dedicated "Missing" category to capture potential information in the
+          missingness itself, or use domain knowledge.
+        </p>
+        <p>
+          <strong>Advanced Approach:</strong> Use Multiple Imputation by Chained
+          Equations (MICE), which creates multiple complete datasets, runs the
+          model on each, and pools the results. This properly accounts for the
+          uncertainty introduced by imputation.
+        </p>
+      </div>
+
+      <h5>Algorithm-Specific Preprocessing Requirements</h5>
+
+      <div class="comparison-grid">
+        <div class="comparison-card">
+          <h5>Linear Regression Preprocessing</h5>
+          <p><strong>Linearity Enhancement:</strong></p>
+          <ul>
+            <li>
+              <strong>Polynomial Features:</strong> Add \(x^2, x^3\) to model
+              non-linear relationships.
+            </li>
+            <li>
+              <strong>Interaction Terms:</strong> Create \(x_1 \times x_2\) to
+              capture synergistic effects where the impact of one feature
+              depends on the level of another.
+            </li>
+            <li>
+              <strong>Log & Box-Cox Transformations:</strong> Apply to features
+              or the target to stabilize variance (homoscedasticity), normalize
+              distributions, and linearize exponential relationships.
+            </li>
+          </ul>
+
+          <p><strong>Assumption Validation:</strong></p>
+          <ul>
+            <li>
+              <strong>Linearity:</strong> Check with residual vs. fitted plots;
+              a random scatter around zero is ideal.
+            </li>
+            <li>
+              <strong>Homoscedasticity (Constant Variance):</strong> Test with
+              Breusch-Pagan test or by observing the spread in the residual vs.
+              fitted plot.
+            </li>
+            <li>
+              <strong>Normality of Residuals:</strong> Verify with Q-Q plots;
+              points should follow the diagonal line.
+            </li>
+            <li>
+              <strong>Multicollinearity:</strong> Detect with Variance Inflation
+              Factor (VIF) scores. A VIF > 5 or 10 indicates that a feature is
+              highly correlated with others, which can destabilize coefficient
+              estimates.
+            </li>
+          </ul>
+        </div>
+
+        <div class="comparison-card">
+          <h5>Logistic Regression Preprocessing</h5>
+          <p><strong>Categorical Handling:</strong></p>
+          <ul>
+            <li>
+              <strong>One-Hot Encoding:</strong> Creates binary columns for
+              nominal features. Best for low-cardinality variables to avoid the
+              "curse of dimensionality."
+            </li>
+            <li>
+              <strong>Ordinal Encoding:</strong> Maps ordered categories to
+              integers (e.g., "low," "medium," "high" to 0, 1, 2).
+            </li>
+            <li>
+              <strong>Target Encoding:</strong> Replaces a category with the
+              mean of the target variable. Powerful but carries a high risk of
+              data leakage; requires careful implementation within a
+              cross-validation loop.
+            </li>
+          </ul>
+
+          <p><strong>Class Balance Management:</strong></p>
+          <ul>
+            <li>
+              <strong>Class Weights:</strong> Adjust the model's cost function
+              to more heavily penalize errors on the minority class.
+            </li>
+            <li>
+              <strong>Oversampling (e.g., SMOTE):</strong> Creates synthetic
+              examples of the minority class. Best when data is limited.
+            </li>
+            <li>
+              <strong>Undersampling:</strong> Removes examples from the majority
+              class. Useful for very large datasets but risks discarding
+              important information.
+            </li>
+            <li>
+              <strong>Evaluation:</strong> Always use metrics like Precision,
+              Recall, F1-Score, or AUC-PR that are robust to class imbalance.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <h4>Advanced Feature Engineering Techniques</h4>
+
+      <h5>Domain-Specific Feature Creation</h5>
+
+      <div class="highlight-box">
+        <p>
+          <strong>Time-Based Features:</strong> From a timestamp, create
+          features like day of the week, month, is_holiday, time since last
+          event, or rolling averages/standard deviations over a time window to
+          capture trends and seasonality.
+        </p>
+        <p>
+          <strong>Text Features:</strong> Transform unstructured text into
+          meaningful numbers using TF-IDF vectors, pre-trained word embeddings
+          (e.g., Word2Vec, GloVe), sentiment scores, or engineered metrics like
+          text length or keyword counts.
+        </p>
+        <p>
+          <strong>Geospatial Features:</strong> From latitude/longitude,
+          calculate distances between points, cluster locations, or enrich data
+          with external sources like population density, weather patterns, or
+          proximity to points of interest.
+        </p>
+      </div>
+
+      <h4>Model Validation and Selection Strategies</h4>
+
+      <h5>Cross-Validation Methodologies</h5>
+
+      <div class="comparison-grid">
+        <div class="comparison-card">
+          <h5>Standard Cross-Validation</h5>
+          <p>
+            <strong>K-Fold Cross-Validation:</strong> The default choice (k=5 or
+            10). Provides a robust estimate of model performance by training and
+            testing on different subsets of the data.
+          </p>
+          <p>
+            <strong>Stratified K-Fold:</strong> Essential for imbalanced
+            classification. Ensures that the class distribution in each fold
+            mirrors the overall dataset, preventing folds with zero minority
+            class samples.
+          </p>
+        </div>
+
+        <div class="comparison-card">
+          <h5>Specialized Validation</h5>
+          <p>
+            <strong>Time Series Split:</strong> Critically important for
+            temporal data to prevent data leakage from the future. The training
+            set always precedes the test set (e.g., train on years 1-3, test on
+            year 4).
+          </p>
+          <p>
+            <strong>Group K-Fold:</strong> Use when data has non-independent
+            groups (e.g., multiple readings from the same patient). Ensures that
+            all data from one group is in either the training or the test set,
+            never split across both.
+          </p>
+          <p>
+            <strong>Nested CV:</strong> The gold standard for reporting
+            performance. An outer loop splits data for evaluation, and an inner
+            loop performs hyperparameter tuning on the training portion only,
+            providing an unbiased performance estimate.
+          </p>
+        </div>
+      </div>
+
+      <h5>Regularization Techniques</h5>
+
+      <p>
+        Regularization adds a penalty to the cost function based on the size of
+        the coefficients, preventing overfitting and improving generalization.
+      </p>
+
+      <div class="math-equation">
+        <strong>Ridge Regression (L2 Regularization):</strong><br />
+        \[J(\boldsymbol{\beta}) = \text{Cost} + \lambda\sum_{j=1}^{n}\beta_j^2\]
+        <p>
+          Shrinks coefficients toward zero but rarely to exactly zero. Excellent
+          for handling multicollinearity and when you believe many features are
+          relevant.
+        </p>
+      </div>
+
+      <div class="math-equation">
+        <strong>Lasso Regression (L1 Regularization):</strong><br />
+        \[J(\boldsymbol{\beta}) = \text{Cost} + \lambda\sum_{j=1}^{n}|\beta_j|\]
+        <p>
+          Can shrink coefficients to exactly zero, performing automatic feature
+          selection. Ideal for creating sparse, interpretable models when you
+          suspect many features are irrelevant.
+        </p>
+      </div>
+
+      <div class="math-equation">
+        <strong>Elastic Net (L1 + L2 Combination):</strong><br />
+        \[J(\boldsymbol{\beta}) = \text{Cost} + \lambda_1\sum_{j=1}^{n}|\beta_j|
+        + \lambda_2\sum_{j=1}^{n}\beta_j^2\]
+        <p>
+          A hybrid that combines the strengths of both. It can perform feature
+          selection like Lasso but is more stable in the presence of highly
+          correlated features, where it tends to group and shrink their
+          coefficients together.
+        </p>
+      </div>
+
+      <h5>Hyperparameter Tuning Strategies</h5>
+
+      <div class="highlight-box">
+        <p>
+          <strong>Grid Search:</strong> An exhaustive search over a manually
+          specified grid of hyperparameters. Guaranteed to find the best
+          combination within the grid but is computationally expensive.
+        </p>
+        <p>
+          <strong>Random Search:</strong> Samples a fixed number of combinations
+          from a statistical distribution. More efficient than grid search,
+          especially for high-dimensional spaces where some hyperparameters are
+          more important than others.
+        </p>
+        <p>
+          <strong>Bayesian Optimization:</strong> An intelligent search method
+          that uses a probabilistic model to decide which hyperparameter
+          combination to try next based on past results. Balances exploration
+          and exploitation to find optimal values in fewer iterations.
+        </p>
+      </div>
+
+      <h4>Performance Optimization and Diagnostics</h4>
+
+      <h5>Computational Efficiency Considerations</h5>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Aspect</th>
+            <th>Linear Regression</th>
+            <th>Logistic Regression</th>
+            <th>Optimization Tips</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Solvers</strong></td>
+            <td>
+              Normal Equation (exact, fast for small N features) or Gradient
+              Descent (iterative, scales to large N).
+            </td>
+            <td>Iterative solvers only (e.g., liblinear, saga, lbfgs).</td>
+            <td>
+              Choose a solver based on dataset size; 'saga' is often a good
+              default for large datasets with regularization.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Large Datasets</strong></td>
+            <td>
+              Use Stochastic Gradient Descent (SGD) for out-of-core learning.
+            </td>
+            <td>
+              Use mini-batch gradient descent for a balance of speed and
+              stability.
+            </td>
+            <td>Process data in chunks if it doesn't fit in memory.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h5>Model Diagnostics and Debugging</h5>
+
+      <div class="comparison-grid">
+        <div class="comparison-card">
+          <h5>Linear Regression Diagnostics</h5>
+          <p><strong>Residual Analysis:</strong></p>
+          <ul>
+            <li>
+              <strong>Residuals vs. Fitted Plot:</strong> Look for non-linear
+              patterns (e.g., a curve) or non-constant variance (e.g., a funnel
+              shape).
+            </li>
+            <li>
+              <strong>Cook's Distance:</strong> Identify influential points
+              that, if removed, would significantly change the model's
+              coefficients.
+            </li>
+          </ul>
+
+          <p><strong>Model Quality Metrics:</strong></p>
+          <ul>
+            <li>
+              <strong>R² vs. Adjusted R²:</strong> Adjusted R² penalizes the
+              addition of useless features, making it better for comparing
+              models with different numbers of predictors.
+            </li>
+            <li>
+              <strong>RMSE/MAE:</strong> Provide error magnitude in the original
+              units of the target, making them easy to interpret.
+            </li>
+          </ul>
+        </div>
+
+        <div class="comparison-card">
+          <h5>Logistic Regression Diagnostics</h5>
+          <p><strong>Classification Performance:</strong></p>
+          <ul>
+            <li>
+              <strong>Confusion Matrix:</strong> The foundation for calculating
+              Precision, Recall, and F1-score.
+            </li>
+            <li>
+              <strong>ROC vs. Precision-Recall Curves:</strong> Use ROC curves
+              for balanced datasets and PR curves for imbalanced datasets to
+              evaluate trade-offs.
+            </li>
+            <li>
+              <strong>Calibration Plot:</strong> Checks if the predicted
+              probabilities are reliable (e.g., if for all predictions of 0.8,
+              80% of them are actually positive).
+            </li>
+          </ul>
+
+          <p><strong>Model Interpretation:</strong></p>
+          <ul>
+            <li>
+              <strong>Odds Ratios:</strong> Interpret coefficients by converting
+              them to odds ratios (\(e^\beta\)). An odds ratio of 1.2 means a
+              one-unit increase in the feature increases the odds of the
+              positive class by 20%.
+            </li>
+            <li>
+              <strong>SHAP/LIME:</strong> Use these model-agnostic methods to
+              explain individual predictions, providing local, instance-level
+              interpretability.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 id="implementation">6. Implementation Examples</h2>
+
+      <h4>Linear Regression: From Scratch Implementation</h4>
+
+      <p>
+        Understanding linear regression requires implementing it from first
+        principles. This implementation demonstrates the mathematical concepts
+        in practice.
+      </p>
+
+      <script src="https://gist.github.com/francesco-s/45599ee098592166f55e7e0db7ff14df.js"></script>
+
+      <h4>Logistic Regression: From Scratch Implementation</h4>
+
+      <p>
+        Logistic regression implementation from scratch demonstrates the sigmoid
+        function, maximum likelihood estimation, and gradient descent
+        optimization.
+      </p>
+
+      <script src="https://gist.github.com/francesco-s/d9e5be1bb2413e35865d8c38914de51b.js"></script>
+
+      <h2 id="extensions">Advanced Topics and Extensions</h2>
+
+      <h4>Polynomial Regression: Mathematical Foundation</h4>
+
+      <p>
+        Polynomial regression extends linear regression by adding polynomial
+        terms of the features (e.g., squared, cubed) to the model. This
+        transformation allows the model to fit non-linear patterns in the data
+        while still leveraging the efficient estimation techniques of linear
+        regression.
+      </p>
+
+      <p><strong>Mathematical Formulation:</strong></p>
+      <p>
+        For a single feature, a polynomial regression of degree \(d\) is defined
+        as:
+      </p>
+      <p class="responsive-math">
+        \[y = \beta_0 + \beta_1x + \beta_2x^2 + \beta_3x^3 + \dots + \beta_dx^d
+        + \epsilon\]
+      </p>
+      <p>
+        This equation models the target \(y\) as a \(d\)-degree polynomial
+        function of the feature \(x\). The model learns coefficients \(\beta_j\)
+        for each power of \(x\), allowing it to fit curves instead of just
+        straight lines. The \(\epsilon\) term represents the irreducible error.
+      </p>
+
+      <p>For multiple features, the model also includes interaction terms:</p>
+      <p class="responsive-math">
+        \[y = \beta_0 + \sum_{i=1}^{n}\beta_i x_i +
+        \sum_{i=1}^{n}\sum_{j=i}^{n}\beta_{ij}x_i x_j + \dots + \epsilon\]
+      </p>
+      <p>
+        This form captures not only the polynomial effect of each feature (e.g.,
+        \(x_1^2\)) but also how features interact with each other (e.g.,
+        \(x_1x_2\)). This allows the model to fit complex, multi-dimensional
+        surfaces.
+      </p>
+
+      <p><strong>Feature Transformation:</strong></p>
+      <p>
+        The core idea is to transform the original feature set into a new,
+        higher-dimensional one that includes the polynomial terms. Polynomial
+        regression is fundamentally a linear regression model applied to these
+        transformed features.
+      </p>
+      <p class="responsive-math">
+        \[\mathbf{X}_{\text{poly}} = [1, x_1, x_2, \dots, x_n, x_1^2, x_1x_2,
+        \dots, x_n^2, x_1^3, \dots]\]
+      </p>
+      <p>
+        We create a new feature matrix, \(\mathbf{X}_{\text{poly}}\), where each
+        row corresponds to an observation and each column represents a term in
+        the polynomial expansion (e.g., \(x_1\), \(x_1^2\), \(x_1x_2\)).
+      </p>
+
+      <p><strong>Matrix Form:</strong></p>
+      <p>
+        Using the transformed features, the model is expressed in a familiar
+        linear form:
+      </p>
+      <p class="responsive-math">
+        \[\mathbf{y} = \mathbf{X}_{\text{poly}}\boldsymbol{\beta} +
+        \boldsymbol{\epsilon}\]
+      </p>
+      <p>
+        This equation is identical in structure to multiple linear regression.
+        The vector \(\mathbf{y}\) contains the target values,
+        \(\mathbf{X}_{\text{poly}}\) is the transformed feature matrix,
+        \(\boldsymbol{\beta}\) is the vector of coefficients to be learned, and
+        \(\boldsymbol{\epsilon}\) is the vector of errors.
+      </p>
+
+      <p><strong>Cost Function:</strong></p>
+      <p>
+        The cost function is the Mean Squared Error (MSE), identical to that of
+        linear regression, but applied to the polynomial features:
+      </p>
+      <p class="responsive-math">
+        \[J(\boldsymbol{\beta}) =
+        \frac{1}{2m}||\mathbf{X}_{\text{poly}}\boldsymbol{\beta} -
+        \mathbf{y}||^2\]
+      </p>
+      <p>
+        This function calculates the sum of the squared differences between the
+        predicted values (\(\mathbf{X}_{\text{poly}}\boldsymbol{\beta}\)) and
+        the actual values (\(\mathbf{y}\)). The goal is to find the coefficient
+        vector \(\boldsymbol{\beta}\) that minimizes this cost.
+      </p>
+
+      <p><strong>Normal Equation:</strong></p>
+      <p>
+        Because the model is linear in its parameters, we can use the Normal
+        Equation to find the optimal \(\boldsymbol{\beta}\) analytically:
+      </p>
+      <p class="responsive-math">
+        \[\boldsymbol{\beta} =
+        (\mathbf{X}_{\text{poly}}^T\mathbf{X}_{\text{poly}})^{-1}\mathbf{X}_{\text{poly}}^T\mathbf{y}\]
+      </p>
+      <p>
+        This provides a direct, closed-form solution without needing iterative
+        methods like gradient descent. It works by finding the projection of
+        \(\mathbf{y}\) onto the column space of \(\mathbf{X}_{\text{poly}}\).
+        However, this method involves inverting a matrix, which can be
+        computationally expensive (\(O(n^3)\) where n is the number of features)
+        and numerically unstable if the features are highly correlated.
+      </p>
+
+      <h4>Polynomial Regression: From Scratch Implementation</h4>
+
+      <script src="https://gist.github.com/francesco-s/9e5015d88cc4820935e498bed3e0379f.js"></script>
+
+      <h4>Multinomial Logistic Regression: Mathematical Foundation</h4>
+
+      <p>
+        Multinomial logistic regression, often called Softmax Regression,
+        generalizes binary logistic regression to handle classification problems
+        with more than two classes (K > 2). Instead of modeling a single
+        probability for one class, it simultaneously models the probabilities
+        for all K classes, ensuring they sum to one.
+      </p>
+
+      <p><strong>Softmax Function:</strong></p>
+      <p>
+        The softmax function is the cornerstone of this model, converting a
+        vector of raw linear scores for each class into a valid probability
+        distribution.
+      </p>
+      <p class="responsive-math">
+        \[P(y=k \mid \mathbf{x}) = \frac{e^{\boldsymbol{\beta}_k^T
+        \mathbf{x}}}{\sum_{j=1}^{K} e^{\boldsymbol{\beta}_j^T \mathbf{x}}}\]
+      </p>
+      <p>
+        For a given input \(\mathbf{x}\), we first compute a linear score
+        \(\boldsymbol{\beta}_k^T \mathbf{x}\) for each class \(k\). The
+        exponentiation \(e^{(\cdot)}\) makes all scores positive. Dividing by
+        the sum of all exponentiated scores ensures that the final probabilities
+        for all classes sum to 1. The class with the highest score will receive
+        the highest probability.
+      </p>
+
+      <p><strong>Matrix Formulation:</strong></p>
+      <p>
+        To manage the parameters efficiently, we organize the coefficient
+        vectors for all K classes into a single parameter matrix \(\mathbf{B}\).
+      </p>
+      <p class="responsive-math">
+        \[\mathbf{B} = [\boldsymbol{\beta}_1, \boldsymbol{\beta}_2, \dots,
+        \boldsymbol{\beta}_K]\]
+      </p>
+      <p>
+        If you have \(n\) features (plus an intercept), each
+        \(\boldsymbol{\beta}_k\) is a vector of size \((n+1) \times 1\). The
+        full parameter matrix \(\mathbf{B}\) will therefore have dimensions
+        \((n+1) \times K\).
+      </p>
+
+      <p><strong>Linear Scores:</strong></p>
+      <p>
+        The linear scores (or logits) for all classes and all observations can
+        be computed in a single matrix operation:
+      </p>
+      <p class="responsive-math">\[\mathbf{Z} = \mathbf{X}\mathbf{B}\]</p>
+      <p>
+        Here, \(\mathbf{X}\) is the feature matrix (size \(m \times (n+1)\)) and
+        \(\mathbf{B}\) is the parameter matrix. The resulting matrix
+        \(\mathbf{Z}\) (size \(m \times K\)) contains the raw score \(z_{ik}\)
+        for the \(i\)-th sample belonging to the \(k\)-th class.
+      </p>
+
+      <p><strong>Probability Matrix:</strong></p>
+      <p>
+        The softmax function is then applied to each row of the score matrix
+        \(\mathbf{Z}\) to produce a matrix of probabilities:
+      </p>
+      <p class="responsive-math">
+        \[P_{ik} = \frac{e^{z_{ik}}}{\sum_{j=1}^{K} e^{z_{ij}}}\]
+      </p>
+      <p>
+        Each element \(P_{ik}\) in the resulting probability matrix
+        \(\mathbf{P}\) represents the model's predicted probability that sample
+        \(i\) belongs to class \(k\). Each row of \(\mathbf{P}\) sums to 1.
+      </p>
+
+      <p><strong>Cross-Entropy Loss:</strong></p>
+      <p>
+        The cost function for multinomial logistic regression is the
+        cross-entropy loss, which is the negative log-likelihood averaged over
+        all samples.
+      </p>
+      <p class="responsive-math">
+        \[J(\mathbf{B}) = -\frac{1}{m}\sum_{i=1}^{m}\sum_{k=1}^{K} y_{ik}
+        \log(P_{ik})\]
+      </p>
+      <p>
+        Here, \(y_{ik}\) is a binary indicator from the one-hot encoded target
+        matrix, which is 1 if sample \(i\) truly belongs to class \(k\) and 0
+        otherwise. This structure cleverly ensures that for each sample, the
+        loss is simply the negative log of the probability assigned to the
+        *correct* class. Minimizing this loss is equivalent to finding the
+        parameters \(\mathbf{B}\) that maximize the probabilities of the true
+        classes for all samples.
+      </p>
+
+      <p><strong>Gradient Computation:</strong></p>
+      <p>
+        The gradient of the cost function with respect to the parameters of a
+        single class \(k\) is given by:
+      </p>
+      <p class="responsive-math">
+        \[\frac{\partial J}{\partial \boldsymbol{\beta}_k} =
+        \frac{1}{m}\mathbf{X}^T(\mathbf{P}_k - \mathbf{y}_k)\]
+      </p>
+      <p>
+        This elegant formula calculates the gradient by taking the average
+        difference between the predicted probabilities (\(\mathbf{P}_k\)) and
+        the true labels (\(\mathbf{y}_k\)) for class \(k\), weighted by the
+        input features \(\mathbf{X}\). This gradient is then used in an
+        iterative optimization algorithm like gradient descent to update the
+        parameters \(\boldsymbol{\beta}_k\).
+      </p>
+
+      <h4>Multinomial Logistic Regression: From Scratch Implementation</h4>
+
+      <script src="https://gist.github.com/francesco-s/0ef148262164ad8513d9250188928e60.js"></script>
+
+      <div class="summary">
+        <h4>Key Takeaways</h4>
+        <ul>
+          <li>
+            <strong>Linear Regression</strong> is best for predicting continuous
+            numerical values with linear relationships
+          </li>
+          <li>
+            <strong>Logistic Regression</strong> is ideal for binary/multi-class
+            classification with probabilistic outputs
+          </li>
+          <li>
+            Both algorithms assume <strong>linear relationships</strong> but in
+            different contexts (features-target vs features-log-odds)
+          </li>
+          <li>
+            <strong>Feature engineering</strong> and
+            <strong>preprocessing</strong> are crucial for both algorithms
+          </li>
+          <li>
+            <strong>Regularization</strong> helps prevent overfitting,
+            especially with high-dimensional data
+          </li>
+          <li>
+            Choose the algorithm based on your <strong>problem type</strong> and
+            <strong>output requirements</strong>
+          </li>
+          <li>
+            Both provide excellent <strong>interpretability</strong> compared to
+            more complex algorithms
+          </li>
+        </ul>
+      </div>
+
+      <p>
+        Linear and logistic regression remain fundamental algorithms in machine
+        learning due to their simplicity, interpretability, and effectiveness
+        for many real-world problems. Understanding their mathematical
+        foundations, assumptions, and practical considerations will help you
+        make informed decisions about when and how to apply these powerful
+        techniques in your data science projects.
+      </p>
+
+      <div id="disqus_thread"></div>
+      <script>
+        var disqus_config = function () {
+          this.page.url =
+            "https://www.francescosannicola.com/articles/linear-vs-logistic-regression.html";
+          this.page.identifier = "linear-vs-logistic-regression";
+          this.page.title =
+            "Machine Learning Essentials: Linear vs. Logistic Regression";
+        };
+
+        (function () {
+          var d = document,
+            s = d.createElement("script");
+          s.src = "https://francescosannicola.disqus.com/embed.js";
+          s.setAttribute("data-timestamp", +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+      <noscript
+        >Please enable JavaScript to view the
+        <a href="https://disqus.com/?ref_noscript"
+          >comments powered by Disqus.</a
+        ></noscript
+      >
+    </div>
+
+    <button
+      id="backToTopButton"
+      onclick="scrollToTop()"
+      style="font-size: 24px; padding: 10px 20px"
+    >
+      <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <script>
+      // Get stored dark mode state
+      let isDarkMode = localStorage.getItem("darkMode") === "true";
+
+      // Function to apply dark mode
+      function applyDarkMode(dark) {
+        const darkModeToggle = document.getElementById("darkModeToggle");
+        const elements = [
+          document.body,
+          ...document.querySelectorAll(
+            ".main-container, .info-container, .projects-container, .article-container, .link-container, .code"
+          ),
+        ];
+
+        // Update state
+        isDarkMode = dark;
+        localStorage.setItem("darkMode", dark);
+
+        // Update UI
+        elements.forEach((element) => {
+          if (dark) {
+            element.classList.add("dark-mode");
+          } else {
+            element.classList.remove("dark-mode");
+          }
+        });
+
+        // Update toggle
+        if (darkModeToggle) {
+          darkModeToggle.checked = dark;
+        }
+      }
+
+      // Initialize dark mode
+      document.addEventListener("DOMContentLoaded", () => {
+        const darkModeToggle = document.getElementById("darkModeToggle");
+
+        // Apply initial state
+        applyDarkMode(isDarkMode);
+
+        // Handle toggle changes
+        darkModeToggle.addEventListener("change", (e) => {
+          applyDarkMode(e.target.checked);
+        });
+      });
+
+      // Apply dark mode immediately if needed
+      if (isDarkMode) {
+        applyDarkMode(true);
+      }
+
+      // Back to Top Button Script
+      function scrollToTop() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+      }
+      window.addEventListener("scroll", () => {
+        const button = document.getElementById("backToTopButton");
+        if (window.scrollY > 500) {
+          button.style.display = "block";
+        } else {
+          button.style.display = "none";
+        }
+      });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  </body>
+</html>
