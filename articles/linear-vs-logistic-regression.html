@@ -1544,21 +1544,7 @@
         the gradient becomes zero and the parameters stop changing.
       </p>
 
-      <!-- MathJax script -->
-      <script>
-        window.MathJax = {
-          tex: {
-            inlineMath: [
-              ["$", "$"],
-              ["\\(", "\\)"],
-            ],
-          },
-          svg: { fontCache: "global" },
-        };
-      </script>
-      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-      <h3>Step-by-Step Logistic Regression Example</h3>
+      <h3>Step-by-Step Example: Logistic Regression with Gradient Descent</h3>
 
       <p>
         Let's walk through a simple logistic regression example to illustrate
@@ -1567,7 +1553,7 @@
 
       <p>
         <strong>Problem:</strong> Predict whether a student passes (1) or fails
-        (0) an exam based on hours studied.
+        (0) an exam based on the number of hours studied.
       </p>
 
       <p><strong>Dataset:</strong></p>
@@ -1612,74 +1598,130 @@
         </table>
       </div>
 
-      <p><strong>Step 1: Set up the logistic regression model</strong></p>
-      <p>
-        The logistic regression equation is:<br />
-        \( P(y=1|x) = \frac{1}{1 + e^{-(\beta_0 + \beta_1x)}} \)
-      </p>
-      <ul>
-        <li>\(x\) = hours studied (feature)</li>
-        <li>\(y\) = pass/fail (target)</li>
-        <li>\(\beta_0\) = intercept</li>
-        <li>\(\beta_1\) = coefficient</li>
-      </ul>
+      <div class="workflow-step">
+        <h6>Step 1 – Set up the logistic regression model</h6>
+        <p>
+          Define the mathematical relationship between the input feature and the
+          probability of a positive outcome using the sigmoid function.
+        </p>
+        <p>The logistic regression probability model is:</p>
+        <div class="math-equation">
+          <p class="responsive-math">
+            \[ P(y=1|x) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x)}} \]
+          </p>
+        </div>
+        <ul>
+          <li>\(x\) = hours studied (input feature)</li>
+          <li>\(y\) = pass/fail (target)</li>
+          <li>\(\beta_0\) = intercept</li>
+          <li>\(\beta_1\) = coefficient</li>
+        </ul>
+      </div>
 
-      <p><strong>Step 2: Initialize parameters</strong></p>
-      <p>
-        Start with random values for \(\beta_0\) and \(\beta_1\), e.g.,
-        \(\beta_0 = 0\), \(\beta_1 = 0\).
-      </p>
+      <div class="workflow-step">
+        <h6>Step 2 – Initialize parameters</h6>
+        <p>
+          Begin the learning process by assigning initial guess values to the
+          model’s parameters.
+        </p>
+        <p>Example initial values:</p>
+        <div class="math-equation">
+          <p class="responsive-math">\[ \beta_0 = 0, \quad \beta_1 = 0 \]</p>
+        </div>
+      </div>
 
-      <p><strong>Step 3: Compute predictions</strong></p>
-      <p>
-        For each student, calculate the predicted probability using the sigmoid
-        function.
-      </p>
-      <p>
-        Example for 4 hours studied:<br />
-        \( z = \beta_0 + \beta_1 \times 4 \)<br />
-        \( P(y=1|x=4) = \frac{1}{1 + e^{-z}} \)
-      </p>
+      <div class="workflow-step">
+        <h6>Step 3 – Compute predictions</h6>
+        <p>
+          Use the current parameters to calculate the predicted probability of
+          passing for each training example using the sigmoid function.
+        </p>
+        <p>Example for \(x = 4\) hours studied:</p>
+        <div class="math-equation">
+          <p class="responsive-math">
+            \[ z = \beta_0 + \beta_1 \times 4 \] \[ P(y=1|x=4) = \frac{1}{1 +
+            e^{-z}} \]
+          </p>
+        </div>
+      </div>
 
-      <p><strong>Step 4: Calculate the cost (log-loss)</strong></p>
-      <p>
-        Use the log-loss function to measure prediction error:<br />
-        \( J(\beta_0, \beta_1) = -\frac{1}{m} \sum_{i=1}^{m}
-        [y^{(i)}\log(p^{(i)}) + (1-y^{(i)})\log(1-p^{(i)})] \)
-      </p>
+      <div class="workflow-step">
+        <h6>Step 4 – Calculate the cost (log-loss)</h6>
+        <p>
+          Measure how far the predictions are from the actual target values
+          using the log-loss function.
+        </p>
+        <p>The cost function is:</p>
+        <div class="math-equation">
+          <p class="responsive-math">
+            \[ J(\beta_0, \beta_1) = -\frac{1}{m} \sum_{i=1}^{m} \left[
+            y^{(i)}\log(p^{(i)}) + (1-y^{(i)})\log(1-p^{(i)}) \right] \]
+          </p>
+        </div>
+      </div>
 
-      <p><strong>Step 5: Update parameters using gradient descent</strong></p>
-      <p>
-        Compute gradients and update parameters:<br />
-        \( \beta_j := \beta_j - \alpha \frac{\partial J}{\partial \beta_j} \)
-      </p>
-      <ul>
-        <li>Repeat steps 3–5 until convergence (cost stops decreasing).</li>
-      </ul>
+      <div class="workflow-step">
+        <h6>Step 5 – Update parameters using gradient descent</h6>
+        <p>
+          Adjust the model parameters in the direction that reduces the cost,
+          using the calculated gradients.
+        </p>
+        <p>Gradient descent update rule:</p>
+        <div class="math-equation">
+          <p class="responsive-math">
+            \[ \beta_j := \beta_j - \alpha \frac{\partial J}{\partial \beta_j}
+            \]
+          </p>
+        </div>
+        <ul>
+          <li>
+            Repeat Steps 3–5 until convergence (when cost stops decreasing).
+          </li>
+        </ul>
+      </div>
 
-      <p><strong>Step 6: Make predictions</strong></p>
-      <p>
-        After training, use the learned parameters to predict the probability of
-        passing for any number of hours studied.<br />
-        For example, if \(\beta_0 = -6\), \(\beta_1 = 1.2\):<br />
-        For 5 hours: \( z = -6 + 1.2 \times 5 = 0 \)<br />
-        \( P(y=1|x=5) = \frac{1}{1 + e^{0}} = 0.5 \)
-      </p>
-      <p>
-        For 7 hours: \( z = -6 + 1.2 \times 7 = 2.4 \)<br />
-        \( P(y=1|x=7) = \frac{1}{1 + e^{-2.4}} \approx 0.92 \)
-      </p>
+      <div class="workflow-step">
+        <h6>Step 6 – Make predictions (after training)</h6>
+        <p>
+          Use the optimized parameters to estimate the probability of passing
+          for new data points.
+        </p>
+        <p>Suppose after training we have:</p>
+        <div class="math-equation">
+          <p class="responsive-math">\[ \beta_0 = -6, \quad \beta_1 = 1.2 \]</p>
+        </div>
+        <p>For \(x = 5\) hours:</p>
+        <div class="math-equation">
+          <p class="responsive-math">
+            \[ z = -6 + 1.2 \times 5 = 0 \] \[ P(y=1|x=5) = \frac{1}{1 + e^{0}}
+            = 0.5 \]
+          </p>
+        </div>
+        <p>For \(x = 7\) hours:</p>
+        <div class="math-equation">
+          <p class="responsive-math">
+            \[ z = -6 + 1.2 \times 7 = 2.4 \] \[ P(y=1|x=7) = \frac{1}{1 +
+            e^{-2.4}} \approx 0.916 \]
+          </p>
+        </div>
+      </div>
 
-      <p><strong>Step 7: Classification</strong></p>
-      <p>
-        If predicted probability &gt; 0.5, classify as "pass" (1); otherwise,
-        "fail" (0).
-      </p>
+      <div class="workflow-step">
+        <h6>Step 7 – Classification rule</h6>
+        <p>
+          Convert predicted probabilities into binary outcomes based on a
+          decision threshold.
+        </p>
+        <p>
+          If \(P(y=1|x) > 0.5\), predict "pass" (1); otherwise, predict "fail"
+          (0).
+        </p>
+      </div>
 
       <p>
-        This step-by-step process shows how logistic regression models the
-        probability of a binary outcome and makes decisions based on a
-        threshold.
+        This step-by-step process demonstrates how logistic regression models
+        the probability of a binary outcome and makes decisions based on a
+        chosen threshold.
       </p>
 
       <h4>Evaluation Metrics for Logistic Regression</h4>
@@ -2595,42 +2637,43 @@
       <h4>Performance Optimization and Diagnostics</h4>
 
       <h5>Computational Efficiency Considerations</h5>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Aspect</th>
-            <th>Linear Regression</th>
-            <th>Logistic Regression</th>
-            <th>Optimization Tips</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Solvers</strong></td>
-            <td>
-              Normal Equation (exact, fast for small N features) or Gradient
-              Descent (iterative, scales to large N).
-            </td>
-            <td>Iterative solvers only (e.g., liblinear, saga, lbfgs).</td>
-            <td>
-              Choose a solver based on dataset size; 'saga' is often a good
-              default for large datasets with regularization.
-            </td>
-          </tr>
-          <tr>
-            <td><strong>Large Datasets</strong></td>
-            <td>
-              Use Stochastic Gradient Descent (SGD) for out-of-core learning.
-            </td>
-            <td>
-              Use mini-batch gradient descent for a balance of speed and
-              stability.
-            </td>
-            <td>Process data in chunks if it doesn't fit in memory.</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="responsive-table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Linear Regression</th>
+              <th>Logistic Regression</th>
+              <th>Optimization Tips</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Solvers</strong></td>
+              <td>
+                Normal Equation (exact, fast for small N features) or Gradient
+                Descent (iterative, scales to large N).
+              </td>
+              <td>Iterative solvers only (e.g., liblinear, saga, lbfgs).</td>
+              <td>
+                Choose a solver based on dataset size; 'saga' is often a good
+                default for large datasets with regularization.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Large Datasets</strong></td>
+              <td>
+                Use Stochastic Gradient Descent (SGD) for out-of-core learning.
+              </td>
+              <td>
+                Use mini-batch gradient descent for a balance of speed and
+                stability.
+              </td>
+              <td>Process data in chunks if it doesn't fit in memory.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <h5>Model Diagnostics and Debugging</h5>
 
