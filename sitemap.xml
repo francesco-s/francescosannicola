@@ -47,5 +47,11 @@
         <changefreq>yearly</changefreq>
         <priority>0.64</priority>
     </url>
+    <url>
+        <loc>https://francescosannicola.com/articles/linear-vs-logistic-regression.html</loc>
+        <lastmod>2025-08-14</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.64</priority>
+    </url>
 
 </urlset>
