@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="This post explores three fundamental spatial indexing structures—KDTrees, BallTrees, and the STR-packed R-tree—moving beyond scikit-learn imports to understand their mathematical backbones."
+    />
+
+    <meta
+      name="keywords"
+      content="spatial indexing, kdtree, balltree, rtree, strtree, nearest neighbor search, data structures, algorithms, geospatial"
+    />
+    <meta name="author" content="Francesco Sannicola" />
+    <meta
+      property="og:title"
+      content="Spatial Indexing Trees: KDTree, BallTree, and STRtree - Francesco Sannicola"
+    />
+    <meta
+      property="og:description"
+      content="Explore spatial indexing structures from mathematical foundations to implementation: KDTree, BallTree, and STR-packed R-tree."
+    />
+    <meta
+      property="og:url"
+      content="https://www.francescosannicola.com/articles"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="./assets/francescosannicola.jpg" />
+    <title>Spatial Indexing Trees - Francesco Sannicola</title>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+    <script
+      type="text/javascript"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+
+    <link rel="stylesheet" type="text/css" href="../style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="left-column">
+        <header>
+          <div class="header-left">
+            <h1>Francesco Sannicola</h1>
+            <h4 class="role">Machine Learning | Software Engineering</h4>
+          </div>
+
+          <div class="header-right">
+            <div class="contact-info">
+              <a href="../resume.pdf" target="_blank" aria-label="View Resume">
+                <svg
+                  fill="#000000"
+                  version="1.1"
+                  id="Capa_1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 45.057 45.057"
+                  xml:space="preserve"
+                >
+                  <title>Resume</title>
+                  <g>
+                    <g id="_x35_8_24_">
+                      <g>
+                        <path
+                          d="M19.558,25.389c-0.067,0.176-0.155,0.328-0.264,0.455c-0.108,0.129-0.24,0.229-0.396,0.301
+                                       c-0.156,0.072-0.347,0.107-0.57,0.107c-0.313,0-0.572-0.068-0.78-0.203c-0.208-0.137-0.374-0.316-0.498-0.541
+                                       c-0.124-0.223-0.214-0.477-0.27-0.756c-0.057-0.279-0.084-0.564-0.084-0.852c0-0.289,0.027-0.572,0.084-0.853
+                                       c0.056-0.281,0.146-0.533,0.27-0.756c0.124-0.225,0.29-0.404,0.498-0.541c0.208-0.137,0.468-0.203,0.78-0.203
+                                       c0.271,0,0.494,0.051,0.666,0.154c0.172,0.105,0.31,0.225,0.414,0.361c0.104,0.137,0.176,0.273,0.216,0.414
+                                       c0.04,0.139,0.068,0.25,0.084,0.33h2.568c-0.112-1.08-0.49-1.914-1.135-2.502c-0.644-0.588-1.558-0.887-2.741-0.895
+                                       c-0.664,0-1.263,0.107-1.794,0.324c-0.532,0.215-0.988,0.52-1.368,0.912c-0.38,0.392-0.672,0.863-0.876,1.416
+                                       c-0.204,0.551-0.307,1.165-0.307,1.836c0,0.631,0.097,1.223,0.288,1.77c0.192,0.549,0.475,1.021,0.847,1.422
+                                       s0.825,0.717,1.361,0.949c0.536,0.23,1.152,0.348,1.849,0.348c0.624,0,1.18-0.105,1.668-0.312
+                                       c0.487-0.209,0.897-0.482,1.229-0.822s0.584-0.723,0.756-1.146c0.172-0.422,0.259-0.852,0.259-1.283h-2.593
+                                       C19.68,25.023,19.627,25.214,19.558,25.389z"
+                        />
+                        <polygon
+                          points="26.62,24.812 26.596,24.812 25.192,19.616 22.528,19.616 25.084,28.184 28.036,28.184 30.713,19.616 28,19.616"
+                        />
+                        <path
+                          d="M33.431,0H5.179v45.057h34.699V6.251L33.431,0z M36.878,42.056H8.179V3h23.706v4.76h4.992L36.878,42.056L36.878,42.056z"
+                        />
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+                <span class="contact-label">Resume</span>
+              </a>
+
+              <a
+                href="mailto:francescosannicola1997@gmail.com"
+                aria-label="Send Email"
+              >
+                <svg
+                  width="18"
+                  height="21"
+                  fill="#000000"
+                  viewBox="0 0 1920 1920"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>Email</title>
+                  <path
+                    d="M0 1694.235h1920V226H0v1468.235ZM112.941 376.664V338.94H1807.06v37.723L960 1111.233l-847.059-734.57ZM1807.06 526.198v950.513l-351.134-438.89-88.32 70.475 378.353 472.998H174.042l378.353-472.998-88.32-70.475-351.134 438.89V526.198L960 1260.768l847.059-734.57Z"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+                <span class="contact-label">Email</span>
+              </a>
+
+              <a
+                href="https://www.linkedin.com/in/francesco-sannicola"
+                target="_blank"
+                aria-label="View LinkedIn Profile"
+              >
+                <svg
+                  fill="#000000"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 1920 1920"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>LinkedIn</title>
+                  <path
+                    d="M1168 601.321v74.955c72.312-44.925 155.796-71.11 282.643-71.11 412.852 0 465.705 308.588 465.705 577.417v733.213L1438.991 1920v-701.261c0-117.718-42.162-140.06-120.12-140.06-74.114 0-120.12 23.423-120.12 140.06V1920l-483.604-4.204V601.32H1168Zm-687.52-.792v1318.918H0V600.53h480.48Zm-120.12 120.12H120.12v1078.678h240.24V720.65Zm687.52.792H835.267v1075.316l243.364 2.162v-580.18c0-226.427 150.51-260.18 240.24-260.18 109.55 0 240.24 45.165 240.24 260.18v580.18l237.117-2.162v-614.174c0-333.334-93.573-457.298-345.585-457.298-151.472 0-217.057 44.925-281.322 98.98l-16.696 14.173H1047.88V721.441ZM240.24 0c132.493 0 240.24 107.748 240.24 240.24 0 132.493-107.747 240.24-240.24 240.24C107.748 480.48 0 372.733 0 240.24 0 107.748 107.748 0 240.24 0Zm0 120.12c-66.186 0-120.12 53.934-120.12 120.12s53.934 120.12 120.12 120.12 120.12-53.934 120.12-120.12-53.934-120.12-120.12-120.12Z"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+                <span class="contact-label">LinkedIn</span>
+              </a>
+
+              <a
+                href="https://github.com/francesco-s"
+                target="_blank"
+                aria-label="View GitHub Profile"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  x="0px"
+                  y="0px"
+                  width="100"
+                  height="100"
+                  viewBox="0 0 24 24"
+                >
+                  <title>GitHub</title>
+                  <path
+                    d="M 12 1.9921875 C 6.4855957 1.9921875 2 6.4769321 2 12 C 2 16.599161 5.1205653 20.490345 9.3671875 21.642578 A 0.50005 0.50005 0 0 0 9.9980469 21.160156 L 9.9980469 17.583984 A 0.50005 0.50005 0 0 0 9.9980469 17.398438 L 9.9980469 17 C 9.9980469 16.463435 10.20474 15.989016 10.550781 15.621094 A 0.50005 0.50005 0 0 0 10.310547 14.794922 C 8.3191985 14.288505 7 12.945349 7 11.492188 C 7 10.73278 7.3615845 9.9960348 8.015625 9.3925781 A 0.50005 0.50005 0 0 0 8.1679688 8.9277344 C 8.066665 8.41934 8.082645 7.8782734 8.0742188 7.34375 C 8.6127591 7.5825374 9.1625862 7.7923277 9.640625 8.1757812 A 0.50005 0.50005 0 0 0 10.09375 8.265625 C 10.683558 8.0925899 11.325263 7.9921875 12 7.9921875 C 12.673669 7.9921875 13.314937 8.0917915 13.904297 8.265625 A 0.50005 0.50005 0 0 0 14.359375 8.1777344 C 14.837054 7.7945694 15.386932 7.5824899 15.925781 7.34375 C 15.916981 7.8785794 15.933881 8.4199143 15.832031 8.9277344 A 0.50005 0.50005 0 0 0 15.982422 9.3945312 C 16.637666 9.9982795 17.001953 10.733923 17.001953 11.494141 C 17.001953 12.945944 15.680991 14.28753 13.689453 14.794922 A 0.50005 0.50005 0 0 0 13.449219 15.623047 C 13.794633 15.990353 14.001953 16.464434 14.001953 17 L 13.998047 21.160156 A 0.50005 0.50005 0 0 0 14.630859 21.642578 C 18.878428 20.490372 22 16.599237 22 12 C 22 6.4769321 17.514404 1.9921875 12 1.9921875 z M 12 2.9921875 C 16.973596 2.9921875 21 7.0170679 21 12 C 21 15.899732 18.470363 19.145081 14.998047 20.388672 L 15.001953 17 C 15.001953 16.421513 14.688987 15.964437 14.404297 15.505859 C 16.432596 14.813419 18.001953 13.369173 18.001953 11.494141 C 18.001953 10.506223 17.528746 9.6094427 16.826172 8.8808594 C 16.963004 8.0965535 17.032667 7.2949738 16.970703 6.4570312 A 0.50005 0.50005 0 0 0 16.3125 6.0214844 C 15.491527 6.300863 14.703446 6.7215379 13.960938 7.2734375 C 13.34208 7.110241 12.692308 6.9921875 12 6.9921875 C 11.30618 6.9921875 10.656139 7.1108109 10.037109 7.2734375 C 9.2949426 6.7217093 8.5094793 6.2989123 7.6894531 6.0195312 A 0.50005 0.50005 0 0 0 7.0292969 6.4550781 C 6.9654142 7.294134 7.0380099 8.0939393 7.1738281 8.8769531 C 6.4709034 9.6061723 6 10.504427 6 11.492188 C 6 13.367279 7.5663139 14.813867 9.59375 15.505859 C 9.3112432 15.962509 9.0029789 16.419068 9 16.992188 L 7.5 16.992188 C 7.2241522 16.992188 7.0052524 16.845238 6.7363281 16.513672 C 6.4674039 16.182105 6.2065255 15.697988 5.9277344 15.234375 A 0.50005 0.50005 0 0 0 5.46875 14.988281 A 0.50005 0.50005 0 0 0 5.0722656 15.75 C 5.3304745 16.179387 5.5979086 16.697395 5.9589844 17.142578 C 6.3200601 17.587762 6.8328478 17.992188 7.5 17.992188 L 8.9980469 17.992188 L 8.9980469 20.388672 C 5.5278881 19.144471 3 15.898951 3 12 C 3 7.0170679 7.0264043 2.9921875 12 2.9921875 z"
+                  ></path>
+                </svg>
+                <span class="contact-label">GitHub</span>
+              </a>
+            </div>
+          </div>
+          <div class="switch">
+            <input type="checkbox" id="darkModeToggle" />
+            <label for="darkModeToggle" class="switch-label">
+              <span class="sun-icon">&#9728;</span>
+              <span class="moon-icon">&#9790;</span>
+            </label>
+          </div>
+        </header>
+      </div>
+    </div>
+    <div class="link-container">
+      <div class="link-column">
+        <a href="../"> <i class="fas fa-home"></i>Home </a>
+      </div>
+      <div class="link-column">
+        <a href="../projects/">
+          <i class="fas fa-project-diagram"></i>Projects
+        </a>
+      </div>
+      <div class="link-column">
+        <a href="../articles/"> <i class="fas fa-newspaper"></i>Articles </a>
+      </div>
+      <div class="link-column">
+        <a href="../about.html"> <i class="fas fa-user"></i>About </a>
+      </div>
+    </div>
+    <div class="article-container">
+      <h1>
+        <span style="font-size: 16px">./articles/</span> Spatial Indexing Trees:
+        KDTree, BallTree, and STRtree
+      </h1>
+      <div class="last-updated">
+        <span class="last-updated-label">Last modified:</span>
+        <time datetime="2025-11-30">November 30, 2025</time>
+      </div>
+
+      <p>
+        This post explores three fundamental structures—KDTrees, BallTrees, and
+        the STR-packed R-tree—moving beyond scikit-learn imports to understand
+        their mathematical backbones. We will dissect how they slice the
+        Euclidean plane (and hyperspace), why the "Curse of Dimensionality"
+        breaks some but not others, and finally, we will implement them from
+        scratch.
+      </p>
+
+      <div class="summary">
+        <h4>Quick Navigation</h4>
+        <ol>
+          <li>
+            <a href="#foundations">Foundations of Spatial Partitioning</a>
+          </li>
+          <li><a href="#kdtree">KDTree (k-Dimensional Tree)</a></li>
+          <li><a href="#balltree">BallTree (Metric Trees)</a></li>
+          <li><a href="#strtree">STRtree (Sort-Tile-Recursive R-tree)</a></li>
+          <li><a href="#comparison">Practical Comparison & Benchmarks</a></li>
+        </ol>
+      </div>
+
+      <h2 id="foundations">1. Foundations of Spatial Partitioning</h2>
+      <p>
+        The starting point for all three structures (KDTree, BallTree,
+        STR-packed R-tree) is the same:
+        <strong>avoid scanning everything</strong>.
+      </p>
+      <p>
+        Given a set of \(N\) geometric objects (points, line segments, polygons)
+        in a domain \(X \subset \mathbb{R}^d\), the baseline way to answer a
+        query is to check the query against all objects. For example:
+      </p>
+      <ul>
+        <li>
+          <strong>Range query</strong>: given a region \(R \subset
+          \mathbb{R}^d\), return all objects intersecting \(R\).
+        </li>
+        <li>
+          <strong>k-nearest neighbor (kNN)</strong>: given a query point \(q \in
+          \mathbb{R}^d\), find the \(k\) objects with minimum distance \(d(q,
+          \cdot)\).
+        </li>
+      </ul>
+      <p>
+        A naive implementation is \(O(N)\) per query. Spatial trees are
+        hierarchical filters that try to achieve something closer to \(O(\log
+        N)\) query time (for fixed, low dimension and "nice" distributions) by
+        eliminating large chunks of space or data at once.
+      </p>
+
+      <h4>The Core Idea: Prune by Geometry, Not by IDs</h4>
+      <p>
+        All three structures can be viewed as trees where each node represents a
+        region of space that contains some subset of the data. Very informally:
+      </p>
+      <ul>
+        <li>
+          <strong>KDTree</strong>: recursively cuts space with axis-aligned
+          hyperplanes (what does it mean? Don't worry we see that in the next
+          chapter).
+        </li>
+        <li>
+          <strong>BallTree</strong>: recursively groups points into nested
+          metric balls (Again, we will discuss later).
+        </li>
+        <li>
+          <strong>R-tree / STRtree</strong>: recursively groups objects into
+          bounding rectangles (or boxes in higher \(d\)).
+        </li>
+      </ul>
+      <p>
+        The query algorithm then walks the tree and repeatedly answers:
+        <em>"Can this entire region be safely ignored?"</em> If yes, the entire
+        subtree is pruned in \(O(1)\), rather than scanning all contained
+        objects.
+      </p>
+
+      <h4>Space-Partitioning vs Data-Partitioning</h4>
+      <p>A useful conceptual distinction:</p>
+      <p>
+        <strong>Space-partitioning indexes</strong> (KDTree, quadtrees, etc.):
+      </p>
+      <ul>
+        <li>
+          Partition the geometric space \(X\) itself into disjoint regions
+          (cells).
+        </li>
+        <li>Every point falls into exactly one region at each level.</li>
+        <li>
+          Nodes correspond to regions of \(X\), regardless of how many points
+          are there.
+        </li>
+      </ul>
+      <p>
+        <strong>Data-partitioning indexes</strong> (R-tree, BallTree and
+        variants):
+      </p>
+      <ul>
+        <li>Partition the set of objects into groups.</li>
+        <li>
+          For each group, store a bounding region that encloses exactly the
+          members of that group.
+        </li>
+        <li>
+          Nodes correspond to groups of objects and their bounding shapes.
+        </li>
+      </ul>
+      <p>This has practical consequences:</p>
+      <ul>
+        <li>
+          In space-partitioning, you may get empty regions if space is sparsely
+          populated.
+        </li>
+        <li>
+          In data-partitioning, every node corresponds to at least one object,
+          but bounding regions can overlap.
+        </li>
+      </ul>
+      <p>Later, this will map nicely to:</p>
+      <ul>
+        <li>
+          <strong>KDTree</strong>: clean partitions of \(\mathbb{R}^d\) with
+          hyperplanes.
+        </li>
+        <li>
+          <strong>BallTree</strong>: nested metric balls around point clusters.
+        </li>
+        <li>
+          <strong>STRtree</strong>: packed groups of objects in minimum bounding
+          rectangles (MBRs).
+        </li>
+      </ul>
+
+      <h4>Formal Setup: Metric Space and Queries</h4>
+      <p>Assume a metric space \((X, d)\):</p>
+      <ul>
+        <li>\(X\) is the set of objects (often \(X = \mathbb{R}^d\)).</li>
+        <li>
+          \(d: X \times X \to \mathbb{R}_{\geq 0}\) is a metric satisfying:
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <strong>Non-negativity and identity</strong>: \(d(x, y) \geq 0\),
+          \(d(x, y) = 0 \Leftrightarrow x = y\).
+        </li>
+        <li><strong>Symmetry</strong>: \(d(x, y) = d(y, x)\).</li>
+        <li>
+          <strong>Triangle inequality</strong>: \(d(x, z) \leq d(x, y) + d(y,
+          z)\).
+        </li>
+      </ul>
+      <p>Common queries:</p>
+      <ul>
+        <li>
+          <strong>Range query</strong> with radius \(r\) around \(q\):
+          <p class="responsive-math">
+            \[ B(q, r) = \{x \in X \mid d(x, q) \leq r\} \]
+          </p>
+        </li>
+        <li>
+          <strong>kNN query</strong>:
+          <p class="responsive-math">
+            \[ \text{kNN}(q, k) = \{x_1, \ldots, x_k \in X \mid d(q, x_i) \text{
+            are the } k \text{ smallest distances}\} \]
+          </p>
+        </li>
+      </ul>
+      <p>Naive evaluation has:</p>
+      <ul>
+        <li>
+          <strong>Time complexity</strong>: \(\Theta(N \cdot C_d)\), where
+          \(C_d\) is the cost of computing distance in dimension \(d\).
+        </li>
+        <li>
+          <strong>Space complexity</strong>: \(\Theta(N)\) for the raw data plus
+          no additional indexing structure.
+        </li>
+      </ul>
+      <p>
+        Hierarchical structures aim to reduce average-case query time to roughly
+        \(O(\log N)\) for moderate \(d\), at the price of extra memory and build
+        time.
+      </p>
+
+      <h4>Concrete Example: Range Query in 2D</h4>
+      <p>Consider \(N = 10^6\) 2D points (e.g. GPS coordinates):</p>
+      <p class="responsive-math">
+        \[ P = \{p_1, \ldots, p_N\} \subset \mathbb{R}^2 \]
+      </p>
+      <p>Suppose we want all points inside the axis-aligned rectangle:</p>
+      <p class="responsive-math">
+        \[ R = [x_{\min}, x_{\max}] \times [y_{\min}, y_{\max}] \]
+      </p>
+
+      <p><strong>Naive Scan:</strong></p>
+      <p>For each point \(p_i = (x_i, y_i)\), check:</p>
+      <p class="responsive-math">
+        \[ x_{\min} \leq x_i \leq x_{\max} \quad \text{and} \quad y_{\min} \leq
+        y_i \leq y_{\max} \]
+      </p>
+      <p>
+        This is 2 comparisons per coordinate, \(O(N)\) test cost, and must be
+        repeated for every query.
+      </p>
+
+      <h4>Example: KDTree Perspective</h4>
+      <p>A KDTree on these points does the following:</p>
+      <ol>
+        <li>
+          At the root, choose a split dimension (e.g. \(x\)) and a split value
+          \(s\) (usually median of x-coordinates):
+          <ul>
+            <li>Left subtree: all points with \(x \leq s\).</li>
+            <li>Right subtree: all points with \(x > s\).</li>
+          </ul>
+        </li>
+        <li>
+          At the next level, alternate dimension (e.g. \(y\)), and split each
+          side again by median \(y\).
+        </li>
+      </ol>
+      <p>Geometrically, space is recursively cut by axis-aligned lines:</p>
+      <ul>
+        <li>Level 0: vertical line \(x = s_0\).</li>
+        <li>
+          Level 1: horizontal lines \(y = s_{1,\text{left}}\), \(y =
+          s_{1,\text{right}}\).
+        </li>
+        <li>Level 2: another set of vertical cuts, etc.</li>
+      </ul>
+      <p>
+        After building, each node represents a hyperrectangle (here, a 2D
+        rectangle) where all its points lie. For a range query rectangle \(R\):
+      </p>
+      <ul>
+        <li>At each node, you know the node's bounding rectangle \(B\).</li>
+        <li>
+          If \(B \cap R = \emptyset\), then no point in that subtree can be in
+          \(R\): prune.
+        </li>
+        <li>
+          If \(B \subseteq R\), then all points in that subtree are in \(R\):
+          accept entire subtree without checking individual points.
+        </li>
+        <li>Otherwise, recurse to children.</li>
+      </ul>
+      <p>
+        If the KDTree is balanced and data is well-distributed, you can rule out
+        most of the space quickly, leading to much less than \(N\) point checks
+        on average.
+      </p>
+
+      <h4>Example: R-tree / STRtree Perspective</h4>
+      <p>
+        Now suppose the data are not points but rectangles: e.g., building
+        footprints in a city. Let each object be an axis-aligned bounding box:
+      </p>
+      <p class="responsive-math">
+        \[ o_i = [x_{i,\min}, x_{i,\max}] \times [y_{i,\min}, y_{i,\max}] \]
+      </p>
+      <p>
+        An R-tree (and STRtree as a specific packed variant) groups objects into
+        nodes, and for each node stores a Minimum Bounding Rectangle (MBR) that
+        covers all its children:
+      </p>
+      <p class="responsive-math">
+        \[ \text{MBR}(\mathcal{N}) = \left[\min_i x_{i,\min}, \max_i
+        x_{i,\max}\right] \times \left[\min_i y_{i,\min}, \max_i
+        y_{i,\max}\right] \]
+      </p>
+      <p>For a range query with rectangle \(R\):</p>
+      <ul>
+        <li>At each node with MBR \(B\):</li>
+        <li>If \(B \cap R = \emptyset\): prune this subtree.</li>
+        <li>
+          If \(B \cap R \neq \emptyset\): descend; at leaves, test query
+          rectangle \(R\) against each stored object.
+        </li>
+      </ul>
+      <p>Key difference from KDTree:</p>
+      <ul>
+        <li>KDTree partitions space into disjoint cells.</li>
+        <li>
+          R-tree (and STRtree) partitions objects into groups whose MBRs may
+          overlap. Overlap causes more branches to be explored, but grouping by
+          proximity reduces tree height, and works well for extended objects.
+        </li>
+      </ul>
+      <p>
+        STRtree in particular tries to pack rectangles such that sibling MBRs
+        overlap as little as possible and are filled close to capacity,
+        optimizing for static datasets.
+      </p>
+
+      <h4>Example: BallTree Perspective</h4>
+      <p>
+        For high-dimensional vectors, axis-aligned splits (KDTree) may be less
+        effective because distances start to "look similar" in all directions
+        (one manifestation of the curse of dimensionality). BallTrees do not
+        rely on coordinate axes:
+      </p>
+      <p>
+        Each node stores a center \(c \in \mathbb{R}^d\) and a radius \(r\) such
+        that all points in that node satisfy:
+      </p>
+      <p class="responsive-math">\[ d(x, c) \leq r \]</p>
+      <p>
+        Children are sub-balls that partition the set of points, often by some
+        heuristic (e.g., splitting along direction of greatest spread).
+      </p>
+      <p>For a kNN query with point \(q\):</p>
+      <ul>
+        <li>At node \((c, r)\), use the triangle inequality:</li>
+      </ul>
+      <p class="responsive-math">
+        \[ \forall x \text{ in node}, \quad d(q, x) \geq d(q, c) - d(x, c) \geq
+        d(q, c) - r \]
+      </p>
+      <ul>
+        <li>
+          If the current best k-th nearest distance is \(D_k\), and \(d(q, c) -
+          r > D_k\), then the entire ball cannot contain a closer neighbor than
+          the current best: prune the node.
+        </li>
+        <li>
+          In range queries, if \(d(q, c) - r > R\) for a search radius \(R\),
+          the node can be discarded entirely.
+        </li>
+      </ul>
+      <p>
+        Note how BallTrees work purely with distances and the triangle
+        inequality, making them more flexible than KDTree and R-tree in
+        arbitrary metrics (e.g., cosine distance, Haversine distance).
+      </p>
+
+      <h4>Complexity Intuition and the Curse of Dimensionality</h4>
+      <p>
+        In low-dimensional Euclidean space (\(d\) small and fixed), spatial
+        trees often achieve:
+      </p>
+      <ul>
+        <li>Build time around \(O(N \log N)\).</li>
+        <li>
+          Average query time around \(O(\log N)\) for balanced trees and
+          well-behaved data distributions.
+        </li>
+      </ul>
+      <p>However, as dimension \(d\) grows:</p>
+      <ul>
+        <li>
+          The volume of the unit ball in \(\mathbb{R}^d\) shrinks compared to
+          the hypercube.
+        </li>
+        <li>
+          Distances between random points tend to concentrate around a narrow
+          band (distance concentration phenomenon).
+        </li>
+        <li>
+          Any bounding shape that must contain a "local neighborhood" of points
+          tends to encompass a large portion of space, so pruning becomes
+          ineffective.
+        </li>
+      </ul>
+      <p>
+        Formally, the "curse of dimensionality" refers to these phenomena where
+        the complexity of search grows exponentially with dimension, making many
+        spatial indexes no better than a linear scan for high \(d\). In
+        practice, KDTree and BallTree are mainly effective for moderate
+        dimensions and specific distributions; for embedding spaces with \(d
+        \sim 100\text{–}1000\), approximate methods or different structures
+        (LSH, graph-based ANN, etc.) are typically used.
+      </p>
+
+      <h4>Takeaways</h4>
+      <p>Of this introduction you can forget everything, but:</p>
+      <ul>
+        <li>
+          <strong
+            >Spatial trees exploit geometry to prune large parts of the dataset
+            for each query.</strong
+          >
+          The fundamental motivation is replacing \(O(N)\) scans with
+          logarithmic-time queries by eliminating irrelevant regions in one
+          step.
+        </li>
+        <li>
+          <strong
+            >There is a clear conceptual split between space-partitioning
+            (KDTree) and data-partitioning (BallTree, R-tree).</strong
+          >
+          <ul>
+            <li>
+              Space-partitioning: recursively divide the geometric domain itself
+              into disjoint cells.
+            </li>
+            <li>
+              Data-partitioning: recursively group objects and store bounding
+              envelopes (whose regions may overlap).
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>All rely on three key ingredients:</strong>
+          <ul>
+            <li>
+              <strong>Bounding regions</strong>: axis-aligned rectangles
+              (R-tree), metric balls (BallTree—the name helps a lot), or
+              axis-aligned hyperrectangles (KDTree).
+            </li>
+            <li>
+              <strong>Metrics and triangle inequality</strong>: the triangle
+              inequality \(d(x, z) \leq d(x, y) + d(y, z)\) is the mathematical
+              hammer that allows pruning based on distance bounds without
+              explicit object inspection.
+            </li>
+            <li>
+              <strong>Hierarchical decomposition</strong>: recursive
+              partitioning creates a tree where depth is logarithmic in dataset
+              size, enabling efficient top-down filtering.
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Their effectiveness is strongly dimension-dependent</strong>
+          due to the curse of dimensionality. As \(d\) grows, bounding regions
+          enlarge relative to "useful" space, and pruning power diminishes.
+          These structures remain effective in low-to-moderate dimensions; for
+          very high-dimensional data, approximate or graph-based methods are
+          preferred.
+        </li>
+      </ul>
+
+      <h2 id="kdtree">2. KDTree: The Space-Partitioning Baseline</h2>
+      <p>
+        The k-dimensional tree (KDTree) is the conceptually simplest of the
+        three structures: it recursively bisects k-dimensional space using
+        axis-aligned hyperplanes. Unlike the data-partitioning approaches that
+        group objects and store bounding envelopes, a KDTree partitions space
+        itself into nested rectangular cells. This clean geometric
+        interpretation makes it an ideal starting point for understanding
+        spatial hierarchies.
+      </p>
+
+      <h4>Core Concept: Binary Space Partitioning</h4>
+      <p>A KDTree is a binary tree where each node stores:</p>
+      <ul>
+        <li>A point \(p = (p_1, p_2, \ldots, p_k) \in \mathbb{R}^k\).</li>
+        <li>
+          A split dimension \(d \in \{0, 1, \ldots, k-1\}\) (cycling through
+          coordinates).
+        </li>
+        <li>
+          Left and right subtrees, containing points to the left and right of
+          the splitting hyperplane respectively.
+        </li>
+      </ul>
+      <p>
+        The splitting hyperplane is defined implicitly: it passes through the
+        point \(p\) and is perpendicular to dimension \(d\). A point \(q = (q_1,
+        \ldots, q_k)\) goes left if \(q_d < p_d\) and right if \(q_d \geq p_d\).
+      </p>
+      <p>
+        <strong>Key Geometric Invariant:</strong> Each node in the KDTree
+        corresponds to an axis-aligned hyperrectangle (a box in k-dimensional
+        space). All points in the node's left subtree lie strictly to the left
+        of the hyperplane; all in the right subtree lie strictly to the right.
+        This partitioning is complete and disjoint: every point in the dataset
+        falls into exactly one rectangular cell at each tree level.
+      </p>
+
+      <h4>Concrete Example: 2D Points</h4>
+      <p>Consider four points in \(\mathbb{R}^2\):</p>
+      <p class="responsive-math">\[ P = \{(2,5), (6,3), (3,8), (8,9)\} \]</p>
+      <p>A typical KDTree construction proceeds as follows:</p>
+      <ol>
+        <li>
+          <strong>At the root:</strong> Split by the x-axis. The median
+          x-coordinate is between 3 and 6; we select pivot point \((6,3)\).
+          <ul>
+            <li>Left subtree: \((2,5), (3,8)\) (both have \(x < 6\)).</li>
+            <li>Right subtree: \((8,9)\) (has \(x > 6\)).</li>
+          </ul>
+        </li>
+        <li>
+          <strong>At the left child:</strong> Split by the y-axis. Points
+          \((2,5)\) and \((3,8)\) differ in y; median y is between them, so
+          pivot is \((3,8)\).
+          <ul>
+            <li>Left-left: \((2,5)\) (has \(y < 8\)).</li>
+            <li>Left-right: empty.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>At the right child:</strong> Only one point \((8,9)\); it
+          becomes a leaf.
+        </li>
+      </ol>
+      <p>The resulting tree has the structure:</p>
+      <pre><code class="language-text">
+      (6,3) [split on x=6]
+          /     \
+      (3,8)    (8,9)
+      [y=8]
+      /    \
+   (2,5)   ø
+      </code></pre>
+      <p>
+        The hyperplanes recursively partition the 2D plane. Points \((2,5)\) and
+        \((3,8)\) lie in the region \(\{(x,y): x < 6, y < 8\}\) and \(\{(x,y): x
+        < 6, y \geq 8\}\), respectively, while \((8,9)\) lies in \(\{(x,y): x
+        \geq 6\}\).
+      </p>
+
+      <h4>Construction: The Median-Based Approach</h4>
+      <p>The standard algorithm for building a balanced KDTree is:</p>
+      <p><strong>Algorithm: Construct KDTree</strong></p>
+      <ol>
+        <li>If the point set is empty, return an empty tree.</li>
+        <li>
+          Select a pivot point and split dimension using a pivot-choosing
+          heuristic.
+        </li>
+        <li>Remove the pivot from the set.</li>
+        <li>
+          Partition remaining points:
+          <ul>
+            <li>
+              Left partition: all \(d'\) with coordinate \(d\) less than pivot's
+              coordinate \(d\).
+            </li>
+            <li>
+              Right partition: all \(d'\) with coordinate \(d\) greater than or
+              equal to pivot's coordinate \(d\).
+            </li>
+          </ul>
+        </li>
+        <li>Recursively build left and right subtrees from the partitions.</li>
+        <li>
+          Return a node containing the pivot, split dimension, and two subtrees.
+        </li>
+      </ol>
+      <p>
+        <strong>Complexity:</strong> \(O(N \log N)\) build time, assuming a
+        balanced tree where median selection takes \(O(N)\) and each recursive
+        call halves the dataset.
+      </p>
+
+      <h4>Pivot Selection Strategy</h4>
+      <p>
+        The choice of pivot affects tree balance and search efficiency. The
+        standard approach is:
+      </p>
+      <ul>
+        <li>
+          Select the splitting dimension as the coordinate with the largest
+          variance (widest spread) in the current point set.
+        </li>
+        <li>Choose the pivot as the median point along that dimension.</li>
+      </ul>
+      <p>
+        This heuristic tends to produce relatively square hyperrectangles and
+        maintains tree balance. However, for skewed distributions, it can
+        produce long, thin cells that reduce pruning opportunities in
+        nearest-neighbor search.
+      </p>
+
+      <h4>Nearest-Neighbor Search: The Core Query</h4>
+      <p>
+        Given a query point \(q\) and the KDTree, the goal is to find the point
+        in the tree closest to \(q\) under Euclidean distance:
+      </p>
+      <p class="responsive-math">\[ \arg\min_{p \in P} \|q - p\|_2 \]</p>
+
+      <p><strong>Algorithm Outline</strong></p>
+      <p>The search proceeds in two phases:</p>
+      <p><strong>Phase 1: Locate an initial candidate</strong></p>
+      <p>
+        Descend the tree greedily, always following the branch containing \(q\):
+      </p>
+      <ul>
+        <li>
+          At each node with split dimension \(d\): if \(q_d < p_d\), go left;
+          otherwise, go right.
+        </li>
+        <li>
+          Reach a leaf node and record its point as the best candidate so far.
+          Let \(D_{\text{best}}\) be the squared distance from \(q\) to this
+          point (we avoid square roots for efficiency).
+        </li>
+      </ul>
+
+      <p><strong>Phase 2: Backtrack and prune</strong></p>
+      <p>Return up the tree, and at each node, perform two checks:</p>
+      <ul>
+        <li>
+          <strong>Update check:</strong> Compute the distance from \(q\) to the
+          current node's point. If closer than \(D_{\text{best}}\), update the
+          best.
+        </li>
+        <li>
+          <strong>Pruning check:</strong> Determine whether the "other child"
+          (the subtree not containing \(q\)) could possibly contain a closer
+          point.
+        </li>
+      </ul>
+      <p>
+        The key insight is the
+        <strong>axis-aligned distance-to-hyperplane test</strong>: at a node
+        splitting on dimension \(s\), the distance from \(q\) to the splitting
+        hyperplane is simply:
+      </p>
+      <p class="responsive-math">\[ d_{\text{plane}} = |q_s - p_s| \]</p>
+      <p>
+        where \(p_s\) is the split point's s-th coordinate. If
+        \(d_{\text{plane}}^2 > D_{\text{best}}\), then the entire "other"
+        subtree's hyperrectangle is too far away; prune it.
+      </p>
+      <p>
+        If \(d_{\text{plane}}^2 \leq D_{\text{best}}\), the other subtree may
+        contain closer points; recursively search it.
+      </p>
+
+      <h4>Computing the Distance-to-Hyperplane</h4>
+      <p>
+        The hyperplane at a node is perpendicular to dimension \(s\) and passes
+        through the split point's coordinate. The distance from query point
+        \(q\) to this plane (in the s-dimension) is:
+      </p>
+      <p class="responsive-math">\[ d_{\text{plane}}^2 = (q_s - p_s)^2 \]</p>
+      <p>
+        This is compared directly against the squared distance to the current
+        best: if \(d_{\text{plane}}^2 > D_{\text{best}}\), the other side is
+        guaranteed to have no closer points (because any point there must be at
+        least \(d_{\text{plane}}\) away in the s-dimension alone).
+      </p>
+
+      <h4>Corrected Concrete 2D Example</h4>
+      <p>Build the tree using points \(P = \{(2,5), (6,3), (3,8), (8,9)\}\):</p>
+      <p><strong>Tree Structure:</strong></p>
+      <pre><code class="language-text">
+      (6,3) [split on x=6]
+          /     \
+      (3,8)    (8,9)
+      [y=8]
+      /   
+   (2,5)
+      </code></pre>
+      <p>Now query for the nearest neighbor to \(q = (5,6)\):</p>
+
+      <p><strong>Step 1: Descent</strong></p>
+      <ul>
+        <li>
+          At root \((6,3)\), split dimension is \(x = 6\). Is \(5 < 6\)? Yes →
+          go left.
+        </li>
+        <li>
+          At node \((3,8)\), split dimension is \(y = 8\). Is \(6 < 8\)? Yes →
+          go left.
+        </li>
+        <li>Reach leaf \((2,5)\).</li>
+      </ul>
+
+      <p><strong>Step 2: Initialize best</strong></p>
+      <p>Distance from \(q = (5,6)\) to \((2,5)\):</p>
+      <p class="responsive-math">
+        \[ D_{\text{best}}^2 = (5-2)^2 + (6-5)^2 = 9 + 1 = 10 \]
+      </p>
+
+      <p><strong>Step 3: Backtrack to node (3,8)</strong></p>
+      <p>Check the point \((3,8)\) itself:</p>
+      <p class="responsive-math">
+        \[ d((5,6), (3,8)) = (5-3)^2 + (6-8)^2 = 4 + 4 = 8 \]
+      </p>
+      <p>Since \(8 < 10\), update: \(D_{\text{best}}^2 = 8\).</p>
+      <p>
+        Pruning check at \((3,8)\): split dimension is \(y = 8\). The "other"
+        child (right, for \(y \geq 8\)) has distance to splitting plane:
+      </p>
+      <p class="responsive-math">\[ d_{\text{plane}}^2 = (6-8)^2 = 4 \]</p>
+      <p>
+        Is \(4 \leq 8\)? Yes → the other child might contain closer points. But
+        \((3,8)\) has no right child, so nothing to explore.
+      </p>
+
+      <p><strong>Step 4: Backtrack to root (6,3)</strong></p>
+      <p>Check the point \((6,3)\) itself:</p>
+      <p class="responsive-math">
+        \[ d((5,6), (6,3)) = (5-6)^2 + (6-3)^2 = 1 + 9 = 10 \]
+      </p>
+      <p>Since \(10 \not< 8\), do not update.</p>
+      <p>
+        Pruning check at \((6,3)\): split dimension is \(x = 6\). The "other"
+        child (right, for \(x \geq 6\)) has distance to splitting plane:
+      </p>
+      <p class="responsive-math">\[ d_{\text{plane}}^2 = (5-6)^2 = 1 \]</p>
+      <p>
+        Is \(1 \leq 8\)? Yes → the other child might contain closer points.
+        Recursively search it.
+      </p>
+
+      <p><strong>Step 5: Search right subtree (containing (8,9))</strong></p>
+      <p>At node \((8,9)\), check the point itself:</p>
+      <p class="responsive-math">
+        \[ d((5,6), (8,9)) = (5-8)^2 + (6-9)^2 = 9 + 9 = 18 \]
+      </p>
+      <p>Since \(18 \not< 8\), do not update. \((8,9)\) is a leaf, so done.</p>
+
+      <p><strong>Step 6: Result</strong></p>
+      <p>The nearest neighbor is \((3,8)\) with squared distance 8.</p>
+
+      <h4>Complexity Analysis</h4>
+      <p><strong>Time Complexity</strong></p>
+      <ul>
+        <li>
+          <strong>Construction:</strong> \(O(N \log N)\) for a balanced tree, as
+          median selection and partitioning each take \(O(N)\) per level, and
+          there are \(O(\log N)\) levels.
+        </li>
+        <li>
+          <strong>Nearest-neighbor query:</strong>
+          <ul>
+            <li>
+              <em>Best case:</em> \(O(\log N)\) if the query point is surrounded
+              by data points and only one branch needs to be explored (no
+              backtracking).
+            </li>
+            <li>
+              <em>Average case</em> (well-distributed data, low dimension):
+              Asymptotically \(O(\log N)\) in the number of tree levels
+              descended, plus \(O(c_d)\) node examinations due to backtracking,
+              where \(c_d\) depends on dimension and is independent of \(N\) for
+              fixed low \(d\).
+            </li>
+            <li>
+              <em>Worst case:</em> \(O(N)\) if the data forms pathological
+              configurations. For instance, if all points lie on a circle around
+              \(q\), the search radius encompasses many hyperrectangles, forcing
+              examination of many leaves.
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Range query</strong> (all points within radius \(r\) of
+          \(q\)): \(O(\log N + K)\), where \(K\) is the number of reported
+          points. The logarithmic term accounts for tree traversal; the linear
+          term counts output points.
+        </li>
+      </ul>
+      <p><strong>Space Complexity</strong></p>
+      <p>
+        \(O(N)\) to store all points, plus \(O(N)\) internal nodes, for a total
+        of \(\Theta(N)\).
+      </p>
+
+      <h4>The Curse of Dimensionality in KDTree</h4>
+      <p>
+        While KDTrees work well in low-dimensional spaces (\(d \leq 10\) or so
+        for typical data), their performance degrades sharply as dimension
+        increases. Moore's empirical study provides crucial insights:
+      </p>
+      <ul>
+        <li>
+          <strong>Search nodes vs. tree size:</strong> After initial scaling,
+          the number of nodes inspected is essentially independent of \(N\)
+          (roughly logarithmic descent to a leaf, plus constant backtracking).
+          This agrees with theory for well-behaved data.
+        </li>
+        <li>
+          <strong>Search nodes vs. dimension \(k_{\text{dom}}\):</strong> The
+          number of inspected nodes rises exponentially or quasi-exponentially
+          with the full dimension of the domain vectors. For example, in a
+          14-dimensional tree, increasing from 1D to 13D increases node
+          inspections from roughly 1 to 400+.
+        </li>
+        <li>
+          <strong
+            >Search nodes vs. intrinsic dimensionality
+            \(d_{\text{intrinsic}}\):</strong
+          >
+          The critical factor is not the embedding dimension \(k_{\text{dom}}\)
+          but the intrinsic dimensionality of the data distribution (e.g., if
+          1000D vectors all lie on a 3D manifold, performance depends on 3, not
+          1000). When intrinsic dimension is fixed and embedding dimension
+          varies, search costs scale only linearly.
+        </li>
+      </ul>
+      <p>
+        <strong>Intuition:</strong> As dimension grows, the volume of the unit
+        hypersphere shrinks relative to the unit hypercube. Distances between
+        random points concentrate around a narrow band, so a sphere of "fixed
+        radius" contains an increasing fraction of all points. Consequently,
+        hyperrectangle-based pruning becomes ineffective, and the tree devolves
+        toward linear scan.
+      </p>
+
+      <h4>KDTree: Strengths and Limitations</h4>
+      <p><strong>Strengths</strong></p>
+      <ul>
+        <li>
+          <strong>Conceptual clarity:</strong> Axis-aligned splits are
+          geometrically transparent and easy to visualize.
+        </li>
+        <li>
+          <strong>Efficient in low dimensions:</strong> For \(d \lesssim 10\)
+          and well-distributed data, queries are fast.
+        </li>
+        <li>
+          <strong>Simple implementation:</strong> Recursive structure is
+          straightforward to code.
+        </li>
+        <li>
+          <strong>Balanced tree guarantees:</strong> Median-based construction
+          ensures \(O(\log N)\) tree depth.
+        </li>
+      </ul>
+      <p><strong>Limitations</strong></p>
+      <ul>
+        <li>
+          <strong>Curse of dimensionality:</strong> Search performance collapses
+          in high-dimensional spaces. Even with intrinsic structure, performance
+          depends critically on whether query points come from the same
+          distribution as indexed data.
+        </li>
+        <li>
+          <strong>Space partitioning overhead:</strong> Axis-aligned splits can
+          create many empty cells in sparse regions, wasting memory.
+        </li>
+        <li>
+          <strong>Axis-aligned bias:</strong> For data with anisotropic
+          structure not aligned to coordinate axes, splits are suboptimal.
+        </li>
+        <li>
+          <strong>Static optimality:</strong> Once built with a fixed pivot
+          strategy, the tree cannot adapt to query patterns.
+        </li>
+      </ul>
+
+      <h4>Takeaway</h4>
+      <p>
+        The KDTree represents the geometric ideal of spatial partitioning:
+        clean, recursive, easy to understand. Its nearest-neighbor search
+        algorithm introduces the core concept of backtracking pruning, which
+        extends to more complex structures like BallTrees and R-trees.
+      </p>
+      <p>
+        However, its vulnerability to dimensionality motivates the next
+        structures: BallTrees relax the axis-aligned constraint in favor of
+        metric-based pruning (the triangle inequality), while R-trees abandon
+        space partitioning entirely in favor of grouping objects by bounding
+        envelopes.
+      </p>
+
+      <div id="disqus_thread"></div>
+      <script>
+        var disqus_config = function () {
+          this.page.url =
+            "https://www.francescosannicola.com/articles/spatial-indexing-trees.html";
+          this.page.identifier = "spatial-indexing-trees";
+          this.page.title =
+            "Spatial Indexing Trees: KDTree, BallTree, and STRtree";
+        };
+
+        (function () {
+          var d = document,
+            s = d.createElement("script");
+          s.src = "https://francescosannicola.disqus.com/embed.js";
+          s.setAttribute("data-timestamp", +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+      <noscript
+        >Please enable JavaScript to view the
+        <a href="https://disqus.com/?ref_noscript"
+          >comments powered by Disqus.</a
+        ></noscript
+      >
+    </div>
+
+    <button
+      id="backToTopButton"
+      onclick="scrollToTop()"
+      style="font-size: 24px; padding: 10px 20px"
+    >
+      <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <script>
+      let isDarkMode = localStorage.getItem("darkMode") === "true";
+
+      function applyDarkMode(dark) {
+        const darkModeToggle = document.getElementById("darkModeToggle");
+        const elements = [
+          document.body,
+          ...document.querySelectorAll(
+            ".main-container, .info-container, .projects-container, .article-container, .link-container, .accordion, .code"
+          ),
+        ];
+
+        isDarkMode = dark;
+        localStorage.setItem("darkMode", dark);
+
+        elements.forEach((element) => {
+          if (dark) {
+            element.classList.add("dark-mode");
+          } else {
+            element.classList.remove("dark-mode");
+          }
+        });
+
+        if (darkModeToggle) {
+          darkModeToggle.checked = dark;
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const darkModeToggle = document.getElementById("darkModeToggle");
+        applyDarkMode(isDarkMode);
+
+        darkModeToggle.addEventListener("change", (e) => {
+          applyDarkMode(e.target.checked);
+        });
+      });
+
+      if (isDarkMode) {
+        applyDarkMode(true);
+      }
+
+      function scrollToTop() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }
+      window.addEventListener("scroll", () => {
+        const button = document.getElementById("backToTopButton");
+        if (window.scrollY > 500) {
+          button.style.display = "block";
+        } else {
+          button.style.display = "none";
+        }
+      });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  </body>
+</html>
