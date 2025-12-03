@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="This post explores three fundamental spatial indexing structures—KDTrees, BallTrees, and the STR-packed R-tree—moving beyond scikit-learn imports to understand their mathematical backbones."
+      content="This post explores three fundamental spatial indexing structures, KDTrees, BallTrees, and the STR-packed R-tree, moving beyond scikit-learn imports to understand their mathematical backbones."
     />
 
     <meta
@@ -189,8 +189,7 @@
     </div>
     <div class="article-container">
       <h1>
-        <span style="font-size: 16px">./articles/</span> Spatial Indexing Trees:
-        KDTree, BallTree, and STRtree
+        <span style="font-size: 16px">./articles/</span> Spatial Indexing Trees
       </h1>
       <div class="last-updated">
         <span class="last-updated-label">Last modified:</span>
@@ -198,12 +197,11 @@
       </div>
 
       <p>
-        This post explores three fundamental structures—KDTrees, BallTrees, and
-        the STR-packed R-tree—moving beyond scikit-learn imports to understand
+        This post explores three fundamental structures, KDTrees, BallTrees, and
+        the STR-packed R-tree, moving beyond scikit-learn imports to understand
         their mathematical backbones. We will dissect how they slice the
         Euclidean plane (and hyperspace), why the "Curse of Dimensionality"
-        breaks some but not others, and finally, we will implement them from
-        scratch.
+        breaks some but not others.
       </p>
 
       <div class="summary">
@@ -605,7 +603,7 @@
           <ul>
             <li>
               <strong>Bounding regions</strong>: axis-aligned rectangles
-              (R-tree), metric balls (BallTree—the name helps a lot), or
+              (R-tree), metric balls (BallTree, the name helps a lot), or
               axis-aligned hyperrectangles (KDTree).
             </li>
             <li>
@@ -697,14 +695,91 @@
         </li>
       </ol>
       <p>The resulting tree has the structure:</p>
-      <pre><code class="language-text">
-      (6,3) [split on x=6]
-          /     \
-      (3,8)    (8,9)
-      [y=8]
-      /    \
-   (2,5)   ø
-      </code></pre>
+      <svg
+        width="600"
+        height="400"
+        viewBox="0 0 600 400"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <!-- Define styles -->
+        <defs>
+          <style>
+            .node-circle {
+              fill: #e8f5e9;
+              stroke: #388e3c;
+              stroke-width: 2;
+            }
+            .connection {
+              stroke: #666;
+              stroke-width: 2;
+              fill: none;
+            }
+            .node-text {
+              font-family: Arial, sans-serif;
+              font-size: 14px;
+              fill: #333;
+              font-weight: bold;
+            }
+            .split-text {
+              font-family: monospace;
+              font-size: 12px;
+              fill: #d32f2f;
+            }
+          </style>
+        </defs>
+
+        <!-- Connections -->
+        <path class="connection" d="M 300 80 L 150 180" />
+        <path class="connection" d="M 300 80 L 450 180" />
+        <path class="connection" d="M 150 180 L 80 300" />
+        <path
+          class="connection"
+          d="M 150 180 L 220 300"
+          stroke-dasharray="4,4"
+        />
+
+        <!-- Root Node -->
+        <circle class="node-circle" cx="300" cy="80" r="45" />
+        <text class="node-text" x="300" y="85" text-anchor="middle">
+          (6, 3)
+        </text>
+        <text class="split-text" x="300" y="105" text-anchor="middle">
+          [split on x=6]
+        </text>
+
+        <!-- Left Child Node -->
+        <circle class="node-circle" cx="150" cy="180" r="45" />
+        <text class="node-text" x="150" y="185" text-anchor="middle">
+          (3, 8)
+        </text>
+        <text class="split-text" x="150" y="205" text-anchor="middle">
+          [y=8]
+        </text>
+
+        <!-- Right Child Node -->
+        <circle class="node-circle" cx="450" cy="180" r="45" />
+        <text class="node-text" x="450" y="190" text-anchor="middle">
+          (8, 9)
+        </text>
+
+        <!-- Left-Left Leaf Node -->
+        <circle class="node-circle" cx="80" cy="300" r="45" />
+        <text class="node-text" x="80" y="310" text-anchor="middle">
+          (2, 5)
+        </text>
+
+        <!-- Right Empty Node -->
+        <circle class="node-circle" cx="220" cy="300" r="45" fill="#f5f5f5" />
+        <text
+          class="node-text"
+          x="220"
+          y="315"
+          text-anchor="middle"
+          font-size="24"
+        >
+          ø
+        </text>
+      </svg>
       <p>
         The hyperplanes recursively partition the 2D plane. Points \((2,5)\) and
         \((3,8)\) lie in the region \(\{(x,y): x < 6, y < 8\}\) and \(\{(x,y): x
@@ -838,14 +913,74 @@
       <h4>Concrete 2D Example</h4>
       <p>Build the tree using points \(P = \{(2,5), (6,3), (3,8), (8,9)\}\):</p>
       <p><strong>Tree Structure:</strong></p>
-      <pre><code class="language-text">
-      (6,3) [split on x=6]
-          /     \
-      (3,8)    (8,9)
-      [y=8]
-      /   
-   (2,5)
-      </code></pre>
+      <svg
+        width="600"
+        height="400"
+        viewBox="0 0 600 400"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <!-- Define styles -->
+        <defs>
+          <style>
+            .node-circle {
+              fill: #e8f5e9;
+              stroke: #388e3c;
+              stroke-width: 2;
+            }
+            .connection {
+              stroke: #666;
+              stroke-width: 2;
+              fill: none;
+            }
+            .node-text {
+              font-family: Arial, sans-serif;
+              font-size: 14px;
+              fill: #333;
+              font-weight: bold;
+            }
+            .split-text {
+              font-family: monospace;
+              font-size: 12px;
+              fill: #d32f2f;
+            }
+          </style>
+        </defs>
+
+        <!-- Connections -->
+        <path class="connection" d="M 300 80 L 150 180" />
+        <path class="connection" d="M 300 80 L 450 180" />
+        <path class="connection" d="M 150 180 L 80 300" />
+
+        <!-- Root Node -->
+        <circle class="node-circle" cx="300" cy="80" r="45" />
+        <text class="node-text" x="300" y="85" text-anchor="middle">
+          (6, 3)
+        </text>
+        <text class="split-text" x="300" y="105" text-anchor="middle">
+          [split on x=6]
+        </text>
+
+        <!-- Left Child Node -->
+        <circle class="node-circle" cx="150" cy="180" r="45" />
+        <text class="node-text" x="150" y="185" text-anchor="middle">
+          (3, 8)
+        </text>
+        <text class="split-text" x="150" y="205" text-anchor="middle">
+          [y=8]
+        </text>
+
+        <!-- Right Child Node -->
+        <circle class="node-circle" cx="450" cy="180" r="45" />
+        <text class="node-text" x="450" y="190" text-anchor="middle">
+          (8, 9)
+        </text>
+
+        <!-- Left-Left Leaf Node -->
+        <circle class="node-circle" cx="80" cy="300" r="45" />
+        <text class="node-text" x="80" y="310" text-anchor="middle">
+          (2, 5)
+        </text>
+      </svg>
       <p>Now query for the nearest neighbor to \(q = (5,6)\):</p>
 
       <p><strong>Step 1: Descent</strong></p>
@@ -1052,66 +1187,111 @@
       </p>
       <h2 id="balltree">3. BallTree: The Metric Tree Alternative</h2>
       <p>
-        The BallTree (or metric tree) is a space-partitioning data structure that recursively partitions data into 
-        nested hyperspheres (balls). By moving away from rigid axis-aligned boundaries to metric-based partitioning, 
-        BallTrees become robust in high dimensions and adaptable to arbitrary distance functions beyond simple Euclidean geometry.
+        The BallTree (or metric tree) is a space-partitioning data structure
+        that recursively partitions data into nested hyperspheres (balls). By
+        moving away from rigid axis-aligned boundaries to metric-based
+        partitioning, BallTrees become robust in high dimensions and adaptable
+        to arbitrary distance functions beyond simple Euclidean geometry.
       </p>
 
       <h4>Core Concept: Partitioning by Hyperspheres</h4>
       <p>
-        A BallTree is a binary tree where each node defines a \(D\)-dimensional ball characterized by:
+        A BallTree is a binary tree where each node defines a \(D\)-dimensional
+        ball characterized by:
       </p>
       <ul>
-        <li>A center \(c \in \mathbb{R}^D\) (typically a data point or computed centroid).</li>
-        <li>A radius \(r \ge 0\) such that every point \(p\) in the node's subtree satisfies: \(d(p, c) \le r\).</li>
+        <li>
+          A center \(c \in \mathbb{R}^D\) (typically a data point or computed
+          centroid).
+        </li>
+        <li>
+          A radius \(r \ge 0\) such that every point \(p\) in the node's subtree
+          satisfies: \(d(p, c) \le r\).
+        </li>
       </ul>
       <p>
-        The ball is the minimum enclosing sphere of all points in that subtree. Because balls are defined solely by 
-        distance (radius) from a center, they can "rotate" arbitrarily to adapt to the data's intrinsic geometry, 
+        The ball is the minimum enclosing sphere of all points in that subtree.
+        Because balls are defined solely by distance (radius) from a center,
+        they can "rotate" arbitrarily to adapt to the data's intrinsic geometry,
         regardless of the coordinate axes.
       </p>
 
       <h4>Key Metric Property</h4>
-      <p>For any query point \(q\) outside a ball \((c, r)\), the distance to any point inside the ball satisfies:</p>
-      <p class="responsive-math">\[ \forall p \in \text{ball}(c, r): \quad d(q, p) \ge \max(0, d(q, c) - r) \]</p>
       <p>
-        This lower bound follows directly from the triangle inequality and is the core pruning mechanism. It provides 
-        a mathematically rigorous guarantee that no point in the pruned subtree can be closer than the lower bound, 
-        enabling safe search space elimination.
+        For any query point \(q\) outside a ball \((c, r)\), the distance to any
+        point inside the ball satisfies:
+      </p>
+      <p class="responsive-math">
+        \[ \forall p \in \text{ball}(c, r): \quad d(q, p) \ge \max(0, d(q, c) -
+        r) \]
+      </p>
+      <p>
+        This lower bound follows directly from the triangle inequality and is
+        the core pruning mechanism. It provides a mathematically rigorous
+        guarantee that no point in the pruned subtree can be closer than the
+        lower bound, enabling safe search space elimination.
       </p>
 
       <h4>Construction: The Farthest-Point Strategy</h4>
       <p>
-        The standard construction algorithm uses a "farthest-point" heuristic to split data. This method focuses on 
-        distinguishing clusters rather than strictly balancing the tree structure.
+        The standard construction algorithm uses a "farthest-point" heuristic to
+        split data. This method focuses on distinguishing clusters rather than
+        strictly balancing the tree structure.
       </p>
       <p><strong>Algorithm: Construct BallTree Node</strong></p>
       <ol>
-        <li><strong>Compute Centroid:</strong> \(\mu = \frac{1}{|X|}\sum_{x \in X} x\).</li>
-        <li><strong>Pivot 1:</strong> Find point \(p_1 \in X\) farthest from \(\mu\).</li>
-        <li><strong>Pivot 2:</strong> Find point \(p_2 \in X\) farthest from \(p_1\).</li>
-        <li><strong>Partition:</strong> Assign every point to the closer pivot (forming \(X_L\) for points closer to \(p_1\) and \(X_R\) for points closer to \(p_2\)).</li>
-        <li><strong>Bound:</strong> Compute the smallest radius \(r_L, r_R\) for each child group that encloses all its assigned points.</li>
-        <li><strong>Recurse:</strong> Repeat for children until leaf size (typically 30–50 points) is reached.</li>
+        <li>
+          <strong>Compute Centroid:</strong> \(\mu = \frac{1}{|X|}\sum_{x \in X}
+          x\).
+        </li>
+        <li>
+          <strong>Pivot 1:</strong> Find point \(p_1 \in X\) farthest from
+          \(\mu\).
+        </li>
+        <li>
+          <strong>Pivot 2:</strong> Find point \(p_2 \in X\) farthest from
+          \(p_1\).
+        </li>
+        <li>
+          <strong>Partition:</strong> Assign every point to the closer pivot
+          (forming \(X_L\) for points closer to \(p_1\) and \(X_R\) for points
+          closer to \(p_2\)).
+        </li>
+        <li>
+          <strong>Bound:</strong> Compute the smallest radius \(r_L, r_R\) for
+          each child group that encloses all its assigned points.
+        </li>
+        <li>
+          <strong>Recurse:</strong> Repeat for children until leaf size
+          (typically 30–50 points) is reached.
+        </li>
       </ol>
       <p>
-        <strong>Rationale:</strong> The pair of farthest points tends to separate dense clusters from outliers, which 
-        improves pruning efficiency during search. However, this strategy does not guarantee balanced partitions; 
-        clusters of varying density can lead to variable tree depth.
+        <strong>Rationale:</strong> The pair of farthest points tends to
+        separate dense clusters from outliers, which improves pruning efficiency
+        during search. However, this strategy does not guarantee balanced
+        partitions; clusters of varying density can lead to variable tree depth.
       </p>
       <p>
-        <strong>Construction Complexity:</strong> \(O(N \log N)\) average case, though with a higher constant factor 
-        than simpler methods due to the cost of distance calculations at every level.
+        <strong>Construction Complexity:</strong> \(O(N \log N)\) average case,
+        though with a higher constant factor than simpler methods due to the
+        cost of distance calculations at every level.
       </p>
 
       <h4>Concrete Example: The "Messiness" of Metric Clustering</h4>
-      <p>Let's trace this on our four points: \(P = \{(2,5), (6,3), (3,8), (8,9)\}\).</p>
+      <p>
+        Let's trace this on our four points: \(P = \{(2,5), (6,3), (3,8),
+        (8,9)\}\).
+      </p>
       <p><strong>Step 1: Root Node</strong></p>
       <ul>
         <li>Centroid: \(\mu \approx (4.75, 6.25)\).</li>
         <li>Farthest from \(\mu\): \((8, 9)\) at distance \(\approx 4.26\).</li>
         <li>Pivot 1: \(p_1 = (8, 9)\).</li>
-        <li>Pivot 2 (farthest from \(p_1\)): \((2, 5)\) at distance \(\approx 7.2\).</li>
+        <li>
+          Pivot 2 (farthest from \(p_1\)): \((2, 5)\) at distance \(\approx
+          7.2\).
+        </li>
         <li>
           <strong>Partition:</strong>
           <ul>
@@ -1121,13 +1301,16 @@
         </li>
       </ul>
       <p>
-        <strong>Result:</strong> Highly unbalanced split.
-        <br>Right Child: \(\{(8, 9)\}\) (Leaf).
-        <br>Left Child: \(\{(2, 5), (3, 8), (6, 3)\}\) (requires further splitting).
+        <strong>Result:</strong> Highly unbalanced split. <br />Right Child:
+        \(\{(8, 9)\}\) (Leaf). <br />Left Child: \(\{(2, 5), (3, 8), (6, 3)\}\)
+        (requires further splitting).
       </p>
 
       <p><strong>Step 2: Left Child Processing</strong></p>
-      <p>Process \(\{(2, 5), (3, 8), (6, 3)\}\). Centroid \(\approx (3.67, 5.33)\).</p>
+      <p>
+        Process \(\{(2, 5), (3, 8), (6, 3)\}\). Centroid \(\approx (3.67,
+        5.33)\).
+      </p>
       <ul>
         <li>Pivot 1: \((6, 3)\). Pivot 2: \((3, 8)\).</li>
         <li>
@@ -1139,106 +1322,1331 @@
         </li>
       </ul>
       <p>Resulting Tree Structure:</p>
-      <pre>de class="language-text">
-          Root(c ≈ (4.75, 6.25), r ≈ 4.26)
-          /                                    \
-   Ball(c ≈ (3.67, 5.33), r ≈ 3.3)        Leaf: (8, 9)
-   [Points: (2,5), (3,8), (6,3)]          [Radius: 0]
-      /              \
-  Ball(...)        Leaf: (6, 3)
-  [Points: (2,5), (3,8)]  [Radius: 0]
-      </code></pre>
+      <svg
+        width="600"
+        height="400"
+        viewBox="0 0 600 400"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <!-- Define styles -->
+        <defs>
+          <style>
+            .node-circle {
+              fill: #e3f2fd;
+              stroke: #1976d2;
+              stroke-width: 2;
+            }
+            .leaf-circle {
+              fill: #fff3e0;
+              stroke: #f57c00;
+              stroke-width: 2;
+            }
+            .connection {
+              stroke: #666;
+              stroke-width: 2;
+              fill: none;
+            }
+            .node-text {
+              font-family: Arial, sans-serif;
+              font-size: 12px;
+              fill: #333;
+            }
+            .label-text {
+              font-family: Arial, sans-serif;
+              font-size: 11px;
+              fill: #666;
+            }
+            .point-text {
+              font-family: monospace;
+              font-size: 10px;
+              fill: #444;
+            }
+          </style>
+        </defs>
+
+        <!-- Connections -->
+        <path class="connection" d="M 300 60 L 150 160" />
+        <path class="connection" d="M 300 60 L 450 160" />
+        <path class="connection" d="M 150 160 L 80 280" />
+        <path class="connection" d="M 150 160 L 220 280" />
+
+        <!-- Root Node -->
+        <circle class="node-circle" cx="300" cy="60" r="50" />
+        <text
+          class="node-text"
+          x="300"
+          y="52"
+          text-anchor="middle"
+          font-weight="bold"
+        >
+          Root
+        </text>
+        <text class="label-text" x="300" y="66" text-anchor="middle">
+          c ≈ (4.75, 6.25)
+        </text>
+        <text class="label-text" x="300" y="80" text-anchor="middle">
+          r ≈ 4.26
+        </text>
+
+        <!-- Left Ball Node -->
+        <circle class="node-circle" cx="150" cy="160" r="50" />
+        <text
+          class="node-text"
+          x="150"
+          y="152"
+          text-anchor="middle"
+          font-weight="bold"
+        >
+          Ball
+        </text>
+        <text class="label-text" x="150" y="166" text-anchor="middle">
+          c ≈ (3.67, 5.33)
+        </text>
+        <text class="label-text" x="150" y="180" text-anchor="middle">
+          r ≈ 3.3
+        </text>
+        <text class="point-text" x="150" y="220" text-anchor="middle">
+          (2,5), (3,8), (6,3)
+        </text>
+
+        <!-- Right Leaf Node -->
+        <circle class="leaf-circle" cx="450" cy="160" r="45" />
+        <text
+          class="node-text"
+          x="450"
+          y="152"
+          text-anchor="middle"
+          font-weight="bold"
+        >
+          Leaf
+        </text>
+        <text class="label-text" x="450" y="166" text-anchor="middle">
+          (8, 9)
+        </text>
+        <text class="label-text" x="450" y="180" text-anchor="middle">
+          r = 0
+        </text>
+
+        <!-- Left-Left Ball Node -->
+        <circle class="node-circle" cx="80" cy="300" r="45" />
+        <text
+          class="node-text"
+          x="80"
+          y="292"
+          text-anchor="middle"
+          font-weight="bold"
+        >
+          Ball
+        </text>
+        <text class="label-text" x="80" y="306" text-anchor="middle">
+          (...)
+        </text>
+        <text class="point-text" x="80" y="330" text-anchor="middle">
+          (2,5), (3,8)
+        </text>
+
+        <!-- Left-Right Leaf Node -->
+        <circle class="leaf-circle" cx="220" cy="300" r="45" />
+        <text
+          class="node-text"
+          x="220"
+          y="292"
+          text-anchor="middle"
+          font-weight="bold"
+        >
+          Leaf
+        </text>
+        <text class="label-text" x="220" y="306" text-anchor="middle">
+          (6, 3)
+        </text>
+        <text class="label-text" x="220" y="320" text-anchor="middle">
+          r = 0
+        </text>
+      </svg>
       <p>
-        <strong>Key Observation:</strong> This tree is unbalanced—the outlier \((8, 9)\) is isolated at depth 1, 
-        while the dense cluster is pushed deeper. This asymmetry is actually beneficial for nearest-neighbor 
-        search: isolated outliers are quickly determined not to be neighbors, allowing aggressive pruning of their subtrees.
+        <strong>Key Observation:</strong> This tree is unbalanced, the outlier
+        \((8, 9)\) is isolated at depth 1, while the dense cluster is pushed
+        deeper. This asymmetry is actually beneficial for nearest-neighbor
+        search: isolated outliers are quickly determined not to be neighbors,
+        allowing aggressive pruning of their subtrees.
       </p>
 
       <h4>Nearest-Neighbor Search: Triangle Inequality Pruning</h4>
       <p>
-        Given query point \(q\), the search maintains the current best distance \(D_{\text{best}}\) and uses 
-        the triangle inequality to prune entire subtrees.
+        Given query point \(q\), the search maintains the current best distance
+        \(D_{\text{best}}\) and uses the triangle inequality to prune entire
+        subtrees.
       </p>
       <p><strong>Algorithm: BallTree NN Search</strong></p>
       <ol>
-        <li>At node with ball \((c, r)\), compute lower bound: \(d_{\text{lb}} = \max(0, d(q, c) - r)\).</li>
-        <li>If \(d_{\text{lb}} \ge D_{\text{best}}\): Prune this entire subtree (no point inside can be closer).</li>
+        <li>
+          At node with ball \((c, r)\), compute lower bound: \(d_{\text{lb}} =
+          \max(0, d(q, c) - r)\).
+        </li>
+        <li>
+          If \(d_{\text{lb}} \ge D_{\text{best}}\): Prune this entire subtree
+          (no point inside can be closer).
+        </li>
         <li>Otherwise, continue.</li>
       </ol>
-      <p><strong>Traversal Order:</strong> Prioritize the child whose center is closer to \(q\) (best-first search).</p>
-      <p>At leaf node: Compute exact distances to all points, update \(D_{\text{best}}\).</p>
+      <p>
+        <strong>Traversal Order:</strong> Prioritize the child whose center is
+        closer to \(q\) (best-first search).
+      </p>
+      <p>
+        At leaf node: Compute exact distances to all points, update
+        \(D_{\text{best}}\).
+      </p>
 
       <p><strong>Example Query: \(q = (5, 6)\)</strong></p>
       <ul>
         <li>
-          <strong>Step 1 (Root):</strong> \(d(q, \text{center}) \approx 0.35\). Lower bound \(0.35 - 4.26 < 0\). Cannot prune. Visit Left Child first (closer).
+          <strong>Step 1 (Root):</strong> \(d(q, \text{center}) \approx 0.35\).
+          Lower bound \(0.35 - 4.26 < 0\). Cannot prune. Visit Left Child first
+          (closer).
         </li>
         <li>
-          <strong>Step 2 (Left Child):</strong> Cannot prune. Recurse. Eventually find \((3, 8)\) at distance \(\sqrt{8} \approx 2.83\). Update \(D_{\text{best}} = 2.83\).
+          <strong>Step 2 (Left Child):</strong> Cannot prune. Recurse.
+          Eventually find \((3, 8)\) at distance \(\sqrt{8} \approx 2.83\).
+          Update \(D_{\text{best}} = 2.83\).
         </li>
         <li>
           <strong>Step 3 (Backtrack to Right Child):</strong> Leaf \((8, 9)\).
-          <br>Distance to ball center: \(d(q, (8,9)) \approx 4.24\).
-          <br>Lower bound: \(4.24 - 0 = 4.24\).
-          <br>Since \(4.24 \ge 2.83\) (\(D_{\text{best}}\)), Prune this subtree entirely.
+          <br />Distance to ball center: \(d(q, (8,9)) \approx 4.24\).
+          <br />Lower bound: \(4.24 - 0 = 4.24\). <br />Since \(4.24 \ge 2.83\)
+          (\(D_{\text{best}}\)), Prune this subtree entirely.
         </li>
       </ul>
       <p>
-        <strong>Result:</strong> We safely skipped examining the outlier node \((8, 9)\) after finding a good candidate in the dense cluster.
+        <strong>Result:</strong> We safely skipped examining the outlier node
+        \((8, 9)\) after finding a good candidate in the dense cluster.
       </p>
 
       <h4>Pruning Condition: The Mathematical Core</h4>
-      <p>The lower bound comes directly from the triangle inequality. For any point \(p\) in the ball:</p>
-      <p class="responsive-math">\[ d(q, p) \ge |d(q, c) - d(p, c)| \ge |d(q, c) - r_{\max}| = d(q, c) - r \]</p>
       <p>
-        Since \(d(p, c) \le r\) by definition, the worst-case (minimum) distance from \(q\) to any point in the ball is:
+        The lower bound comes directly from the triangle inequality. For any
+        point \(p\) in the ball:
+      </p>
+      <p class="responsive-math">
+        \[ d(q, p) \ge |d(q, c) - d(p, c)| \ge |d(q, c) - r_{\max}| = d(q, c) -
+        r \]
+      </p>
+      <p>
+        Since \(d(p, c) \le r\) by definition, the worst-case (minimum) distance
+        from \(q\) to any point in the ball is:
       </p>
       <p class="responsive-math">\[ d_{\text{lb}} = \max(0, d(q, c) - r) \]</p>
       <p>
-        If \(d_{\text{lb}} > D_{\text{best}}\), every point in the ball is strictly farther than the current best 
-        candidate; pruning is safe and optimal.
+        If \(d_{\text{lb}} > D_{\text{best}}\), every point in the ball is
+        strictly farther than the current best candidate; pruning is safe and
+        optimal.
       </p>
 
       <h4>Advanced: Optimization via PCA (Ball*-tree)</h4>
       <p>
-        The standard "farthest-point" construction is simple but can lead to unbalanced trees. A more robust approach, 
-        known as Ball-tree*, uses Principal Component Analysis (PCA) to determine splits.
+        The standard "farthest-point" construction is simple but can lead to
+        unbalanced trees. A more robust approach, known as Ball-tree*, uses
+        Principal Component Analysis (PCA) to determine splits.
       </p>
       <ul>
-        <li><strong>The Logic:</strong> Compute the covariance matrix of the node's points and find the first principal 
-        component (direction of maximum variance). Project points onto this axis and split at the median.</li>
-        <li><strong>Result:</strong> A hyperplane perpendicular to the principal axis. This captures the data's 
-        natural geometry while maintaining better balance than farthest-point heuristics.</li>
-        <li><strong>Trade-off:</strong> Construction complexity rises to \(O(D^2 \cdot N)\), but queries are 
-        faster due to tighter balls. [arxiv:1]</li>
+        <li>
+          <strong>The Logic:</strong> Compute the covariance matrix of the
+          node's points and find the first principal component (direction of
+          maximum variance). Project points onto this axis and split at the
+          median.
+        </li>
+        <li>
+          <strong>Result:</strong> A hyperplane perpendicular to the principal
+          axis. This captures the data's natural geometry while maintaining
+          better balance than farthest-point heuristics.
+        </li>
+        <li>
+          <strong>Trade-off:</strong> Construction complexity rises to \(O(D^2
+          \cdot N)\), but queries are faster due to tighter balls. [arxiv:1]
+        </li>
       </ul>
 
       <h4>Strengths and Limitations</h4>
       <p><strong>Strengths</strong></p>
       <ul>
-        <li><strong>High-Dimensional Robustness:</strong> Superior performance when \(D \gtrsim 20\), especially when intrinsic dimensionality is low.</li>
-        <li><strong>Metric Flexibility:</strong> Supports any metric satisfying the triangle inequality (Euclidean, Manhattan, Cosine, Haversine).</li>
-        <li><strong>Isotropic Pruning:</strong> Spherical bounds are natural for distance-based queries and eliminate entire neighborhoods uniformly.</li>
+        <li>
+          <strong>High-Dimensional Robustness:</strong> Superior performance
+          when \(D \gtrsim 20\), especially when intrinsic dimensionality is
+          low.
+        </li>
+        <li>
+          <strong>Metric Flexibility:</strong> Supports any metric satisfying
+          the triangle inequality (Euclidean, Manhattan, Cosine, Haversine).
+        </li>
+        <li>
+          <strong>Isotropic Pruning:</strong> Spherical bounds are natural for
+          distance-based queries and eliminate entire neighborhoods uniformly.
+        </li>
       </ul>
       <p><strong>Limitations</strong></p>
       <ul>
-        <li><strong>Slower Construction:</strong> Building is generally slower than axis-aligned methods due to the cost of distance and/or PCA calculations.</li>
-        <li><strong>Higher Memory Usage:</strong> Storing center vectors and radii for every node adds overhead compared to storing simple scalar split values.</li>
-        <li><strong>Variable Tree Depth:</strong> Without PCA balancing, depth is not guaranteed to be logarithmic, which can affect worst-case performance.</li>
+        <li>
+          <strong>Slower Construction:</strong> Building is generally slower
+          than axis-aligned methods due to the cost of distance and/or PCA
+          calculations.
+        </li>
+        <li>
+          <strong>Higher Memory Usage:</strong> Storing center vectors and radii
+          for every node adds overhead compared to storing simple scalar split
+          values.
+        </li>
+        <li>
+          <strong>Variable Tree Depth:</strong> Without PCA balancing, depth is
+          not guaranteed to be logarithmic, which can affect worst-case
+          performance.
+        </li>
       </ul>
 
       <h4>Takeaway: BallTree as Metric Generalist</h4>
       <p>
-        The BallTree represents a shift from geometric space-partitioning to metric-based pruning. Its fundamental 
-        operation is asking "how far from a center?" rather than "which side of a boundary?".
+        The BallTree represents a shift from geometric space-partitioning to
+        metric-based pruning. Its fundamental operation is asking "how far from
+        a center?" rather than "which side of a boundary?".
       </p>
       <p><strong>When to Use BallTree:</strong></p>
       <ul>
         <li>High-dimensional data (e.g., neural embeddings, text vectors).</li>
         <li>Non-Euclidean metrics (e.g., Haversine distance).</li>
         <li>Isotropic clusters where spherical bounds are tight.</li>
-        <li>Datasets with low intrinsic dimensionality in high ambient space.</li>
+        <li>
+          Datasets with low intrinsic dimensionality in high ambient space.
+        </li>
       </ul>
+
+      <h2 id="strtree">4. STRtree: The Sort-Tile-Recursive R-Tree Packer</h2>
+      <p>
+        The STRtree (Sort-Tile-Recursive tree) represents a paradigm shift from
+        the hierarchical decomposition of KDTree and BallTree to the
+        bulk-loading or packing of spatial objects. Unlike KDTree's recursive
+        splits and BallTree's metric partitioning, STRtree explicitly optimizes
+        for static geospatial data, polygons, line segments, and extended
+        objects, by grouping them into hierarchically nested bounding boxes.
+        This makes it the de facto standard in Geographic Information Systems
+        (GIS) for indexing roads, buildings, and other real-world geometries.
+      </p>
+
+      <h4>Core Concept: Object Grouping via Minimum Bounding Rectangles</h4>
+      <p>An R-tree is a height-balanced multi-way tree where:</p>
+      <ul>
+        <li>
+          Leaf nodes store Minimum Bounding Rectangles (MBRs) of actual spatial
+          objects (e.g., road line segments, building footprints).
+        </li>
+        <li>
+          Internal nodes store MBRs that enclose all MBRs of their child nodes.
+        </li>
+        <li>
+          Bounding boxes can overlap between siblings (unlike KDTree's disjoint
+          partitions).
+        </li>
+      </ul>
+      <p>
+        The MBR of a set of objects is the smallest axis-aligned rectangle that
+        fully contains all of them:
+      </p>
+      <p class="responsive-math">
+        \[ \text{MBR}(S) = [\min_i x_{\min,i}, \max_i x_{\max,i}] \times [\min_i
+        y_{\min,i}, \max_i y_{\max,i}] \]
+      </p>
+
+      <h4>STRtree vs. Standard R-tree: The Key Differences</h4>
+      <p>
+        A standard R-tree is built dynamically via insertions: each new object
+        is placed in the leaf that causes the smallest MBR enlargement. Over
+        time, with many updates, nodes can become fragmented and overlap
+        heavily, degrading query performance. STRtree is built bottom-up in a
+        single pass, using a bulk-loading algorithm called Sort-Tile-Recursive.
+        The core insight:
+      </p>
+
+      <div class="responsive-table-container">
+        <table border="1" cellpadding="8" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Standard R-tree</th>
+              <th>STRtree</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Construction</strong></td>
+              <td>Dynamic insertion (top-down)</td>
+              <td>Bulk loading (bottom-up)</td>
+            </tr>
+            <tr>
+              <td><strong>Optimization Goal</strong></td>
+              <td>Minimize MBR enlargement per insertion</td>
+              <td>Minimize overlap and dead space globally</td>
+            </tr>
+            <tr>
+              <td><strong>Space Utilization</strong></td>
+              <td>50–70% of nodes filled</td>
+              <td>95–100% of nodes filled</td>
+            </tr>
+            <tr>
+              <td><strong>Node Overflow</strong></td>
+              <td>Triggers expensive splits</td>
+              <td>Never occurs (pre-computed)</td>
+            </tr>
+            <tr>
+              <td><strong>Overlap</strong></td>
+              <td>High (objects scattered across branches)</td>
+              <td>Low (spatially coherent grouping)</td>
+            </tr>
+            <tr>
+              <td><strong>Query Performance</strong></td>
+              <td>Good for distributed data, degrades over updates</td>
+              <td>Optimal for static data</td>
+            </tr>
+            <tr>
+              <td><strong>Update Cost</strong></td>
+              <td>\(O(\log N)\) per insertion</td>
+              <td>\(O(N)\) to rebuild tree</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        <strong>When to use STRtree:</strong> Static or slowly-changing
+        geospatial datasets (e.g., city boundaries, road networks).
+        <strong>When to use standard R-tree:</strong> Frequently updated data
+        (e.g., moving vehicles, real-time sensor positions).
+      </p>
+
+      <h4>The Sort-Tile-Recursive Algorithm</h4>
+      <p>
+        The STRtree construction algorithm works in three phases: sort, tile,
+        and recursively build.
+      </p>
+      <p><strong>Algorithm: Construct STRtree (Bulk-Load)</strong></p>
+      <ol>
+        <li>
+          <strong>Input:</strong> Set of spatial objects \(O = \{o_1, \ldots,
+          o_N\}\), each with MBR \(b_i\).
+        </li>
+        <li>
+          <strong>Output:</strong> STRtree with leaf capacity \(C\) (typically
+          30–50 objects per leaf).
+        </li>
+        <li>
+          <strong>Phase 1: Sort</strong>
+          <ul>
+            <li>Compute MBRs for all objects.</li>
+            <li>Sort all MBRs by their \(x_{\min}\) coordinate (left edge).</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Phase 2: Tile</strong>
+          <ul>
+            <li>Partition sorted MBRs into vertical slabs.</li>
+            <li>Number of slabs: \(S = \lceil \sqrt{N/C} \rceil\).</li>
+            <li>Each slab contains approximately \(N/S\) objects.</li>
+            <li>
+              Within each slab, sort by \(y_{\min}\) coordinate (bottom edge) to
+              create row-based grouping.
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Phase 3: Recursive Build</strong>
+          <ul>
+            <li>
+              Within each slab, group objects into horizontal tiles of size
+              ~\(C\).
+            </li>
+            <li>Create a leaf node for each tile, computing its MBR.</li>
+            <li>
+              Recursively apply the algorithm to the set of all leaf MBRs to
+              create the next level of internal nodes.
+            </li>
+            <li>Continue until a single root node.</li>
+          </ul>
+        </li>
+      </ol>
+
+      <h4>Concrete Example: 8 Points in 2D</h4>
+      <p>
+        Consider 8 objects with centers: \(O = \{(1,1), (2,8), (3,2), (4,7),
+        (5,3), (6,6), (7,1), (8,9)\}\). Assume leaf capacity \(C=2\).
+      </p>
+      <ol>
+        <li>
+          <strong>Step 1: Sort by x-coordinate</strong><br />Already in order:
+          \((1,1), (2,8), (3,2), (4,7), (5,3), (6,6), (7,1), (8,9)\).
+        </li>
+        <li>
+          <strong>Step 2: Compute and partition into slabs</strong><br />\(S =
+          \lceil \sqrt{8/2} \rceil = \lceil 2 \rceil = 2\) slabs.<br />Objects
+          per slab: \(N/S = 8/2 = 4\) objects.<br />Slab 1 (\(x \in [1,5]\)):
+          \((1,1), (2,8), (3,2), (4,7)\)<br />Slab 2 (\(x \in [5,8]\)): \((5,3),
+          (6,6), (7,1), (8,9)\)
+        </li>
+        <li>
+          <strong>Step 3: Sort within slabs by y-coordinate</strong><br />Slab
+          1: \((1,1), (3,2), (4,7), (2,8)\)<br />Slab 2: \((7,1), (5,3), (6,6),
+          (8,9)\)
+        </li>
+        <li>
+          <strong>Step 4: Create leaf tiles</strong><br />Within each slab,
+          partition into groups of size \(C=2\):<br />
+          <ul>
+            <li>
+              Slab 1, Tile A: \((1,1), (3,2)\) → MBR: \([1,3] \times [1,2]\)
+            </li>
+            <li>
+              Slab 1, Tile B: \((4,7), (2,8)\) → MBR: \([2,4] \times [7,8]\)
+            </li>
+            <li>
+              Slab 2, Tile C: \((7,1), (5,3)\) → MBR: \([5,7] \times [1,3]\)
+            </li>
+            <li>
+              Slab 2, Tile D: \((6,6), (8,9)\) → MBR: \([6,8] \times [6,9]\)
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Step 5: Build next level</strong><br />Now recursively apply
+          STRtree to the 4 leaf MBRs. With \(S = \lceil\sqrt{4/2}\rceil = 1\)
+          slab, we group all 4 leaves into a single internal node:<br />Root:
+          MBR: \([1,8] \times [1,9]\), children: Tiles A, B, C, D.
+        </li>
+      </ol>
+      <p>Resulting tree structure:</p>
+      <svg
+        width="600"
+        height="400"
+        viewBox="0 0 600 400"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <!-- Define styles -->
+        <defs>
+          <style>
+            .root-rect {
+              fill: #fce4ec;
+              stroke: #c2185b;
+              stroke-width: 3;
+            }
+            .tile-rect {
+              fill: #e1f5fe;
+              stroke: #0277bd;
+              stroke-width: 2;
+            }
+            .connection {
+              stroke: #666;
+              stroke-width: 2;
+              fill: none;
+            }
+            .node-text {
+              font-family: Arial, sans-serif;
+              font-size: 13px;
+              fill: #333;
+              font-weight: bold;
+            }
+            .range-text {
+              font-family: monospace;
+              font-size: 11px;
+              fill: #666;
+            }
+          </style>
+        </defs>
+
+        <!-- Connections -->
+        <path class="connection" d="M 300 100 L 80 240" />
+        <path class="connection" d="M 300 100 L 220 240" />
+        <path class="connection" d="M 300 100 L 380 240" />
+        <path class="connection" d="M 300 100 L 520 240" />
+
+        <!-- Root Node -->
+        <rect class="root-rect" x="250" y="50" width="100" height="70" rx="5" />
+        <text class="node-text" x="300" y="75" text-anchor="middle">Root</text>
+        <text class="range-text" x="300" y="92" text-anchor="middle">
+          [1,8]×[1,9]
+        </text>
+
+        <!-- Tile-A -->
+        <rect class="tile-rect" x="30" y="220" width="100" height="70" rx="5" />
+        <text class="node-text" x="80" y="245" text-anchor="middle">
+          Tile-A
+        </text>
+        <text class="range-text" x="80" y="262" text-anchor="middle">
+          [1,3]×[1,2]
+        </text>
+
+        <!-- Tile-B -->
+        <rect
+          class="tile-rect"
+          x="170"
+          y="220"
+          width="100"
+          height="70"
+          rx="5"
+        />
+        <text class="node-text" x="220" y="245" text-anchor="middle">
+          Tile-B
+        </text>
+        <text class="range-text" x="220" y="262" text-anchor="middle">
+          [2,4]×[7,8]
+        </text>
+
+        <!-- Tile-C -->
+        <rect
+          class="tile-rect"
+          x="330"
+          y="220"
+          width="100"
+          height="70"
+          rx="5"
+        />
+        <text class="node-text" x="380" y="245" text-anchor="middle">
+          Tile-C
+        </text>
+        <text class="range-text" x="380" y="262" text-anchor="middle">
+          [5,7]×[1,3]
+        </text>
+
+        <!-- Tile-D -->
+        <rect
+          class="tile-rect"
+          x="470"
+          y="220"
+          width="100"
+          height="70"
+          rx="5"
+        />
+        <text class="node-text" x="520" y="245" text-anchor="middle">
+          Tile-D
+        </text>
+        <text class="range-text" x="520" y="262" text-anchor="middle">
+          [6,8]×[6,9]
+        </text>
+      </svg>
+
+      <h4>Complexity Analysis</h4>
+      <ul>
+        <li>
+          <strong>Construction Time:</strong> \(O(N \log N + N \log_C N) = O(N
+          \log N)\). Dominated by sorting.
+        </li>
+        <li>
+          <strong>Space Utilization:</strong> Each leaf contains approximately
+          \(C\) objects (95–100% full). No wasted space from node fragmentation.
+        </li>
+        <li>
+          <strong>Query Time (Window Query):</strong> \(O(\log_C N + K)\) where
+          \(K\) is the number of reported objects. The low overlap from STRtree
+          packing means fewer branches are traversed, making queries faster than
+          standard R-trees on static data.
+        </li>
+      </ul>
+
+      <h4>Range Query: Pruning with Overlaps</h4>
+      <p>
+        Given a query window \(Q = [x_q, x'_q] \times [y_q, y'_q]\) (a
+        rectangle), find all objects intersecting \(Q\).
+      </p>
+      <p><strong>Algorithm: STRtree Range Query</strong></p>
+      <ol>
+        <li>Start at root.</li>
+        <li>For each child node with MBR \(M\):</li>
+        <ul>
+          <li>If \(M \cap Q \neq \emptyset\) (MBRs overlap), descend.</li>
+          <li>Otherwise, prune entire subtree.</li>
+        </ul>
+        <li>At leaf nodes, test actual object geometries against \(Q\).</li>
+      </ol>
+      <p>Two rectangles intersect if:</p>
+      <p class="responsive-math">
+        \[ M \cap Q \neq \emptyset \iff x_{\min}(M) \le x'_q \text{ AND }
+        x_{\max}(M) \ge x_q \text{ AND } y_{\min}(M) \le y'_q \text{ AND }
+        y_{\max}(M) \ge y_q \]
+      </p>
+
+      <h4>Concrete Query Example</h4>
+      <p>
+        Using the tree from above, query window: \(Q = [2, 6] \times [2, 8]\).
+      </p>
+      <ul>
+        <li>
+          <strong>At root \([1,8] \times [1,9]\):</strong> Overlaps \(Q\)? Yes.
+          Descend to all children.
+        </li>
+        <li>
+          <strong>Check Tile-A \([1,3] \times [1,2]\):</strong> Overlaps \(Q\)?
+          Yes. Check points: \((1,1)\) no, \((3,2)\) yes. Report \((3,2)\).
+        </li>
+        <li>
+          <strong>Check Tile-B \([2,4] \times [7,8]\):</strong> Overlaps \(Q\)?
+          Yes. Check points: \((4,7)\) yes, \((2,8)\) yes. Report both.
+        </li>
+        <li>
+          <strong>Check Tile-C \([5,7] \times [1,3]\):</strong> Overlaps \(Q\)?
+          Yes. Check points: \((7,1)\) no, \((5,3)\) yes. Report \((5,3)\).
+        </li>
+        <li>
+          <strong>Check Tile-D \([6,8] \times [6,9]\):</strong> Overlaps \(Q\)?
+          Yes. Check points: \((6,6)\) yes, \((8,9)\) no. Report \((6,6)\).
+        </li>
+      </ul>
+      <p>
+        <strong>Final result:</strong> Objects \((3,2), (4,7), (2,8), (5,3),
+        (6,6)\) intersect the query window.
+      </p>
+
+      <h4>Tree Visualization</h4>
+      <p>Here is an SVG representation of the constructed STRtree:</p>
+      <svg
+        width="850"
+        height="450"
+        viewBox="0 0 850 450"
+        xmlns="http://www.w3.org/2000/svg"
+        font-family="Arial, sans-serif"
+      >
+        <defs>
+          <marker
+            id="arrow"
+            markerWidth="10"
+            markerHeight="10"
+            refX="9"
+            refY="3"
+            orient="auto"
+            markerUnits="strokeWidth"
+          >
+            <path d="M0,0 L0,6 L9,3 z" fill="#555" />
+          </marker>
+          <style>
+            .grid-line {
+              stroke: #e0e0e0;
+              stroke-width: 1;
+            }
+            .axis {
+              stroke: #333;
+              stroke-width: 2;
+            }
+            .label {
+              font-size: 12px;
+              fill: #555;
+            }
+            .title {
+              font-size: 16px;
+              font-weight: bold;
+              fill: #333;
+            }
+            .mbr {
+              fill-opacity: 0.2;
+              stroke-width: 2;
+            }
+            .point {
+              fill: #333;
+              r: 4;
+            }
+            .point-label {
+              font-size: 10px;
+              fill: #333;
+              font-weight: bold;
+            }
+            .query-box {
+              fill: none;
+              stroke: #ff0000;
+              stroke-width: 2;
+              stroke-dasharray: 5, 5;
+            }
+
+            /* Node Styles for Tree */
+            .node-rect {
+              fill: #fff;
+              stroke-width: 2;
+              rx: 5;
+            }
+            .node-text {
+              font-size: 12px;
+              font-weight: bold;
+              text-anchor: middle;
+              dominant-baseline: middle;
+            }
+            .mbr-text {
+              font-size: 10px;
+              fill: #666;
+              text-anchor: middle;
+            }
+            .link {
+              stroke: #555;
+              stroke-width: 1.5;
+              fill: none;
+              marker-end: url(#arrow);
+            }
+
+            /* Color Coding Groups */
+            .group-a {
+              stroke: #2e7d32;
+              fill: #2e7d32;
+            } /* Green */
+            .group-b {
+              stroke: #1565c0;
+              fill: #1565c0;
+            } /* Blue */
+            .group-c {
+              stroke: #ef6c00;
+              fill: #ef6c00;
+            } /* Orange */
+            .group-d {
+              stroke: #6a1b9a;
+              fill: #6a1b9a;
+            } /* Purple */
+          </style>
+        </defs>
+
+        <rect width="100%" height="100%" fill="#fafafa" />
+
+        <g transform="translate(40, 40)">
+          <text x="150" y="-15" class="title" text-anchor="middle">
+            Spatial View (2D Map)
+          </text>
+
+          <g class="grid">
+            <path
+              d="M0,350 L350,350 M0,315 L350,315 M0,280 L350,280 M0,245 L350,245 M0,210 L350,210 M0,175 L350,175 M0,140 L350,140 M0,105 L350,105 M0,70 L350,70 M0,35 L350,35 M0,0 L350,0"
+              class="grid-line"
+            />
+            <path
+              d="M0,0 L0,350 M35,0 L35,350 M70,0 L70,350 M105,0 L105,350 M140,0 L140,350 M175,0 L175,350 M210,0 L210,350 M245,0 L245,350 M280,0 L280,350 M315,0 L315,350 M350,0 L350,350"
+              class="grid-line"
+            />
+          </g>
+
+          <line x1="0" y1="350" x2="350" y2="350" class="axis" />
+          <line x1="0" y1="350" x2="0" y2="0" class="axis" />
+          <text x="340" y="370" class="label">X</text>
+          <text x="-25" y="10" class="label">Y</text>
+
+          <rect x="70" y="70" width="140" height="210" class="query-box" />
+          <text
+            x="140"
+            y="60"
+            class="label"
+            fill="#ff0000"
+            text-anchor="middle"
+          >
+            Query Window
+          </text>
+
+          <rect x="35" y="280" width="70" height="35" class="mbr group-a" />
+          <rect x="70" y="70" width="70" height="35" class="mbr group-b" />
+          <rect x="175" y="245" width="70" height="70" class="mbr group-c" />
+          <rect x="210" y="35" width="70" height="105" class="mbr group-d" />
+
+          <circle cx="35" cy="315" class="point" />
+          <text x="35" y="310" class="point-label" text-anchor="end">
+            (1,1)
+          </text>
+          <circle cx="105" cy="280" class="point" />
+          <text x="105" y="275" class="point-label">(3,2)</text>
+
+          <circle cx="140" cy="105" class="point" />
+          <text x="145" y="105" class="point-label">(4,7)</text>
+          <circle cx="70" cy="70" class="point" />
+          <text x="65" y="70" class="point-label" text-anchor="end">(2,8)</text>
+
+          <circle cx="245" cy="315" class="point" />
+          <text x="250" y="315" class="point-label">(7,1)</text>
+          <circle cx="175" cy="245" class="point" />
+          <text x="170" y="240" class="point-label" text-anchor="end">
+            (5,3)
+          </text>
+
+          <circle cx="210" cy="140" class="point" />
+          <text x="205" y="140" class="point-label" text-anchor="end">
+            (6,6)
+          </text>
+          <circle cx="280" cy="35" class="point" />
+          <text x="285" y="35" class="point-label">(8,9)</text>
+        </g>
+
+        <g transform="translate(450, 40)">
+          <text x="180" y="-15" class="title" text-anchor="middle">
+            Tree Structure
+          </text>
+
+          <g transform="translate(130, 30)">
+            <rect
+              x="-50"
+              y="-20"
+              width="100"
+              height="40"
+              class="node-rect"
+              style="stroke: #333"
+            />
+            <text x="0" y="0" class="node-text">ROOT</text>
+            <text x="0" y="35" class="mbr-text">[1,8] x [1,9]</text>
+          </g>
+
+          <path d="M 130 50 L 40 130" class="link" />
+          <path d="M 130 50 L 100 130" class="link" />
+          <path d="M 130 50 L 260 130" class="link" />
+          <path d="M 130 50 L 320 130" class="link" />
+
+          <g transform="translate(40, 150)">
+            <rect
+              x="-35"
+              y="-20"
+              width="70"
+              height="40"
+              class="node-rect group-a"
+              style="fill-opacity: 0.1"
+            />
+            <text x="0" y="0" class="node-text" fill="#2e7d32">Tile A</text>
+            <text x="0" y="35" class="mbr-text">[1,3] x [1,2]</text>
+          </g>
+
+          <g transform="translate(120, 150)">
+            <rect
+              x="-35"
+              y="-20"
+              width="70"
+              height="40"
+              class="node-rect group-b"
+              style="fill-opacity: 0.1"
+            />
+            <text x="0" y="0" class="node-text" fill="#1565c0">Tile B</text>
+            <text x="0" y="35" class="mbr-text">[2,4] x [7,8]</text>
+          </g>
+
+          <g transform="translate(240, 150)">
+            <rect
+              x="-35"
+              y="-20"
+              width="70"
+              height="40"
+              class="node-rect group-c"
+              style="fill-opacity: 0.1"
+            />
+            <text x="0" y="0" class="node-text" fill="#ef6c00">Tile C</text>
+            <text x="0" y="35" class="mbr-text">[5,7] x [1,3]</text>
+          </g>
+
+          <g transform="translate(320, 150)">
+            <rect
+              x="-35"
+              y="-20"
+              width="70"
+              height="40"
+              class="node-rect group-d"
+              style="fill-opacity: 0.1"
+            />
+            <text x="0" y="0" class="node-text" fill="#6a1b9a">Tile D</text>
+            <text x="0" y="35" class="mbr-text">[6,8] x [6,9]</text>
+          </g>
+
+          <g transform="translate(0, 260)">
+            <rect x="0" y="0" width="360" height="90" fill="#f5f5f5" rx="5" />
+            <text x="10" y="20" font-weight="bold" font-size="12">
+              Legend & Logic:
+            </text>
+            <text x="10" y="40" font-size="11">
+              1. Objects sorted by X, then Y (Slab method).
+            </text>
+            <text x="10" y="55" font-size="11">
+              2. Colored boxes = Leaf Nodes (MBRs).
+            </text>
+            <text x="10" y="70" font-size="11">
+              3. Red Dashed Box = Query Window.
+            </text>
+          </g>
+        </g>
+      </svg>
+      <h4>Strengths and Limitations</h4>
+      <p><strong>Strengths</strong></p>
+      <ul>
+        <li>
+          <strong>Optimal space utilization:</strong> 95–100% node occupancy for
+          static data.
+        </li>
+        <li>
+          <strong>Minimal overlap:</strong> Sorted grouping creates spatially
+          coherent clusters, reducing branch exploration during queries.
+        </li>
+        <li>
+          <strong>Fast construction:</strong> Single-pass \(O(N \log N)\)
+          bulk-load is much faster than incremental insertion on large datasets.
+        </li>
+        <li>
+          <strong>Proven in production:</strong> Industry standard in GIS
+          systems (PostGIS, Shapely, QGIS).
+        </li>
+        <li>
+          Excellent query performance on static geospatial data (roads,
+          buildings, administrative boundaries).
+        </li>
+      </ul>
+      <p><strong>Limitations</strong></p>
+      <ul>
+        <li>
+          <strong>No dynamic updates:</strong> Any insertion/deletion requires
+          rebuilding the entire tree (\(O(N)\) cost). Practical workaround:
+          maintain a "delta tree" of recent changes and merge periodically.
+        </li>
+        <li>
+          <strong>Only for axis-aligned objects:</strong> Cannot handle rotated
+          rectangles or more complex shapes without reorienting to axis-aligned
+          MBRs.
+        </li>
+        <li>
+          <strong>Fixed leaf capacity:</strong> Must be tuned for disk block
+          size and object size. Suboptimal capacity reduces performance.
+        </li>
+        <li>
+          <strong>Data distribution dependent:</strong> Skewed or highly
+          clustered data can still cause overlap despite sorting. (Advanced
+          variants like R*-tree use more sophisticated splitting heuristics.)
+        </li>
+      </ul>
+
+      <h4>Takeaway: STRtree as the Geospatial Standard</h4>
+      <p>
+        The STRtree bridges the gap between theoretical elegance (KDTree,
+        BallTree) and practical necessity. By accepting that geospatial data is
+        often static or slow-changing and high-dimensional (polygons with
+        multiple vertices), STRtree sacrifices dynamic insertion for massive
+        query efficiency gains.
+      </p>
+      <p>
+        <strong>Key insight:</strong> The Sort-Tile-Recursive algorithm encodes
+        geographic intuition, sort objects left-to-right (longitude), then
+        bottom-to-top (latitude), into a tree structure that reflects natural
+        spatial clustering.
+      </p>
+      <p>
+        <strong>When to use STRtree:</strong> City datasets, road networks,
+        building registries, boundaries (95% of real-world GIS use cases).
+      </p>
+      <p><strong>When to use alternatives:</strong></p>
+      <ul>
+        <li>
+          <strong>KDTree:</strong> Low-dimensional Euclidean point clouds (\(d <
+          10\)).
+        </li>
+        <li>
+          <strong>BallTree:</strong> High-dimensional metric spaces with
+          frequent queries but rare updates.
+        </li>
+        <li>
+          <strong>Standard R-tree:</strong> Datasets with frequent updates,
+          where rebuild cost is prohibitive.
+        </li>
+      </ul>
+
+      <h2 id="comparison">5. Practical Comparison & Benchmarks</h2>
+      <p>
+        While the theoretical differences between spatial trees are complex, the
+        choice for real-world applications typically follows a clear decision
+        path based on dimensionality, data type, and update frequency.
+      </p>
+
+      <h4>Performance Comparison Matrix</h4>
+      <p>
+        This matrix consolidates theoretical Big-O complexity with real-world
+        benchmark observations.
+      </p>
+
+      <div class="responsive-table-container">
+        <table border="1" cellpadding="8" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>KDTree</th>
+              <th>BallTree</th>
+              <th>STRtree (R-tree variant)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Ideal Data</strong></td>
+              <td>Points in low dimensions (\(d \le 10\))</td>
+              <td>High-dimensional points or non-Euclidean metrics</td>
+              <td>Extended objects (polygons, lines)</td>
+            </tr>
+            <tr>
+              <td><strong>Build Time</strong></td>
+              <td>Fastest (\(O(N \log N)\))<br />~10ms for 1M points</td>
+              <td>Moderate (\(O(N \log N)\))<br />~50ms for 1M points</td>
+              <td>Slowest (\(O(N \log N)\))<br />~100ms for 1M rectangles</td>
+            </tr>
+            <tr>
+              <td><strong>Query Time</strong></td>
+              <td>Fast (\(O(\log N)\)) in low dims<br />~0.5ms per query</td>
+              <td>
+                Robust (\(O(\log N)\)) in high dims<br />~1.2ms (low dim) to 8ms
+                (high dim)
+              </td>
+              <td>Fast for window queries<br />~50ms per window query</td>
+            </tr>
+            <tr>
+              <td><strong>High-Dim Behavior</strong></td>
+              <td>Degrades to \(O(N)\) if \(d > 20\)</td>
+              <td>Resilient; adapts to intrinsic dimensionality</td>
+              <td>N/A (rarely used for high-dim vectors)</td>
+            </tr>
+            <tr>
+              <td><strong>Memory Overhead</strong></td>
+              <td>Low (~70% occupancy)</td>
+              <td>Medium (stores centroids/radii)</td>
+              <td>High (stores MBRs)</td>
+            </tr>
+            <tr>
+              <td><strong>Dynamic Updates</strong></td>
+              <td>Efficient (\(O(\log N)\) insertion)</td>
+              <td>Efficient (\(O(\log N)\) insertion)</td>
+              <td>Expensive (\(O(N)\) rebuild required)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>Use-Case Decision Framework</h4>
+
+      <p>
+        <strong
+          >1. Low-Dimensional Point Data (\(d \lesssim 10\)) \(\rightarrow\)
+          KDTree</strong
+        >
+      </p>
+      <p>
+        KDTree is the standard for low-dimensional Euclidean space due to its
+        lightweight construction and memory efficiency. It is ideal for 3D
+        graphics (ray tracing), 2D GIS points (ATMs, amenities), and robotic
+        configuration spaces.
+      </p>
+      <p>
+        <strong>Benchmark:</strong> For uniformly distributed 3D data (1M
+        points), KDTree queries average ~0.5–2 ms, significantly faster than
+        BallTree due to lower constant overhead factors.
+      </p>
+
+      <p>
+        <strong
+          >2. High-Dimensional or Non-Euclidean Data (\(d > 20\))
+          \(\rightarrow\) BallTree</strong
+        >
+      </p>
+      <p>
+        In high dimensions, the volume of the corners in a hypercube becomes
+        dominant, rendering KDTree's axis-aligned splits ineffective (the "curse
+        of dimensionality"). BallTree clusters points in hyperspheres, allowing
+        it to prune search spaces based on intrinsic dimensionality rather than
+        ambient coordinates.
+      </p>
+      <p>
+        <strong>Key Capability:</strong> Supports custom metrics like Cosine
+        (text similarity), Haversine (geospatial lat/lon), and Jaccard.
+      </p>
+      <p>
+        <strong>Benchmark:</strong> For 100K text embeddings (\(d=300\)),
+        BallTree maintains ~5–20 ms per query, whereas KDTree degrades to
+        brute-force speeds (~500+ ms).
+      </p>
+
+      <pre><code class="language-python">
+    from sklearn.neighbors import NearestNeighbors
+
+    # BallTree is preferred for high-dim or custom metrics
+    # Note: 'algorithm="auto"' in scikit-learn handles this selection automatically
+    nbrs = NearestNeighbors(n_neighbors=5, algorithm='ball_tree', metric='haversine')
+    nbrs.fit(X_lat_lon)
+    distances, indices = nbrs.kneighbors(query_point)
+      </code></pre>
+
+      <p>
+        <strong
+          >3. Static Geospatial Geometries (Polygons/Lines) \(\rightarrow\)
+          STRtree</strong
+        >
+      </p>
+      <p>
+        STRtree (Sort-Tile-Recursive) is the industry standard for indexing
+        extended objects like roads, administrative boundaries, and building
+        footprints. Unlike KD/Ball trees, it indexes bounding boxes rather than
+        points, making it the only viable choice for "Which polygon contains
+        this point?" or "Which roads intersect this window?" queries.
+      </p>
+      <p>
+        <strong>Warning:</strong> STRtree is static. Adding a single geometry
+        requires a full rebuild (\(O(N)\)), making it unsuitable for streaming
+        data.
+      </p>
+
+      <pre><code class="language-python">
+    from shapely.strtree import STRtree
+
+    # Shapely 2.0+ Pattern: Operations return indices, not geometries
+    tree = STRtree(geometries)
+
+    # Query: Find indices of geometries intersecting the query_box
+    # This is significantly faster than checking all geometries (~50ms vs 2000ms)
+    indices = tree.query(query_box)
+    matching_geoms = [geometries[i] for i in indices]
+      </code></pre>
+
+      <p>
+        <strong
+          >4. Dynamic or Streaming Data \(\rightarrow\) KDTree /
+          BallTree</strong
+        >
+      </p>
+      <p>
+        If your data changes frequently (e.g., live drone tracking, ride-sharing
+        fleets), avoid STRtree. Use KDTree or BallTree, which support efficient
+        \(O(\log N)\) insertions. For geospatial apps requiring updates, a
+        common hybrid approach is to map GPS coordinates to a KDTree for
+        proximity checks while keeping static map layers in an STRtree.
+      </p>
+
+      <p><strong>5. Anti-Patterns: When NOT to Use a Spatial Index</strong></p>
+      <ul>
+        <li>
+          <strong>Tiny Datasets (\(N < 1000\)):</strong> The overhead of
+          building and traversing the tree exceeds the cost of a simple linear
+          scan (Brute Force).
+        </li>
+        <li>
+          <strong>Single-Shot Queries:</strong> If you only need to perform one
+          query, building an index (\(O(N \log N)\)) is slower than just
+          calculating distances once (\(O(N)\)).
+        </li>
+        <li>
+          <strong>Wrong Topology:</strong> Using KDTree for geospatial lat/lon
+          data can yield incorrect results near the poles or meridian
+          wrap-around; BallTree with metric='haversine' is correct.
+        </li>
+      </ul>
+
+      <h4>Language & Library Ecosystem</h4>
+      <div class="responsive-table-container">
+        <table border="1" cellpadding="8" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Language</th>
+              <th>Points (KD/Ball)</th>
+              <th>Polygons (R-tree/STR)</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Python</strong></td>
+              <td>scikit-learn</td>
+              <td>shapely, rtree</td>
+              <td>
+                Scikit-learn's <code>algorithm='auto'</code> intelligently swaps
+                KD/Ball/Brute.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Java</strong></td>
+              <td>Custom / ELKI</td>
+              <td>JTS (STRtree)</td>
+              <td>JTS is the backend for many JVM spatial tools.</td>
+            </tr>
+            <tr>
+              <td><strong>C++</strong></td>
+              <td>NanoFlann, Boost</td>
+              <td>Boost.Geometry</td>
+              <td>NanoFlann is highly optimized for 3D point clouds.</td>
+            </tr>
+            <tr>
+              <td><strong>SQL</strong></td>
+              <td>N/A</td>
+              <td>PostGIS (GiST)</td>
+              <td>GiST implements R-tree logic on disk.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div
+        class="references-section"
+        style="margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px"
+      >
+        <h3>References & Further Reading</h3>
+        <ul style="list-style-type: none; padding-left: 0">
+          <li style="margin-bottom: 15px">
+            <a
+              href="http://www.gitta.info/SpatPartitio/en/text/SpatPartitio.pdf"
+              target="_blank"
+              style="font-weight: bold; color: #2c3e50; text-decoration: none"
+              >Spatial Partitioning and Indexing</a
+            ><br />
+            <span style="color: #666; font-size: 0.95em"
+              >A comprehensive overview of regular (Grid, Quadtree) and
+              object-oriented (Binary tree, R-tree) decomposition methods for
+              spatial data access.</span
+            >
+          </li>
+
+          <li style="margin-bottom: 15px">
+            <a
+              href="https://d-nb.info/988097362/34"
+              target="_blank"
+              style="font-weight: bold; color: #2c3e50; text-decoration: none"
+              >The Priority R-Tree: A Practically Efficient and Worst-Case
+              Optimal R-Tree</a
+            ><br />
+            <span style="color: #666; font-size: 0.95em"
+              >Investigates bulk-loading strategies like the Sort-Tile-Recursive
+              (STR) algorithm to optimize R-tree structures for static
+              geospatial datasets.</span
+            >
+          </li>
+
+          <li style="margin-bottom: 15px">
+            <a
+              href="https://arxiv.org/pdf/1210.6122"
+              target="_blank"
+              style="font-weight: bold; color: #2c3e50; text-decoration: none"
+              >Performance Evaluation: Ball-Tree and KD-Tree in the context of
+              MST</a
+            ><br />
+            <span style="color: #666; font-size: 0.95em"
+              >Explores the theoretical limits of space-partitioning structures
+              and how high intrinsic dimensionality affects KD-tree versus
+              Ball-tree performance.</span
+            >
+          </li>
+
+          <li style="margin-bottom: 15px">
+            <a
+              href="https://www.ri.cmu.edu/pub_files/pub1/moore_andrew_1991_1/moore_andrew_1991_1.pdf"
+              target="_blank"
+              style="font-weight: bold; color: #2c3e50; text-decoration: none"
+              >An into ductory tutorial on kd-trees</a
+            ><br />
+            <span style="color: #666; font-size: 0.95em"
+              >Andrew Moore's foundational thesis on KD-trees, introducing
+              efficient nearest-neighbor search algorithms and pruning
+              strategies that underpin modern implementations.</span
+            >
+          </li>
+
+          <li style="margin-bottom: 15px">
+            <a
+              href="https://arxiv.org/pdf/1511.0628"
+              target="_blank"
+              style="font-weight: bold; color: #2c3e50; text-decoration: none"
+              >Ball*-tree: Efficient spatial indexing for constrained
+              nearest-neighbor search in metric spaces</a
+            ><br />
+            <span style="color: #666; font-size: 0.95em"
+              >Discusses advanced construction techniques for BallTrees,
+              including PCA-based splitting, to handle high-dimensional metric
+              spaces more effectively.</span
+            >
+          </li>
+        </ul>
+      </div>
 
       <div id="disqus_thread"></div>
       <script>
