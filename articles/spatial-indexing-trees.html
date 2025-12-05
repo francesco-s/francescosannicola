@@ -189,7 +189,8 @@
     </div>
     <div class="article-container">
       <h1>
-        <span style="font-size: 16px">./articles/</span> Spatial Indexing Trees
+        <span style="font-size: 16px">./articles/</span> Understanding Spatial
+        Indexing Trees
       </h1>
       <div class="last-updated">
         <span class="last-updated-label">Last modified:</span>
@@ -232,11 +233,17 @@
         <li>
           <strong>Range query</strong>: given a region \(R \subset
           \mathbb{R}^d\), return all objects intersecting \(R\).
+          <br />
+          <em>Example:</em> Find all restaurants within a 1 km radius of a
+          location.
         </li>
         <li>
           <strong>k-nearest neighbor (kNN)</strong>: given a query point \(q \in
           \mathbb{R}^d\), find the \(k\) objects with minimum distance \(d(q,
           \cdot)\).
+          <br />
+          <em>Example:</em> Find the 5 closest ATMs to the user's current
+          position.
         </li>
       </ul>
       <p>
@@ -256,14 +263,46 @@
           <strong>KDTree</strong>: recursively cuts space with axis-aligned
           hyperplanes (what does it mean? Don't worry we see that in the next
           chapter).
+          <figure>
+            <img
+              src="../assets/KDtree.png"
+              alt="Visual representation of a KDTree structure with recursive axis-aligned splits"
+              class="responsive-img"
+              width="720"
+              height="480"
+            />
+            <figcaption style="text-align: center">KDTree Structure</figcaption>
+          </figure>
         </li>
         <li>
           <strong>BallTree</strong>: recursively groups points into nested
           metric balls (Again, we will discuss later).
+          <figure>
+            <img
+              src="../assets/BallTree.jpg"
+              alt="Visual representation of a BallTree structure with nested metric balls"
+              class="responsive-img"
+              width="720"
+              height="480"
+            />
+            <figcaption style="text-align: center">
+              BallTree Structure
+            </figcaption>
+          </figure>
         </li>
         <li>
           <strong>R-tree / STRtree</strong>: recursively groups objects into
           bounding rectangles (or boxes in higher \(d\)).
+          <figure>
+            <img
+              src="../assets/RTree.webp"
+              alt="Visual representation of an R-tree structure with hierarchical bounding rectangles"
+              class="responsive-img"
+              width="720"
+              height="480"
+            />
+            <figcaption style="text-align: center">R-tree Structure</figcaption>
+          </figure>
         </li>
       </ul>
       <p>
@@ -383,6 +422,19 @@
 
       <h4>Concrete Example: Range Query in 2D</h4>
       <p>Consider \(N = 10^6\) 2D points (e.g. GPS coordinates):</p>
+      <p>Why \(10^6\)? It's a realistic scale for modern spatial queries:</p>
+      <ul>
+        <li>A single city (e.g., Manhattan) has ~1M addresses/POIs.</li>
+        <li>
+          A smartphone map application must handle ~1M tiles or features in
+          viewport range.
+        </li>
+        <li>
+          Naive \(O(N)\) scanning of 1M points takes ~100 ms; indexed \(O(\log
+          N)\) takes ~1 ms—a 100× speedup.
+        </li>
+      </ul>
+
       <p class="responsive-math">
         \[ P = \{p_1, \ldots, p_N\} \subset \mathbb{R}^2 \]
       </p>
@@ -476,15 +528,6 @@
           rectangle \(R\) against each stored object.
         </li>
       </ul>
-      <p>Key difference from KDTree:</p>
-      <ul>
-        <li>KDTree partitions space into disjoint cells.</li>
-        <li>
-          R-tree (and STRtree) partitions objects into groups whose MBRs may
-          overlap. Overlap causes more branches to be explored, but grouping by
-          proximity reduces tree height, and works well for extended objects.
-        </li>
-      </ul>
       <p>
         STRtree in particular tries to pack rectangles such that sibling MBRs
         overlap as little as possible and are filled close to capacity,
@@ -500,9 +543,15 @@
       </p>
       <p>
         Each node stores a center \(c \in \mathbb{R}^d\) and a radius \(r\) such
-        that all points in that node satisfy:
+        that every point in that node satisfies:
       </p>
-      <p class="responsive-math">\[ d(x, c) \leq r \]</p>
+      <p class="responsive-math">
+        \[ \forall x \text{ in the node: } d(x, c) \leq r \]
+      </p>
+      <p>
+        Here, \(x\) denotes any data point contained in the node's subtree
+        (i.e., an element of the indexed point set).
+      </p>
       <p>
         Children are sub-balls that partition the set of points, often by some
         heuristic (e.g., splitting along direction of greatest spread).
@@ -514,6 +563,12 @@
       <p class="responsive-math">
         \[ \forall x \text{ in node}, \quad d(q, x) \geq d(q, c) - d(x, c) \geq
         d(q, c) - r \]
+      </p>
+      <p>
+        This inequality states that any point \(x\) inside the ball is at least
+        \(d(q, c) - r\) away from the query point \(q\). Since all points in the
+        ball satisfy \(d(x, c) \leq r\), the minimum possible distance from
+        \(q\) to any point in the ball is \(d(q, c) - r\).
       </p>
       <ul>
         <li>
@@ -549,15 +604,31 @@
         <li>
           The volume of the unit ball in \(\mathbb{R}^d\) shrinks compared to
           the hypercube.
+          <br />
+          <em>Example:</em> In 1D, a ball of radius 1 occupies the interval
+          \([-1, 1]\) (length 2) within the cube \([-1, 1]\) (length 2): 100%
+          coverage. In 10D, the unit ball occupies only ~2.5% of the unit
+          hypercube, leaving vast empty corners.
         </li>
         <li>
           Distances between random points tend to concentrate around a narrow
           band (distance concentration phenomenon).
+          <br />
+          <em>Example:</em> In 100D Euclidean space, if you sample 1000 random
+          points uniformly in \([0,1]^{100}\), pairwise distances cluster
+          tightly around ~\(\sqrt{50}\) (the median), with little variation. A
+          "nearest neighbor" is almost as far as an arbitrary point, making
+          pruning ineffective.
         </li>
         <li>
           Any bounding shape that must contain a "local neighborhood" of points
           tends to encompass a large portion of space, so pruning becomes
           ineffective.
+          <br />
+          <em>Example:</em> In 50D, to enclose the 10 nearest neighbors of a
+          query point, a hyperrectangle may need to expand to cover 30% of the
+          total data space, forcing the algorithm to examine thousands of
+          irrelevant points instead of pruning.
         </li>
       </ul>
       <p>
