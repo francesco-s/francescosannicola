@@ -1691,15 +1691,45 @@
         <li>
           <strong>High-Dimensional Robustness:</strong> Superior performance
           when \(D \gtrsim 20\), especially when intrinsic dimensionality is
-          low.
+          low. KDTree's axis-aligned splits become ineffective in high ambient
+          dimension because data points tend to be far apart along every
+          coordinate direction, there is no good choice of splitting axis.
+          BallTree avoids this by partitioning based on distance to a center
+          (not coordinate values), which adapts to the actual intrinsic
+          structure of the data. If data lies on a lower-dimensional manifold
+          (e.g., 300-dimensional text embeddings that cluster in a
+          10-dimensional subspace), BallTree clusters points based on similarity
+          rather than coordinate alignment, allowing tighter balls and more
+          aggressive pruning regardless of ambient \(D\).
         </li>
         <li>
           <strong>Metric Flexibility:</strong> Supports any metric satisfying
           the triangle inequality (Euclidean, Manhattan, Cosine, Haversine).
+          This is because BallTree's core pruning mechanism, the lower bound
+          \(d_{\text{lb}} = \max(0, d(q, c) - r)\), derives directly from the
+          triangle inequality: for any point \(p\) in ball \((c, r)\), we have
+          \(d(q, p) \ge d(q, c) - d(p, c) \ge d(q, c) - r\). This derivation
+          requires only that the distance function satisfies the triangle
+          inequality (\(d(a, c) + d(c, p) \ge d(a, p)\)), not Euclidean geometry
+          or any coordinate structure. Thus, Haversine (geodesic distance on
+          Earth), Cosine (for high-dim text embeddings), and Manhattan (taxicab
+          distance) all work identically, the ball partitioning and pruning
+          remain valid regardless of the underlying metric space's geometry.
         </li>
+
         <li>
           <strong>Isotropic Pruning:</strong> Spherical bounds are natural for
-          distance-based queries and eliminate entire neighborhoods uniformly.
+          distance-based queries because they eliminate entire neighborhoods
+          uniformly in all directions from a center point. Unlike axis-aligned
+          bounding boxes (which are anisotropic, tighter in some coordinate
+          directions than others), a hypersphere \((c, r)\) encloses all points
+          at distance \(\le r\) from center \(c\) without favoring any
+          direction. This uniformity means that when a ball is pruned (because
+          its lower bound exceeds the current best distance), the pruned region
+          is geometrically compact and symmetric. For high-dimensional data
+          where coordinate axes become meaningless, this symmetry is a
+          fundamental advantage: the pruning does not waste effort on distant
+          corners of axis-aligned boxes.
         </li>
       </ul>
       <p><strong>Limitations</strong></p>
@@ -1832,10 +1862,10 @@
         </table>
       </div>
       <p>
-        <strong>When to use STRtree:</strong> Static or slowly-changing
-        geospatial datasets (e.g., city boundaries, road networks).
-        <strong>When to use standard R-tree:</strong> Frequently updated data
-        (e.g., moving vehicles, real-time sensor positions).
+        In few wors:use STRtree with slowly-changing geospatial datasets (e.g.,
+        city boundaries, road networks). Use standard R-tree with frequently
+        updated data (e.g., moving vehicles, real-time sensor positions). This
+        article focuses on STRtree due to its superior static packing.
       </p>
 
       <h4>The Sort-Tile-Recursive Algorithm</h4>
@@ -1896,46 +1926,87 @@
       </p>
       <ol>
         <li>
-          <strong>Step 1: Sort by x-coordinate</strong><br />Already in order:
-          \((1,1), (2,8), (3,2), (4,7), (5,3), (6,6), (7,1), (8,9)\).
+          <strong>Step 1: Sort by x-coordinate</strong><br />
+          Already in order: \((1,1), (2,8), (3,2), (4,7), (5,3), (6,6), (7,1),
+          (8,9)\).
+          <br /><em>Reasoning:</em> The algorithm starts by linearizing the 2D
+          space. Sorting by the primary axis (x) brings spatially proximate
+          objects closer together in the list, ensuring that the subsequent
+          "vertical slabs" capture meaningful vertical strips of the data
+          distribution.
         </li>
         <li>
-          <strong>Step 2: Compute and partition into slabs</strong><br />\(S =
-          \lceil \sqrt{8/2} \rceil = \lceil 2 \rceil = 2\) slabs.<br />Objects
-          per slab: \(N/S = 8/2 = 4\) objects.<br />Slab 1 (\(x \in [1,5]\)):
-          \((1,1), (2,8), (3,2), (4,7)\)<br />Slab 2 (\(x \in [5,8]\)): \((5,3),
-          (6,6), (7,1), (8,9)\)
+          <strong>Step 2: Compute and partition into slabs</strong><br />
+          \(S = \lceil \sqrt{8/2} \rceil = \lceil 2 \rceil = 2\) slabs.<br />
+          Objects per slab: \(N/S = 8/2 = 4\) objects.<br />
+          Slab 1 (\(x \in [1,5]\)): \((1,1), (2,8), (3,2), (4,7)\). Slab 1 is
+          formed by the first 4 points: x=1,2,3,4. Their true x‑range is [1,4];
+          writing x∈[1,5] is a slightly loose way of saying “this slab occupies
+          the left part of the space, up to the split between 4 and 5”.<br />
+          Slab 2 (\(x \in [5,8]\)): \((5,3), (6,6), (7,1), (8,9)\)
+          <br /><em>Reasoning:</em> The number of slabs \(S\) is calculated to
+          ensure the final tree is roughly square-like (balanced). By dividing
+          the sorted list into equal chunks, we create vertical slices of the
+          map. This limits the x-range of subsequent nodes, preventing long,
+          thin rectangles that would span the entire width of the map.
         </li>
         <li>
-          <strong>Step 3: Sort within slabs by y-coordinate</strong><br />Slab
-          1: \((1,1), (3,2), (4,7), (2,8)\)<br />Slab 2: \((7,1), (5,3), (6,6),
-          (8,9)\)
+          <strong>Step 3: Sort within slabs by y-coordinate</strong><br />
+          Slab 1: \((1,1), (3,2), (4,7), (2,8)\)<br />
+          Slab 2: \((7,1), (5,3), (6,6), (8,9)\)
+          <br /><em>Reasoning:</em> Within each vertical slab, objects can still
+          be far apart vertically (e.g., one at the bottom, one at the top).
+          Sorting by y-coordinate clusters these points locally. This is the
+          "Tile" part of Sort-Tile-Recursive: we are preparing to group objects
+          that are close in both x (because they are in the same slab) and y
+          (because of this sort).
         </li>
         <li>
-          <strong>Step 4: Create leaf tiles</strong><br />Within each slab,
-          partition into groups of size \(C=2\):<br />
+          <strong>Step 4: Create leaf tiles</strong><br />
+          Within each slab (from Step 3), partition the sorted points into
+          groups of size \(C=2\):<br />
           <ul>
             <li>
-              Slab 1, Tile A: \((1,1), (3,2)\) → MBR: \([1,3] \times [1,2]\)
+              Slab 1, Tile A: Take the first 2 points from sorted Slab 1:
+              \((1,1), (3,2)\) → MBR: \([1,3] \times [1,2]\)
             </li>
             <li>
-              Slab 1, Tile B: \((4,7), (2,8)\) → MBR: \([2,4] \times [7,8]\)
+              Slab 1, Tile B: Take the next 2 points from sorted Slab 1:
+              \((4,7), (2,8)\) → MBR: \([2,4] \times [7,8]\)
             </li>
             <li>
-              Slab 2, Tile C: \((7,1), (5,3)\) → MBR: \([5,7] \times [1,3]\)
+              Slab 2, Tile C: Take the first 2 points from sorted Slab 2:
+              \((7,1), (5,3)\) → MBR: \([5,7] \times [1,3]\)
             </li>
             <li>
-              Slab 2, Tile D: \((6,6), (8,9)\) → MBR: \([6,8] \times [6,9]\)
+              Slab 2, Tile D: Take the next 2 points from sorted Slab 2:
+              \((6,6), (8,9)\) → MBR: \([6,8] \times [6,9]\)
             </li>
           </ul>
+          <br /><em>Reasoning:</em> We iterate through the specific lists
+          created in Step 3. For Slab 1, we have 4 points sorted by Y. We simply
+          "cut" this list every \(C\) items. The first cut (Tile A) captures the
+          bottom-most points in that vertical strip, and the second cut (Tile B)
+          captures the top-most points. We then repeat this process for Slab 2.
+          This ensures objects are grouped with their nearest neighbors in the Y
+          direction, while already being constrained to a specific X range (the
+          Slab).
         </li>
         <li>
-          <strong>Step 5: Build next level</strong><br />Now recursively apply
-          STRtree to the 4 leaf MBRs. With \(S = \lceil\sqrt{4/2}\rceil = 1\)
-          slab, we group all 4 leaves into a single internal node:<br />Root:
-          MBR: \([1,8] \times [1,9]\), children: Tiles A, B, C, D.
+          <strong>Step 5: Build next level</strong><br />
+          Now recursively apply STRtree to the 4 leaf MBRs. With \(S =
+          \lceil\sqrt{4/2}\rceil = 1\) slab, we group all 4 leaves into a single
+          internal node:<br />
+          Root: MBR: \([1,8] \times [1,9]\), children: Tiles A, B, C, D.
+          <br /><em>Reasoning:</em> The process repeats recursively. The input
+          for this step is the set of 4 rectangles created in Step 4. Since 4
+          items fit into a single level (calculated via the slab formula), they
+          are grouped into one root node. This bottom-up construction guarantees
+          100% node utilization, unlike dynamic insertions which often leave
+          nodes half-empty.
         </li>
       </ol>
+
       <p>Resulting tree structure:</p>
       <svg
         width="600"
@@ -2118,7 +2189,6 @@
       </p>
 
       <h4>Tree Visualization</h4>
-      <p>Here is an SVG representation of the constructed STRtree:</p>
       <svg
         width="850"
         height="450"
