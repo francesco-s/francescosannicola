@@ -1993,17 +1993,61 @@
           Slab).
         </li>
         <li>
-          <strong>Step 5: Build next level</strong><br />
+          <strong>Step 5: Build Next Level (Recursive Step)</strong><br />
           Now recursively apply STRtree to the 4 leaf MBRs. With \(S =
           \lceil\sqrt{4/2}\rceil = 1\) slab, we group all 4 leaves into a single
-          internal node:<br />
-          Root: MBR: \([1,8] \times [1,9]\), children: Tiles A, B, C, D.
-          <br /><em>Reasoning:</em> The process repeats recursively. The input
-          for this step is the set of 4 rectangles created in Step 4. Since 4
-          items fit into a single level (calculated via the slab formula), they
-          are grouped into one root node. This bottom-up construction guarantees
-          100% node utilization, unlike dynamic insertions which often leave
-          nodes half-empty.
+          internal node:
+          <ol style="list-style-type: lower-alpha">
+            <li>
+              <strong>Check Termination Condition.</strong> The input for this
+              level is N=4 rectangles. The algorithm first checks if the number
+              of items is small enough to fit into a single parent node. Since 4
+              is a small number (typically much smaller than the maximum
+              capacity of an internal node), the recursive process concludes.
+              All 4 rectangles will be grouped under one parent node.
+            </li>
+            <li>
+              <strong>Create Parent Node.</strong> A new internal node is
+              created. Since this grouping will contain all remaining items and
+              is the highest-level node, it becomes the <strong>Root</strong> of
+              the tree.
+            </li>
+            <li>
+              <strong>Assign Children.</strong> The new Root node is assigned
+              pointers to its four children: the leaf nodes Tile-A, Tile-B,
+              Tile-C, and Tile-D.
+            </li>
+            <li>
+              <strong>Calculate Parent's MBR.</strong> The MBR for the Root node
+              is calculated by finding the minimum bounding box that encloses
+              the MBRs of <em>all its children</em> (A, B, C, and D).
+              <ul>
+                <li>
+                  min(all child x-coordinates) = min(1, 2, 5, 6) =
+                  <strong>1</strong>
+                </li>
+                <li>
+                  max(all child x-coordinates) = max(3, 4, 7, 8) =
+                  <strong>8</strong>
+                </li>
+                <li>
+                  min(all child y-coordinates) = min(1, 7, 1, 6) =
+                  <strong>1</strong>
+                </li>
+                <li>
+                  max(all child y-coordinates) = max(2, 8, 3, 9) =
+                  <strong>9</strong>
+                </li>
+              </ul>
+              The resulting MBR for the Root node is \([1,8] \times [1,9]\). The
+              tree construction is now complete.
+            </li>
+          </ol>
+          <em>Reasoning:</em> This final step demonstrates the "recursive" and
+          "bottom-up" nature of the algorithm. We start with the data points,
+          group them into leaves, and then group those leaves into parent nodes
+          until only one node, the root, remains. This process guarantees a
+          height-balanced tree with high node occupancy.
         </li>
       </ol>
 
@@ -2159,33 +2203,94 @@
 
       <h4>Concrete Query Example</h4>
       <p>
-        Using the tree from above, query window: \(Q = [2, 6] \times [2, 8]\).
+        Using the tree constructed above, we perform a window query to find all
+        objects inside the rectangle \(Q = [2, 6] \times [2, 8]\). The search
+        starts at the top (Root) and filters down.
       </p>
       <ul>
         <li>
-          <strong>At root \([1,8] \times [1,9]\):</strong> Overlaps \(Q\)? Yes.
-          Descend to all children.
+          <strong>1. Check Root Node \([1,8] \times [1,9]\):</strong><br />
+          Does the root's MBR intersect \(Q\)?<br />
+          Intersection logic: The x-intervals \([1,8]\) and \([2,6]\) overlap,
+          and the y-intervals \([1,9]\) and \([2,8]\) overlap.
+          <br /><em>Decision:</em> <strong>Yes, overlap detected.</strong> Since
+          the root covers the query area, we must inspect its children (Tiles A,
+          B, C, D) to see which specific branches contain relevant data.
         </li>
         <li>
-          <strong>Check Tile-A \([1,3] \times [1,2]\):</strong> Overlaps \(Q\)?
-          Yes. Check points: \((1,1)\) no, \((3,2)\) yes. Report \((3,2)\).
+          <strong>2. Check Child Tile-A \([1,3] \times [1,2]\):</strong><br />
+          Does Tile-A's MBR intersect \(Q = [2,6] \times [2,8]\)?<br />
+          X-overlap: \([1,3]\) overlaps \([2,6]\) (on segment \([2,3]\)).<br />
+          Y-overlap: \([1,2]\) overlaps \([2,8]\) (at value \(2\)).<br />
+          <em>Decision:</em> <strong>Yes, candidate found.</strong> We must now
+          check the individual objects inside Tile-A:
+          <ul>
+            <li>
+              Object \((1,1)\): Outside \(Q\) (x \(1 < 2\)).
+              <strong>Reject.</strong>
+            </li>
+            <li>
+              Object \((3,2)\): Inside \(Q\) (x \(3 \in [2,6]\), y \(2 \in
+              [2,8]\)). <strong>Report.</strong>
+            </li>
+          </ul>
         </li>
         <li>
-          <strong>Check Tile-B \([2,4] \times [7,8]\):</strong> Overlaps \(Q\)?
-          Yes. Check points: \((4,7)\) yes, \((2,8)\) yes. Report both.
+          <strong>3. Check Child Tile-B \([2,4] \times [7,8]\):</strong><br />
+          Does Tile-B's MBR intersect \(Q\)?<br />
+          X-overlap: \([2,4]\) is fully inside \([2,6]\).<br />
+          Y-overlap: \([7,8]\) overlaps \([2,8]\).<br />
+          <em>Decision:</em> <strong>Yes, candidate found.</strong> Check
+          objects inside Tile-B:
+          <ul>
+            <li>Object \((4,7)\): Inside \(Q\). <strong>Report.</strong></li>
+            <li>
+              Object \((2,8)\): Inside \(Q\) (on boundary).
+              <strong>Report.</strong>
+            </li>
+          </ul>
         </li>
         <li>
-          <strong>Check Tile-C \([5,7] \times [1,3]\):</strong> Overlaps \(Q\)?
-          Yes. Check points: \((7,1)\) no, \((5,3)\) yes. Report \((5,3)\).
+          <strong>4. Check Child Tile-C \([5,7] \times [1,3]\):</strong><br />
+          Does Tile-C's MBR intersect \(Q\)?<br />
+          X-overlap: \([5,7]\) overlaps \([2,6]\).<br />
+          Y-overlap: \([1,3]\) overlaps \([2,8]\).<br />
+          <em>Decision:</em> <strong>Yes, candidate found.</strong> Check
+          objects inside Tile-C:
+          <ul>
+            <li>
+              Object \((7,1)\): Outside \(Q\) (x \(7 > 6\)).
+              <strong>Reject.</strong>
+            </li>
+            <li>Object \((5,3)\): Inside \(Q\). <strong>Report.</strong></li>
+          </ul>
         </li>
         <li>
-          <strong>Check Tile-D \([6,8] \times [6,9]\):</strong> Overlaps \(Q\)?
-          Yes. Check points: \((6,6)\) yes, \((8,9)\) no. Report \((6,6)\).
+          <strong>5. Check Child Tile-D \([6,8] \times [6,9]\):</strong><br />
+          Does Tile-D's MBR intersect \(Q\)?<br />
+          X-overlap: \([6,8]\) overlaps \([2,6]\) at \(x=6\).<br />
+          Y-overlap: \([6,9]\) overlaps \([2,8]\).<br />
+          <em>Decision:</em> <strong>Yes, candidate found.</strong> Check
+          objects inside Tile-D:
+          <ul>
+            <li>
+              Object \((6,6)\): Inside \(Q\) (on boundary).
+              <strong>Report.</strong>
+            </li>
+            <li>
+              Object \((8,9)\): Outside \(Q\) (x \(8 > 6\)).
+              <strong>Reject.</strong>
+            </li>
+          </ul>
         </li>
       </ul>
       <p>
-        <strong>Final result:</strong> Objects \((3,2), (4,7), (2,8), (5,3),
-        (6,6)\) intersect the query window.
+        <strong>Final result:</strong> The query returns objects \(\{(3,2),
+        (4,7), (2,8), (5,3), (6,6)\}\). Note how the hierarchical check allowed
+        us to zoom in on specific regions, although in this dense example, all
+        nodes happened to overlap. In a larger tree, many branches would be
+        "pruned" (skipped) at step 2, 3, 4, or 5 if their MBRs did not touch
+        \(Q\).
       </p>
 
       <h4>Tree Visualization</h4>
@@ -2452,46 +2557,80 @@
       <p><strong>Strengths</strong></p>
       <ul>
         <li>
-          <strong>Optimal space utilization:</strong> 95–100% node occupancy for
-          static data.
+          <strong>Optimal Space Utilization (95–100% Occupancy):</strong><br />
+          Because STRtree is built bottom-up by packing sorted objects directly
+          into nodes, it avoids the fragmentation common in dynamic trees (where
+          nodes split and often end up half-empty). This high fill rate reduces
+          the total number of nodes in the tree, leading to smaller file sizes
+          and better CPU cache locality during searches.
         </li>
         <li>
-          <strong>Minimal overlap:</strong> Sorted grouping creates spatially
-          coherent clusters, reducing branch exploration during queries.
+          <strong>Minimal Node Overlap:</strong><br />
+          The "Sort-Tile-Recursive" logic groups objects that are spatially
+          adjacent. This minimizes the intersection area between sibling nodes.
+          Less overlap means that a query window is less likely to intersect
+          multiple branches simultaneously, allowing the search algorithm to
+          "prune" (ignore) large sections of the tree more effectively.
         </li>
         <li>
-          <strong>Fast construction:</strong> Single-pass \(O(N \log N)\)
-          bulk-load is much faster than incremental insertion on large datasets.
+          <strong>Fast Construction (\(O(N \log N)\)):</strong><br />
+          Building an STRtree is essentially a sorting problem. It avoids the
+          overhead of balancing re-insertions and complex split heuristics
+          required by dynamic R-trees (like the R*-tree). This makes it possible
+          to index millions of static objects (e.g., all roads in a country) in
+          seconds rather than minutes.
         </li>
         <li>
-          <strong>Proven in production:</strong> Industry standard in GIS
-          systems (PostGIS, Shapely, QGIS).
+          <strong>Industry Standard for Read-Heavy Workloads:</strong><br />
+          Due to its query speed and simplicity, STRtree is the default packing
+          algorithm in major geospatial libraries like JTS (Java Topology
+          Suite), GEOS (C++), Shapely (Python), and PostGIS (for geometry
+          columns that don't change often).
         </li>
         <li>
-          Excellent query performance on static geospatial data (roads,
-          buildings, administrative boundaries).
+          <strong>Excellent Query Performance:</strong><br />
+          For static layers like administrative boundaries or census tracts, the
+          tightly packed structure ensures that point-in-polygon and
+          intersection queries are resolved with the fewest possible
+          comparisons.
         </li>
       </ul>
+
       <p><strong>Limitations</strong></p>
       <ul>
         <li>
-          <strong>No dynamic updates:</strong> Any insertion/deletion requires
-          rebuilding the entire tree (\(O(N)\) cost). Practical workaround:
-          maintain a "delta tree" of recent changes and merge periodically.
+          <strong>Static Structure (No Dynamic Updates):</strong><br />
+          STRtree is immutable. You cannot insert or delete a single object
+          without invalidating the sorted order and node structure. Adding one
+          item technically requires rebuilding the entire tree from scratch
+          (\(O(N)\) cost). <em>Workaround:</em> Systems often use a hybrid
+          approach, keeping a small dynamic R-tree for recent "edits" and a
+          large static STRtree for the "base map," merging them periodically.
         </li>
         <li>
-          <strong>Only for axis-aligned objects:</strong> Cannot handle rotated
-          rectangles or more complex shapes without reorienting to axis-aligned
-          MBRs.
+          <strong>Axis-Aligned Limitation:</strong><br />
+          Like all R-tree variants, STRtree relies on Min/Max X and Y
+          coordinates. It cannot natively index rotated rectangles or complex
+          diagonal shapes without first wrapping them in an axis-aligned box
+          (MBR). This adds "dead space" around diagonal objects (e.g., a road
+          running NE-SW), potentially triggering false-positive checks that must
+          be filtered out later.
         </li>
         <li>
-          <strong>Fixed leaf capacity:</strong> Must be tuned for disk block
-          size and object size. Suboptimal capacity reduces performance.
+          <strong>Sensitivity to Tuning Parameters:</strong><br />
+          The leaf capacity (node size) is a critical hyperparameter. If set too
+          small, the tree becomes too deep (more pointer chasing). If set too
+          large, the internal overlap increases and filtering within a leaf
+          becomes slow. It must be tuned to match the underlying storage page
+          size (e.g., 4KB or 8KB) for optimal performance.
         </li>
         <li>
-          <strong>Data distribution dependent:</strong> Skewed or highly
-          clustered data can still cause overlap despite sorting. (Advanced
-          variants like R*-tree use more sophisticated splitting heuristics.)
+          <strong>Vulnerability to Skewed Distributions:</strong><br />
+          While sorting helps, highly clustered data (e.g., a dense city center
+          vs. sparse rural areas) can still result in overlapping slab
+          boundaries. Advanced dynamic trees like the R*-tree use iterative
+          optimization heuristics to reduce this specific type of overlap,
+          sometimes outperforming STRtree on extremely irregular datasets.
         </li>
       </ul>
 
@@ -2537,10 +2676,6 @@
       </p>
 
       <h4>Performance Comparison Matrix</h4>
-      <p>
-        This matrix consolidates theoretical Big-O complexity with real-world
-        benchmark observations.
-      </p>
 
       <div class="responsive-table-container">
         <table border="1" cellpadding="8" cellspacing="0">
@@ -2572,7 +2707,10 @@
                 Robust (\(O(\log N)\)) in high dims<br />~1.2ms (low dim) to 8ms
                 (high dim)
               </td>
-              <td>Fast for window queries<br />~50ms per window query</td>
+              <td>
+                \(O(\log_C N + K)\). Fast for window queries<br />~50ms per
+                window query
+              </td>
             </tr>
             <tr>
               <td><strong>High-Dim Behavior</strong></td>
