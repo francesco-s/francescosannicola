@@ -1598,36 +1598,52 @@
         <li>
           <strong>Step 1 (Root):</strong> Query point \(q = (5, 6)\). Root
           center \(c = (4.75, 6.25)\), radius \(r = 4.26\). <br />Distance:
-          \(d(q, c) = \sqrt{(5-4.75)^2 + (6-6.25)^2} = \sqrt{0.0625 + 0.0625} =
-          \sqrt{0.125} \approx 0.354\). <br />Lower bound: \(\max(0, 0.354 -
-          4.26) = \max(0, -3.906) = 0\). Cannot prune (lower bound is 0). Visit
-          Left Child first (closer).
+          <p class="responsive-math">
+            \(d(q, c) = \sqrt{(5-4.75)^2 + (6-6.25)^2} = \sqrt{0.0625 + 0.0625}
+            = \sqrt{0.125} \approx 0.354\).
+          </p>
+          <br />Lower bound: \(\max(0, 0.354 - 4.26) = \max(0, -3.906) = 0\).
+          Cannot prune (lower bound is 0). Visit Left Child first (closer).
         </li>
         <li>
           <strong>Step 2 (Left Child Ball):</strong> Center \(c \approx (3.67,
-          5.33)\), radius \(r \approx 3.3\). <br />Distance: \(d(q, c) =
-          \sqrt{(5-3.67)^2 + (6-5.33)^2} = \sqrt{1.33^2 + 0.67^2} = \sqrt{1.7689
-          + 0.4489} = \sqrt{2.2178} \approx 1.489\). <br />Lower bound:
-          \(\max(0, 1.489 - 3.3) = 0\). Cannot prune (lower bound is 0), meaning
-          points in this ball could potentially be closer than the current best.
-          Recurse into leaves. <br /><br />
+          5.33)\), radius \(r \approx 3.3\). <br />Distance:
+          <p class="responsive-math">
+            \(d(q, c) = \sqrt{(5-3.67)^2 + (6-5.33)^2} = \sqrt{1.33^2 + 0.67^2}
+            = \sqrt{1.7689 + 0.4489} = \sqrt{2.2178} \approx 1.489\).
+          </p>
+          <br />Lower bound: \(\max(0, 1.489 - 3.3) = 0\). Cannot prune (lower
+          bound is 0), meaning points in this ball could potentially be closer
+          than the current best. Recurse into leaves. <br /><br />
           <strong>Leaf 1: Point \((3, 8)\)</strong> <br />Distance from \(q\) to
-          point: \(d((5,6), (3,8)) = \sqrt{(5-3)^2 + (6-8)^2} = \sqrt{4 + 4} =
-          \sqrt{8} \approx 2.828\). <br />This is the first candidate found.
-          Update: \(D_{\text{best}} = 2.828\). <br /><br />
+          point:
+          <p class="responsive-math">
+            \(d((5,6), (3,8)) = \sqrt{(5-3)^2 + (6-8)^2} = \sqrt{4 + 4} =
+            \sqrt{8} \approx 2.828\).
+          </p>
+          <br />This is the first candidate found. Update: \(D_{\text{best}} =
+          2.828\). <br /><br />
           <strong>Leaf 2: Point \((2, 5)\)</strong> <br />Distance from \(q\) to
-          point: \(d((5,6), (2,5)) = \sqrt{(5-2)^2 + (6-5)^2} = \sqrt{9 + 1} =
-          \sqrt{10} \approx 3.162\). <br />Compare to current best: \(3.162 >
-          2.828\), so \((2,5)\) is farther than \((3,8)\). <br />No update to
-          \(D_{\text{best}}\). Keep \((3,8)\) as the best candidate so far.
+          point:
+          <p class="responsive-math">
+            \(d((5,6), (2,5)) = \sqrt{(5-2)^2 + (6-5)^2} = \sqrt{9 + 1} =
+            \sqrt{10} \approx 3.162\).
+          </p>
+          <br />Compare to current best: \(3.162 > 2.828\), so \((2,5)\) is
+          farther than \((3,8)\). <br />No update to \(D_{\text{best}}\). Keep
+          \((3,8)\) as the best candidate so far.
         </li>
         <li>
           <strong>Step 3 (Right Child - Leaf \((8, 9)\)):</strong> Center is the
           point itself \((8, 9)\), radius \(r = 0\). <br />Distance to ball
-          center: \(d(q, (8,9)) = \sqrt{(5-8)^2 + (6-9)^2} = \sqrt{9 + 9} =
-          \sqrt{18} \approx 4.243\). <br />Lower bound: \(\max(0, 4.243 - 0) =
-          4.243\). <br />Pruning check: Is \(4.243 \geq D_{\text{best}} =
-          2.828\)? <strong>Yes.</strong> <br /><strong
+          center:
+          <p class="responsive-math">
+            \(d(q, (8,9)) = \sqrt{(5-8)^2 + (6-9)^2} = \sqrt{9 + 9} = \sqrt{18}
+            \approx 4.243\).
+          </p>
+          <br />Lower bound: \(\max(0, 4.243 - 0) = 4.243\). <br />Pruning
+          check: Is \(4.243 \geq D_{\text{best}} = 2.828\)?
+          <strong>Yes.</strong> <br /><strong
             >Prune this subtree entirely.</strong
           >
           The point \((8, 9)\) cannot be closer than the current best, so we
