@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="All five GoF Creational Design Patterns: Factory Method, Abstract Factory, Builder, Prototype, and Singleton, with Python and Java examples, creation-flow diagrams, and practical trade-offs." name="description"/>
+  <meta content="design patterns, creational patterns, factory method, abstract factory, builder, prototype, singleton, python, java" name="keywords"/>
+  <meta content="Francesco Sannicola" name="author"/>
+  <meta content="Creational Design Patterns - Francesco Sannicola" property="og:title"/>
+  <meta content="Five creational design patterns with runnable examples, creation-flow diagrams, ownership contracts, and concurrency notes." property="og:description"/>
+    <meta content="https://www.francescosannicola.com/articles/oop-creational-patterns.html" property="og:url"/>
+  <meta content="article" property="og:type"/>
+  <meta content="https://www.francescosannicola.com/assets/francescosannicola.jpg" property="og:image"/>
+  <title>
+   Creational Design Patterns - Francesco Sannicola
+  </title>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <link href="../style.css" rel="stylesheet" type="text/css"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+  <style>
+   /* Page-local adjustments: retain the shared article palette and components. */
+.creational-patterns {
+  min-width: 0;
+}
+.creational-patterns h2[id] {
+  scroll-margin-top: 24px;
+}
+.creational-patterns h4.accordion {
+    cursor: pointer;
+}
+.creational-patterns .responsive-code-container,
+.creational-patterns .responsive-table-container {
+  margin: 20px;
+  max-width: calc(100% - 40px);
+  min-width: 0;
+  overflow-x: auto;
+  white-space: normal;
+  box-sizing: border-box;
+}
+.creational-patterns pre,
+.creational-patterns pre[class*="language-"] {
+  margin: 0;
+  padding: 18px;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  background: #f8f9fa;
+  color: #333;
+  overflow-x: auto;
+  white-space: pre;
+  tab-size: 4;
+  line-height: 1.5;
+  font-size: 0.9rem;
+  text-shadow: none;
+}
+.creational-patterns pre code,
+.creational-patterns code[class*="language-"] {
+  font-family: Consolas, Monaco, "Courier New", monospace;
+  color: inherit;
+  text-shadow: none;
+}
+.creational-patterns pre code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+.creational-patterns :not(pre) > code {
+  overflow-wrap: anywhere;
+}
+.creational-patterns .responsive-table-container table {
+  width: 100%;
+  margin: 0;
+}
+.creational-patterns ol {
+  list-style-type: decimal;
+  padding-left: 20px;
+}
+.creational-patterns .summary li,
+.creational-patterns .workflow-step li {
+  margin-left: 0;
+}
+.creational-patterns .workflow-step ol li {
+  list-style-type: decimal;
+}
+.creational-patterns .workflow-step h5 {
+  margin-top: 0;
+}
+.creational-patterns .key-insight::before {
+  content: none;
+}
+.creational-patterns .key-insight p:first-child::before {
+  content: "\1F4A1 ";
+}
+.creational-patterns .pattern-figure {
+  margin: 20px;
+  max-width: calc(100% - 40px);
+}
+.creational-patterns .pattern-diagram,
+.creational-patterns .pattern-diagram:hover {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  color: rgb(96, 125, 138);
+  fill: none;
+}
+.creational-patterns figcaption {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+body.dark-mode .creational-patterns pre,
+body.dark-mode .creational-patterns pre[class*="language-"] {
+  background: #2a3a4a;
+  color: #e0e0e0;
+  border-color: #4a5a6a;
+}
+body.dark-mode .creational-patterns .pattern-diagram,
+body.dark-mode .creational-patterns .pattern-diagram:hover {
+  color: rgb(207, 216, 220);
+  fill: none;
+}
+body.dark-mode .creational-patterns .token.comment,
+body.dark-mode .creational-patterns .token.prolog,
+body.dark-mode .creational-patterns .token.doctype {
+  color: #aab8c4;
+}
+body.dark-mode .creational-patterns .token.keyword,
+body.dark-mode .creational-patterns .token.atrule {
+  color: #8fc8ff;
+}
+body.dark-mode .creational-patterns .token.string,
+body.dark-mode .creational-patterns .token.char,
+body.dark-mode .creational-patterns .token.builtin {
+  color: #c3df9a;
+}
+body.dark-mode .creational-patterns .token.function,
+body.dark-mode .creational-patterns .token.class-name {
+  color: #ffd18c;
+}
+body.dark-mode .creational-patterns .token.number,
+body.dark-mode .creational-patterns .token.boolean,
+body.dark-mode .creational-patterns .token.constant {
+  color: #edb1d4;
+}
+body.dark-mode .creational-patterns .token.operator,
+body.dark-mode .creational-patterns .token.punctuation {
+  color: #e0e0e0;
+  background: transparent;
+}
+.skip-link {
+  position: absolute;
+  left: -10000px;
+  top: 10px;
+  z-index: 3000;
+  padding: 10px 16px;
+  background: #fff;
+  color: #333;
+}
+.skip-link:focus {
+  left: 10px;
+}
+#darkModeToggle {
+  display: block;
+  position: absolute;
+  width: 40px;
+  height: 20px;
+  margin: 0;
+  opacity: 0;
+  z-index: 1;
+  cursor: pointer;
+}
+#darkModeToggle:focus-visible + .switch-label,
+.creational-patterns :focus-visible,
+#backToTopButton:focus-visible {
+  outline: 3px solid #227ab5;
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .switch-label,
+  .switch-label::before {
+    transition: none;
+  }
+}
+@media screen and (max-width: 480px) {
+  .creational-patterns .responsive-code-container,
+  .creational-patterns .responsive-table-container,
+  .creational-patterns .pattern-figure {
+    margin-left: 12px;
+    margin-right: 12px;
+    max-width: calc(100% - 24px);
+  }
+  .creational-patterns pre,
+  .creational-patterns pre[class*="language-"] {
+    padding: 12px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Keep creation-flow labels readable; reuse horizontal scrolling on small screens. */
+@media screen and (max-width: 600px) {
+  .creational-patterns .pattern-figure {
+    overflow-x: auto;
+  }
+  .creational-patterns .pattern-diagram {
+    min-width: 760px;
+  }
+}
+  </style>
+ </head>
+ <body>
+  <a class="skip-link" href="#main-content">
+   Skip to article
+  </a>
+  <div class="main-container">
+   <div class="left-column">
+    <header>
+     <div class="header-left">
+      <h1>
+       Francesco Sannicola
+      </h1>
+      <h4 class="role">
+       Machine Learning | Software Engineering
+      </h4>
+     </div>
+     <div class="header-right">
+      <div class="contact-info">
+       <a aria-label="View Resume" href="../resume.pdf" rel="noopener noreferrer" target="_blank">
+        <svg fill="#000000" height="18" id="Capa_1" version="1.1" viewBox="0 0 45.057 45.057" width="18" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+         <title>
+          Resume
+         </title>
+         <g>
+          <g id="_x35_8_24_">
+           <g>
+            <path d="M19.558,25.389c-0.067,0.176-0.155,0.328-0.264,0.455c-0.108,0.129-0.24,0.229-0.396,0.301
+                                       c-0.156,0.072-0.347,0.107-0.57,0.107c-0.313,0-0.572-0.068-0.78-0.203c-0.208-0.137-0.374-0.316-0.498-0.541
+                                       c-0.124-0.223-0.214-0.477-0.27-0.756c-0.057-0.279-0.084-0.564-0.084-0.852c0-0.289,0.027-0.572,0.084-0.853
+                                       c0.056-0.281,0.146-0.533,0.27-0.756c0.124-0.225,0.29-0.404,0.498-0.541c0.208-0.137,0.468-0.203,0.78-0.203
+                                       c0.271,0,0.494,0.051,0.666,0.154c0.172,0.105,0.31,0.225,0.414,0.361c0.104,0.137,0.176,0.273,0.216,0.414
+                                       c0.04,0.139,0.068,0.25,0.084,0.33h2.568c-0.112-1.08-0.49-1.914-1.135-2.502c-0.644-0.588-1.558-0.887-2.741-0.895
+                                       c-0.664,0-1.263,0.107-1.794,0.324c-0.532,0.215-0.988,0.52-1.368,0.912c-0.38,0.392-0.672,0.863-0.876,1.416
+                                       c-0.204,0.551-0.307,1.165-0.307,1.836c0,0.631,0.097,1.223,0.288,1.77c0.192,0.549,0.475,1.021,0.847,1.422
+                                       s0.825,0.717,1.361,0.949c0.536,0.23,1.152,0.348,1.849,0.348c0.624,0,1.18-0.105,1.668-0.312
+                                       c0.487-0.209,0.897-0.482,1.229-0.822s0.584-0.723,0.756-1.146c0.172-0.422,0.259-0.852,0.259-1.283h-2.593
+                                       C19.68,25.023,19.627,25.214,19.558,25.389z">
+            </path>
+            <polygon points="26.62,24.812 26.596,24.812 25.192,19.616 22.528,19.616 25.084,28.184 28.036,28.184 30.713,19.616 28,19.616">
+            </polygon>
+            <path d="M33.431,0H5.179v45.057h34.699V6.251L33.431,0z M36.878,42.056H8.179V3h23.706v4.76h4.992L36.878,42.056L36.878,42.056z">
+            </path>
+           </g>
+          </g>
+         </g>
+        </svg>
+        <span class="contact-label">
+         Resume
+        </span>
+       </a>
+       <a aria-label="Send Email" href="mailto:francescosannicola1997@gmail.com">
+        <svg fill="#000000" height="21" viewBox="0 0 1920 1920" width="18" xmlns="http://www.w3.org/2000/svg">
+         <title>
+          Email
+         </title>
+         <path d="M0 1694.235h1920V226H0v1468.235ZM112.941 376.664V338.94H1807.06v37.723L960 1111.233l-847.059-734.57ZM1807.06 526.198v950.513l-351.134-438.89-88.32 70.475 378.353 472.998H174.042l378.353-472.998-88.32-70.475-351.134 438.89V526.198L960 1260.768l847.059-734.57Z" fill-rule="evenodd">
+         </path>
+        </svg>
+        <span class="contact-label">
+         Email
+        </span>
+       </a>
+       <a aria-label="View LinkedIn Profile" href="https://www.linkedin.com/in/francesco-sannicola" rel="noopener noreferrer" target="_blank">
+        <svg fill="#000000" height="18" viewBox="0 0 1920 1920" width="18" xmlns="http://www.w3.org/2000/svg">
+         <title>
+          LinkedIn
+         </title>
+         <path d="M1168 601.321v74.955c72.312-44.925 155.796-71.11 282.643-71.11 412.852 0 465.705 308.588 465.705 577.417v733.213L1438.991 1920v-701.261c0-117.718-42.162-140.06-120.12-140.06-74.114 0-120.12 23.423-120.12 140.06V1920l-483.604-4.204V601.32H1168Zm-687.52-.792v1318.918H0V600.53h480.48Zm-120.12 120.12H120.12v1078.678h240.24V720.65Zm687.52.792H835.267v1075.316l243.364 2.162v-580.18c0-226.427 150.51-260.18 240.24-260.18 109.55 0 240.24 45.165 240.24 260.18v580.18l237.117-2.162v-614.174c0-333.334-93.573-457.298-345.585-457.298-151.472 0-217.057 44.925-281.322 98.98l-16.696 14.173H1047.88V721.441ZM240.24 0c132.493 0 240.24 107.748 240.24 240.24 0 132.493-107.747 240.24-240.24 240.24C107.748 480.48 0 372.733 0 240.24 0 107.748 107.748 0 240.24 0Zm0 120.12c-66.186 0-120.12 53.934-120.12 120.12s53.934 120.12 120.12 120.12 120.12-53.934 120.12-120.12-53.934-120.12-120.12-120.12Z" fill-rule="evenodd">
+         </path>
+        </svg>
+        <span class="contact-label">
+         LinkedIn
+        </span>
+       </a>
+       <a aria-label="View GitHub Profile" href="https://github.com/francesco-s" rel="noopener noreferrer" target="_blank">
+        <svg height="100" viewBox="0 0 24 24" width="100" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px">
+         <title>
+          GitHub
+         </title>
+         <path d="M 12 1.9921875 C 6.4855957 1.9921875 2 6.4769321 2 12 C 2 16.599161 5.1205653 20.490345 9.3671875 21.642578 A 0.50005 0.50005 0 0 0 9.9980469 21.160156 L 9.9980469 17.583984 A 0.50005 0.50005 0 0 0 9.9980469 17.398438 L 9.9980469 17 C 9.9980469 16.463435 10.20474 15.989016 10.550781 15.621094 A 0.50005 0.50005 0 0 0 10.310547 14.794922 C 8.3191985 14.288505 7 12.945349 7 11.492188 C 7 10.73278 7.3615845 9.9960348 8.015625 9.3925781 A 0.50005 0.50005 0 0 0 8.1679688 8.9277344 C 8.066665 8.41934 8.082645 7.8782734 8.0742188 7.34375 C 8.6127591 7.5825374 9.1625862 7.7923277 9.640625 8.1757812 A 0.50005 0.50005 0 0 0 10.09375 8.265625 C 10.683558 8.0925899 11.325263 7.9921875 12 7.9921875 C 12.673669 7.9921875 13.314937 8.0917915 13.904297 8.265625 A 0.50005 0.50005 0 0 0 14.359375 8.1777344 C 14.837054 7.7945694 15.386932 7.5824899 15.925781 7.34375 C 15.916981 7.8785794 15.933881 8.4199143 15.832031 8.9277344 A 0.50005 0.50005 0 0 0 15.982422 9.3945312 C 16.637666 9.9982795 17.001953 10.733923 17.001953 11.494141 C 17.001953 12.945944 15.680991 14.28753 13.689453 14.794922 A 0.50005 0.50005 0 0 0 13.449219 15.623047 C 13.794633 15.990353 14.001953 16.464434 14.001953 17 L 13.998047 21.160156 A 0.50005 0.50005 0 0 0 14.630859 21.642578 C 18.878428 20.490372 22 16.599237 22 12 C 22 6.4769321 17.514404 1.9921875 12 1.9921875 z M 12 2.9921875 C 16.973596 2.9921875 21 7.0170679 21 12 C 21 15.899732 18.470363 19.145081 14.998047 20.388672 L 15.001953 17 C 15.001953 16.421513 14.688987 15.964437 14.404297 15.505859 C 16.432596 14.813419 18.001953 13.369173 18.001953 11.494141 C 18.001953 10.506223 17.528746 9.6094427 16.826172 8.8808594 C 16.963004 8.0965535 17.032667 7.2949738 16.970703 6.4570312 A 0.50005 0.50005 0 0 0 16.3125 6.0214844 C 15.491527 6.300863 14.703446 6.7215379 13.960938 7.2734375 C 13.34208 7.110241 12.692308 6.9921875 12 6.9921875 C 11.30618 6.9921875 10.656139 7.1108109 10.037109 7.2734375 C 9.2949426 6.7217093 8.5094793 6.2989123 7.6894531 6.0195312 A 0.50005 0.50005 0 0 0 7.0292969 6.4550781 C 6.9654142 7.294134 7.0380099 8.0939393 7.1738281 8.8769531 C 6.4709034 9.6061723 6 10.504427 6 11.492188 C 6 13.367279 7.5663139 14.813867 9.59375 15.505859 C 9.3112432 15.962509 9.0029789 16.419068 9 16.992188 L 7.5 16.992188 C 7.2241522 16.992188 7.0052524 16.845238 6.7363281 16.513672 C 6.4674039 16.182105 6.2065255 15.697988 5.9277344 15.234375 A 0.50005 0.50005 0 0 0 5.46875 14.988281 A 0.50005 0.50005 0 0 0 5.0722656 15.75 C 5.3304745 16.179387 5.5979086 16.697395 5.9589844 17.142578 C 6.3200601 17.587762 6.8328478 17.992188 7.5 17.992188 L 8.9980469 17.992188 L 8.9980469 20.388672 C 5.5278881 19.144471 3 15.898951 3 12 C 3 7.0170679 7.0264043 2.9921875 12 2.9921875 z">
+         </path>
+        </svg>
+        <span class="contact-label">
+         GitHub
+        </span>
+       </a>
+      </div>
+     </div>
+     <div class="switch">
+      <input aria-label="Enable dark mode" id="darkModeToggle" type="checkbox"/>
+      <label class="switch-label" for="darkModeToggle">
+       <span aria-hidden="true" class="sun-icon">
+        ☀
+       </span>
+       <!-- Sun icon (Light Mode) -->
+       <span aria-hidden="true" class="moon-icon">
+        ☾
+       </span>
+       <!-- Moon icon (Dark Mode) -->
+      </label>
+     </div>
+    </header>
+   </div>
+  </div>
+  <div aria-label="Main navigation" class="link-container" role="navigation">
+   <div class="link-column">
+    <a href="../">
+     <i class="fas fa-home">
+     </i>
+     Home
+    </a>
+   </div>
+   <div class="link-column">
+    <a href="../projects/">
+     <i class="fas fa-project-diagram">
+     </i>
+     Projects
+    </a>
+   </div>
+   <div class="link-column">
+    <a href="../articles/">
+     <i class="fas fa-newspaper">
+     </i>
+     Articles
+    </a>
+   </div>
+   <div class="link-column">
+    <a href="../about.html">
+     <i class="fas fa-user">
+     </i>
+     About
+    </a>
+   </div>
+  </div>
+    <main class="article-container creational-patterns" id="main-content">
+   <h1><span style="font-size: 16px">./articles/</span> Software Engineering Essentials: Creational Design Patterns</h1>
+   <div class="last-updated"><span class="last-updated-label">Last modified:</span> <time datetime="2026-10-18">October 18, 2026</time></div>
+   <p>Creational design patterns organize how objects come into existence: which implementation is selected, how a product is assembled or copied, and when an instance is shared. They move those decisions behind deliberate construction boundaries instead of scattering concrete constructor calls and lifecycle assumptions across client code.</p>
+    <p>This chapter covers all five Creational patterns in the Gang of Four catalog. Each section starts with a concrete design problem, follows the creation flow, and supplies independent Python and Java examples with matching demo output. For the other GoF categories, explore <a href="oop-structural-design-patterns.html">Structural Design Patterns</a>, focused on composition, and <a href="oop-behavioral-patterns.html">Behavioral Design Patterns</a>, focused on object collaboration.</p>
+   <p>Project source: <a href="https://github.com/francesco-s/oop-design-patterns-handbook/tree/main/creational" target="_blank" rel="noopener noreferrer">OOP Design Patterns Handbook: Creational Patterns</a>.</p>
+   <nav class="summary" aria-label="Article sections">
+    <h4>Quick Navigation</h4>
+    <ol><li><a href="#factory-method">Factory Method</a></li><li><a href="#abstract-factory">Abstract Factory</a></li><li><a href="#builder">Builder</a></li><li><a href="#prototype">Prototype</a></li><li><a href="#singleton">Singleton</a></li>
+     <li><a href="#comparison">Detailed Comparison</a></li>
+     <li><a href="#conclusion">Putting It All Together</a></li>
+    </ol>
+   </nav>
+   <div class="highlight-box">
+    <p>Run each Python example independently with Python 3.10 or later; only the standard library is required. Each Java example is a separate source file named in its first comment. Compile and run its public class, for example <code>javac -encoding UTF-8 FactoryMethodDemo.java</code> followed by <code>java FactoryMethodDemo</code>. The Java examples target Java 8 or later and use only JDK APIs. Do not combine the snippets into one file.</p>
+    <p>Repository verification: the linked source could not be retrieved during preparation. These are independently tested Python reference examples, not verified reproductions of the repository's APIs or naming. No specific upstream discrepancy is asserted without inspecting that source.</p>
+   </div>
+   <h4>Quick Reference</h4>
+   <div class="responsive-table-container" role="region" tabindex="0" aria-label="Scrollable creational patterns quick reference"><table><thead><tr><th scope="col">Pattern</th><th scope="col">Core Intent</th><th scope="col">Key Benefit</th></tr></thead><tbody><tr><td>Factory Method</td><td>Delegate a creation hook to subclasses</td><td>Extend a shared workflow with a different product</td></tr><tr><td>Abstract Factory</td><td>Create a family of related products</td><td>Keep the family selection consistent across product types</td></tr><tr><td>Builder</td><td>Separate stepwise assembly from the finished object</td><td>Name construction steps and control publication</td></tr><tr><td>Prototype</td><td>Copy a configured object through a cloning contract</td><td>Reuse runtime presets without reconstructing them in client code</td></tr><tr><td>Singleton</td><td>Control one instance and a shared access point</td><td>Make identity and runtime scope explicit</td></tr></tbody></table></div>
+   <p>The diagrams trace creation and ownership, not every method or inheritance relationship. On narrow screens, diagrams scroll horizontally to keep labels readable. Code and output use the same expandable component as the Behavioral chapter and remain readable if JavaScript is unavailable.</p>
+
+   <h2 id="factory-method">1. Factory Method</h2>
+   <h4>Intent</h4>
+   <p>Factory Method defines a creation hook in a superclass and lets subclasses decide which concrete product to return. The superclass can then run its normal workflow against the product interface rather than a hard-coded class.</p>
+   <h4>The Problem It Solves</h4>
+   <p>A logistics service starts with road deliveries. If its planning workflow constructs <code>Truck</code> directly, adding sea delivery forces shipping-specific decisions into that workflow. The shared dispatch process should remain stable while subclasses supply the appropriate transport.</p>
+   <h4>Structure</h4>
+   <ul>
+    <li>Product: <code>Transport</code> defines <code>deliver(parcel)</code>.</li>
+    <li>Concrete Products: <code>Truck</code> and <code>Ship</code> provide different delivery behavior.</li>
+    <li>Creator: <code>Logistics</code> owns <code>plan_delivery()</code> and declares the factory method <code>create_transport()</code>.</li>
+    <li>Concrete Creators: <code>RoadLogistics</code> and <code>SeaLogistics</code> override only the creation hook.</li>
+   </ul>
+   <figure class="pattern-figure" tabindex="0" aria-label="Factory Method creation-flow diagram, horizontally scrollable on narrow screens">
+    <svg class="pattern-diagram" xmlns="http://www.w3.org/2000/svg" width="760" height="280" viewBox="0 0 760 280" role="img" aria-labelledby="factory-method-diagram-title factory-method-diagram-desc">
+     <title id="factory-method-diagram-title">Factory Method delegates product creation</title>
+     <desc id="factory-method-diagram-desc">The inherited plan_delivery workflow calls a factory method. RoadLogistics creates a Truck and SeaLogistics creates a Ship. The product is returned to the workflow and used through Transport.</desc>
+     <defs><marker id="factory-method-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+     <g font-family="Arial, sans-serif"><rect x="20" y="95" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="110.0" y="131.0" text-anchor="middle" fill="currentColor" font-size="16">plan_delivery()</text>
+<text x="110.0" y="154.0" text-anchor="middle" fill="currentColor" font-size="13">inherited workflow</text>
+<rect x="290" y="95" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="380.0" y="131.0" text-anchor="middle" fill="currentColor" font-size="16">create_transport()</text>
+<text x="380.0" y="154.0" text-anchor="middle" fill="currentColor" font-size="13">overridden creation hook</text>
+<rect x="560" y="95" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="650.0" y="131.0" text-anchor="middle" fill="currentColor" font-size="16">Transport</text>
+<text x="650.0" y="154.0" text-anchor="middle" fill="currentColor" font-size="13">Truck or Ship</text>
+<path d="M200 135 H285" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#factory-method-arrow)"/>
+<path d="M470 135 H555" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#factory-method-arrow)"/>
+<text x="245" y="80" fill="currentColor" text-anchor="middle" font-size="14">1. delegate</text>
+<text x="515" y="80" fill="currentColor" text-anchor="middle" font-size="14">2. create</text>
+<path d="M650 175 V225 H110 V180" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#factory-method-arrow)"/>
+<text x="380" y="251" fill="currentColor" text-anchor="middle" font-size="14">3. Return the product; the workflow calls deliver()</text>
+</g>
+    </svg>
+    <figcaption>Changing the creator subclass changes the product, not the delivery workflow.</figcaption>
+   </figure>
+   <div class="workflow-step">
+    <h5>From Product Selection to Delivery</h5>
+    <ol>
+     <li>The application selects a concrete logistics service at its configuration boundary.</li>
+     <li>The inherited planning method calls the creation hook on that service.</li>
+     <li>The returned product performs delivery through the common interface.</li>
+    </ol>
+    <p>The demo prints messages instead of contacting a shipping provider. Its dispatch approval is just a visible shared step, not a real business validation.</p>
+   </div>
+   <h4>Python Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-python">from abc import ABC, abstractmethod
+
+
+class Transport(ABC):
+    @abstractmethod
+    def deliver(self, parcel: str) -&gt; str:
+        pass
+
+
+class Truck(Transport):
+    def deliver(self, parcel: str) -&gt; str:
+        return f"Truck delivers {parcel} by road"
+
+
+class Ship(Transport):
+    def deliver(self, parcel: str) -&gt; str:
+        return f"Ship delivers {parcel} by sea"
+
+
+class Logistics(ABC):
+    @abstractmethod
+    def create_transport(self) -&gt; Transport:
+        pass
+
+    def plan_delivery(self, parcel: str) -&gt; str:
+        transport = self.create_transport()
+        return f"Dispatch approved: {transport.deliver(parcel)}"
+
+
+class RoadLogistics(Logistics):
+    def create_transport(self) -&gt; Transport:
+        return Truck()
+
+
+class SeaLogistics(Logistics):
+    def create_transport(self) -&gt; Transport:
+        return Ship()
+
+
+if __name__ == "__main__":
+    for logistics in (RoadLogistics(), SeaLogistics()):
+        print(logistics.plan_delivery("books"))</code></pre></div>
+<h4>Java Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-java">// FactoryMethodDemo.java
+
+interface Transport {
+    String deliver(String parcel);
+}
+
+final class Truck implements Transport {
+    public String deliver(String parcel) {
+        return "Truck delivers " + parcel + " by road";
+    }
+}
+
+final class Ship implements Transport {
+    public String deliver(String parcel) {
+        return "Ship delivers " + parcel + " by sea";
+    }
+}
+
+abstract class Logistics {
+    protected abstract Transport createTransport();
+
+    public String planDelivery(String parcel) {
+        Transport transport = createTransport();
+        return "Dispatch approved: " + transport.deliver(parcel);
+    }
+}
+
+final class RoadLogistics extends Logistics {
+    @Override
+    protected Transport createTransport() { return new Truck(); }
+}
+
+final class SeaLogistics extends Logistics {
+    @Override
+    protected Transport createTransport() { return new Ship(); }
+}
+
+public class FactoryMethodDemo {
+    public static void main(String[] args) {
+        Logistics[] services = {new RoadLogistics(), new SeaLogistics()};
+        for (Logistics logistics : services) {
+            System.out.println(logistics.planDelivery("books"));
+        }
+    }
+}</code></pre></div>
+<h4>Output</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-none">Dispatch approved: Truck delivers books by road
+Dispatch approved: Ship delivers books by sea</code></pre></div>
+   <h4>Factory Method vs. a Simple Factory</h4>
+   <p>A helper such as <code>make_transport(kind)</code> that switches on a string can centralize construction, but that alone is not the GoF Factory Method pattern. Here, creation is a polymorphic extension point used by an inherited workflow. A conditional may still select the creator at startup; the pattern removes product-specific construction from the workflow, not every conditional from the application.</p>
+   <div class="key-insight">
+    <p>A factory method need not allocate a new object on every call: it may return a cached or pooled product if the ownership contract permits it. This example deliberately creates a fresh transport each time. The main cost is an extra creator hierarchy, which is unnecessary when product creation is simple and unlikely to vary.</p>
+   </div>
+   <h4>When to Use It</h4>
+   <ul>
+    <li>When a framework or reusable workflow should let subclasses choose one collaborating product.</li>
+    <li>When adding a product variant should not require rewriting the inherited operation that uses it.</li>
+   </ul>
+
+   <h2 id="abstract-factory">2. Abstract Factory</h2>
+   <h4>Intent</h4>
+   <p>Abstract Factory provides a creation interface for a family of related products. A client receives one factory object and obtains each product through its abstract interface, without naming the concrete implementations.</p>
+   <h4>The Problem It Solves</h4>
+   <p>A settings screen needs both a button and a checkbox. Selecting a theme independently for each control can accidentally produce a light button alongside a dark checkbox. Passing one theme factory to the screen keeps that family decision together instead of scattering it across widget construction calls.</p>
+   <h4>Structure</h4>
+   <ul>
+    <li>Abstract Products: <code>Button</code> and <code>Checkbox</code> are separate product types.</li>
+    <li>Concrete Products: the light and dark implementations form two matching families.</li>
+    <li>Abstract Factory: <code>GUIFactory</code> declares a creation method for each product type.</li>
+    <li>Concrete Factories: <code>LightFactory</code> and <code>DarkFactory</code> return the matching variants.</li>
+    <li>Client: <code>render_settings()</code> depends only on the factory and product contracts.</li>
+   </ul>
+   <figure class="pattern-figure" tabindex="0" aria-label="Abstract Factory creation-flow diagram, horizontally scrollable on narrow screens">
+    <svg class="pattern-diagram" xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330" role="img" aria-labelledby="abstract-factory-diagram-title abstract-factory-diagram-desc">
+     <title id="abstract-factory-diagram-title">Abstract Factory creates a coherent product family</title>
+     <desc id="abstract-factory-diagram-desc">The settings screen receives a GUIFactory. A LightFactory creates a LightButton and LightCheckbox; a DarkFactory creates a DarkButton and DarkCheckbox. Both products are obtained from the same selected factory.</desc>
+     <defs><marker id="abstract-factory-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+     <g font-family="Arial, sans-serif"><rect x="20" y="105" width="170" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="105.0" y="141.0" text-anchor="middle" fill="currentColor" font-size="16">Settings screen</text>
+<text x="105.0" y="164.0" text-anchor="middle" fill="currentColor" font-size="13">uses product interfaces</text>
+<rect x="300" y="105" width="170" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="385.0" y="141.0" text-anchor="middle" fill="currentColor" font-size="16">GUIFactory</text>
+<text x="385.0" y="164.0" text-anchor="middle" fill="currentColor" font-size="13">LightFactory or DarkFactory</text>
+<rect x="570" y="30" width="170" height="70" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="655.0" y="61.0" text-anchor="middle" fill="currentColor" font-size="16">Button</text>
+<text x="655.0" y="84.0" text-anchor="middle" fill="currentColor" font-size="13">matching theme</text>
+<rect x="570" y="215" width="170" height="70" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="655.0" y="246.0" text-anchor="middle" fill="currentColor" font-size="16">Checkbox</text>
+<text x="655.0" y="269.0" text-anchor="middle" fill="currentColor" font-size="13">matching theme</text>
+<path d="M190 145 H295" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#abstract-factory-arrow)"/>
+<path d="M470 125 H520 V65 H565" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#abstract-factory-arrow)"/>
+<path d="M470 165 H520 V250 H565" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#abstract-factory-arrow)"/>
+<text x="245" y="90" fill="currentColor" text-anchor="middle" font-size="14">1. inject family</text>
+<text x="585" y="17" fill="currentColor" text-anchor="middle" font-size="14">2. create_button()</text>
+<text x="585" y="310" fill="currentColor" text-anchor="middle" font-size="14">3. create_checkbox()</text>
+</g>
+    </svg>
+    <figcaption>Select a family once at the composition boundary, then create each related product through that factory.</figcaption>
+   </figure>
+   <div class="workflow-step">
+    <h5>One Family Decision, Multiple Products</h5>
+    <ol>
+     <li>The application injects a light or dark factory into the settings renderer.</li>
+     <li>The renderer asks that same factory for a button and a checkbox.</li>
+     <li>Each product renders through its own interface; the renderer contains no theme-specific branches.</li>
+    </ol>
+    <p>The controls return descriptive strings rather than invoking a GUI toolkit. Matching appearance is the family constraint in this example; other domains may have stronger protocol or platform compatibility requirements.</p>
+   </div>
+   <h4>Python Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-python">from abc import ABC, abstractmethod
+
+
+class Button(ABC):
+    @abstractmethod
+    def render(self) -&gt; str:
+        pass
+
+
+class Checkbox(ABC):
+    @abstractmethod
+    def render(self) -&gt; str:
+        pass
+
+
+class LightButton(Button):
+    def render(self) -&gt; str:
+        return "Light button"
+
+
+class DarkButton(Button):
+    def render(self) -&gt; str:
+        return "Dark button"
+
+
+class LightCheckbox(Checkbox):
+    def render(self) -&gt; str:
+        return "Light checkbox"
+
+
+class DarkCheckbox(Checkbox):
+    def render(self) -&gt; str:
+        return "Dark checkbox"
+
+
+class GUIFactory(ABC):
+    @abstractmethod
+    def create_button(self) -&gt; Button:
+        pass
+
+    @abstractmethod
+    def create_checkbox(self) -&gt; Checkbox:
+        pass
+
+
+class LightFactory(GUIFactory):
+    def create_button(self) -&gt; Button:
+        return LightButton()
+
+    def create_checkbox(self) -&gt; Checkbox:
+        return LightCheckbox()
+
+
+class DarkFactory(GUIFactory):
+    def create_button(self) -&gt; Button:
+        return DarkButton()
+
+    def create_checkbox(self) -&gt; Checkbox:
+        return DarkCheckbox()
+
+
+def render_settings(factory: GUIFactory) -&gt; str:
+    button = factory.create_button()
+    checkbox = factory.create_checkbox()
+    return f"{button.render()} | {checkbox.render()}"
+
+
+if __name__ == "__main__":
+    print(render_settings(LightFactory()))
+    print(render_settings(DarkFactory()))</code></pre></div>
+<h4>Java Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-java">// AbstractFactoryDemo.java
+
+interface Button { String render(); }
+interface Checkbox { String render(); }
+
+final class LightButton implements Button {
+    public String render() { return "Light button"; }
+}
+
+final class DarkButton implements Button {
+    public String render() { return "Dark button"; }
+}
+
+final class LightCheckbox implements Checkbox {
+    public String render() { return "Light checkbox"; }
+}
+
+final class DarkCheckbox implements Checkbox {
+    public String render() { return "Dark checkbox"; }
+}
+
+interface GUIFactory {
+    Button createButton();
+    Checkbox createCheckbox();
+}
+
+final class LightFactory implements GUIFactory {
+    public Button createButton() { return new LightButton(); }
+    public Checkbox createCheckbox() { return new LightCheckbox(); }
+}
+
+final class DarkFactory implements GUIFactory {
+    public Button createButton() { return new DarkButton(); }
+    public Checkbox createCheckbox() { return new DarkCheckbox(); }
+}
+
+public class AbstractFactoryDemo {
+    static String renderSettings(GUIFactory factory) {
+        Button button = factory.createButton();
+        Checkbox checkbox = factory.createCheckbox();
+        return button.render() + " | " + checkbox.render();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(renderSettings(new LightFactory()));
+        System.out.println(renderSettings(new DarkFactory()));
+    }
+}</code></pre></div>
+<h4>Output</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-none">Light button | Light checkbox
+Dark button | Dark checkbox</code></pre></div>
+   <h4>The Extension Trade-off</h4>
+   <p>Adding a new family, such as a high-contrast theme, means adding its products and one new factory. Adding a new product type, such as a slider, changes the factory interface and every concrete factory. Abstract Factory therefore works best when the product categories are reasonably stable but their families vary.</p>
+   <div class="key-insight">
+    <p>The interface does not magically enforce compatibility. Each concrete factory must actually create a coherent family, and client code must use the selected factory consistently. Replacing the factory affects future creation only; it does not retheme widgets already created. The example needs no factory-of-factories layer.</p>
+   </div>
+   <h4>When to Use It</h4>
+   <ul>
+    <li>When several product types must vary together as one platform, provider, or theme family.</li>
+    <li>When clients should be reusable across families without importing their concrete product classes.</li>
+   </ul>
+
+   <h2 id="builder">3. Builder</h2>
+   <h4>Intent</h4>
+   <p>Builder separates a multi-step assembly process from the finished object. Named steps collect the necessary parts, while a final build operation creates the product. A reusable construction recipe can be placed in an optional director.</p>
+   <h4>The Problem It Solves</h4>
+   <p>A report grows from a title and a few ordered sections into several named configurations. Large constructor calls obscure what each value means, while scattered mutations can expose unfinished reports. A builder holds the temporary assembly state and publishes a finished report only when the required title is present.</p>
+   <h4>Structure</h4>
+   <ul>
+    <li>Product: <code>Report</code> stores a title and an immutable sequence of section strings.</li>
+    <li>Builder: <code>ReportBuilder</code> defines reset, title, section, and build operations.</li>
+    <li>Concrete Builder: <code>TextReportBuilder</code> collects data and produces the report.</li>
+    <li>Director: <code>ReportDirector</code> encapsulates the quarterly recipe, but clients may also use the builder directly.</li>
+   </ul>
+   <figure class="pattern-figure" tabindex="0" aria-label="Builder creation-flow diagram, horizontally scrollable on narrow screens">
+    <svg class="pattern-diagram" xmlns="http://www.w3.org/2000/svg" width="760" height="280" viewBox="0 0 760 280" role="img" aria-labelledby="builder-diagram-title builder-diagram-desc">
+     <title id="builder-diagram-title">Builder separates assembly from the finished report</title>
+     <desc id="builder-diagram-desc">The optional director resets and configures a builder. The builder validates its state, creates an immutable report, and resets itself. Future builder changes cannot alter the completed report.</desc>
+     <defs><marker id="builder-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+     <g font-family="Arial, sans-serif"><rect x="20" y="85" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="110.0" y="121.0" text-anchor="middle" fill="currentColor" font-size="16">ReportDirector</text>
+<text x="110.0" y="144.0" text-anchor="middle" fill="currentColor" font-size="13">orders construction steps</text>
+<rect x="290" y="85" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="380.0" y="121.0" text-anchor="middle" fill="currentColor" font-size="16">TextReportBuilder</text>
+<text x="380.0" y="144.0" text-anchor="middle" fill="currentColor" font-size="13">holds unfinished state</text>
+<rect x="560" y="85" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="650.0" y="121.0" text-anchor="middle" fill="currentColor" font-size="16">Report</text>
+<text x="650.0" y="144.0" text-anchor="middle" fill="currentColor" font-size="13">title + immutable sections</text>
+<path d="M200 125 H285" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#builder-arrow)"/>
+<path d="M470 125 H555" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#builder-arrow)"/>
+<text x="245" y="65" fill="currentColor" text-anchor="middle" font-size="14">1. configure</text>
+<text x="515" y="65" fill="currentColor" text-anchor="middle" font-size="14">2. build()</text>
+<path d="M380 165 V225 H260 V125 H285" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#builder-arrow)"/>
+<text x="490" y="247" fill="currentColor" text-anchor="middle" font-size="14">3. Reset builder state for the next report</text>
+</g>
+    </svg>
+    <figcaption>The builder is mutable during assembly; the published Report owns a separate, immutable collection.</figcaption>
+   </figure>
+   <div class="workflow-step">
+    <h5>A Defined Builder Lifecycle</h5>
+    <ol>
+     <li>Start from reset state and set the title and ordered sections.</li>
+     <li><code>build()</code> rejects an empty title without returning a partial product.</li>
+     <li>On success, copy the section collection into the report and reset the builder for reuse.</li>
+    </ol>
+    <p>The quarterly recipe and a directly assembled follow-up note use the same builder. Their completed reports remain independent even though the builder is reused.</p>
+   </div>
+   <h4>Python Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-python">from __future__ import annotations
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class Report:
+    title: str
+    sections: tuple[str, ...]
+
+
+class ReportBuilder(ABC):
+    @abstractmethod
+    def reset(self) -&gt; None:
+        pass
+
+    @abstractmethod
+    def set_title(self, title: str) -&gt; ReportBuilder:
+        pass
+
+    @abstractmethod
+    def add_section(self, text: str) -&gt; ReportBuilder:
+        pass
+
+    @abstractmethod
+    def build(self) -&gt; Report:
+        pass
+
+
+class TextReportBuilder(ReportBuilder):
+    def __init__(self):
+        self.reset()
+
+    def reset(self) -&gt; None:
+        self._title = ""
+        self._sections: list[str] = []
+
+    def set_title(self, title: str) -&gt; TextReportBuilder:
+        self._title = title.strip()
+        return self
+
+    def add_section(self, text: str) -&gt; TextReportBuilder:
+        self._sections.append(text)
+        return self
+
+    def build(self) -&gt; Report:
+        if not self._title:
+            raise ValueError("A report requires a title")
+        result = Report(self._title, tuple(self._sections))
+        self.reset()
+        return result
+
+
+class ReportDirector:
+    def quarterly(self, builder: ReportBuilder) -&gt; Report:
+        builder.reset()
+        builder.set_title("Quarterly review")
+        builder.add_section("Revenue: 120")
+        builder.add_section("Costs: 80")
+        return builder.build()
+
+
+if __name__ == "__main__":
+    builder = TextReportBuilder()
+    report = ReportDirector().quarterly(builder)
+    note = builder.set_title("Follow-up").add_section("Action: review costs").build()
+
+    for product in (report, note):
+        print(f"{product.title}: {' | '.join(product.sections)}")
+    print(f"First report still has {len(report.sections)} sections")</code></pre></div>
+<h4>Java Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-java">// BuilderDemo.java
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
+final class Report {
+    private final String title;
+    private final List&lt;String&gt; sections;
+
+    public Report(String title, List&lt;String&gt; sections) {
+        this.title = title;
+        this.sections = Collections.unmodifiableList(new ArrayList&lt;&gt;(sections));
+    }
+
+    public String getTitle() { return title; }
+    public List&lt;String&gt; getSections() { return sections; }
+}
+
+interface ReportBuilder {
+    void reset();
+    ReportBuilder setTitle(String title);
+    ReportBuilder addSection(String text);
+    Report build();
+}
+
+final class TextReportBuilder implements ReportBuilder {
+    private String title;
+    private final List&lt;String&gt; sections = new ArrayList&lt;&gt;();
+
+    public TextReportBuilder() { reset(); }
+
+    public void reset() {
+        title = "";
+        sections.clear();
+    }
+
+    public TextReportBuilder setTitle(String title) {
+        this.title = Objects.requireNonNull(title, "title").trim();
+        return this;
+    }
+
+    public TextReportBuilder addSection(String text) {
+        sections.add(Objects.requireNonNull(text, "section"));
+        return this;
+    }
+
+    public Report build() {
+        if (title.isEmpty()) throw new IllegalStateException("A report requires a title");
+        Report result = new Report(title, sections);
+        reset();
+        return result;
+    }
+}
+
+final class ReportDirector {
+    public Report quarterly(ReportBuilder builder) {
+        builder.reset();
+        builder.setTitle("Quarterly review");
+        builder.addSection("Revenue: 120");
+        builder.addSection("Costs: 80");
+        return builder.build();
+    }
+}
+
+public class BuilderDemo {
+    public static void main(String[] args) {
+        TextReportBuilder builder = new TextReportBuilder();
+        Report report = new ReportDirector().quarterly(builder);
+        Report note = builder.setTitle("Follow-up").addSection("Action: review costs").build();
+
+        for (Report product : new Report[] {report, note}) {
+            System.out.println(product.getTitle() + ": " + String.join(" | ", product.getSections()));
+        }
+        System.out.println("First report still has " + report.getSections().size() + " sections");
+    }
+}</code></pre></div>
+<h4>Output</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-none">Quarterly review: Revenue: 120 | Costs: 80
+Follow-up: Action: review costs
+First report still has 2 sections</code></pre></div>
+   <h4>Fluent Calls Are Optional</h4>
+   <p>Returning the builder from its configuration methods enables chaining, but fluent syntax is not what defines the pattern. The important separation is between assembly state and the published product. This example uses one representation to keep the lifecycle visible. A second builder could interpret the same steps as a different representation; when product types differ, the director can perform the steps and let each concrete builder expose its own result.</p>
+   <div class="key-insight">
+    <p>The Python product uses a tuple of strings; the Java product defensively copies its list and exposes an unmodifiable view. Those choices are sufficient for the immutable elements used here, not a general deep-freezing mechanism. The mutable builder is not thread-safe. Reset-on-success is an explicit policy, not a requirement of Builder; failed builds retain their state so the client can correct it or call reset.</p>
+   </div>
+   <h4>When to Use It</h4>
+   <ul>
+    <li>When meaningful assembly steps, validation, or reusable recipes make a large constructor difficult to read.</li>
+    <li>When construction must hide incomplete state. For a small Python object, keyword arguments or a dataclass may already be enough.</li>
+   </ul>
+
+   <h2 id="prototype">4. Prototype</h2>
+   <h4>Intent</h4>
+   <p>Prototype creates a new object by copying a configured instance through a cloning contract. The client requests a duplicate instead of reconstructing that object's concrete class and initialization details.</p>
+   <h4>The Problem It Solves</h4>
+   <p>A document template already contains a title, sections, and tags. Rebuilding its defaults at every call site duplicates configuration logic. Assigning the template to another variable is not a copy, and copying only its outer container leaves nested mutable sections shared. A clone operation gives the document one place to define what a usable independent duplicate means.</p>
+   <h4>Structure</h4>
+   <ul>
+    <li>Prototype: a contract for <code>clone()</code> in Python or <code>copy()</code> in the Java example.</li>
+    <li>Concrete Prototype: <code>Document</code> owns the copy policy for its sections and their tag lists.</li>
+    <li>Client: clones a prepared template and then customizes the duplicate.</li>
+   </ul>
+   <figure class="pattern-figure" tabindex="0" aria-label="Prototype creation-flow diagram, horizontally scrollable on narrow screens">
+    <svg class="pattern-diagram" xmlns="http://www.w3.org/2000/svg" width="760" height="260" viewBox="0 0 760 260" role="img" aria-labelledby="prototype-diagram-title prototype-diagram-desc">
+     <title id="prototype-diagram-title">Prototype duplicates a configured object</title>
+     <desc id="prototype-diagram-desc">The client requests a clone of an existing Document. The copy operation creates a new Document, new Section objects, and new tag lists. Editing the clone does not change the original template.</desc>
+     <defs><marker id="prototype-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+     <g font-family="Arial, sans-serif"><rect x="20" y="95" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="110.0" y="131.0" text-anchor="middle" fill="currentColor" font-size="16">Template</text>
+<text x="110.0" y="154.0" text-anchor="middle" fill="currentColor" font-size="13">configured Document</text>
+<rect x="290" y="95" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="380.0" y="131.0" text-anchor="middle" fill="currentColor" font-size="16">clone() / copy()</text>
+<text x="380.0" y="154.0" text-anchor="middle" fill="currentColor" font-size="13">copy policy lives here</text>
+<rect x="560" y="95" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="650.0" y="131.0" text-anchor="middle" fill="currentColor" font-size="16">New Document</text>
+<text x="650.0" y="154.0" text-anchor="middle" fill="currentColor" font-size="13">independent mutable state</text>
+<path d="M200 135 H285" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#prototype-arrow)"/>
+<path d="M470 135 H555" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#prototype-arrow)"/>
+<text x="245" y="70" fill="currentColor" text-anchor="middle" font-size="14">1. request clone</text>
+<text x="515" y="70" fill="currentColor" text-anchor="middle" font-size="14">2. copy sections</text>
+<text x="380" y="220" fill="currentColor" text-anchor="middle" font-size="14">3. Add a regional tag to the clone; the template stays unchanged</text>
+</g>
+    </svg>
+    <figcaption>New identity does not imply independent internals: the clone operation must define which nested objects to copy.</figcaption>
+   </figure>
+   <div class="workflow-step">
+    <h5>Clone, Then Customize</h5>
+    <ol>
+     <li>Create a template containing a summary section and a baseline tag.</li>
+     <li>Request a clone that copies the mutable section objects and tag lists.</li>
+     <li>Rename the clone and append a regional tag; verify that the original still has only its baseline tag.</li>
+    </ol>
+    <p>For this small object tree, Python delegates to <code>deepcopy()</code>; Java uses explicit copy constructors rather than <code>Object.clone()</code> or <code>Cloneable</code>.</p>
+   </div>
+   <h4>Python Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-python">from __future__ import annotations
+from abc import ABC, abstractmethod
+from copy import deepcopy
+from dataclasses import dataclass, field
+
+
+class Prototype(ABC):
+    @abstractmethod
+    def clone(self) -&gt; Prototype:
+        pass
+
+
+@dataclass
+class Section:
+    text: str
+    tags: list[str] = field(default_factory=list)
+
+
+@dataclass
+class Document(Prototype):
+    title: str
+    sections: list[Section] = field(default_factory=list)
+
+    def clone(self) -&gt; Document:
+        return deepcopy(self)
+
+
+if __name__ == "__main__":
+    template = Document("Quarterly review", [Section("Summary", ["baseline"])])
+    regional = template.clone()
+    regional.title = "Regional review"
+    regional.sections[0].tags.append("regional")
+
+    print(f"Original: {template.title} / {', '.join(template.sections[0].tags)}")
+    print(f"Clone: {regional.title} / {', '.join(regional.sections[0].tags)}")
+    independent = regional.sections[0] is not template.sections[0]
+    print(f"Nested sections independent: {'yes' if independent else 'no'}")</code></pre></div>
+<h4>Java Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-java">// PrototypeDemo.java
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+interface Prototype&lt;T&gt; { T copy(); }
+
+final class Section {
+    private final String text;
+    private final List&lt;String&gt; tags;
+
+    public Section(String text, List&lt;String&gt; tags) {
+        this.text = text;
+        this.tags = new ArrayList&lt;&gt;(tags);
+    }
+
+    public Section(Section source) {
+        this(source.text, source.tags);
+    }
+
+    // Tags are deliberately editable in this example.
+    public List&lt;String&gt; getTags() { return tags; }
+}
+
+final class Document implements Prototype&lt;Document&gt; {
+    private String title;
+    private final List&lt;Section&gt; sections;
+
+    public Document(String title, List&lt;Section&gt; sections) {
+        this.title = title;
+        this.sections = new ArrayList&lt;&gt;(sections);
+    }
+
+    private Document(Document source) {
+        title = source.title;
+        sections = new ArrayList&lt;&gt;();
+        for (Section section : source.sections) {
+            sections.add(new Section(section));
+        }
+    }
+
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+    public List&lt;Section&gt; getSections() { return sections; }
+
+    @Override
+    public Document copy() { return new Document(this); }
+}
+
+public class PrototypeDemo {
+    public static void main(String[] args) {
+        Document template = new Document("Quarterly review", Arrays.asList(
+                new Section("Summary", Arrays.asList("baseline"))));
+        Document regional = template.copy();
+        regional.setTitle("Regional review");
+        regional.getSections().get(0).getTags().add("regional");
+
+        System.out.println("Original: " + template.getTitle() + " / "
+                + String.join(", ", template.getSections().get(0).getTags()));
+        System.out.println("Clone: " + regional.getTitle() + " / "
+                + String.join(", ", regional.getSections().get(0).getTags()));
+        boolean independent = regional.getSections().get(0) != template.getSections().get(0);
+        System.out.println("Nested sections independent: " + (independent ? "yes" : "no"));
+    }
+}</code></pre></div>
+<h4>Output</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-none">Original: Quarterly review / baseline
+Clone: Regional review / baseline, regional
+Nested sections independent: yes</code></pre></div>
+   <h4>Shallow Copy vs. Deep Copy</h4>
+   <p>A shallow copy creates a new outer object but retains references to its nested objects. A deep copy recursively copies nested state. Python's <a href="https://docs.python.org/3/library/copy.html" target="_blank" rel="noopener noreferrer">copy module</a> uses a memo during deep copying to handle cycles and preserve repeated references within the copied graph. The Java demo handles an acyclic tree only: it copies each section occurrence independently, so preserving aliases or cycles would require an explicit identity map.</p>
+   <div class="key-insight">
+    <p>Define the copy boundary deliberately. Immutable values can often be shared; open files, sockets, locks, and database sessions require domain-specific handling rather than indiscriminate cloning. Copying is not inherently faster than constructing a new object. For large graphs, measure the cost and consider custom copy logic.</p>
+    <p>A registry of named prototypes is optional. If one is added, return clones rather than exposing a mutable shared template, and define whether registration also copies its input.</p>
+   </div>
+   <h4>When to Use It</h4>
+   <ul>
+    <li>When new objects should start from rich, runtime-configured presets instead of repeated initialization recipes.</li>
+    <li>When a client knows a cloning interface but should not know each concrete class's constructor.</li>
+   </ul>
+
+   <h2 id="singleton">5. Singleton</h2>
+   <h4>Intent</h4>
+   <p>Singleton combines controlled creation of one instance with a shared access point. Its distinguishing question is not which product to create, but how callers obtain the same instance within a defined runtime scope.</p>
+   <h4>The Problem It Solves</h4>
+   <p>Several worker threads need the same runtime configuration. An unprotected check-then-create sequence can allocate multiple instances under concurrent first access. A Python implementation that only protects <code>__new__()</code> can also run <code>__init__()</code> repeatedly on the reused object. Construction and publication must therefore be treated as one lifecycle operation.</p>
+   <h4>Structure</h4>
+   <ul>
+    <li>Shared Product: <code>RuntimeConfig</code> exposes fixed environment and timeout values.</li>
+    <li>Python Creation Boundary: <code>SingletonMeta</code> caches one successfully initialized instance per class and serializes creation with a lock.</li>
+    <li>Java Creation Boundary: a private constructor and nested holder publish the instance through <code>getInstance()</code>.</li>
+    <li>Clients: concurrent tasks request the configuration and compare object identity.</li>
+   </ul>
+   <figure class="pattern-figure" tabindex="0" aria-label="Singleton creation-flow diagram, horizontally scrollable on narrow screens">
+    <svg class="pattern-diagram" xmlns="http://www.w3.org/2000/svg" width="760" height="320" viewBox="0 0 760 320" role="img" aria-labelledby="singleton-diagram-title singleton-diagram-desc">
+     <title id="singleton-diagram-title">Singleton funnels callers through one creation boundary</title>
+     <desc id="singleton-diagram-desc">Concurrent callers use one access boundary. A Python metaclass lock protects construction and initialization, while Java uses class initialization of a nested holder. Later calls return the same RuntimeConfig within the documented runtime scope.</desc>
+     <defs><marker id="singleton-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+     <g font-family="Arial, sans-serif"><rect x="20" y="30" width="160" height="60" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="100.0" y="65.0" text-anchor="middle" fill="currentColor" font-size="16">Caller A</text>
+<rect x="20" y="200" width="160" height="60" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="100.0" y="235.0" text-anchor="middle" fill="currentColor" font-size="16">Caller B</text>
+<rect x="290" y="105" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="380.0" y="141.0" text-anchor="middle" fill="currentColor" font-size="16">Access boundary</text>
+<text x="380.0" y="164.0" text-anchor="middle" fill="currentColor" font-size="13">synchronized creation</text>
+<rect x="560" y="105" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="650.0" y="141.0" text-anchor="middle" fill="currentColor" font-size="16">RuntimeConfig</text>
+<text x="650.0" y="164.0" text-anchor="middle" fill="currentColor" font-size="13">same published instance</text>
+<path d="M180 60 H225 V125 H285" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#singleton-arrow)"/>
+<path d="M180 230 H225 V165 H285" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#singleton-arrow)"/>
+<path d="M470 145 H555" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#singleton-arrow)"/>
+<text x="380" y="70" fill="currentColor" text-anchor="middle" font-size="14">1. Check cached instance</text>
+<text x="600" y="237" fill="currentColor" text-anchor="middle" font-size="14">2. Create once or reuse</text>
+<text x="380" y="297" fill="currentColor" text-anchor="middle" font-size="14">Python: metaclass lock. Java: initialization-on-demand holder.</text>
+</g>
+    </svg>
+    <figcaption>Publication must finish initialization before another caller can receive the instance.</figcaption>
+   </figure>
+   <div class="workflow-step">
+    <h5>Initialize Before Publishing</h5>
+    <ol>
+     <li>Sixteen tasks request the configuration through the controlled access path.</li>
+     <li>The first successful construction initializes the fixed values before publishing the reference.</li>
+     <li>Later requests reuse that reference; the demo checks that every returned object is identical.</li>
+    </ol>
+    <p>Python takes the lock on every call, favoring clarity over a double-checked optimization. Java relies on the JVM's class-initialization guarantees for its lazy holder. No external configuration file or service is required.</p>
+   </div>
+   <h4>Python Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-python">from concurrent.futures import ThreadPoolExecutor
+from threading import Lock
+from types import MappingProxyType
+
+
+class SingletonMeta(type):
+    _instances: dict[type, object] = {}
+    _lock = Lock()
+
+    def __call__(cls):
+        # Lock covers construction AND initialization, not just __new__.
+        with cls._lock:
+            if cls not in cls._instances:
+                instance = super().__call__()
+                cls._instances[cls] = instance
+            return cls._instances[cls]
+
+
+class RuntimeConfig(metaclass=SingletonMeta):
+    def __init__(self):
+        self._values = MappingProxyType({
+            "environment": "production",
+            "timeout": 30,
+        })
+
+    def get(self, key: str) -&gt; str | int:
+        return self._values[key]
+
+
+if __name__ == "__main__":
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        configs = list(pool.map(lambda _: RuntimeConfig(), range(16)))
+
+    first = configs[0]
+    same = all(config is first for config in configs)
+    print(f"One instance across threads: {'yes' if same else 'no'}")
+    print(f"Environment: {first.get('environment')}")
+    print(f"Timeout: {first.get('timeout')}")</code></pre></div>
+<h4>Java Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-java">// SingletonDemo.java
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+final class RuntimeConfig {
+    private final Map&lt;String, String&gt; values;
+
+    private RuntimeConfig() {
+        Map&lt;String, String&gt; initial = new HashMap&lt;&gt;();
+        initial.put("environment", "production");
+        initial.put("timeout", "30");
+        values = Collections.unmodifiableMap(initial);
+    }
+
+    // JVM class initialization safely publishes the instance.
+    private static class Holder {
+        private static final RuntimeConfig INSTANCE = new RuntimeConfig();
+    }
+
+    public static RuntimeConfig getInstance() { return Holder.INSTANCE; }
+    public String get(String key) { return values.get(key); }
+}
+
+public class SingletonDemo {
+    public static void main(String[] args) throws Exception {
+        ExecutorService pool = Executors.newFixedThreadPool(8);
+        try {
+            List&lt;Future&lt;RuntimeConfig&gt;&gt; tasks = new ArrayList&lt;&gt;();
+            for (int i = 0; i &lt; 16; i++) {
+                tasks.add(pool.submit(() -&gt; RuntimeConfig.getInstance()));
+            }
+            RuntimeConfig first = tasks.get(0).get();
+            boolean same = true;
+            for (Future&lt;RuntimeConfig&gt; task : tasks) {
+                same &amp;= task.get() == first;
+            }
+            System.out.println("One instance across threads: " + (same ? "yes" : "no"));
+            System.out.println("Environment: " + first.get("environment"));
+            System.out.println("Timeout: " + first.get("timeout"));
+        } finally {
+            pool.shutdown();
+        }
+    }
+}</code></pre></div>
+<h4>Output</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-none">One instance across threads: yes
+Environment: production
+Timeout: 30</code></pre></div>
+   <h4>Scope, Concurrency, and Initialization Policy</h4>
+   <p>The Python cache is tied to a class object in its interpreter; Java's static instance is tied to its defining class loader. Neither coordinates one instance across processes or machines. These implementations cover ordinary calls through the documented access paths, not deliberate reflection, custom deserialization, or low-level construction bypasses.</p>
+   <p>The Python metaclass accepts no configuration arguments, avoiding an ambiguous first-call-wins parameter policy. It stores the instance only after successful initialization. Its shared, non-reentrant lock assumes constructors do not instantiate another class using the same metaclass. This small example has no such dependency; a more general service lifecycle needs a different design.</p>
+   <div class="key-insight">
+    <p>Thread-safe initialization does not make arbitrary instance methods thread-safe. The demo exposes read-only mappings of immutable values and performs no later configuration writes. Java keeps values as strings; Python retains the integer timeout. The identical printed output does not imply identical value types.</p>
+    <p>Global access can hide dependencies, complicate tests, and couple state across callers. When only one application-owned instance is needed, construct it at startup and inject it into consumers instead. A module-level object can also be a simpler Python solution when class-level enforcement is unnecessary. A database connection pool is not the same thing as one globally shared connection.</p>
+   </div>
+   <h4>When to Use It</h4>
+   <ul>
+    <li>When a deliberately shared identity and global access are both part of the contract, and the runtime scope is explicit.</li>
+    <li>Only after checking that explicit ownership and dependency injection would not satisfy the requirement more simply.</li>
+   </ul>
+
+   <h2 id="comparison">6. Detailed Comparison</h2>
+   <h4>Pattern Selection Guide</h4>
+   <p>Start with the source of change rather than the pattern name. The following guide makes the design boundary and its required contract explicit.</p>
+   <div class="responsive-table-container" role="region" tabindex="0" aria-label="Scrollable creational pattern selection guide"><table><thead><tr><th scope="col">Design Pressure</th><th scope="col">Pattern</th><th scope="col">Variation Boundary</th><th scope="col">What Must Be Defined</th><th scope="col">Avoid It When</th></tr></thead><tbody><tr><td>One collaborator varies inside an inherited workflow</td><td>Factory Method</td><td>Creator subclass supplies a product</td><td>Product ownership and the creation hook</td><td>A direct constructor or injected callable is sufficient</td></tr><tr><td>Multiple product types must vary as one family</td><td>Abstract Factory</td><td>Injected factory selects matching implementations</td><td>Which products belong to a family</td><td>Products are unrelated or product categories change constantly</td></tr><tr><td>Assembly has meaningful steps or reusable recipes</td><td>Builder</td><td>Builder state and construction sequence</td><td>Validation, result ownership, and reset behavior</td><td>Keyword arguments already express construction clearly</td></tr><tr><td>New instances start from configured runtime objects</td><td>Prototype</td><td>Clone operation of the source object</td><td>Copy depth, identities, aliases, and resource handling</td><td>Fresh construction is clearer or the state cannot safely be copied</td></tr><tr><td>Callers require one shared identity and access point</td><td>Singleton</td><td>Controlled creation and publication</td><td>Scope, concurrency, initialization, and test isolation</td><td>One injected application-owned instance meets the requirement</td></tr></tbody></table></div>
+   <div class="workflow-step">
+    <h5>Resolve the Closest Choices</h5>
+    <ul>
+     <li>Factory Method or Abstract Factory: ask whether a subclass must customize one workflow collaborator, or a client must receive several matching product types. An Abstract Factory may implement its creation operations using factory methods; the intents remain different.</li>
+     <li>Abstract Factory or Builder: ask whether the decision is which coherent family to create, or how to assemble a product over a sequence of steps.</li>
+     <li>Builder or Prototype: use a construction recipe when steps define the result; use a copy contract when a configured instance is the starting point.</li>
+     <li>Singleton or explicit ownership: sharing one instance does not by itself require enforcing a global creation rule.</li>
+    </ul>
+   </div>
+   <h4>Common Pitfalls</h4>
+   <div class="responsive-table-container" role="region" tabindex="0" aria-label="Scrollable creational pattern pitfalls"><table><thead><tr><th scope="col">Pattern</th><th scope="col">Common Pitfall</th><th scope="col">Better Approach</th></tr></thead><tbody><tr><td>Factory Method</td><td>Calling every factory helper the GoF Factory Method pattern</td><td>Identify the overridden creation hook and the workflow that uses it</td></tr><tr><td>Abstract Factory</td><td>Allowing callers to mix independently chosen families</td><td>Inject one coherent factory at the composition boundary</td></tr><tr><td>Builder</td><td>Publishing mutable assembly collections directly</td><td>Give the completed product independent storage and document reset policy</td></tr><tr><td>Prototype</td><td>Assuming a new outer object implies independent nested state</td><td>Test nested mutations and document the copy policy</td></tr><tr><td>Singleton</td><td>Treating a global instance as automatically thread-safe or system-wide</td><td>Specify runtime scope and separate publication safety from mutable-state safety</td></tr></tbody></table></div>
+   <h2 id="conclusion">7. Putting It All Together</h2>
+   <p>A useful creational abstraction hides a decision that actually needs to vary. Keep ordinary constructors when no such pressure exists; add a pattern when it creates a clearer extension or lifecycle boundary.</p>
+   <div class="summary">
+    <h4>Construction Contracts Worth Making Explicit</h4>
+    <ul>
+     <li>Ownership: does a call return a fresh product, a copy, a pooled object, or a shared instance? Clients should not have to infer this from a method name.</li>
+     <li>Validity: when does validation occur, and can a partially built or initialized object escape to another caller?</li>
+     <li>Isolation: can later builder edits, prototype mutations, or concurrent access change a product that a client already holds?</li>
+    </ul>
+   </div>
+   <p>Keep the application boundary responsible for selecting concrete creators and factories. Let consumers work with the resulting contracts. That keeps configuration choices visible while allowing product implementations and construction details to evolve independently.</p>
+   <p>Pattern terminology and relationships can be explored in the <a href="https://refactoring.guru/design-patterns/creational-patterns" target="_blank" rel="noopener noreferrer">Creational Patterns catalog</a>; the examples here focus on explicit creation, ownership, and runtime behavior.</p>
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = "https://www.francescosannicola.com/articles/oop-creational-patterns.html";
+            this.page.identifier = "oop-creational-patterns";
+            this.page.title = "Creational Design Patterns";
+        };
+        (function () {
+            var d = document, s = d.createElement("script");
+            s.src = "https://francescosannicola.disqus.com/embed.js";
+            s.setAttribute("data-timestamp", +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </main>
+  <button aria-label="Back to top" id="backToTopButton" title="Back to top" type="button">
+   <i aria-hidden="true" class="fa fa-arrow-up">
+   </i>
+  </button>
+  <script>
+   (() => {
+  "use strict";
+  const toggle = document.getElementById("darkModeToggle");
+  const backToTop = document.getElementById("backToTopButton");
+  const targets = [document.body, ...document.querySelectorAll(
+    ".main-container, .article-container, .link-container"
+  )];
+
+  function applyDarkMode(dark, persist = false) {
+    targets.forEach((element) => element.classList.toggle("dark-mode", dark));
+    if (toggle) {
+      toggle.checked = dark;
+      toggle.setAttribute("aria-label", dark ? "Disable dark mode" : "Enable dark mode");
+    }
+    if (persist) {
+      try {
+        window.localStorage.setItem("darkMode", String(dark));
+      } catch (_) {
+        // The toggle still works when browser storage is unavailable.
+      }
+    }
+  }
+
+  let dark = false;
+  try {
+    dark = window.localStorage.getItem("darkMode") === "true";
+  } catch (_) {
+    // Keep the site's default light theme if storage is blocked.
+  }
+  applyDarkMode(dark);
+  if (toggle) {
+    toggle.addEventListener("change", () => applyDarkMode(toggle.checked, true));
+  }
+
+  if (backToTop) {
+    const updateVisibility = () => {
+      backToTop.style.display = window.scrollY > 500 ? "block" : "none";
+    };
+    backToTop.addEventListener("click", () => {
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
+    });
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    updateVisibility();
+  }
+
+    document.querySelectorAll(".creational-patterns h2[id]").forEach((sectionHeading, index) => {
+        const sectionNodes = [];
+        for (let node = sectionHeading.nextElementSibling; node && node.tagName !== "H2"; node = node.nextElementSibling) {
+            sectionNodes.push(node);
+        }
+
+        const implementationHeading = sectionNodes.find((node) =>
+            node.tagName === "H4" && /^(Python|Java) Implementation$/.test(node.textContent.trim())
+        );
+        const outputHeading = sectionNodes.find((node) =>
+            node.tagName === "H4" && node.textContent.trim() === "Output"
+        );
+        const outputPanel = outputHeading && outputHeading.nextElementSibling;
+        if (!implementationHeading || !outputPanel || !outputPanel.classList.contains("responsive-code-container")) return;
+
+        const accordion = document.createElement("h4");
+        accordion.className = "accordion";
+        accordion.setAttribute("role", "button");
+        accordion.setAttribute("tabindex", "0");
+        accordion.setAttribute("aria-expanded", "false");
+        accordion.setAttribute("aria-controls", `code-examples-${index + 1}`);
+        accordion.append("Code Examples and Output");
+
+        const arrow = document.createElement("span");
+        arrow.className = "arrow";
+        arrow.setAttribute("aria-hidden", "true");
+        arrow.textContent = "▼";
+        accordion.appendChild(arrow);
+
+        const panel = document.createElement("div");
+        panel.id = `code-examples-${index + 1}`;
+        panel.style.display = "none";
+        const nextSectionHeading = sectionNodes[sectionNodes.length - 1].nextElementSibling;
+        const parent = sectionHeading.parentNode;
+        parent.insertBefore(accordion, nextSectionHeading);
+        parent.insertBefore(panel, nextSectionHeading);
+
+        let node = implementationHeading;
+        while (node) {
+            const nextNode = node.nextElementSibling;
+            panel.appendChild(node);
+            if (node === outputPanel) break;
+            node = nextNode;
+        }
+
+        const togglePanel = () => {
+            const isExpanded = accordion.getAttribute("aria-expanded") === "true";
+            accordion.setAttribute("aria-expanded", String(!isExpanded));
+            accordion.classList.toggle("active", !isExpanded);
+            panel.style.display = isExpanded ? "none" : "block";
+        };
+
+        accordion.addEventListener("click", togglePanel);
+        accordion.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                togglePanel();
+            }
+        });
+    });
+})();
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js">
+  </script>
+ </body>
+</html>

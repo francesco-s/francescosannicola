@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Explore Creational, Structural, and Behavioral design patterns through practical Python and Java examples, visual explanations, and implementation trade-offs." />
+    <meta name="author" content="Francesco Sannicola" />
+    <meta property="og:title" content="Object-Oriented Design Patterns - Francesco Sannicola" />
+    <meta property="og:description" content="A practical handbook of object creation, composition, and collaboration. Browse the Creational, Structural, and Behavioral pattern guides." />
+    <meta property="og:url" content="https://www.francescosannicola.com/articles/design-patterns.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://www.francescosannicola.com/assets/francescosannicola.jpg" />
+    <title>Object-Oriented Design Patterns - Francesco Sannicola</title>
+    <link rel="canonical" href="https://www.francescosannicola.com/articles/design-patterns.html" />
+    <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="../style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+      /* Page-scoped additions reuse the shared palette and card components. */
+      #design-patterns-page .site-name {
+        margin: 0 0 5px 20px;
+        color: #333;
+        font-size: 2.2rem;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+
+      #design-patterns-page .skip-link {
+        position: absolute;
+        top: 10px;
+        left: -10000px;
+        z-index: 3000;
+        padding: 10px 16px;
+        border-radius: 4px;
+        background: #fff;
+        color: #333;
+      }
+
+      #design-patterns-page .skip-link:focus {
+        left: 10px;
+      }
+
+      #design-patterns-page #darkModeToggle {
+        display: block;
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        width: 40px;
+        height: 20px;
+        margin: 0;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      #design-patterns-page #darkModeToggle:focus-visible + .switch-label,
+      #design-patterns-page a:focus-visible,
+      #design-patterns-page button:focus-visible {
+        outline: 3px solid #227ab5;
+        outline-offset: 4px;
+      }
+
+      #design-patterns-page .link-container a i {
+        margin-right: 8px;
+      }
+
+      .patterns-overview {
+        min-width: 0;
+      }
+
+      .patterns-overview .article-path {
+        display: inline;
+        margin-right: 0.35em;
+        font-size: 1rem;
+        font-weight: 400;
+      }
+
+      .patterns-overview .article-intro {
+        max-width: 86ch;
+      }
+
+      .patterns-overview .category-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        align-items: stretch;
+        gap: 20px;
+        width: calc(100% - 40px);
+        margin: 28px 20px;
+      }
+
+      .patterns-overview .category-grid > .category-card {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 24px;
+        overflow: visible;
+      }
+
+      .patterns-overview .category-card h2,
+      .patterns-overview .category-card p,
+      .patterns-overview .category-card ul,
+      .patterns-overview .category-card li {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .patterns-overview .category-card h2 {
+        margin-top: 12px;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        font-size: 1.4rem;
+        font-weight: 600;
+        line-height: 1.3;
+        color: #455b66;
+      }
+
+      .patterns-overview .category-kicker {
+        margin-top: 0;
+        margin-bottom: 0;
+        color: #455b66;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .patterns-overview .category-question {
+        margin-top: 0;
+        margin-bottom: 12px;
+        font-size: 1.05rem;
+        font-weight: 600;
+      }
+
+      .patterns-overview .category-description {
+        margin-top: 0;
+        margin-bottom: 16px;
+      }
+
+      .patterns-overview .pattern-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-top: 0;
+        margin-bottom: 24px;
+        padding: 0;
+        list-style: none;
+      }
+
+      .patterns-overview .pattern-list li {
+        max-width: 100%;
+        margin: 0;
+        padding: 5px 9px;
+        border: 1px solid #dce4e8;
+        border-radius: 4px;
+        background: #eef3f5;
+        color: #455b66;
+        font-size: 0.82rem;
+        line-height: 1.4;
+        list-style: none;
+        overflow-wrap: anywhere;
+      }
+
+      .patterns-overview .category-link {
+        display: inline-flex;
+        align-items: center;
+        align-self: flex-start;
+        gap: 10px;
+        min-height: 44px;
+        margin-top: auto;
+        padding: 4px 0;
+        color: #455b66;
+        font-weight: 600;
+        line-height: 1.5;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 4px;
+      }
+
+      .patterns-overview .category-link i {
+        flex-shrink: 0;
+        font-size: 0.85em;
+      }
+
+      #design-patterns-page.dark-mode .site-name {
+        color: #fff;
+      }
+
+      #design-patterns-page.dark-mode .category-kicker,
+      #design-patterns-page.dark-mode .category-card h2,
+      #design-patterns-page.dark-mode .category-link,
+
+      #design-patterns-page.dark-mode .pattern-list li {
+        border-color: #607380;
+        background: #293b46;
+        color: #e0e8ed;
+      }
+
+      #design-patterns-page.dark-mode a:focus-visible,
+      #design-patterns-page.dark-mode button:focus-visible,
+      #design-patterns-page.dark-mode #darkModeToggle:focus-visible + .switch-label {
+        outline-color: #8fc8ff;
+      }
+
+      @media screen and (max-width: 1050px) {
+        .patterns-overview .category-grid {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        #design-patterns-page .site-name {
+          max-width: calc(100% - 60px);
+          font-size: 1.8rem;
+        }
+
+        .patterns-overview .category-grid > .category-card {
+          padding: 18px;
+        }
+
+        .patterns-overview .category-card h2 {
+          font-size: 1.25rem;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #design-patterns-page .switch-label,
+        #design-patterns-page .switch-label::before,
+        .patterns-overview .comparison-card {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body id="design-patterns-page">
+    <a class="skip-link" href="#main-content">Skip to handbook overview</a>
+
+    <div class="main-container">
+      <div class="left-column">
+        <header>
+          <div class="header-left">
+            <p class="site-name">Francesco Sannicola</p>
+            <p class="role">Machine Learning | Software Engineering</p>
+          </div>
+          <div class="switch">
+            <input type="checkbox" id="darkModeToggle" aria-label="Enable dark mode" />
+            <label for="darkModeToggle" class="switch-label">
+              <span class="sun-icon" aria-hidden="true">&#9728;</span>
+              <span class="moon-icon" aria-hidden="true">&#9790;</span>
+            </label>
+          </div>
+        </header>
+      </div>
+    </div>
+
+    <nav class="link-container" aria-label="Main navigation">
+      <div class="link-column">
+        <a href="../"><i class="fas fa-home" aria-hidden="true"></i>Home</a>
+      </div>
+      <div class="link-column">
+        <a href="../projects/"><i class="fas fa-project-diagram" aria-hidden="true"></i>Projects</a>
+      </div>
+      <div class="link-column">
+        <a href="../articles/"><i class="fas fa-newspaper" aria-hidden="true"></i>Articles</a>
+      </div>
+      <div class="link-column">
+        <a href="../about.html"><i class="fas fa-user" aria-hidden="true"></i>About</a>
+      </div>
+    </nav>
+
+    <main class="article-container patterns-overview" id="main-content" tabindex="-1">
+      <h1><span class="article-path">./articles/</span>Object-Oriented Design Patterns (WIP)</h1>
+      <div class="last-updated">
+        <span class="last-updated-label">Last modified:</span>
+        <time datetime="2026-10-21">October 21, 2026</time>
+      </div>
+
+      <p>
+        Design patterns describe reusable approaches to recurring software design
+        problems. The Gang of Four catalog organizes them around three concerns:
+        how objects are created, how they are composed, and how they collaborate.
+      </p>
+      <p>
+        Explore the category that matches your design problem. Each guide connects
+        the intent of a pattern to practical examples, implementation trade-offs,
+        and situations where it is useful.
+      </p>
+
+      <div class="category-grid">
+        <section class="comparison-card category-card" aria-labelledby="creational-patterns">
+          <p class="category-kicker">Object creation</p>
+          <h2 id="creational-patterns">Creational Design Patterns</h2>
+          <p class="category-question">How should objects be created?</p>
+          <p class="category-description">
+            Explore object creation and lifecycle decisions, from selecting an
+            implementation to assembling, copying, or sharing an instance.
+          </p>
+          <ul class="pattern-list" aria-label="Creational patterns">
+            <li>Factory Method</li>
+            <li>Abstract Factory</li>
+            <li>Builder</li>
+            <li>Prototype</li>
+            <li>Singleton</li>
+          </ul>
+          <a class="category-link" href="oop-creational-patterns.html">
+            Explore Creational patterns <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          </a>
+        </section>
+
+        <section class="comparison-card category-card" aria-labelledby="structural-patterns">
+          <p class="category-kicker">Object composition</p>
+          <h2 id="structural-patterns">Structural Design Patterns</h2>
+          <p class="category-question">How should objects fit together?</p>
+          <p class="category-description">
+            Organize classes and objects into flexible structures, adapt
+            interfaces, and compose responsibilities behind clear boundaries.
+          </p>
+          <ul class="pattern-list" aria-label="Structural patterns">
+            <li>Adapter</li>
+            <li>Bridge</li>
+            <li>Composite</li>
+            <li>Decorator</li>
+            <li>Facade</li>
+            <li>Flyweight</li>
+            <li>Proxy</li>
+          </ul>
+          <a class="category-link" href="oop-structural-design-patterns.html">
+            Explore Structural patterns <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          </a>
+        </section>
+
+        <section class="comparison-card category-card" aria-labelledby="behavioral-patterns">
+          <p class="category-kicker">Object collaboration</p>
+          <h2 id="behavioral-patterns">Behavioral Design Patterns</h2>
+          <p class="category-question">How should objects work together?</p>
+          <p class="category-description">
+            Describe communication and shared responsibilities, with patterns for
+            algorithms, requests, notifications, and coordinated behavior.
+          </p>
+          <ul class="pattern-list" aria-label="Behavioral patterns">
+            <li>Iterator</li>
+            <li>Command</li>
+            <li>Strategy</li>
+            <li>Observer</li>
+            <li>Chain of Responsibility</li>
+            <li>Template Method</li>
+            <li>State</li>
+            <li>Mediator</li>
+            <li>Memento</li>
+            <li>Visitor</li>
+          </ul>
+          <a class="category-link" href="oop-behavioral-patterns.html">
+            Explore Behavioral patterns <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          </a>
+        </section>
+      </div>
+      <div id="disqus_thread"></div>
+      <script>
+        var disqus_config = function () {
+          this.page.url = "https://www.francescosannicola.com/articles/design-patterns.html";
+          this.page.identifier = "design-patterns";
+          this.page.title = "Object-Oriented Design Patterns";
+        };
+        (function () {
+          var d = document, s = d.createElement("script");
+          s.src = "https://francescosannicola.disqus.com/embed.js";
+          s.setAttribute("data-timestamp", +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </main>
+
+    <button id="backToTopButton" type="button" aria-label="Back to top" title="Back to top" hidden>
+      <i class="fas fa-arrow-up" aria-hidden="true"></i>
+    </button>
+
+    <script>
+      (() => {
+        "use strict";
+
+        const toggle = document.getElementById("darkModeToggle");
+        const backToTop = document.getElementById("backToTopButton");
+        const themeTargets = [
+          document.body,
+          ...document.querySelectorAll(".main-container, .article-container, .link-container"),
+        ];
+
+        function applyDarkMode(enabled, persist = false) {
+          themeTargets.forEach((element) => {
+            element.classList.toggle("dark-mode", enabled);
+          });
+
+          if (toggle) {
+            toggle.checked = enabled;
+            toggle.setAttribute("aria-label", enabled ? "Disable dark mode" : "Enable dark mode");
+          }
+
+          if (persist) {
+            try {
+              window.localStorage.setItem("darkMode", String(enabled));
+            } catch (_) {
+              // Theme switching still works when storage is unavailable.
+            }
+          }
+        }
+
+        let darkModeEnabled = false;
+        try {
+          darkModeEnabled = window.localStorage.getItem("darkMode") === "true";
+        } catch (_) {
+          // Keep the site's default light theme when storage is unavailable.
+        }
+        applyDarkMode(darkModeEnabled);
+
+        if (toggle) {
+          toggle.addEventListener("change", () => {
+            applyDarkMode(toggle.checked, true);
+          });
+        }
+
+        // Keep this tab consistent with theme changes in another same-origin tab.
+        window.addEventListener("storage", (event) => {
+          if (event.key !== "darkMode" && event.key !== null) return;
+          try {
+            if (event.storageArea !== window.localStorage) return;
+          } catch (_) {
+            return;
+          }
+          applyDarkMode(event.key === "darkMode" && event.newValue === "true");
+        });
+
+        if (backToTop) {
+          const updateBackToTop = () => {
+            const visible = window.scrollY > 500;
+            backToTop.hidden = !visible;
+            backToTop.style.display = visible ? "block" : "none";
+          };
+
+          backToTop.addEventListener("click", () => {
+            const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+          });
+
+          window.addEventListener("scroll", updateBackToTop, { passive: true });
+          window.addEventListener("resize", updateBackToTop);
+          updateBackToTop();
+        }
+      })();
+    </script>
+  </body>
+</html>

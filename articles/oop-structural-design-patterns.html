@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="All seven GoF Structural Design Patterns: Adapter, Bridge, Composite, Decorator, Facade, Flyweight, and Proxy, with Python and Java examples, composition diagrams, and practical trade-offs." name="description"/>
+  <meta content="design patterns, structural patterns, adapter, bridge, composite, decorator, facade, flyweight, proxy, python, java" name="keywords"/>
+  <meta content="Francesco Sannicola" name="author"/>
+  <meta content="Structural Design Patterns - Francesco Sannicola" property="og:title"/>
+  <meta content="Seven structural design patterns with runnable examples, composition-flow diagrams, delegation contracts, and practical trade-offs." property="og:description"/>
+    <meta content="https://www.francescosannicola.com/articles/oop-structural-design-patterns.html" property="og:url"/>
+  <meta content="article" property="og:type"/>
+  <meta content="https://www.francescosannicola.com/assets/francescosannicola.jpg" property="og:image"/>
+  <title>
+   Structural Design Patterns - Francesco Sannicola
+  </title>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <link href="../style.css" rel="stylesheet" type="text/css"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+  <style>
+   /* Page-local adjustments: retain the shared article palette and components. */
+.structural-patterns {
+  min-width: 0;
+}
+.structural-patterns h2[id] {
+  scroll-margin-top: 24px;
+}
+.structural-patterns h4.accordion {
+    cursor: pointer;
+}
+.structural-patterns .responsive-code-container,
+.structural-patterns .responsive-table-container {
+  margin: 20px;
+  max-width: calc(100% - 40px);
+  min-width: 0;
+  overflow-x: auto;
+  white-space: normal;
+  box-sizing: border-box;
+}
+.structural-patterns pre,
+.structural-patterns pre[class*="language-"] {
+  margin: 0;
+  padding: 18px;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  background: #f8f9fa;
+  color: #333;
+  overflow-x: auto;
+  white-space: pre;
+  tab-size: 4;
+  line-height: 1.5;
+  font-size: 0.9rem;
+  text-shadow: none;
+}
+.structural-patterns pre code,
+.structural-patterns code[class*="language-"] {
+  font-family: Consolas, Monaco, "Courier New", monospace;
+  color: inherit;
+  text-shadow: none;
+}
+.structural-patterns pre code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+.structural-patterns :not(pre) > code {
+  overflow-wrap: anywhere;
+}
+.structural-patterns .responsive-table-container table {
+  width: 100%;
+  margin: 0;
+}
+.structural-patterns ol {
+  list-style-type: decimal;
+  padding-left: 20px;
+}
+.structural-patterns .summary li,
+.structural-patterns .workflow-step li {
+  margin-left: 0;
+}
+.structural-patterns .workflow-step ol li {
+  list-style-type: decimal;
+}
+.structural-patterns .workflow-step h5 {
+  margin-top: 0;
+}
+.structural-patterns .key-insight::before {
+  content: none;
+}
+.structural-patterns .key-insight p:first-child::before {
+  content: "\1F4A1 ";
+}
+.structural-patterns .pattern-figure {
+  margin: 20px;
+  max-width: calc(100% - 40px);
+}
+.structural-patterns .pattern-diagram,
+.structural-patterns .pattern-diagram:hover {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  color: rgb(96, 125, 138);
+  fill: none;
+}
+.structural-patterns figcaption {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+body.dark-mode .structural-patterns pre,
+body.dark-mode .structural-patterns pre[class*="language-"] {
+  background: #2a3a4a;
+  color: #e0e0e0;
+  border-color: #4a5a6a;
+}
+body.dark-mode .structural-patterns .pattern-diagram,
+body.dark-mode .structural-patterns .pattern-diagram:hover {
+  color: rgb(207, 216, 220);
+  fill: none;
+}
+body.dark-mode .structural-patterns .token.comment,
+body.dark-mode .structural-patterns .token.prolog,
+body.dark-mode .structural-patterns .token.doctype {
+  color: #aab8c4;
+}
+body.dark-mode .structural-patterns .token.keyword,
+body.dark-mode .structural-patterns .token.atrule {
+  color: #8fc8ff;
+}
+body.dark-mode .structural-patterns .token.string,
+body.dark-mode .structural-patterns .token.char,
+body.dark-mode .structural-patterns .token.builtin {
+  color: #c3df9a;
+}
+body.dark-mode .structural-patterns .token.function,
+body.dark-mode .structural-patterns .token.class-name {
+  color: #ffd18c;
+}
+body.dark-mode .structural-patterns .token.number,
+body.dark-mode .structural-patterns .token.boolean,
+body.dark-mode .structural-patterns .token.constant {
+  color: #edb1d4;
+}
+body.dark-mode .structural-patterns .token.operator,
+body.dark-mode .structural-patterns .token.punctuation {
+  color: #e0e0e0;
+  background: transparent;
+}
+.skip-link {
+  position: absolute;
+  left: -10000px;
+  top: 10px;
+  z-index: 3000;
+  padding: 10px 16px;
+  background: #fff;
+  color: #333;
+}
+.skip-link:focus {
+  left: 10px;
+}
+#darkModeToggle {
+  display: block;
+  position: absolute;
+  width: 40px;
+  height: 20px;
+  margin: 0;
+  opacity: 0;
+  z-index: 1;
+  cursor: pointer;
+}
+#darkModeToggle:focus-visible + .switch-label,
+.structural-patterns :focus-visible,
+#backToTopButton:focus-visible {
+  outline: 3px solid #227ab5;
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .switch-label,
+  .switch-label::before {
+    transition: none;
+  }
+}
+@media screen and (max-width: 480px) {
+  .structural-patterns .responsive-code-container,
+  .structural-patterns .responsive-table-container,
+  .structural-patterns .pattern-figure {
+    margin-left: 12px;
+    margin-right: 12px;
+    max-width: calc(100% - 24px);
+  }
+  .structural-patterns pre,
+  .structural-patterns pre[class*="language-"] {
+    padding: 12px;
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .structural-patterns .pattern-figure {
+    overflow-x: auto;
+  }
+  .structural-patterns .pattern-diagram {
+    min-width: 760px;
+  }
+}
+  </style>
+ </head>
+ <body>
+  <a class="skip-link" href="#main-content">
+   Skip to article
+  </a>
+  <div class="main-container">
+   <div class="left-column">
+    <header>
+     <div class="header-left">
+      <h1>
+       Francesco Sannicola
+      </h1>
+      <h4 class="role">
+       Machine Learning | Software Engineering
+      </h4>
+     </div>
+     <div class="header-right">
+      <div class="contact-info">
+       <a aria-label="View Resume" href="../resume.pdf" rel="noopener noreferrer" target="_blank">
+        <svg fill="#000000" height="18" id="Capa_1" version="1.1" viewBox="0 0 45.057 45.057" width="18" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+         <title>
+          Resume
+         </title>
+         <g>
+          <g id="_x35_8_24_">
+           <g>
+            <path d="M19.558,25.389c-0.067,0.176-0.155,0.328-0.264,0.455c-0.108,0.129-0.24,0.229-0.396,0.301
+                                       c-0.156,0.072-0.347,0.107-0.57,0.107c-0.313,0-0.572-0.068-0.78-0.203c-0.208-0.137-0.374-0.316-0.498-0.541
+                                       c-0.124-0.223-0.214-0.477-0.27-0.756c-0.057-0.279-0.084-0.564-0.084-0.852c0-0.289,0.027-0.572,0.084-0.853
+                                       c0.056-0.281,0.146-0.533,0.27-0.756c0.124-0.225,0.29-0.404,0.498-0.541c0.208-0.137,0.468-0.203,0.78-0.203
+                                       c0.271,0,0.494,0.051,0.666,0.154c0.172,0.105,0.31,0.225,0.414,0.361c0.104,0.137,0.176,0.273,0.216,0.414
+                                       c0.04,0.139,0.068,0.25,0.084,0.33h2.568c-0.112-1.08-0.49-1.914-1.135-2.502c-0.644-0.588-1.558-0.887-2.741-0.895
+                                       c-0.664,0-1.263,0.107-1.794,0.324c-0.532,0.215-0.988,0.52-1.368,0.912c-0.38,0.392-0.672,0.863-0.876,1.416
+                                       c-0.204,0.551-0.307,1.165-0.307,1.836c0,0.631,0.097,1.223,0.288,1.77c0.192,0.549,0.475,1.021,0.847,1.422
+                                       s0.825,0.717,1.361,0.949c0.536,0.23,1.152,0.348,1.849,0.348c0.624,0,1.18-0.105,1.668-0.312
+                                       c0.487-0.209,0.897-0.482,1.229-0.822s0.584-0.723,0.756-1.146c0.172-0.422,0.259-0.852,0.259-1.283h-2.593
+                                       C19.68,25.023,19.627,25.214,19.558,25.389z">
+            </path>
+            <polygon points="26.62,24.812 26.596,24.812 25.192,19.616 22.528,19.616 25.084,28.184 28.036,28.184 30.713,19.616 28,19.616">
+            </polygon>
+            <path d="M33.431,0H5.179v45.057h34.699V6.251L33.431,0z M36.878,42.056H8.179V3h23.706v4.76h4.992L36.878,42.056L36.878,42.056z">
+            </path>
+           </g>
+          </g>
+         </g>
+        </svg>
+        <span class="contact-label">
+         Resume
+        </span>
+       </a>
+       <a aria-label="Send Email" href="mailto:francescosannicola1997@gmail.com">
+        <svg fill="#000000" height="21" viewBox="0 0 1920 1920" width="18" xmlns="http://www.w3.org/2000/svg">
+         <title>
+          Email
+         </title>
+         <path d="M0 1694.235h1920V226H0v1468.235ZM112.941 376.664V338.94H1807.06v37.723L960 1111.233l-847.059-734.57ZM1807.06 526.198v950.513l-351.134-438.89-88.32 70.475 378.353 472.998H174.042l378.353-472.998-88.32-70.475-351.134 438.89V526.198L960 1260.768l847.059-734.57Z" fill-rule="evenodd">
+         </path>
+        </svg>
+        <span class="contact-label">
+         Email
+        </span>
+       </a>
+       <a aria-label="View LinkedIn Profile" href="https://www.linkedin.com/in/francesco-sannicola" rel="noopener noreferrer" target="_blank">
+        <svg fill="#000000" height="18" viewBox="0 0 1920 1920" width="18" xmlns="http://www.w3.org/2000/svg">
+         <title>
+          LinkedIn
+         </title>
+         <path d="M1168 601.321v74.955c72.312-44.925 155.796-71.11 282.643-71.11 412.852 0 465.705 308.588 465.705 577.417v733.213L1438.991 1920v-701.261c0-117.718-42.162-140.06-120.12-140.06-74.114 0-120.12 23.423-120.12 140.06V1920l-483.604-4.204V601.32H1168Zm-687.52-.792v1318.918H0V600.53h480.48Zm-120.12 120.12H120.12v1078.678h240.24V720.65Zm687.52.792H835.267v1075.316l243.364 2.162v-580.18c0-226.427 150.51-260.18 240.24-260.18 109.55 0 240.24 45.165 240.24 260.18v580.18l237.117-2.162v-614.174c0-333.334-93.573-457.298-345.585-457.298-151.472 0-217.057 44.925-281.322 98.98l-16.696 14.173H1047.88V721.441ZM240.24 0c132.493 0 240.24 107.748 240.24 240.24 0 132.493-107.747 240.24-240.24 240.24C107.748 480.48 0 372.733 0 240.24 0 107.748 107.748 0 240.24 0Zm0 120.12c-66.186 0-120.12 53.934-120.12 120.12s53.934 120.12 120.12 120.12 120.12-53.934 120.12-120.12-53.934-120.12-120.12-120.12Z" fill-rule="evenodd">
+         </path>
+        </svg>
+        <span class="contact-label">
+         LinkedIn
+        </span>
+       </a>
+       <a aria-label="View GitHub Profile" href="https://github.com/francesco-s" rel="noopener noreferrer" target="_blank">
+        <svg height="100" viewBox="0 0 24 24" width="100" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px">
+         <title>
+          GitHub
+         </title>
+         <path d="M 12 1.9921875 C 6.4855957 1.9921875 2 6.4769321 2 12 C 2 16.599161 5.1205653 20.490345 9.3671875 21.642578 A 0.50005 0.50005 0 0 0 9.9980469 21.160156 L 9.9980469 17.583984 A 0.50005 0.50005 0 0 0 9.9980469 17.398438 L 9.9980469 17 C 9.9980469 16.463435 10.20474 15.989016 10.550781 15.621094 A 0.50005 0.50005 0 0 0 10.310547 14.794922 C 8.3191985 14.288505 7 12.945349 7 11.492188 C 7 10.73278 7.3615845 9.9960348 8.015625 9.3925781 A 0.50005 0.50005 0 0 0 8.1679688 8.9277344 C 8.066665 8.41934 8.082645 7.8782734 8.0742188 7.34375 C 8.6127591 7.5825374 9.1625862 7.7923277 9.640625 8.1757812 A 0.50005 0.50005 0 0 0 10.09375 8.265625 C 10.683558 8.0925899 11.325263 7.9921875 12 7.9921875 C 12.673669 7.9921875 13.314937 8.0917915 13.904297 8.265625 A 0.50005 0.50005 0 0 0 14.359375 8.1777344 C 14.837054 7.7945694 15.386932 7.5824899 15.925781 7.34375 C 15.916981 7.8785794 15.933881 8.4199143 15.832031 8.9277344 A 0.50005 0.50005 0 0 0 15.982422 9.3945312 C 16.637666 9.9982795 17.001953 10.733923 17.001953 11.494141 C 17.001953 12.945944 15.680991 14.28753 13.689453 14.794922 A 0.50005 0.50005 0 0 0 13.449219 15.623047 C 13.794633 15.990353 14.001953 16.464434 14.001953 17 L 13.998047 21.160156 A 0.50005 0.50005 0 0 0 14.630859 21.642578 C 18.878428 20.490372 22 16.599237 22 12 C 22 6.4769321 17.514404 1.9921875 12 1.9921875 z M 12 2.9921875 C 16.973596 2.9921875 21 7.0170679 21 12 C 21 15.899732 18.470363 19.145081 14.998047 20.388672 L 15.001953 17 C 15.001953 16.421513 14.688987 15.964437 14.404297 15.505859 C 16.432596 14.813419 18.001953 13.369173 18.001953 11.494141 C 18.001953 10.506223 17.528746 9.6094427 16.826172 8.8808594 C 16.963004 8.0965535 17.032667 7.2949738 16.970703 6.4570312 A 0.50005 0.50005 0 0 0 16.3125 6.0214844 C 15.491527 6.300863 14.703446 6.7215379 13.960938 7.2734375 C 13.34208 7.110241 12.692308 6.9921875 12 6.9921875 C 11.30618 6.9921875 10.656139 7.1108109 10.037109 7.2734375 C 9.2949426 6.7217093 8.5094793 6.2989123 7.6894531 6.0195312 A 0.50005 0.50005 0 0 0 7.0292969 6.4550781 C 6.9654142 7.294134 7.0380099 8.0939393 7.1738281 8.8769531 C 6.4709034 9.6061723 6 10.504427 6 11.492188 C 6 13.367279 7.5663139 14.813867 9.59375 15.505859 C 9.3112432 15.962509 9.0029789 16.419068 9 16.992188 L 7.5 16.992188 C 7.2241522 16.992188 7.0052524 16.845238 6.7363281 16.513672 C 6.4674039 16.182105 6.2065255 15.697988 5.9277344 15.234375 A 0.50005 0.50005 0 0 0 5.46875 14.988281 A 0.50005 0.50005 0 0 0 5.0722656 15.75 C 5.3304745 16.179387 5.5979086 16.697395 5.9589844 17.142578 C 6.3200601 17.587762 6.8328478 17.992188 7.5 17.992188 L 8.9980469 17.992188 L 8.9980469 20.388672 C 5.5278881 19.144471 3 15.898951 3 12 C 3 7.0170679 7.0264043 2.9921875 12 2.9921875 z">
+         </path>
+        </svg>
+        <span class="contact-label">
+         GitHub
+        </span>
+       </a>
+      </div>
+     </div>
+     <div class="switch">
+      <input aria-label="Enable dark mode" id="darkModeToggle" type="checkbox"/>
+      <label class="switch-label" for="darkModeToggle">
+       <span aria-hidden="true" class="sun-icon">
+        ☀
+       </span>
+       <!-- Sun icon (Light Mode) -->
+       <span aria-hidden="true" class="moon-icon">
+        ☾
+       </span>
+       <!-- Moon icon (Dark Mode) -->
+      </label>
+     </div>
+    </header>
+   </div>
+  </div>
+  <div aria-label="Main navigation" class="link-container" role="navigation">
+   <div class="link-column">
+    <a href="../">
+     <i class="fas fa-home">
+     </i>
+     Home
+    </a>
+   </div>
+   <div class="link-column">
+    <a href="../projects/">
+     <i class="fas fa-project-diagram">
+     </i>
+     Projects
+    </a>
+   </div>
+   <div class="link-column">
+    <a href="../articles/">
+     <i class="fas fa-newspaper">
+     </i>
+     Articles
+    </a>
+   </div>
+   <div class="link-column">
+    <a href="../about.html">
+     <i class="fas fa-user">
+     </i>
+     About
+    </a>
+   </div>
+  </div>
+    <main class="article-container structural-patterns" id="main-content">
+   <h1><span style="font-size: 16px">./articles/</span> Software Engineering Essentials: Structural Design Patterns</h1>
+   <div class="last-updated"><span class="last-updated-label">Last modified:</span> <time datetime="2026-10-18">October 18, 2026</time></div>
+   <p>Structural design patterns organize objects and classes into larger structures while keeping those structures flexible. They focus on composition boundaries: adapting interfaces, separating variation axes, treating parts and wholes uniformly, wrapping behavior, simplifying subsystem access, sharing state, and controlling access.</p>
+    <p>This chapter covers all seven Structural patterns in the Gang of Four catalog. Each section moves from a concrete composition problem to a creation or delegation flow, then provides independent Python and Java examples with matching demo output. For object creation and object collaboration, see the <a href="oop-creational-patterns.html">Creational</a> and <a href="oop-behavioral-patterns.html">Behavioral</a> chapters.</p>
+   <p>Project source: <a href="https://github.com/francesco-s/oop-design-patterns-handbook/tree/main/structural" target="_blank" rel="noopener noreferrer">OOP Design Patterns Handbook: Structural Patterns</a>.</p>
+   <nav class="summary" aria-label="Article sections">
+    <h4>Quick Navigation</h4>
+    <ol><li><a href="#adapter">Adapter</a></li><li><a href="#bridge">Bridge</a></li><li><a href="#composite">Composite</a></li><li><a href="#decorator">Decorator</a></li><li><a href="#facade">Facade</a></li><li><a href="#flyweight">Flyweight</a></li><li><a href="#proxy">Proxy</a></li>
+     <li><a href="#comparison">Detailed Comparison</a></li>
+     <li><a href="#conclusion">Putting It All Together</a></li>
+    </ol>
+   </nav>
+   <div class="highlight-box">
+    <p>Run each Python example independently with Python 3.10 or later; only the standard library is required. Each Java example is a separate source file named in its first comment. Compile and run its public class, for example <code>javac -encoding UTF-8 AdapterDemo.java</code> followed by <code>java AdapterDemo</code>. The Java examples target Java 8 or later and use only JDK APIs. Do not combine the snippets into one file.</p>
+    <p>Repository verification: the linked source could not be retrieved during preparation. These are independently tested Python reference examples, not verified reproductions of the repository's APIs or naming. No specific upstream discrepancy is asserted without inspecting that source.</p>
+   </div>
+   <h4>Quick Reference</h4>
+   <div class="responsive-table-container" role="region" tabindex="0" aria-label="Scrollable structural patterns quick reference"><table><thead><tr><th scope="col">Pattern</th><th scope="col">Core Intent</th><th scope="col">Key Benefit</th></tr></thead><tbody><tr><td>Adapter</td><td>Convert an existing interface into one a client expects</td><td>Integrates incompatible code without changing either side</td></tr><tr><td>Bridge</td><td>Separate an abstraction from its implementation</td><td>Avoids a class for every combination of two variation axes</td></tr><tr><td>Composite</td><td>Treat individual objects and containers uniformly</td><td>Simplifies operations across part-whole hierarchies</td></tr><tr><td>Decorator</td><td>Attach responsibilities by wrapping an object</td><td>Combines optional behavior without subclass explosion</td></tr><tr><td>Facade</td><td>Offer one simplified entry point to subsystems</td><td>Coordinates a common workflow and reduces client coupling</td></tr><tr><td>Flyweight</td><td>Share immutable state across many objects</td><td>Reduces memory use when state repeats at scale</td></tr><tr><td>Proxy</td><td>Control access through a same-interface substitute</td><td>Adds protection, caching, logging, or deferred access</td></tr></tbody></table></div>
+   <p>The diagrams emphasize composition and delegation rather than exhaustive class relationships. On narrow screens, diagrams scroll horizontally to keep labels readable. Code and output remain visible if JavaScript is unavailable.</p>
+
+   <h2 id="adapter">1. Adapter</h2>
+   <h4>Intent</h4>
+   <p>Adapter converts one interface into another that a client expects. It lets existing code collaborate without changing either side.</p>
+   <h4>The Problem It Solves</h4>
+   <p>A checkout service works with integer cents and a <code>charge()</code> contract. A legacy gateway uses floating-point amounts and <code>make_payment()</code>. Rewriting the gateway may be impossible, while changing every checkout call would spread legacy details through the application. An adapter can translate between the two contracts at one boundary.</p>
+   <h4>Structure</h4>
+   <ul>
+    <li>Target: <code>PaymentGateway</code> is the interface the client already understands.</li>
+    <li>Adaptee: <code>LegacyGateway</code> has the useful behavior but an incompatible method and value format.</li>
+    <li>Adapter: <code>LegacyGatewayAdapter</code> implements the target, converts cents to the legacy unit, and normalizes the response.</li>
+    <li>Client: <code>checkout()</code> depends only on the target interface.</li>
+   </ul>
+   <figure class="pattern-figure" tabindex="0" aria-label="Adapter translates a legacy gateway interface, horizontally scrollable on narrow screens">
+    <svg class="pattern-diagram" xmlns="http://www.w3.org/2000/svg" width="760" height="280" viewBox="0 0 760 280" role="img" aria-labelledby="adapter-diagram-title adapter-diagram-desc">
+     <title id="adapter-diagram-title">Adapter translates a legacy gateway interface</title>
+     <desc id="adapter-diagram-desc">The checkout workflow depends on the PaymentGateway interface. The adapter converts cents and currency into the legacy call, validates the response, and returns a normalized reference.</desc>
+     <defs><marker id="adapter-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+     <g font-family="Arial, sans-serif"><rect x="20" y="100" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="110.0" y="136.0" text-anchor="middle" fill="currentColor" font-size="16">checkout()</text>
+<text x="110.0" y="159.0" text-anchor="middle" fill="currentColor" font-size="13">uses PaymentGateway</text>
+<rect x="290" y="100" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="380.0" y="136.0" text-anchor="middle" fill="currentColor" font-size="16">LegacyGatewayAdapter</text>
+<text x="380.0" y="159.0" text-anchor="middle" fill="currentColor" font-size="13">translates calls</text>
+<rect x="560" y="100" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="650.0" y="136.0" text-anchor="middle" fill="currentColor" font-size="16">LegacyGateway</text>
+<text x="650.0" y="159.0" text-anchor="middle" fill="currentColor" font-size="13">make_payment()</text>
+<path d="M200 140 H285" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#adapter-arrow)"/>
+<path d="M470 140 H555" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#adapter-arrow)"/>
+<text x="245" y="80" fill="currentColor" text-anchor="middle" font-size="14">1. charge(2499, EUR)</text>
+<text x="515" y="80" fill="currentColor" text-anchor="middle" font-size="14">2. make_payment(24.99, EUR)</text>
+<text x="380" y="230" fill="currentColor" text-anchor="middle" font-size="14">3. Normalize the response and return a payment reference</text>
+</g>
+    </svg>
+    <figcaption>The adapter preserves the legacy implementation while giving new client code a stable interface.</figcaption>
+   </figure>
+   <div class="workflow-step">
+    <h5>From Target Call to Legacy Response</h5>
+    <ol>
+     <li>The client calls <code>charge(2499, "EUR")</code> through the adapter.</li>
+     <li>The adapter validates the amount, converts it to 24.99, and calls the legacy gateway.</li>
+     <li>It checks the legacy status and returns the payment reference as a string.</li>
+    </ol>
+    <p>The demo uses an in-memory response rather than a network call. The adapter performs only format and protocol translation; it does not add payment authorization.</p>
+   </div>
+   <h4>Python Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-python">from __future__ import annotations
+from abc import ABC, abstractmethod
+
+
+class PaymentGateway(ABC):
+    @abstractmethod
+    def charge(self, amount_cents: int, currency: str) -&gt; str:
+        pass
+
+
+class LegacyGateway:
+    def make_payment(self, value: float, currency_code: str) -&gt; dict[str, object]:
+        return {"status": "APPROVED", "reference": "LEG-421"}
+
+
+class LegacyGatewayAdapter(PaymentGateway):
+    def __init__(self, gateway: LegacyGateway):
+        self._gateway = gateway
+
+    def charge(self, amount_cents: int, currency: str) -&gt; str:
+        if amount_cents &lt; 0:
+            raise ValueError("Amount must be non-negative")
+        result = self._gateway.make_payment(amount_cents / 100, currency)
+        if result["status"] != "APPROVED":
+            raise RuntimeError("Payment was not approved")
+        return str(result["reference"])
+
+
+def checkout(gateway: PaymentGateway) -&gt; str:
+    return f"Payment reference: {gateway.charge(2499, 'EUR')}"
+
+
+if __name__ == "__main__":
+    print(checkout(LegacyGatewayAdapter(LegacyGateway())))</code></pre></div>
+<h4>Java Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-java">// AdapterDemo.java
+
+interface PaymentGateway {
+    String charge(int amountCents, String currency);
+}
+
+final class LegacyGateway {
+    public java.util.Map&lt;String, String&gt; makePayment(double value, String currencyCode) {
+        return java.util.Map.of("status", "APPROVED", "reference", "LEG-421");
+    }
+}
+
+final class LegacyGatewayAdapter implements PaymentGateway {
+    private final LegacyGateway gateway;
+
+    public LegacyGatewayAdapter(LegacyGateway gateway) {
+        this.gateway = gateway;
+    }
+
+    public String charge(int amountCents, String currency) {
+        if (amountCents &lt; 0) throw new IllegalArgumentException("Amount must be non-negative");
+        java.util.Map&lt;String, String&gt; result = gateway.makePayment(amountCents / 100.0, currency);
+        if (!"APPROVED".equals(result.get("status"))) {
+            throw new IllegalStateException("Payment was not approved");
+        }
+        return result.get("reference");
+    }
+}
+
+public class AdapterDemo {
+    static String checkout(PaymentGateway gateway) {
+        return "Payment reference: " + gateway.charge(2499, "EUR");
+    }
+
+    public static void main(String[] args) {
+        System.out.println(checkout(new LegacyGatewayAdapter(new LegacyGateway())));
+    }
+}</code></pre></div>
+<h4>Output</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-none">Payment reference: LEG-421</code></pre></div>
+   <div class="key-insight">
+    <p>This is an object adapter: it holds the adaptee rather than inheriting from it. That keeps the legacy class replaceable and avoids exposing its public surface through inheritance. A class adapter, available in languages with multiple implementation inheritance, would inherit from both sides but couples the adapter more tightly to the adaptee.</p>
+    <p>Keep translation rules explicit. Here, cents become a decimal amount and an approved legacy status becomes a reference. Silently mapping every unexpected status or currency can hide an integration failure.</p>
+   </div>
+   <h4>When to Use It</h4>
+   <ul>
+    <li>When an existing class has the required behavior but not the interface your client can use.</li>
+    <li>When integrating a third-party SDK or legacy service without modifying its source.</li>
+   </ul>
+
+   <h2 id="bridge">2. Bridge</h2>
+   <h4>Intent</h4>
+   <p>Bridge splits one abstraction from one or more implementations so the two hierarchies can change independently. The abstraction holds a reference to an implementation interface rather than creating a concrete implementation itself.</p>
+   <h4>The Problem It Solves</h4>
+   <p>Shapes need vector and raster rendering. Inheritance alone produces a class for every combination: vector circle, raster circle, vector square, raster square, and so on. Bridge keeps shape variants in one hierarchy and renderer variants in another, then connects them through composition.</p>
+   <h4>Structure</h4>
+   <ul>
+    <li>Abstraction: <code>Shape</code> holds a <code>Renderer</code> and defines <code>draw()</code>.</li>
+    <li>Refined Abstractions: <code>Circle</code> and <code>Square</code> supply their geometry and area calculation.</li>
+    <li>Implementation: <code>Renderer</code> declares <code>render(shape, area)</code>.</li>
+    <li>Concrete Implementations: <code>VectorRenderer</code> and <code>RasterRenderer</code> provide different output formats.</li>
+   </ul>
+   <figure class="pattern-figure" tabindex="0" aria-label="Bridge separates shape abstraction from rendering, horizontally scrollable on narrow screens">
+    <svg class="pattern-diagram" xmlns="http://www.w3.org/2000/svg" width="760" height="280" viewBox="0 0 760 280" role="img" aria-labelledby="bridge-diagram-title bridge-diagram-desc">
+     <title id="bridge-diagram-title">Bridge separates shape abstraction from rendering</title>
+     <desc id="bridge-diagram-desc">A Shape holds a Renderer and delegates drawing to it. Circle and Square can be combined with VectorRenderer or RasterRenderer without creating a class for every combination.</desc>
+     <defs><marker id="bridge-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+     <g font-family="Arial, sans-serif"><rect x="20" y="95" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="110.0" y="131.0" text-anchor="middle" fill="currentColor" font-size="16">Shape hierarchy</text>
+<text x="110.0" y="154.0" text-anchor="middle" fill="currentColor" font-size="13">Circle, Square</text>
+<rect x="290" y="95" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="380.0" y="131.0" text-anchor="middle" fill="currentColor" font-size="16">Renderer</text>
+<text x="380.0" y="154.0" text-anchor="middle" fill="currentColor" font-size="13">composition boundary</text>
+<rect x="560" y="95" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="650.0" y="131.0" text-anchor="middle" fill="currentColor" font-size="16">Renderer hierarchy</text>
+<text x="650.0" y="154.0" text-anchor="middle" fill="currentColor" font-size="13">Vector, Raster</text>
+<path d="M200 135 H285" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#bridge-arrow)"/>
+<path d="M470 135 H555" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#bridge-arrow)"/>
+<text x="245" y="70" fill="currentColor" text-anchor="middle" font-size="14">1. draw()</text>
+<text x="515" y="70" fill="currentColor" text-anchor="middle" font-size="14">2. render(shape, area)</text>
+<text x="380" y="230" fill="currentColor" text-anchor="middle" font-size="14">Shape variants and rendering variants evolve independently.</text>
+</g>
+    </svg>
+    <figcaption>The abstraction depends on the Renderer contract; concrete renderers remain independently replaceable.</figcaption>
+   </figure>
+   <div class="workflow-step">
+    <h5>Combining Two Independent Variations</h5>
+    <ol>
+     <li>Create a shape with the renderer selected at the composition boundary.</li>
+     <li><code>draw()</code> calculates the shape-specific area and passes it to the renderer.</li>
+     <li>The renderer formats the result without knowing whether the shape is a circle or square.</li>
+    </ol>
+    <p>The demo combines a vector circle and a raster square. Adding a triangle or an SVG renderer does not require a multiplication of shape-renderer subclasses.</p>
+   </div>
+   <h4>Python Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-python">from __future__ import annotations
+from abc import ABC, abstractmethod
+
+
+class Renderer(ABC):
+    @abstractmethod
+    def render(self, shape: str, area: float) -&gt; str:
+        pass
+
+
+class VectorRenderer(Renderer):
+    def render(self, shape: str, area: float) -&gt; str:
+        return f"Vector {shape}: area={area:.2f}"
+
+
+class RasterRenderer(Renderer):
+    def render(self, shape: str, area: float) -&gt; str:
+        return f"Raster {shape}: area={area:.2f}"
+
+
+class Shape(ABC):
+    def __init__(self, renderer: Renderer):
+        self._renderer = renderer
+
+    @abstractmethod
+    def area(self) -&gt; float:
+        pass
+
+    def draw(self) -&gt; str:
+        return self._renderer.render(type(self).__name__, self.area())
+
+
+class Circle(Shape):
+    def __init__(self, renderer: Renderer, radius: float):
+        super().__init__(renderer)
+        self.radius = radius
+
+    def area(self) -&gt; float:
+        return 3.141592653589793 * self.radius ** 2
+
+
+class Square(Shape):
+    def __init__(self, renderer: Renderer, side: float):
+        super().__init__(renderer)
+        self.side = side
+
+    def area(self) -&gt; float:
+        return self.side ** 2
+
+
+if __name__ == "__main__":
+    shapes = [Circle(VectorRenderer(), 2), Square(RasterRenderer(), 3)]
+    for shape in shapes:
+        print(shape.draw())</code></pre></div>
+<h4>Java Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-java">// BridgeDemo.java
+
+interface Renderer {
+    String render(String shape, double area);
+}
+
+final class VectorRenderer implements Renderer {
+    public String render(String shape, double area) {
+        return String.format(java.util.Locale.ROOT, "Vector %s: area=%.2f", shape, area);
+    }
+}
+
+final class RasterRenderer implements Renderer {
+    public String render(String shape, double area) {
+        return String.format(java.util.Locale.ROOT, "Raster %s: area=%.2f", shape, area);
+    }
+}
+
+abstract class Shape {
+    protected final Renderer renderer;
+
+    protected Shape(Renderer renderer) {
+        this.renderer = renderer;
+    }
+
+    public abstract double area();
+
+    public String draw() {
+        return renderer.render(getClass().getSimpleName(), area());
+    }
+}
+
+final class Circle extends Shape {
+    private final double radius;
+
+    public Circle(Renderer renderer, double radius) {
+        super(renderer);
+        this.radius = radius;
+    }
+
+    public double area() {
+        return Math.PI * radius * radius;
+    }
+}
+
+final class Square extends Shape {
+    private final double side;
+
+    public Square(Renderer renderer, double side) {
+        super(renderer);
+        this.side = side;
+    }
+
+    public double area() {
+        return side * side;
+    }
+}
+
+public class BridgeDemo {
+    public static void main(String[] args) {
+        Shape[] shapes = {new Circle(new VectorRenderer(), 2), new Square(new RasterRenderer(), 3)};
+        for (Shape shape : shapes) {
+            System.out.println(shape.draw());
+        }
+    }
+}</code></pre></div>
+<h4>Output</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-none">Vector Circle: area=12.57
+Raster Square: area=9.00</code></pre></div>
+   <div class="key-insight">
+    <p>Bridge differs from Adapter in intent. Adapter reconciles incompatible interfaces that already exist; Bridge is designed in advance to keep two variation axes separate. In this example, a shape may hold any renderer, but it does not replace it after construction. That policy keeps the geometry and rendering configuration stable for the object's lifetime.</p>
+    <p>The shared <code>draw()</code> method uses the concrete class name only as a display label. A more complete design would pass an explicit shape descriptor rather than relying on the class name.</p>
+   </div>
+   <h4>When to Use It</h4>
+   <ul>
+    <li>When two independent dimensions of variation would otherwise create a large inheritance matrix.</li>
+    <li>When implementation details, such as rendering technology or platform API, should change without altering domain abstractions.</li>
+   </ul>
+
+   <h2 id="composite">3. Composite</h2>
+   <h4>Intent</h4>
+   <p>Composite represents part-whole hierarchies through a common component interface. Clients can invoke the same operation on a leaf, a container, or an entire tree without branching on the object's structure.</p>
+   <h4>The Problem It Solves</h4>
+   <p>A course bundle contains a video product and a books bundle, which itself contains two products. Calculating the course price by manually traversing every level duplicates tree knowledge in every caller. A uniform <code>total_price()</code> operation lets each node contribute according to its role.</p>
+   <h4>Structure</h4>
+   <ul>
+    <li>Component: <code>CatalogItem</code> declares <code>total_price()</code>.</li>
+    <li>Leaf: <code>Product</code> returns its own price.</li>
+    <li>Composite: <code>Bundle</code> stores child components and sums their totals.</li>
+    <li>Client: works with <code>CatalogItem</code> objects and does not need to know whether an item is a product or bundle.</li>
+   </ul>
+   <figure class="pattern-figure" tabindex="0" aria-label="Composite treats products and bundles uniformly, horizontally scrollable on narrow screens">
+    <svg class="pattern-diagram" xmlns="http://www.w3.org/2000/svg" width="760" height="260" viewBox="0 0 760 260" role="img" aria-labelledby="composite-diagram-title composite-diagram-desc">
+     <title id="composite-diagram-title">Composite treats products and bundles uniformly</title>
+     <desc id="composite-diagram-desc">A bundle can contain products and other bundles. Calling total_price() on the outer bundle recursively collects prices from nested items and returns one total.</desc>
+     <defs><marker id="composite-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+     <g font-family="Arial, sans-serif"><rect x="20" y="95" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="110.0" y="131.0" text-anchor="middle" fill="currentColor" font-size="16">Course bundle</text>
+<text x="110.0" y="154.0" text-anchor="middle" fill="currentColor" font-size="13">CatalogItem</text>
+<rect x="300" y="30" width="160" height="70" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="380.0" y="61.0" text-anchor="middle" fill="currentColor" font-size="16">Video lessons</text>
+<text x="380.0" y="84.0" text-anchor="middle" fill="currentColor" font-size="13">Product</text>
+<rect x="300" y="160" width="160" height="70" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="380.0" y="191.0" text-anchor="middle" fill="currentColor" font-size="16">Books bundle</text>
+<text x="380.0" y="214.0" text-anchor="middle" fill="currentColor" font-size="13">CatalogItem</text>
+<rect x="560" y="95" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="650.0" y="131.0" text-anchor="middle" fill="currentColor" font-size="16">Products</text>
+<text x="650.0" y="154.0" text-anchor="middle" fill="currentColor" font-size="13">leaf nodes</text>
+<path d="M200 125 H250 V65 H295" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#composite-arrow)"/>
+<path d="M200 155 H250 V195 H295" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#composite-arrow)"/>
+<path d="M460 195 H510 V135 H555" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#composite-arrow)"/>
+<text x="380" y="17" fill="currentColor" text-anchor="middle" font-size="14">1. total_price() recurses</text>
+<text x="615" y="205" fill="currentColor" text-anchor="middle" font-size="14">2. Leaf prices are summed</text>
+</g>
+    </svg>
+    <figcaption>The client does not need to distinguish a leaf product from a composite bundle when calculating a total.</figcaption>
+   </figure>
+   <div class="workflow-step">
+    <h5>Recursive Price Calculation</h5>
+    <ol>
+     <li>The client calls <code>total_price()</code> on the outer course bundle.</li>
+     <li>The bundle asks each child for its total; the nested books bundle repeats the process.</li>
+     <li>Leaf products return their own prices, and the sums propagate back to the caller.</li>
+    </ol>
+    <p>The example uses non-negative integer cents to avoid floating-point money arithmetic. It does not model quantities, discounts, or duplicate-child detection.</p>
+   </div>
+   <h4>Python Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-python">from __future__ import annotations
+from abc import ABC, abstractmethod
+
+
+class CatalogItem(ABC):
+    @abstractmethod
+    def total_price(self) -&gt; int:
+        pass
+
+
+class Product(CatalogItem):
+    def __init__(self, name: str, price_cents: int):
+        if price_cents &lt; 0:
+            raise ValueError("Price must be non-negative")
+        self.name = name
+        self.price_cents = price_cents
+
+    def total_price(self) -&gt; int:
+        return self.price_cents
+
+
+class Bundle(CatalogItem):
+    def __init__(self, name: str):
+        self.name = name
+        self._items: list[CatalogItem] = []
+
+    def add(self, item: CatalogItem) -&gt; Bundle:
+        self._items.append(item)
+        return self
+
+    def total_price(self) -&gt; int:
+        return sum(item.total_price() for item in self._items)
+
+
+if __name__ == "__main__":
+    books = Bundle("Books").add(Product("Design Patterns", 4200)).add(Product("Refactoring", 3800))
+    course = Bundle("Course").add(Product("Video lessons", 9900)).add(books)
+
+    print(f"Books: {books.total_price()} cents")
+    print(f"Course: {course.total_price()} cents")</code></pre></div>
+<h4>Java Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-java">// CompositeDemo.java
+
+import java.util.ArrayList;
+import java.util.List;
+
+interface CatalogItem {
+    int totalPrice();
+}
+
+final class Product implements CatalogItem {
+    private final String name;
+    private final int priceCents;
+
+    public Product(String name, int priceCents) {
+        if (priceCents &lt; 0) throw new IllegalArgumentException("Price must be non-negative");
+        this.name = name;
+        this.priceCents = priceCents;
+    }
+
+    public int totalPrice() { return priceCents; }
+}
+
+final class Bundle implements CatalogItem {
+    private final String name;
+    private final List&lt;CatalogItem&gt; items = new ArrayList&lt;&gt;();
+
+    public Bundle(String name) { this.name = name; }
+
+    public Bundle add(CatalogItem item) {
+        items.add(item);
+        return this;
+    }
+
+    public int totalPrice() {
+        int total = 0;
+        for (CatalogItem item : items) total += item.totalPrice();
+        return total;
+    }
+}
+
+public class CompositeDemo {
+    public static void main(String[] args) {
+        Bundle books = new Bundle("Books")
+                .add(new Product("Design Patterns", 4200))
+                .add(new Product("Refactoring", 3800));
+        Bundle course = new Bundle("Course")
+                .add(new Product("Video lessons", 9900))
+                .add(books);
+
+        System.out.println("Books: " + books.totalPrice() + " cents");
+        System.out.println("Course: " + course.totalPrice() + " cents");
+    }
+}</code></pre></div>
+<h4>Output</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-none">Books: 8000 cents
+Course: 17900 cents</code></pre></div>
+   <div class="key-insight">
+    <p>Composite is useful when clients should treat individual objects and groups uniformly. It is not automatically a tree library: this example permits the same item to appear in multiple bundles and does not detect cycles. A cycle such as adding a bundle to itself would make recursive calculation non-terminating.</p>
+    <p>Child management methods can live on the composite only, as shown here, or on the shared component interface. The latter is more uniform but forces leaf products to reject meaningless operations such as <code>add()</code>.</p>
+   </div>
+   <h4>When to Use It</h4>
+   <ul>
+    <li>When a hierarchy has leaves and containers that should support the same operation.</li>
+    <li>When clients should calculate, render, validate, or process an entire structure without manually traversing its levels.</li>
+   </ul>
+
+   <h2 id="decorator">4. Decorator</h2>
+   <h4>Intent</h4>
+   <p>Decorator attaches responsibilities to an object dynamically by wrapping it in another object with the same interface. Each wrapper delegates to the object it contains and may add behavior before or after that call.</p>
+   <h4>The Problem It Solves</h4>
+   <p>A coffee ordering system starts with espresso and later needs milk, an extra shot, and other optional features. Creating a subclass for every combination grows quickly, while putting every option into one class makes that class difficult to change. Decorators keep each feature separate and let clients compose only the options they need.</p>
+   <h4>Structure</h4>
+   <ul>
+    <li>Component: <code>Coffee</code> declares <code>cost_cents()</code> and <code>description()</code>.</li>
+    <li>Concrete Component: <code>Espresso</code> is the base drink.</li>
+    <li>Decorator: <code>CoffeeDecorator</code> implements the component interface and holds another coffee.</li>
+    <li>Concrete Decorators: <code>Milk</code> and <code>ExtraShot</code> add their own cost and description.</li>
+   </ul>
+   <figure class="pattern-figure" tabindex="0" aria-label="Decorator wraps a base coffee with optional features, horizontally scrollable on narrow screens">
+    <svg class="pattern-diagram" xmlns="http://www.w3.org/2000/svg" width="760" height="340" viewBox="0 0 760 340" role="img" aria-labelledby="decorator-diagram-title decorator-diagram-desc">
+     <title id="decorator-diagram-title">Decorator wraps a base coffee with optional features</title>
+     <desc id="decorator-diagram-desc">The client sees only the Coffee interface. ExtraShot delegates to Milk, which delegates to Espresso. Each wrapper contributes its cost and description before returning the combined result.</desc>
+     <defs><marker id="decorator-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+     <g font-family="Arial, sans-serif"><rect x="20" y="100" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="110.0" y="136.0" text-anchor="middle" fill="currentColor" font-size="16">Client</text>
+<text x="110.0" y="159.0" text-anchor="middle" fill="currentColor" font-size="13">depends on Coffee</text>
+<rect x="290" y="100" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="380.0" y="136.0" text-anchor="middle" fill="currentColor" font-size="16">ExtraShot</text>
+<text x="380.0" y="159.0" text-anchor="middle" fill="currentColor" font-size="13">CoffeeDecorator</text>
+<rect x="560" y="100" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="650.0" y="136.0" text-anchor="middle" fill="currentColor" font-size="16">Milk</text>
+<text x="650.0" y="159.0" text-anchor="middle" fill="currentColor" font-size="13">CoffeeDecorator</text>
+<rect x="290" y="215" width="180" height="70" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="380.0" y="246.0" text-anchor="middle" fill="currentColor" font-size="16">Espresso</text>
+<text x="380.0" y="269.0" text-anchor="middle" fill="currentColor" font-size="13">base Coffee</text>
+<path d="M200 140 H285" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#decorator-arrow)"/>
+<path d="M470 140 H555" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#decorator-arrow)"/>
+<path d="M380 180 V210" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#decorator-arrow)"/>
+<text x="245" y="80" fill="currentColor" text-anchor="middle" font-size="14">1. cost_cents()</text>
+<text x="515" y="80" fill="currentColor" text-anchor="middle" font-size="14">2. delegate</text>
+<text x="380" y="310" fill="currentColor" text-anchor="middle" font-size="14">Each wrapper adds its own cost and description, then delegates inward.</text>
+</g>
+    </svg>
+    <figcaption>Wrappers can be composed at runtime without creating a subclass for every feature combination.</figcaption>
+   </figure>
+   <div class="workflow-step">
+    <h5>Wrapping From Outside Inward</h5>
+    <ol>
+     <li>The client constructs <code>ExtraShot(Milk(Espresso()))</code>.</li>
+     <li>Calling <code>cost_cents()</code> starts at the outermost decorator and delegates inward.</li>
+     <li>Each layer adds its contribution, producing one combined cost and description.</li>
+    </ol>
+    <p>The resulting object is still a <code>Coffee</code>, so it can be passed to code that does not know which options were added. The order of wrappers can matter when a feature changes behavior rather than only adding data.</p>
+   </div>
+   <h4>Python Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-python">from __future__ import annotations
+from abc import ABC, abstractmethod
+
+
+class Coffee(ABC):
+    @abstractmethod
+    def cost_cents(self) -&gt; int:
+        pass
+
+    @abstractmethod
+    def description(self) -&gt; str:
+        pass
+
+
+class Espresso(Coffee):
+    def cost_cents(self) -&gt; int:
+        return 250
+
+    def description(self) -&gt; str:
+        return "Espresso"
+
+
+class CoffeeDecorator(Coffee):
+    def __init__(self, coffee: Coffee):
+        self._coffee = coffee
+
+    def cost_cents(self) -&gt; int:
+        return self._coffee.cost_cents()
+
+    def description(self) -&gt; str:
+        return self._coffee.description()
+
+
+class Milk(CoffeeDecorator):
+    def cost_cents(self) -&gt; int:
+        return self._coffee.cost_cents() + 50
+
+    def description(self) -&gt; str:
+        return f"{self._coffee.description()} + milk"
+
+
+class ExtraShot(CoffeeDecorator):
+    def cost_cents(self) -&gt; int:
+        return self._coffee.cost_cents() + 80
+
+    def description(self) -&gt; str:
+        return f"{self._coffee.description()} + extra shot"
+
+
+if __name__ == "__main__":
+    order: Coffee = ExtraShot(Milk(Espresso()))
+    print(f"{order.description()}: {order.cost_cents()} cents")</code></pre></div>
+<h4>Java Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-java">// DecoratorDemo.java
+
+interface Coffee {
+    int costCents();
+    String description();
+}
+
+final class Espresso implements Coffee {
+    public int costCents() { return 250; }
+    public String description() { return "Espresso"; }
+}
+
+abstract class CoffeeDecorator implements Coffee {
+    protected final Coffee coffee;
+
+    protected CoffeeDecorator(Coffee coffee) {
+        this.coffee = coffee;
+    }
+
+    public int costCents() { return coffee.costCents(); }
+    public String description() { return coffee.description(); }
+}
+
+final class Milk extends CoffeeDecorator {
+    public Milk(Coffee coffee) { super(coffee); }
+
+    public int costCents() { return coffee.costCents() + 50; }
+    public String description() { return coffee.description() + " + milk"; }
+}
+
+final class ExtraShot extends CoffeeDecorator {
+    public ExtraShot(Coffee coffee) { super(coffee); }
+
+    public int costCents() { return coffee.costCents() + 80; }
+    public String description() { return coffee.description() + " + extra shot"; }
+}
+
+public class DecoratorDemo {
+    public static void main(String[] args) {
+        Coffee order = new ExtraShot(new Milk(new Espresso()));
+        System.out.println(order.description() + ": " + order.costCents() + " cents");
+    }
+}</code></pre></div>
+<h4>Output</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-none">Espresso + milk + extra shot: 380 cents</code></pre></div>
+   <div class="key-insight">
+    <p>Decorator differs from inheritance because responsibilities attach to an instance at composition time, not to a class at compile time. It also differs from a collection of options: each decorator preserves the component contract and can alter calls, not merely store a setting.</p>
+    <p>Deep chains can become hard to debug and may duplicate wrapper logic. Keep each decorator focused, avoid dependencies on a particular wrapping order unless that order is part of the domain rule, and do not use Decorator merely to add fields to a data record.</p>
+   </div>
+   <h4>When to Use It</h4>
+   <ul>
+    <li>When optional responsibilities should be combined flexibly at runtime.</li>
+    <li>When subclassing every combination would create an impractical number of classes.</li>
+   </ul>
+
+   <h2 id="facade">5. Facade</h2>
+   <h4>Intent</h4>
+   <p>Facade provides a simplified entry point to a set of subsystems. It coordinates a common workflow behind one interface while leaving the subsystems available for callers that need finer control.</p>
+   <h4>The Problem It Solves</h4>
+   <p>Placing an order requires inventory reservation, shipping scheduling, and billing. A client that calls all three services directly must know their order and dependencies. A facade gives the common case one method while keeping each subsystem independently testable and reusable.</p>
+   <h4>Structure</h4>
+   <ul>
+    <li>Facade: <code>OrderFacade</code> exposes <code>place_order()</code> and coordinates the workflow.</li>
+    <li>Subsystem: <code>Inventory</code>, <code>Shipping</code>, and <code>Billing</code> retain their own interfaces.</li>
+    <li>Client: uses the facade for the standard order flow.</li>
+   </ul>
+   <figure class="pattern-figure" tabindex="0" aria-label="Facade coordinates subsystem calls behind one entry point, horizontally scrollable on narrow screens">
+    <svg class="pattern-diagram" xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300" role="img" aria-labelledby="facade-diagram-title facade-diagram-desc">
+     <title id="facade-diagram-title">Facade coordinates subsystem calls behind one entry point</title>
+     <desc id="facade-diagram-desc">The client calls place_order() on the facade. The facade invokes inventory, shipping, and billing in the required order and returns a combined confirmation.</desc>
+     <defs><marker id="facade-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+     <g font-family="Arial, sans-serif"><rect x="20" y="100" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="110.0" y="136.0" text-anchor="middle" fill="currentColor" font-size="16">Client</text>
+<text x="110.0" y="159.0" text-anchor="middle" fill="currentColor" font-size="13">place_order()</text>
+<rect x="290" y="100" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="380.0" y="136.0" text-anchor="middle" fill="currentColor" font-size="16">OrderFacade</text>
+<text x="380.0" y="159.0" text-anchor="middle" fill="currentColor" font-size="13">simple entry point</text>
+<rect x="560" y="30" width="180" height="70" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="650.0" y="61.0" text-anchor="middle" fill="currentColor" font-size="16">Inventory</text>
+<text x="650.0" y="84.0" text-anchor="middle" fill="currentColor" font-size="13">reserve()</text>
+<rect x="560" y="115" width="180" height="70" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="650.0" y="146.0" text-anchor="middle" fill="currentColor" font-size="16">Shipping</text>
+<text x="650.0" y="169.0" text-anchor="middle" fill="currentColor" font-size="13">schedule()</text>
+<rect x="560" y="200" width="180" height="70" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="650.0" y="231.0" text-anchor="middle" fill="currentColor" font-size="16">Billing</text>
+<text x="650.0" y="254.0" text-anchor="middle" fill="currentColor" font-size="13">charge()</text>
+<path d="M200 140 H285" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#facade-arrow)"/>
+<path d="M470 120 H520 V65 H555" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#facade-arrow)"/>
+<path d="M470 140 H555" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#facade-arrow)"/>
+<path d="M470 160 H520 V235 H555" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#facade-arrow)"/>
+<text x="245" y="80" fill="currentColor" text-anchor="middle" font-size="14">1. one call</text>
+<text x="515" y="17" fill="currentColor" text-anchor="middle" font-size="14">2. coordinate subsystems</text>
+</g>
+    </svg>
+    <figcaption>The facade simplifies the common workflow but does not prevent direct use of the subsystems when needed.</figcaption>
+   </figure>
+   <div class="workflow-step">
+    <h5>One Entry Point, Three Coordinated Steps</h5>
+    <ol>
+     <li>The client calls <code>place_order()</code> with the order data.</li>
+     <li>The facade validates the request and invokes inventory, shipping, and billing.</li>
+     <li>It combines the subsystem responses into one confirmation string.</li>
+    </ol>
+    <p>This demo prints the result of each step rather than implementing persistence, compensation, or distributed transactions. A facade is not a transaction manager unless that responsibility is explicitly added and handled.</p>
+   </div>
+   <h4>Python Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-python">from __future__ import annotations
+
+
+class Inventory:
+    def reserve(self, sku: str, quantity: int) -&gt; str:
+        return f"Reserved {quantity} x {sku}"
+
+
+class Shipping:
+    def schedule(self, address: str) -&gt; str:
+        return f"Shipping scheduled to {address}"
+
+
+class Billing:
+    def charge(self, amount_cents: int) -&gt; str:
+        return f"Billing accepted {amount_cents} cents"
+
+
+class OrderFacade:
+    def __init__(self, inventory: Inventory, shipping: Shipping, billing: Billing):
+        self._inventory = inventory
+        self._shipping = shipping
+        self._billing = billing
+
+    def place_order(self, sku: str, quantity: int, address: str, amount_cents: int) -&gt; str:
+        if quantity &lt;= 0 or amount_cents &lt; 0:
+            raise ValueError("Quantity and amount must be non-negative")
+        return " | ".join((
+            self._inventory.reserve(sku, quantity),
+            self._shipping.schedule(address),
+            self._billing.charge(amount_cents),
+        ))
+
+
+if __name__ == "__main__":
+    facade = OrderFacade(Inventory(), Shipping(), Billing())
+    print(facade.place_order("BOOK-42", 2, "Milan", 7600))</code></pre></div>
+<h4>Java Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-java">// FacadeDemo.java
+
+final class Inventory {
+    public String reserve(String sku, int quantity) {
+        return "Reserved " + quantity + " x " + sku;
+    }
+}
+
+final class Shipping {
+    public String schedule(String address) {
+        return "Shipping scheduled to " + address;
+    }
+}
+
+final class Billing {
+    public String charge(int amountCents) {
+        return "Billing accepted " + amountCents + " cents";
+    }
+}
+
+final class OrderFacade {
+    private final Inventory inventory;
+    private final Shipping shipping;
+    private final Billing billing;
+
+    public OrderFacade(Inventory inventory, Shipping shipping, Billing billing) {
+        this.inventory = inventory;
+        this.shipping = shipping;
+        this.billing = billing;
+    }
+
+    public String placeOrder(String sku, int quantity, String address, int amountCents) {
+        if (quantity &lt;= 0 || amountCents &lt; 0) {
+            throw new IllegalArgumentException("Quantity and amount must be non-negative");
+        }
+        return String.join(" | ",
+                inventory.reserve(sku, quantity),
+                shipping.schedule(address),
+                billing.charge(amountCents));
+    }
+}
+
+public class FacadeDemo {
+    public static void main(String[] args) {
+        OrderFacade facade = new OrderFacade(new Inventory(), new Shipping(), new Billing());
+        System.out.println(facade.placeOrder("BOOK-42", 2, "Milan", 7600));
+    }
+}</code></pre></div>
+<h4>Output</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-none">Reserved 2 x BOOK-42 | Shipping scheduled to Milan | Billing accepted 7600 cents</code></pre></div>
+   <div class="key-insight">
+    <p>A facade reduces coupling for the common workflow, but it should not become the only route to every subsystem capability. Keeping subsystem interfaces accessible avoids turning the facade into a bottleneck or a "God object."</p>
+    <p>The example returns a formatted confirmation for clarity. Production code would more likely return a structured result, distinguish partial failures, and define what happens when one subsystem fails after another has succeeded.</p>
+   </div>
+   <h4>When to Use It</h4>
+   <ul>
+    <li>When a common operation spans several subsystems and clients should not manage their sequencing.</li>
+    <li>When introducing a library or legacy system behind a smaller, domain-oriented interface.</li>
+   </ul>
+
+   <h2 id="flyweight">6. Flyweight</h2>
+   <h4>Intent</h4>
+   <p>Flyweight shares immutable state that repeats across many objects. Each object keeps only its unique state and refers to a shared flyweight for the common part.</p>
+   <h4>The Problem It Solves</h4>
+   <p>A forest may contain millions of trees. Storing the species name, color, and texture reference in every tree repeats the same data. A shared immutable <code>TreeType</code> reduces that repetition, while each tree retains only its own position and height.</p>
+   <h4>Structure</h4>
+   <ul>
+    <li>Flyweight: <code>TreeType</code> is immutable and contains intrinsic state shared by many trees.</li>
+    <li>Flyweight Factory: <code>TreeTypeFactory</code> maps a key to one cached instance.</li>
+    <li>Context: <code>Tree</code> stores extrinsic state: x, y, and height.</li>
+    <li>Client: <code>Forest</code> requests a shared type and creates contextual tree objects.</li>
+   </ul>
+   <figure class="pattern-figure" tabindex="0" aria-label="Flyweight shares immutable intrinsic state, horizontally scrollable on narrow screens">
+    <svg class="pattern-diagram" xmlns="http://www.w3.org/2000/svg" width="760" height="280" viewBox="0 0 760 280" role="img" aria-labelledby="flyweight-diagram-title flyweight-diagram-desc">
+     <title id="flyweight-diagram-title">Flyweight shares immutable intrinsic state</title>
+     <desc id="flyweight-diagram-desc">The forest requests a TreeType by its name, color, and texture. The factory returns one shared immutable object for matching keys, while each Tree retains only its unique extrinsic position and height.</desc>
+     <defs><marker id="flyweight-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+     <g font-family="Arial, sans-serif"><rect x="20" y="100" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="110.0" y="136.0" text-anchor="middle" fill="currentColor" font-size="16">Forest</text>
+<text x="110.0" y="159.0" text-anchor="middle" fill="currentColor" font-size="13">many Tree objects</text>
+<rect x="290" y="100" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="380.0" y="136.0" text-anchor="middle" fill="currentColor" font-size="16">TreeTypeFactory</text>
+<text x="380.0" y="159.0" text-anchor="middle" fill="currentColor" font-size="13">shared lookup</text>
+<rect x="560" y="100" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="650.0" y="136.0" text-anchor="middle" fill="currentColor" font-size="16">TreeType</text>
+<text x="650.0" y="159.0" text-anchor="middle" fill="currentColor" font-size="13">name, color, texture</text>
+<path d="M200 140 H285" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#flyweight-arrow)"/>
+<path d="M470 140 H555" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#flyweight-arrow)"/>
+<text x="245" y="70" fill="currentColor" text-anchor="middle" font-size="14">1. request type</text>
+<text x="515" y="70" fill="currentColor" text-anchor="middle" font-size="14">2. reuse cached type</text>
+<text x="380" y="230" fill="currentColor" text-anchor="middle" font-size="14">Each Tree stores only its unique x, y, and height.</text>
+</g>
+    </svg>
+    <figcaption>Sharing reduces repeated state, but requires immutable shared data and a clear key policy.</figcaption>
+   </figure>
+   <div class="workflow-step">
+    <h5>Separating Shared and Unique State</h5>
+    <ol>
+     <li>The forest requests a tree type using name, color, and texture.</li>
+     <li>The factory returns the existing cached type or creates it once.</li>
+     <li>Each tree stores a reference to that type plus its unique coordinates and height.</li>
+    </ol>
+    <p>Three trees use only two shared types in the demo. The savings grow with the number of objects and the size of the shared state.</p>
+   </div>
+   <h4>Python Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-python">from __future__ import annotations
+from dataclasses import dataclass
+from typing import ClassVar
+
+
+@dataclass(frozen=True)
+class TreeType:
+    name: str
+    color: str
+    texture: str
+
+
+class TreeTypeFactory:
+    _types: ClassVar[dict[tuple[str, str, str], TreeType]] = {}
+
+    @classmethod
+    def get(cls, name: str, color: str, texture: str) -&gt; TreeType:
+        key = (name, color, texture)
+        if key not in cls._types:
+            cls._types[key] = TreeType(name, color, texture)
+        return cls._types[key]
+
+
+class Tree:
+    def __init__(self, tree_type: TreeType, x: float, y: float, height: float):
+        self.type = tree_type
+        self.x = x
+        self.y = y
+        self.height = height
+
+    def draw(self) -&gt; str:
+        return f"{self.type.name} at ({self.x:.1f}, {self.y:.1f}), height={self.height:.1f}"
+
+
+class Forest:
+    def __init__(self):
+        self.trees: list[Tree] = []
+
+    def plant(self, name: str, color: str, texture: str, x: float, y: float, height: float) -&gt; Tree:
+        tree = Tree(TreeTypeFactory.get(name, color, texture), x, y, height)
+        self.trees.append(tree)
+        return tree
+
+
+if __name__ == "__main__":
+    forest = Forest()
+    forest.plant("Oak", "green", "oak.png", 10, 20, 4.5)
+    forest.plant("Oak", "green", "oak.png", 15, 25, 3.8)
+    forest.plant("Pine", "dark green", "pine.png", 30, 40, 6.0)
+
+    print(f"Trees planted: {len(forest.trees)}")
+    print(f"Shared types: {len(TreeTypeFactory._types)}")
+    print(forest.trees[0].draw())
+    print(forest.trees[2].draw())</code></pre></div>
+<h4>Java Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-java">// FlyweightDemo.java
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+
+final class TreeType {
+    private final String name;
+    private final String color;
+    private final String texture;
+
+    private TreeType(String name, String color, String texture) {
+        this.name = name;
+        this.color = color;
+        this.texture = texture;
+    }
+
+    public static TreeType of(String name, String color, String texture) {
+        return new TreeType(name, color, texture);
+    }
+
+    public String getName() { return name; }
+}
+
+final class TreeTypeFactory {
+    private static final Map&lt;String, TreeType&gt; TYPES = new HashMap&lt;&gt;();
+
+    public static TreeType get(String name, String color, String texture) {
+        String key = String.join("|", name, color, texture);
+        return TYPES.computeIfAbsent(key, ignored -&gt; TreeType.of(name, color, texture));
+    }
+
+    public static int typeCount() { return TYPES.size(); }
+}
+
+final class Tree {
+    private final TreeType type;
+    private final double x;
+    private final double y;
+    private final double height;
+
+    public Tree(TreeType type, double x, double y, double height) {
+        this.type = Objects.requireNonNull(type);
+        this.x = x;
+        this.y = y;
+        this.height = height;
+    }
+
+    public String draw() {
+        return String.format(Locale.ROOT, "%s at (%.1f, %.1f), height=%.1f",
+                type.getName(), x, y, height);
+    }
+}
+
+final class Forest {
+    private final List&lt;Tree&gt; trees = new ArrayList&lt;&gt;();
+
+    public Tree plant(String name, String color, String texture, double x, double y, double height) {
+        Tree tree = new Tree(TreeTypeFactory.get(name, color, texture), x, y, height);
+        trees.add(tree);
+        return tree;
+    }
+
+    public int treeCount() { return trees.size(); }
+}
+
+public class FlyweightDemo {
+    public static void main(String[] args) {
+        Forest forest = new Forest();
+        forest.plant("Oak", "green", "oak.png", 10, 20, 4.5);
+        forest.plant("Oak", "green", "oak.png", 15, 25, 3.8);
+        forest.plant("Pine", "dark green", "pine.png", 30, 40, 6.0);
+
+        System.out.println("Trees planted: " + forest.treeCount());
+        System.out.println("Shared types: " + TreeTypeFactory.typeCount());
+        System.out.println(forest.plant("Oak", "green", "oak.png", 50, 60, 5.0).draw());
+    }
+}</code></pre></div>
+<h4>Output</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-none">Trees planted: 3
+Shared types: 2
+Oak at (10.0, 20.0), height=4.5
+Pine at (30.0, 40.0), height=6.0</code></pre></div>
+   <div class="key-insight">
+    <p>Intrinsic state must be safe to share. Here, <code>TreeType</code> is immutable and contains no identity-dependent behavior. Extrinsic state remains with each <code>Tree</code>, so two trees can share a type while occupying different positions.</p>
+    <p>The cache key must identify the shared state completely. Using only the species name would incorrectly share different colors or textures. A bounded or evictable cache may be appropriate when the set of flyweights is large or changes over time.</p>
+   </div>
+   <h4>When to Use It</h4>
+   <ul>
+    <li>When many objects repeat substantial immutable state.</li>
+    <li>When object identity of the shared part does not matter and its state can be safely reused.</li>
+   </ul>
+
+   <h2 id="proxy">7. Proxy</h2>
+   <h4>Intent</h4>
+   <p>Proxy provides a substitute with the same interface as another object. It can control, delay, cache, log, or protect access before forwarding a request to the real subject.</p>
+   <h4>The Problem It Solves</h4>
+   <p>A report service may expose confidential documents. Clients should use one reporting interface, but access rules should be enforced before the real service performs its work. A proxy can check the caller role and forward only authorized requests.</p>
+   <h4>Structure</h4>
+   <ul>
+    <li>Subject: <code>ReportService</code> declares <code>read(report_id)</code>.</li>
+    <li>Real Subject: <code>RealReportService</code> performs the actual data access.</li>
+    <li>Proxy: <code>AccessControlProxy</code> implements the same interface and controls delegation.</li>
+    <li>Client: depends on the subject interface, not directly on the real service.</li>
+   </ul>
+   <figure class="pattern-figure" tabindex="0" aria-label="Proxy controls access before delegating, horizontally scrollable on narrow screens">
+    <svg class="pattern-diagram" xmlns="http://www.w3.org/2000/svg" width="760" height="280" viewBox="0 0 760 280" role="img" aria-labelledby="proxy-diagram-title proxy-diagram-desc">
+     <title id="proxy-diagram-title">Proxy controls access before delegating</title>
+     <desc id="proxy-diagram-desc">The client uses the ReportService interface. The proxy checks the caller role first; authorized requests are forwarded to the real service, while unauthorized requests are rejected.</desc>
+     <defs><marker id="proxy-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+     <g font-family="Arial, sans-serif"><rect x="20" y="100" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="110.0" y="136.0" text-anchor="middle" fill="currentColor" font-size="16">Client</text>
+<text x="110.0" y="159.0" text-anchor="middle" fill="currentColor" font-size="13">read(report_id)</text>
+<rect x="290" y="100" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="380.0" y="136.0" text-anchor="middle" fill="currentColor" font-size="16">AccessControlProxy</text>
+<text x="380.0" y="159.0" text-anchor="middle" fill="currentColor" font-size="13">same interface</text>
+<rect x="560" y="100" width="180" height="80" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="650.0" y="136.0" text-anchor="middle" fill="currentColor" font-size="16">RealReportService</text>
+<text x="650.0" y="159.0" text-anchor="middle" fill="currentColor" font-size="13">actual data access</text>
+<path d="M200 140 H285" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#proxy-arrow)"/>
+<path d="M470 140 H555" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#proxy-arrow)"/>
+<text x="245" y="70" fill="currentColor" text-anchor="middle" font-size="14">1. authorize role</text>
+<text x="515" y="70" fill="currentColor" text-anchor="middle" font-size="14">2. forward request</text>
+<text x="380" y="230" fill="currentColor" text-anchor="middle" font-size="14">Rejected requests never reach the real service.</text>
+</g>
+    </svg>
+    <figcaption>A proxy has the same interface as its subject and can add access control, caching, logging, or lazy initialization.</figcaption>
+   </figure>
+   <div class="workflow-step">
+    <h5>Authorize, Then Delegate</h5>
+    <ol>
+     <li>The client calls <code>read()</code> on the proxy.</li>
+     <li>The proxy checks whether the caller role is allowed.</li>
+     <li>An authorized request reaches the real service; an unauthorized request raises an access error.</li>
+    </ol>
+    <p>The Python proxy accepts a role argument for clarity. The Java proxy uses a fixed guest role to retain the same subject signature. Both make the access decision before touching the real service.</p>
+   </div>
+   <h4>Python Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-python">from __future__ import annotations
+from abc import ABC, abstractmethod
+
+
+class ReportService(ABC):
+    @abstractmethod
+    def read(self, report_id: str) -&gt; str:
+        pass
+
+
+class RealReportService(ReportService):
+    def read(self, report_id: str) -&gt; str:
+        return f"Contents of {report_id}"
+
+
+class AccessControlProxy(ReportService):
+    def __init__(self, service: ReportService, allowed_roles: set[str]):
+        self._service = service
+        self._allowed_roles = allowed_roles
+
+    def read(self, report_id: str, role: str = "guest") -&gt; str:
+        if role not in self._allowed_roles:
+            raise PermissionError(f"Role '{role}' cannot read {report_id}")
+        return self._service.read(report_id)
+
+
+if __name__ == "__main__":
+    service = AccessControlProxy(RealReportService(), {"analyst", "admin"})
+    print(service.read("quarterly-report", "analyst"))
+    try:
+        service.read("quarterly-report", "guest")
+    except PermissionError as error:
+        print(error)</code></pre></div>
+<h4>Java Implementation</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-java">// ProxyDemo.java
+
+interface ReportService {
+    String read(String reportId);
+}
+
+final class RealReportService implements ReportService {
+    public String read(String reportId) {
+        return "Contents of " + reportId;
+    }
+}
+
+final class AccessControlProxy implements ReportService {
+    private final ReportService service;
+    private final java.util.Set&lt;String&gt; allowedRoles;
+
+    public AccessControlProxy(ReportService service, java.util.Set&lt;String&gt; allowedRoles) {
+        this.service = service;
+        this.allowedRoles = java.util.Set.copyOf(allowedRoles);
+    }
+
+    public String read(String reportId) {
+        String role = "guest";
+        if (!allowedRoles.contains(role)) {
+            throw new SecurityException("Role '" + role + "' cannot read " + reportId);
+        }
+        return service.read(reportId);
+    }
+}
+
+public class ProxyDemo {
+    public static void main(String[] args) {
+        ReportService service = new AccessControlProxy(
+                new RealReportService(), java.util.Set.of("analyst", "admin"));
+        System.out.println(service.read("quarterly-report"));
+        try {
+            new AccessControlProxy(new RealReportService(), java.util.Set.of("admin"))
+                    .read("quarterly-report");
+        } catch (SecurityException error) {
+            System.out.println(error.getMessage());
+        }
+    }
+}</code></pre></div>
+<h4>Output</h4>
+<div class="responsive-code-container"><pre tabindex="0"><code class="language-none">Contents of quarterly-report
+Role 'guest' cannot read quarterly-report</code></pre></div>
+   <div class="key-insight">
+    <p>Protection, virtual, caching, logging, and remote proxies share the same structural idea but solve different access problems. The important contract is interface compatibility: a client should be able to use the proxy wherever it could use the real subject.</p>
+    <p>A proxy adds a layer and can change latency or failure behavior. Make its policy explicit, especially for caching, retries, and security decisions. This demo does not authenticate the caller; it assumes the supplied role is already trusted.</p>
+   </div>
+   <h4>When to Use It</h4>
+   <ul>
+    <li>When access to an expensive, remote, or protected resource needs a controlled boundary.</li>
+    <li>When cross-cutting behavior should surround a service without modifying the service implementation.</li>
+   </ul>
+
+   <h2 id="comparison">8. Detailed Comparison</h2>
+   <h4>Pattern Selection Guide</h4>
+   <p>Identify the composition pressure before selecting a pattern. The table below distinguishes the boundary each pattern introduces and the contract that must be made explicit.</p>
+   <div class="responsive-table-container" role="region" tabindex="0" aria-label="Scrollable structural pattern selection guide"><table><thead><tr><th scope="col">Design Pressure</th><th scope="col">Pattern</th><th scope="col">Composition Boundary</th><th scope="col">What Must Be Defined</th><th scope="col">Avoid It When</th></tr></thead><tbody><tr><td>An existing interface does not match the client</td><td>Adapter</td><td>Adapter translates between Target and Adaptee</td><td>Unit, protocol, and error mappings</td><td>You can change the incompatible interface directly</td></tr><tr><td>Two independent dimensions would multiply subclasses</td><td>Bridge</td><td>Abstraction holds an Implementation reference</td><td>Which variations belong to each hierarchy</td><td>There is only one stable implementation</td></tr><tr><td>Clients should treat leaves and groups alike</td><td>Composite</td><td>Composite stores child Components</td><td>Cycle policy and child-management API</td><td>The structure is fixed and shallow</td></tr><tr><td>Optional behavior must compose at runtime</td><td>Decorator</td><td>Decorator wraps another Component</td><td>Delegation order and added responsibilities</td><td>A few constructor parameters express the options clearly</td></tr><tr><td>A common workflow spans several subsystems</td><td>Facade</td><td>Facade coordinates subsystem calls</td><td>Workflow order, validation, and failure policy</td><td>Clients need unrestricted access to every subsystem feature</td></tr><tr><td>Many objects repeat immutable state</td><td>Flyweight</td><td>Factory caches shared Flyweight objects</td><td>Cache key, sharing safety, and extrinsic state</td><td>The repeated state is small or object identity matters</td></tr><tr><td>Access to a subject needs a controlled boundary</td><td>Proxy</td><td>Proxy implements the Subject interface</td><td>Authorization, caching, retry, and failure behavior</td><td>Direct access is simpler and has no cross-cutting requirement</td></tr></tbody></table></div>
+   <div class="workflow-step">
+    <h5>Resolve the Closest Choices</h5>
+    <ul>
+     <li>Adapter or Facade: Adapter reconciles an existing incompatible interface; Facade simplifies access to several already-usable subsystems.</li>
+     <li>Bridge or Adapter: Bridge plans two independent variation axes; Adapter connects interfaces that already exist but do not match.</li>
+     <li>Decorator or Proxy: Both wrap a subject, but Decorator adds responsibilities while Proxy controls access, creation, or location.</li>
+     <li>Composite or Decorator: Composite forms a tree of uniformly treated components; Decorator wraps one component to add behavior.</li>
+     <li>Flyweight or shared immutable object: use Flyweight when many contexts need the same intrinsic state and can supply their own extrinsic state.</li>
+    </ul>
+   </div>
+   <h4>Common Pitfalls</h4>
+   <div class="responsive-table-container" role="region" tabindex="0" aria-label="Scrollable structural pattern pitfalls"><table><thead><tr><th scope="col">Pattern</th><th scope="col">Common Pitfall</th><th scope="col">Better Approach</th></tr></thead><tbody><tr><td>Adapter</td><td>Hiding incompatible semantics behind a renamed method</td><td>Document conversions, validation, and error translation explicitly</td></tr><tr><td>Bridge</td><td>Creating a hierarchy split without two genuine variation axes</td><td>Use Bridge only when abstraction and implementation must evolve independently</td></tr><tr><td>Composite</td><td>Allowing cycles or treating every node as both leaf and container</td><td>Keep leaf and composite responsibilities clear; define cycle handling</td></tr><tr><td>Decorator</td><td>Building deep, order-dependent wrapper chains</td><td>Keep wrappers small and make any required ordering explicit</td></tr><tr><td>Facade</td><td>Turning the facade into a &quot;God object&quot; that owns every capability</td><td>Coordinate common flows while preserving direct subsystem access</td></tr><tr><td>Flyweight</td><td>Sharing mutable state or using an incomplete cache key</td><td>Make shared state immutable and include every distinguishing field in the key</td></tr><tr><td>Proxy</td><td>Assuming interface compatibility makes behavior transparent</td><td>Document latency, caching, security, and error-handling changes</td></tr></tbody></table></div>
+   <h2 id="conclusion">9. Putting It All Together</h2>
+   <p>A structural pattern earns its place when it clarifies a real composition boundary. It should make a variation, access rule, or hierarchy easier to understand, not merely add another layer of indirection.</p>
+   <div class="summary">
+    <h4>Composition Contracts Worth Making Explicit</h4>
+    <ul>
+     <li>Interface: what can clients rely on, and which implementation details remain hidden behind it?</li>
+     <li>Ownership: which object owns mutable state, and which parts are safe to share or replace?</li>
+     <li>Delegation: when is a call forwarded, transformed, rejected, cached, or coordinated across collaborators?</li>
+    </ul>
+   </div>
+   <p>Prefer direct composition when it expresses the design clearly. Introduce a structural pattern when it isolates a change that would otherwise spread through client code, and keep the resulting boundary small, documented, and testable.</p>
+   <p>Pattern terminology and relationships can be explored in the <a href="https://refactoring.guru/design-patterns/structural-patterns" target="_blank" rel="noopener noreferrer">Structural Patterns catalog</a>; the examples here focus on explicit composition, delegation, and runtime behavior.</p>
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = "https://www.francescosannicola.com/articles/oop-structural-design-patterns.html";
+            this.page.identifier = "oop-structural-design-patterns";
+            this.page.title = "Structural Design Patterns";
+        };
+        (function () {
+            var d = document, s = d.createElement("script");
+            s.src = "https://francescosannicola.disqus.com/embed.js";
+            s.setAttribute("data-timestamp", +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </main>
+  <button aria-label="Back to top" id="backToTopButton" title="Back to top" type="button">
+   <i aria-hidden="true" class="fa fa-arrow-up">
+   </i>
+  </button>
+  <script>
+   (() => {
+  "use strict";
+  const toggle = document.getElementById("darkModeToggle");
+  const backToTop = document.getElementById("backToTopButton");
+  const targets = [document.body, ...document.querySelectorAll(
+    ".main-container, .article-container, .link-container"
+  )];
+
+  function applyDarkMode(dark, persist = false) {
+    targets.forEach((element) => element.classList.toggle("dark-mode", dark));
+    if (toggle) {
+      toggle.checked = dark;
+      toggle.setAttribute("aria-label", dark ? "Disable dark mode" : "Enable dark mode");
+    }
+    if (persist) {
+      try {
+        window.localStorage.setItem("darkMode", String(dark));
+      } catch (_) {
+        // The toggle still works when browser storage is unavailable.
+      }
+    }
+  }
+
+  let dark = false;
+  try {
+    dark = window.localStorage.getItem("darkMode") === "true";
+  } catch (_) {
+    // Keep the site's default light theme if storage is blocked.
+  }
+  applyDarkMode(dark);
+  if (toggle) {
+    toggle.addEventListener("change", () => applyDarkMode(toggle.checked, true));
+  }
+
+  if (backToTop) {
+    const updateVisibility = () => {
+      backToTop.style.display = window.scrollY > 500 ? "block" : "none";
+    };
+    backToTop.addEventListener("click", () => {
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
+    });
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    updateVisibility();
+  }
+
+    document.querySelectorAll(".structural-patterns h2[id]").forEach((sectionHeading, index) => {
+        const sectionNodes = [];
+        for (let node = sectionHeading.nextElementSibling; node && node.tagName !== "H2"; node = node.nextElementSibling) {
+            sectionNodes.push(node);
+        }
+
+        const implementationHeading = sectionNodes.find((node) =>
+            node.tagName === "H4" && /^(Python|Java) Implementation$/.test(node.textContent.trim())
+        );
+        const outputHeading = sectionNodes.find((node) =>
+            node.tagName === "H4" && node.textContent.trim() === "Output"
+        );
+        const outputPanel = outputHeading && outputHeading.nextElementSibling;
+        if (!implementationHeading || !outputPanel || !outputPanel.classList.contains("responsive-code-container")) return;
+
+        const accordion = document.createElement("h4");
+        accordion.className = "accordion";
+        accordion.setAttribute("role", "button");
+        accordion.setAttribute("tabindex", "0");
+        accordion.setAttribute("aria-expanded", "false");
+        accordion.setAttribute("aria-controls", `code-examples-${index + 1}`);
+        accordion.append("Code Examples and Output");
+
+        const arrow = document.createElement("span");
+        arrow.className = "arrow";
+        arrow.setAttribute("aria-hidden", "true");
+        arrow.textContent = "▼";
+        accordion.appendChild(arrow);
+
+        const panel = document.createElement("div");
+        panel.id = `code-examples-${index + 1}`;
+        panel.style.display = "none";
+        const nextSectionHeading = sectionNodes[sectionNodes.length - 1].nextElementSibling;
+        const parent = sectionHeading.parentNode;
+        parent.insertBefore(accordion, nextSectionHeading);
+        parent.insertBefore(panel, nextSectionHeading);
+
+        let node = implementationHeading;
+        while (node) {
+            const nextNode = node.nextElementSibling;
+            panel.appendChild(node);
+            if (node === outputPanel) break;
+            node = nextNode;
+        }
+
+        const togglePanel = () => {
+            const isExpanded = accordion.getAttribute("aria-expanded") === "true";
+            accordion.setAttribute("aria-expanded", String(!isExpanded));
+            accordion.classList.toggle("active", !isExpanded);
+            panel.style.display = isExpanded ? "none" : "block";
+        };
+
+        accordion.addEventListener("click", togglePanel);
+        accordion.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                togglePanel();
+            }
+        });
+    });
+})();
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js">
+  </script>
+ </body>
+</html>

@@ -1,0 +1,3930 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="A comprehensive guide to Behavioral Design Patterns - covering Iterator, Command, Strategy, Observer, Chain of Responsibility, Template Method, Memento, Visitor, and more, with Python and Java implementations." name="description"/>
+  <meta content="design patterns, behavioral patterns, iterator, command, strategy, observer, memento, visitor, software engineering, python, java" name="keywords"/>
+  <meta content="Francesco Sannicola" name="author"/>
+  <meta content="Behavioral Design Patterns - Francesco Sannicola" property="og:title"/>
+  <meta content="Ten behavioral design patterns with Python and Java examples, trade-offs, state snapshots, and visitor dispatch." property="og:description"/>
+    <meta content="https://www.francescosannicola.com/articles/oop-behavioral-patterns.html" property="og:url"/>
+  <meta content="article" property="og:type"/>
+  <meta content="https://www.francescosannicola.com/assets/francescosannicola.jpg" property="og:image"/>
+  <title>
+   Behavioral Design Patterns - Francesco Sannicola
+  </title>
+  <link href="../favicon.ico" rel="icon" type="image/x-icon"/>
+  <link href="../style.css" rel="stylesheet" type="text/css"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+  <style>
+   /* Page-local adjustments: retain the shared article palette and components. */
+.behavioral-patterns {
+  min-width: 0;
+}
+.behavioral-patterns h2[id] {
+  scroll-margin-top: 24px;
+}
+.behavioral-patterns h4.accordion {
+    cursor: pointer;
+}
+.behavioral-patterns .responsive-code-container,
+.behavioral-patterns .responsive-table-container {
+  margin: 20px;
+  max-width: calc(100% - 40px);
+  min-width: 0;
+  overflow-x: auto;
+  white-space: normal;
+  box-sizing: border-box;
+}
+.behavioral-patterns pre,
+.behavioral-patterns pre[class*="language-"] {
+  margin: 0;
+  padding: 18px;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  background: #f8f9fa;
+  color: #333;
+  overflow-x: auto;
+  white-space: pre;
+  tab-size: 4;
+  line-height: 1.5;
+  font-size: 0.9rem;
+  text-shadow: none;
+}
+.behavioral-patterns pre code,
+.behavioral-patterns code[class*="language-"] {
+  font-family: Consolas, Monaco, "Courier New", monospace;
+  color: inherit;
+  text-shadow: none;
+}
+.behavioral-patterns pre code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+.behavioral-patterns :not(pre) > code {
+  overflow-wrap: anywhere;
+}
+.behavioral-patterns .responsive-table-container table {
+  width: 100%;
+  margin: 0;
+}
+.behavioral-patterns ol {
+  list-style-type: decimal;
+  padding-left: 20px;
+}
+.behavioral-patterns .summary li,
+.behavioral-patterns .workflow-step li {
+  margin-left: 0;
+}
+.behavioral-patterns .workflow-step ol li {
+  list-style-type: decimal;
+}
+.behavioral-patterns .workflow-step h5 {
+  margin-top: 0;
+}
+.behavioral-patterns .key-insight::before {
+  content: none;
+}
+.behavioral-patterns .key-insight p:first-child::before {
+  content: "\1F4A1 ";
+}
+.behavioral-patterns .pattern-figure {
+  margin: 20px;
+  max-width: calc(100% - 40px);
+}
+.behavioral-patterns .pattern-diagram,
+.behavioral-patterns .pattern-diagram:hover {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  color: rgb(96, 125, 138);
+  fill: none;
+}
+.behavioral-patterns figcaption {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+body.dark-mode .behavioral-patterns pre,
+body.dark-mode .behavioral-patterns pre[class*="language-"] {
+  background: #2a3a4a;
+  color: #e0e0e0;
+  border-color: #4a5a6a;
+}
+body.dark-mode .behavioral-patterns .pattern-diagram,
+body.dark-mode .behavioral-patterns .pattern-diagram:hover {
+  color: rgb(207, 216, 220);
+  fill: none;
+}
+body.dark-mode .behavioral-patterns .token.comment,
+body.dark-mode .behavioral-patterns .token.prolog,
+body.dark-mode .behavioral-patterns .token.doctype {
+  color: #aab8c4;
+}
+body.dark-mode .behavioral-patterns .token.keyword,
+body.dark-mode .behavioral-patterns .token.atrule {
+  color: #8fc8ff;
+}
+body.dark-mode .behavioral-patterns .token.string,
+body.dark-mode .behavioral-patterns .token.char,
+body.dark-mode .behavioral-patterns .token.builtin {
+  color: #c3df9a;
+}
+body.dark-mode .behavioral-patterns .token.function,
+body.dark-mode .behavioral-patterns .token.class-name {
+  color: #ffd18c;
+}
+body.dark-mode .behavioral-patterns .token.number,
+body.dark-mode .behavioral-patterns .token.boolean,
+body.dark-mode .behavioral-patterns .token.constant {
+  color: #edb1d4;
+}
+body.dark-mode .behavioral-patterns .token.operator,
+body.dark-mode .behavioral-patterns .token.punctuation {
+  color: #e0e0e0;
+  background: transparent;
+}
+.skip-link {
+  position: absolute;
+  left: -10000px;
+  top: 10px;
+  z-index: 3000;
+  padding: 10px 16px;
+  background: #fff;
+  color: #333;
+}
+.skip-link:focus {
+  left: 10px;
+}
+#darkModeToggle {
+  display: block;
+  position: absolute;
+  width: 40px;
+  height: 20px;
+  margin: 0;
+  opacity: 0;
+  z-index: 1;
+  cursor: pointer;
+}
+#darkModeToggle:focus-visible + .switch-label,
+.behavioral-patterns :focus-visible,
+#backToTopButton:focus-visible {
+  outline: 3px solid #227ab5;
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .switch-label,
+  .switch-label::before {
+    transition: none;
+  }
+}
+@media screen and (max-width: 480px) {
+  .behavioral-patterns .responsive-code-container,
+  .behavioral-patterns .responsive-table-container,
+  .behavioral-patterns .pattern-figure {
+    margin-left: 12px;
+    margin-right: 12px;
+    max-width: calc(100% - 24px);
+  }
+  .behavioral-patterns pre,
+  .behavioral-patterns pre[class*="language-"] {
+    padding: 12px;
+    font-size: 0.8rem;
+  }
+}
+  </style>
+ </head>
+ <body>
+  <a class="skip-link" href="#main-content">
+   Skip to article
+  </a>
+  <div class="main-container">
+   <div class="left-column">
+    <header>
+     <div class="header-left">
+      <h1>
+       Francesco Sannicola
+      </h1>
+      <h4 class="role">
+       Machine Learning | Software Engineering
+      </h4>
+     </div>
+     <div class="header-right">
+      <div class="contact-info">
+       <a aria-label="View Resume" href="../resume.pdf" rel="noopener noreferrer" target="_blank">
+        <svg fill="#000000" height="18" id="Capa_1" version="1.1" viewBox="0 0 45.057 45.057" width="18" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+         <title>
+          Resume
+         </title>
+         <g>
+          <g id="_x35_8_24_">
+           <g>
+            <path d="M19.558,25.389c-0.067,0.176-0.155,0.328-0.264,0.455c-0.108,0.129-0.24,0.229-0.396,0.301
+                                       c-0.156,0.072-0.347,0.107-0.57,0.107c-0.313,0-0.572-0.068-0.78-0.203c-0.208-0.137-0.374-0.316-0.498-0.541
+                                       c-0.124-0.223-0.214-0.477-0.27-0.756c-0.057-0.279-0.084-0.564-0.084-0.852c0-0.289,0.027-0.572,0.084-0.853
+                                       c0.056-0.281,0.146-0.533,0.27-0.756c0.124-0.225,0.29-0.404,0.498-0.541c0.208-0.137,0.468-0.203,0.78-0.203
+                                       c0.271,0,0.494,0.051,0.666,0.154c0.172,0.105,0.31,0.225,0.414,0.361c0.104,0.137,0.176,0.273,0.216,0.414
+                                       c0.04,0.139,0.068,0.25,0.084,0.33h2.568c-0.112-1.08-0.49-1.914-1.135-2.502c-0.644-0.588-1.558-0.887-2.741-0.895
+                                       c-0.664,0-1.263,0.107-1.794,0.324c-0.532,0.215-0.988,0.52-1.368,0.912c-0.38,0.392-0.672,0.863-0.876,1.416
+                                       c-0.204,0.551-0.307,1.165-0.307,1.836c0,0.631,0.097,1.223,0.288,1.77c0.192,0.549,0.475,1.021,0.847,1.422
+                                       s0.825,0.717,1.361,0.949c0.536,0.23,1.152,0.348,1.849,0.348c0.624,0,1.18-0.105,1.668-0.312
+                                       c0.487-0.209,0.897-0.482,1.229-0.822s0.584-0.723,0.756-1.146c0.172-0.422,0.259-0.852,0.259-1.283h-2.593
+                                       C19.68,25.023,19.627,25.214,19.558,25.389z">
+            </path>
+            <polygon points="26.62,24.812 26.596,24.812 25.192,19.616 22.528,19.616 25.084,28.184 28.036,28.184 30.713,19.616 28,19.616">
+            </polygon>
+            <path d="M33.431,0H5.179v45.057h34.699V6.251L33.431,0z M36.878,42.056H8.179V3h23.706v4.76h4.992L36.878,42.056L36.878,42.056z">
+            </path>
+           </g>
+          </g>
+         </g>
+        </svg>
+        <span class="contact-label">
+         Resume
+        </span>
+       </a>
+       <a aria-label="Send Email" href="mailto:francescosannicola1997@gmail.com">
+        <svg fill="#000000" height="21" viewBox="0 0 1920 1920" width="18" xmlns="http://www.w3.org/2000/svg">
+         <title>
+          Email
+         </title>
+         <path d="M0 1694.235h1920V226H0v1468.235ZM112.941 376.664V338.94H1807.06v37.723L960 1111.233l-847.059-734.57ZM1807.06 526.198v950.513l-351.134-438.89-88.32 70.475 378.353 472.998H174.042l378.353-472.998-88.32-70.475-351.134 438.89V526.198L960 1260.768l847.059-734.57Z" fill-rule="evenodd">
+         </path>
+        </svg>
+        <span class="contact-label">
+         Email
+        </span>
+       </a>
+       <a aria-label="View LinkedIn Profile" href="https://www.linkedin.com/in/francesco-sannicola" rel="noopener noreferrer" target="_blank">
+        <svg fill="#000000" height="18" viewBox="0 0 1920 1920" width="18" xmlns="http://www.w3.org/2000/svg">
+         <title>
+          LinkedIn
+         </title>
+         <path d="M1168 601.321v74.955c72.312-44.925 155.796-71.11 282.643-71.11 412.852 0 465.705 308.588 465.705 577.417v733.213L1438.991 1920v-701.261c0-117.718-42.162-140.06-120.12-140.06-74.114 0-120.12 23.423-120.12 140.06V1920l-483.604-4.204V601.32H1168Zm-687.52-.792v1318.918H0V600.53h480.48Zm-120.12 120.12H120.12v1078.678h240.24V720.65Zm687.52.792H835.267v1075.316l243.364 2.162v-580.18c0-226.427 150.51-260.18 240.24-260.18 109.55 0 240.24 45.165 240.24 260.18v580.18l237.117-2.162v-614.174c0-333.334-93.573-457.298-345.585-457.298-151.472 0-217.057 44.925-281.322 98.98l-16.696 14.173H1047.88V721.441ZM240.24 0c132.493 0 240.24 107.748 240.24 240.24 0 132.493-107.747 240.24-240.24 240.24C107.748 480.48 0 372.733 0 240.24 0 107.748 107.748 0 240.24 0Zm0 120.12c-66.186 0-120.12 53.934-120.12 120.12s53.934 120.12 120.12 120.12 120.12-53.934 120.12-120.12-53.934-120.12-120.12-120.12Z" fill-rule="evenodd">
+         </path>
+        </svg>
+        <span class="contact-label">
+         LinkedIn
+        </span>
+       </a>
+       <a aria-label="View GitHub Profile" href="https://github.com/francesco-s" rel="noopener noreferrer" target="_blank">
+        <svg height="100" viewBox="0 0 24 24" width="100" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px">
+         <title>
+          GitHub
+         </title>
+         <path d="M 12 1.9921875 C 6.4855957 1.9921875 2 6.4769321 2 12 C 2 16.599161 5.1205653 20.490345 9.3671875 21.642578 A 0.50005 0.50005 0 0 0 9.9980469 21.160156 L 9.9980469 17.583984 A 0.50005 0.50005 0 0 0 9.9980469 17.398438 L 9.9980469 17 C 9.9980469 16.463435 10.20474 15.989016 10.550781 15.621094 A 0.50005 0.50005 0 0 0 10.310547 14.794922 C 8.3191985 14.288505 7 12.945349 7 11.492188 C 7 10.73278 7.3615845 9.9960348 8.015625 9.3925781 A 0.50005 0.50005 0 0 0 8.1679688 8.9277344 C 8.066665 8.41934 8.082645 7.8782734 8.0742188 7.34375 C 8.6127591 7.5825374 9.1625862 7.7923277 9.640625 8.1757812 A 0.50005 0.50005 0 0 0 10.09375 8.265625 C 10.683558 8.0925899 11.325263 7.9921875 12 7.9921875 C 12.673669 7.9921875 13.314937 8.0917915 13.904297 8.265625 A 0.50005 0.50005 0 0 0 14.359375 8.1777344 C 14.837054 7.7945694 15.386932 7.5824899 15.925781 7.34375 C 15.916981 7.8785794 15.933881 8.4199143 15.832031 8.9277344 A 0.50005 0.50005 0 0 0 15.982422 9.3945312 C 16.637666 9.9982795 17.001953 10.733923 17.001953 11.494141 C 17.001953 12.945944 15.680991 14.28753 13.689453 14.794922 A 0.50005 0.50005 0 0 0 13.449219 15.623047 C 13.794633 15.990353 14.001953 16.464434 14.001953 17 L 13.998047 21.160156 A 0.50005 0.50005 0 0 0 14.630859 21.642578 C 18.878428 20.490372 22 16.599237 22 12 C 22 6.4769321 17.514404 1.9921875 12 1.9921875 z M 12 2.9921875 C 16.973596 2.9921875 21 7.0170679 21 12 C 21 15.899732 18.470363 19.145081 14.998047 20.388672 L 15.001953 17 C 15.001953 16.421513 14.688987 15.964437 14.404297 15.505859 C 16.432596 14.813419 18.001953 13.369173 18.001953 11.494141 C 18.001953 10.506223 17.528746 9.6094427 16.826172 8.8808594 C 16.963004 8.0965535 17.032667 7.2949738 16.970703 6.4570312 A 0.50005 0.50005 0 0 0 16.3125 6.0214844 C 15.491527 6.300863 14.703446 6.7215379 13.960938 7.2734375 C 13.34208 7.110241 12.692308 6.9921875 12 6.9921875 C 11.30618 6.9921875 10.656139 7.1108109 10.037109 7.2734375 C 9.2949426 6.7217093 8.5094793 6.2989123 7.6894531 6.0195312 A 0.50005 0.50005 0 0 0 7.0292969 6.4550781 C 6.9654142 7.294134 7.0380099 8.0939393 7.1738281 8.8769531 C 6.4709034 9.6061723 6 10.504427 6 11.492188 C 6 13.367279 7.5663139 14.813867 9.59375 15.505859 C 9.3112432 15.962509 9.0029789 16.419068 9 16.992188 L 7.5 16.992188 C 7.2241522 16.992188 7.0052524 16.845238 6.7363281 16.513672 C 6.4674039 16.182105 6.2065255 15.697988 5.9277344 15.234375 A 0.50005 0.50005 0 0 0 5.46875 14.988281 A 0.50005 0.50005 0 0 0 5.0722656 15.75 C 5.3304745 16.179387 5.5979086 16.697395 5.9589844 17.142578 C 6.3200601 17.587762 6.8328478 17.992188 7.5 17.992188 L 8.9980469 17.992188 L 8.9980469 20.388672 C 5.5278881 19.144471 3 15.898951 3 12 C 3 7.0170679 7.0264043 2.9921875 12 2.9921875 z">
+         </path>
+        </svg>
+        <span class="contact-label">
+         GitHub
+        </span>
+       </a>
+      </div>
+     </div>
+     <div class="switch">
+      <input aria-label="Enable dark mode" id="darkModeToggle" type="checkbox"/>
+      <label class="switch-label" for="darkModeToggle">
+       <span aria-hidden="true" class="sun-icon">
+        ☀
+       </span>
+       <!-- Sun icon (Light Mode) -->
+       <span aria-hidden="true" class="moon-icon">
+        ☾
+       </span>
+       <!-- Moon icon (Dark Mode) -->
+      </label>
+     </div>
+    </header>
+   </div>
+  </div>
+  <div aria-label="Main navigation" class="link-container" role="navigation">
+   <div class="link-column">
+    <a href="../">
+     <i class="fas fa-home">
+     </i>
+     Home
+    </a>
+   </div>
+   <div class="link-column">
+    <a href="../projects/">
+     <i class="fas fa-project-diagram">
+     </i>
+     Projects
+    </a>
+   </div>
+   <div class="link-column">
+    <a href="../articles/">
+     <i class="fas fa-newspaper">
+     </i>
+     Articles
+    </a>
+   </div>
+   <div class="link-column">
+    <a href="../about.html">
+     <i class="fas fa-user">
+     </i>
+     About
+    </a>
+   </div>
+  </div>
+  <main class="article-container behavioral-patterns" id="main-content">
+   <h1>
+    <span style="font-size: 16px">
+     ./articles/
+    </span>
+    Software Engineering
+            Essentials: Behavioral Design Patterns
+   </h1>
+   <div class="last-updated">
+    <span class="last-updated-label">
+     Last modified:
+    </span>
+    <time datetime="2026-10-18">
+     October 18, 2026
+    </time>
+   </div>
+   <p>
+    Behavioral design patterns are one of the three major categories of
+            design patterns, alongside Creational and Structural. While Creational
+            patterns deal with object creation and Structural patterns handle the
+            composition of classes and objects, Behavioral patterns focus on
+    <strong>
+     how objects communicate and collaborate with one another
+    </strong>
+    .
+            They define the responsibilities of objects and the protocols through
+            which they interact, making complex control flows easier to understand,
+            extend, and maintain.
+   </p>
+   <p>
+    This guide examines ten Behavioral Design Patterns through their intent, participants, trade-offs, and runnable examples. The first six patterns, plus Memento and Visitor, include Python and Java implementations; State and Mediator use Python. The selection is not the complete behavioral-pattern catalog.
+   </p>
+    <p>
+     For the other GoF categories, explore
+     <a href="oop-creational-patterns.html">Creational Design Patterns</a>,
+     focused on object creation, and
+     <a href="oop-structural-design-patterns.html">Structural Design Patterns</a>,
+     focused on composition.
+    </p>
+   <p>
+    Explore the source implementations of the behavioral patterns in
+    <a href="https://github.com/francesco-s/oop-design-patterns-handbook/tree/main/behavioral" target="_blank" rel="noopener noreferrer">GitHub: OOP Design Patterns Handbook</a>.
+    The examples below remain self-contained, so you can run each pattern independently while reading.
+   </p>
+   <nav aria-label="Article sections" class="summary">
+    <h4>
+     Quick Navigation
+    </h4>
+    <ol>
+     <li>
+      <a href="#iterator">
+       Iterator
+      </a>
+     </li>
+     <li>
+      <a href="#command">
+       Command
+      </a>
+     </li>
+     <li>
+      <a href="#strategy">
+       Strategy
+      </a>
+     </li>
+     <li>
+      <a href="#observer">
+       Observer
+      </a>
+     </li>
+     <li>
+      <a href="#chain">
+       Chain of Responsibility
+      </a>
+     </li>
+     <li>
+      <a href="#template-method">
+       Template Method
+      </a>
+     </li>
+     <li>
+      <a href="#state">
+       State
+      </a>
+     </li>
+     <li>
+      <a href="#mediator">
+       Mediator
+      </a>
+     </li>
+     <li><a href="#memento">Memento</a></li>
+     <li><a href="#visitor">Visitor</a></li>
+     <li>
+      <a href="#comparison">
+       Detailed Comparison
+      </a>
+     </li>
+     <li>
+      <a href="#conclusion">
+       Putting It All Together
+      </a>
+     </li>
+    </ol>
+   </nav>
+   <div class="highlight-box">
+    <p>
+     Run each Python example independently with Python 3.10 or later. Each Java example is a separate source file: save it using the filename in its first comment, then compile and run its public class, for example
+     <code>
+      javac -encoding UTF-8 WeatherStation.java
+     </code>
+     and
+     <code>
+      java WeatherStation
+     </code>
+     . The Java code targets Java 8 or later and uses only JDK APIs. Do not combine all snippets into one file. The output blocks show the demo runs; Java numeric formatting uses a fixed locale.
+    </p>
+   </div>
+   <h4>
+    Quick Reference
+   </h4>
+   <div aria-label="Scrollable quick reference table" class="responsive-table-container" role="region" tabindex="0">
+    <table>
+     <thead>
+      <tr>
+       <th scope="col">
+        Pattern
+       </th>
+       <th scope="col">
+        Core Intent
+       </th>
+       <th scope="col">
+        Key Benefit
+       </th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td>
+        <strong>
+         Iterator
+        </strong>
+       </td>
+       <td>
+        Traverse a collection without exposing its internals
+       </td>
+       <td>
+        Decouples traversal from data structure
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         Command
+        </strong>
+       </td>
+       <td>
+        Encapsulate a request as an object
+       </td>
+       <td>
+        Enables undo/redo, queuing, and logging
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         Strategy
+        </strong>
+       </td>
+       <td>
+        Define a family of interchangeable algorithms
+       </td>
+       <td>
+        Swap behavior at runtime without changing the client
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         Observer
+        </strong>
+       </td>
+       <td>
+        Notify dependents automatically when state changes
+       </td>
+       <td>
+        Loose coupling between publisher and subscribers
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         Chain of Responsibility
+        </strong>
+       </td>
+       <td>
+        Pass a request along a chain of handlers
+       </td>
+       <td>
+        Decouples sender from receiver
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         Template Method
+        </strong>
+       </td>
+       <td>
+        Define the skeleton of an algorithm in a base class
+       </td>
+       <td>
+        Reuse common steps, vary specific ones
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         State
+        </strong>
+       </td>
+       <td>
+        Alter object behavior when its internal state changes
+       </td>
+       <td>
+        Eliminates large state-based conditionals
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         Mediator
+        </strong>
+       </td>
+       <td>
+        Centralize complex communication between objects
+       </td>
+       <td>
+        Reduces tight coupling among collaborators
+       </td>
+      </tr>
+           <tr>
+       <td>Memento</td>
+       <td>Capture and restore an object's state</td>
+       <td>Keeps checkpoint storage separate from state representation</td>
+      </tr>
+      <tr>
+       <td>Visitor</td>
+       <td>Separate operations from a stable element hierarchy</td>
+       <td>Adds operations without editing each element class</td>
+      </tr>
+     </tbody>
+    </table>
+   </div>
+   <p>
+    Each section moves from the design problem to the implementation and its output. The comparison at the end focuses on selection criteria and common mistakes, rather than repeating the definitions.
+   </p>
+   <!-- ===================== ITERATOR ===================== -->
+   <h2 id="iterator">
+    1. Iterator
+   </h2>
+   <h4>
+    Intent
+   </h4>
+   <p>
+    The
+    <strong>
+     Iterator
+    </strong>
+    pattern provides a way to
+    <strong>
+     sequentially access the elements of a collection
+    </strong>
+    without exposing its underlying representation. Whether the collection
+            is a list, a tree, a graph, or a custom data structure, the client
+            always interacts with it through the same uniform interface.
+   </p>
+   <h4>
+    The Problem It Solves
+   </h4>
+   <p>
+    Imagine you have a
+    <code>
+     BookCollection
+    </code>
+    class that stores books
+            internally as a list. A client that wants to iterate over the books
+            would need to know that the collection uses a list, access it directly,
+            and write a
+    <code>
+     for
+    </code>
+    loop against the list's index. Now suppose
+            you later change the internal representation to a tree or a hash map:
+            you would have to update every client that iterates over it. The
+            Iterator pattern breaks this dependency: the collection exposes an
+            iterator object, and the client only talks to that object.
+   </p>
+   <h4>
+    Structure
+   </h4>
+   <p>
+    The pattern has four participants:
+   </p>
+   <ul>
+    <li>
+     <strong>
+      Iterator
+     </strong>:
+     declares
+     <code>
+      has_next()
+     </code>
+     and
+     <code>
+      next()
+     </code>
+     , with adapters for the language’s native iteration protocol.
+    </li>
+    <li>
+     <strong>
+      Concrete Iterator
+     </strong>:
+     implements the interface and
+              tracks the current position in the collection.
+    </li>
+    <li>
+     <strong>
+      IterableCollection
+     </strong>:
+     the interface declaring a
+              factory method
+     <code>
+      create_iterator()
+     </code>
+     .
+    </li>
+    <li>
+     <strong>
+      Concrete Collection
+     </strong>:
+     stores the elements and
+              returns a Concrete Iterator when asked.
+    </li>
+   </ul>
+   <h4>
+    Python Implementation
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-python">from abc import ABC, abstractmethod
+from typing import Any
+
+
+# Iterator interface
+class Iterator(ABC):
+    def __iter__(self):
+        return self
+
+    def __next__(self) -&gt; Any:
+        return self.next()
+
+    @abstractmethod
+    def has_next(self) -&gt; bool:
+        pass
+
+    @abstractmethod
+    def next(self) -&gt; Any:
+        pass
+
+
+# Iterable interface
+class IterableCollection(ABC):
+    def __iter__(self) -&gt; Iterator:
+        return self.create_iterator()
+
+    @abstractmethod
+    def create_iterator(self) -&gt; Iterator:
+        pass
+
+
+# Concrete Iterator
+class BookIterator(Iterator):
+    def __init__(self, books: list[str]):
+        self._books = tuple(books)  # stable traversal snapshot
+        self._index = 0
+
+    def has_next(self) -&gt; bool:
+        return self._index &lt; len(self._books)
+
+    def next(self) -&gt; str:
+        if not self.has_next():
+            raise StopIteration
+        book = self._books[self._index]
+        self._index += 1
+        return book
+
+
+# Concrete Collection
+class BookCollection(IterableCollection):
+    def __init__(self):
+        self._books: list[str] = []
+
+    def add_book(self, book: str) -&gt; None:
+        self._books.append(book)
+
+    def create_iterator(self) -&gt; Iterator:
+        return BookIterator(self._books)
+
+
+# Example usage
+if __name__ == "__main__":
+    library = BookCollection()
+    library.add_book("The Pragmatic Programmer")
+    library.add_book("Clean Code")
+    library.add_book("Design Patterns")
+    library.add_book("Refactoring")
+
+    iterator = library.create_iterator()
+
+    print("Books in library:")
+    while iterator.has_next():
+        print(f"  - {iterator.next()}")</code></pre>
+   </div>
+   <h4>
+    Java Implementation
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-java">// BookCollection.java
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+
+
+// Iterator interface
+interface Iterator&lt;T&gt; extends java.util.Iterator&lt;T&gt; {
+    boolean hasNext();
+    T next();
+}
+
+
+// Iterable interface
+interface IterableCollection&lt;T&gt; extends Iterable&lt;T&gt; {
+    Iterator&lt;T&gt; createIterator();
+
+    @Override
+    default Iterator&lt;T&gt; iterator() {
+        return createIterator();
+    }
+}
+
+
+// Concrete Iterator
+class BookIterator implements Iterator&lt;String&gt; {
+    private final List&lt;String&gt; books;
+    private int index = 0;
+
+    public BookIterator(List&lt;String&gt; books) {
+        this.books = new ArrayList&lt;&gt;(books); // stable traversal snapshot
+    }
+
+    @Override
+    public boolean hasNext() {
+        return index &lt; books.size();
+    }
+
+    @Override
+    public String next() {
+        if (!hasNext()) {
+            throw new NoSuchElementException("Iterator exhausted");
+        }
+        return books.get(index++);
+    }
+}
+
+
+// Concrete Collection
+public class BookCollection implements IterableCollection&lt;String&gt; {
+    private final List&lt;String&gt; books = new ArrayList&lt;&gt;();
+
+    public void addBook(String book) {
+        books.add(book);
+    }
+
+    @Override
+    public Iterator&lt;String&gt; createIterator() {
+        return new BookIterator(books);
+    }
+
+    public static void main(String[] args) {
+        BookCollection library = new BookCollection();
+        library.addBook("The Pragmatic Programmer");
+        library.addBook("Clean Code");
+        library.addBook("Design Patterns");
+        library.addBook("Refactoring");
+
+        Iterator&lt;String&gt; iterator = library.createIterator();
+
+        System.out.println("Books in library:");
+        while (iterator.hasNext()) {
+            System.out.println("  - " + iterator.next());
+        }
+    }
+}</code></pre>
+   </div>
+   <h4>
+    Output
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-none">Books in library:
+  - The Pragmatic Programmer
+  - Clean Code
+  - Design Patterns
+  - Refactoring</code></pre>
+   </div>
+   <h4>
+    When to Use It
+   </h4>
+   <ul>
+    <li>
+     When you want to hide the internal structure of a collection from
+              its clients.
+    </li>
+    <li>
+     When you need to support multiple simultaneous traversals of the
+              same collection (each iterator keeps its own position).
+    </li>
+    <li>
+     When you want a uniform interface to traverse different types of
+              collections.
+    </li>
+   </ul>
+   <p>
+    The teaching interfaces also implement the native protocols: Python supports
+    <code>
+     iter()
+    </code>
+    ,
+    <code>
+     next()
+    </code>
+    , and
+    <code>
+     for
+    </code>
+    ; Java supports enhanced
+    <code>
+     for
+    </code>
+    through
+    <code>
+     Iterable
+    </code>
+    . Exhaustion raises
+    <code>
+     StopIteration
+    </code>
+    in Python and
+    <code>
+     NoSuchElementException
+    </code>
+    in Java. Each iterator takes a shallow snapshot at creation: later additions do not affect an active traversal. This costs O(n) time and references per iterator, while preserving independent positions; the referenced elements themselves are not deep-copied.
+   </p>
+   <!-- ===================== COMMAND ===================== -->
+   <h2 id="command">
+    2. Command
+   </h2>
+   <h4>
+    Intent
+   </h4>
+   <p>
+    The
+    <strong>
+     Command
+    </strong>
+    pattern
+    <strong>
+     encapsulates a request as a standalone object
+    </strong>
+    , which
+            contains all the information needed to perform the action: the receiver,
+            the method to call, and the arguments. This decouples the object that
+            sends the request (the
+    <em>
+     invoker
+    </em>
+    ) from the object that actually
+            performs it (the
+    <em>
+     receiver
+    </em>
+    ), and it enables powerful features
+            like undo/redo, request queuing, and operation logging.
+   </p>
+   <h4>
+    The Problem It Solves
+   </h4>
+   <p>
+    Consider a smart home remote control. Calling every device directly couples the remote to device-specific operations. Command moves those operations behind a common interface. For this example, each button press also records the receiver’s previous state, so the remote can undo actions without knowing how a light works. Undo is an extension used here, not a requirement of the pattern.
+   </p>
+   <h4>
+    Structure
+   </h4>
+   <p>
+    The pattern has four participants:
+   </p>
+   <ul>
+    <li>
+     <strong>
+      Command
+     </strong>:
+     declares
+     <code>
+      execute()
+     </code>
+     ; this reversible example also requires
+     <code>
+      undo()
+     </code>
+     .
+    </li>
+    <li>
+     <strong>
+      Concrete Command
+     </strong>:
+     implements the interface, holds a
+              reference to the receiver, and defines the action.
+    </li>
+    <li>
+     <strong>
+      Receiver
+     </strong>:
+     the object that actually performs the
+              work (e.g.,
+     <code>
+      Light
+     </code>
+     ).
+    </li>
+    <li>
+     <strong>
+      Invoker
+     </strong>:
+     stores and triggers commands without
+              knowing what they do internally (e.g.,
+     <code>
+      RemoteControl
+     </code>
+     ).
+    </li>
+   </ul>
+   <h4>
+    Python Implementation
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-python">from abc import ABC, abstractmethod
+from typing import List
+
+
+# Command interface
+class Command(ABC):
+    @abstractmethod
+    def execute(self) -&gt; None:
+        pass
+
+    @abstractmethod
+    def undo(self) -&gt; None:
+        pass
+
+
+# Receiver
+class Light:
+    def __init__(self, location: str):
+        self.location = location
+        self._is_on = False
+
+    @property
+    def is_on(self) -&gt; bool:
+        return self._is_on
+
+    def turn_on(self) -&gt; None:
+        self._is_on = True
+        print(f"{self.location} light turned ON")
+
+    def turn_off(self) -&gt; None:
+        self._is_on = False
+        print(f"{self.location} light turned OFF")
+
+
+# Concrete Commands
+class TurnOnCommand(Command):
+    def __init__(self, light: Light):
+        self._light = light
+        self._previous_states: list[bool] = []
+
+    def execute(self) -&gt; None:
+        previous = self._light.is_on
+        self._light.turn_on()
+        self._previous_states.append(previous)
+
+    def undo(self) -&gt; None:
+        if not self._previous_states:
+            raise RuntimeError("Command has no execution to undo")
+        previous = self._previous_states[-1]
+        if previous:
+            self._light.turn_on()
+        else:
+            self._light.turn_off()
+        self._previous_states.pop()
+
+class TurnOffCommand(Command):
+    def __init__(self, light: Light):
+        self._light = light
+        self._previous_states: list[bool] = []
+
+    def execute(self) -&gt; None:
+        previous = self._light.is_on
+        self._light.turn_off()
+        self._previous_states.append(previous)
+
+    def undo(self) -&gt; None:
+        if not self._previous_states:
+            raise RuntimeError("Command has no execution to undo")
+        previous = self._previous_states[-1]
+        if previous:
+            self._light.turn_on()
+        else:
+            self._light.turn_off()
+        self._previous_states.pop()
+
+# Invoker
+class RemoteControl:
+    def __init__(self):
+        self._history: List[Command] = []
+
+    def press(self, command: Command) -&gt; None:
+        command.execute()
+        self._history.append(command)
+
+    def press_undo(self) -&gt; None:
+        if self._history:
+            command = self._history[-1]
+            command.undo()
+            self._history.pop()
+        else:
+            print("Nothing to undo")
+
+
+# Example usage
+if __name__ == "__main__":
+    remote = RemoteControl()
+
+    living_room = Light("Living room")
+    bedroom = Light("Bedroom")
+
+    remote.press(TurnOnCommand(living_room))
+    remote.press(TurnOnCommand(bedroom))
+    remote.press(TurnOffCommand(living_room))
+
+    print("\n-- Undo last 2 commands --")
+    remote.press_undo()
+    remote.press_undo()</code></pre>
+   </div>
+   <h4>
+    Java Implementation
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-java">// RemoteControl.java
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+
+// Command interface
+interface Command {
+    void execute();
+    void undo();
+}
+
+
+// Receiver
+class Light {
+    private final String location;
+    private boolean isOn = false;
+
+    public Light(String location) {
+        this.location = location;
+    }
+
+    public boolean isOn() {
+        return isOn;
+    }
+
+    public void turnOn() {
+        isOn = true;
+        System.out.println(location + " light turned ON");
+    }
+
+    public void turnOff() {
+        isOn = false;
+        System.out.println(location + " light turned OFF");
+    }
+}
+
+
+// Concrete Commands
+class TurnOnCommand implements Command {
+    private final Light light;
+    private final Deque&lt;Boolean&gt; previousStates = new ArrayDeque&lt;&gt;();
+
+    public TurnOnCommand(Light light) {
+        this.light = light;
+    }
+
+    @Override
+    public void execute() {
+        boolean previous = light.isOn();
+        light.turnOn();
+        previousStates.push(previous);
+    }
+
+    @Override
+    public void undo() {
+        if (previousStates.isEmpty()) {
+            throw new IllegalStateException("Command has no execution to undo");
+        }
+        if (previousStates.peek()) {
+            light.turnOn();
+        } else {
+            light.turnOff();
+        }
+        previousStates.pop();
+    }
+}
+
+
+class TurnOffCommand implements Command {
+    private final Light light;
+    private final Deque&lt;Boolean&gt; previousStates = new ArrayDeque&lt;&gt;();
+
+    public TurnOffCommand(Light light) {
+        this.light = light;
+    }
+
+    @Override
+    public void execute() {
+        boolean previous = light.isOn();
+        light.turnOff();
+        previousStates.push(previous);
+    }
+
+    @Override
+    public void undo() {
+        if (previousStates.isEmpty()) {
+            throw new IllegalStateException("Command has no execution to undo");
+        }
+        if (previousStates.peek()) {
+            light.turnOn();
+        } else {
+            light.turnOff();
+        }
+        previousStates.pop();
+    }
+}
+
+
+// Invoker
+public class RemoteControl {
+    private final Deque&lt;Command&gt; history = new ArrayDeque&lt;&gt;();
+
+    public void press(Command command) {
+        command.execute();
+        history.push(command);
+    }
+
+    public void pressUndo() {
+        if (!history.isEmpty()) {
+            history.peek().undo();
+            history.pop();
+        } else {
+            System.out.println("Nothing to undo");
+        }
+    }
+
+    public static void main(String[] args) {
+        RemoteControl remote = new RemoteControl();
+
+        Light livingRoom = new Light("Living room");
+        Light bedroom    = new Light("Bedroom");
+
+        remote.press(new TurnOnCommand(livingRoom));
+        remote.press(new TurnOnCommand(bedroom));
+        remote.press(new TurnOffCommand(livingRoom));
+
+        System.out.println("\n-- Undo last 2 commands --");
+        remote.pressUndo();
+        remote.pressUndo();
+    }
+}</code></pre>
+   </div>
+   <h4>
+    Output
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-none">Living room light turned ON
+Bedroom light turned ON
+Living room light turned OFF
+
+-- Undo last 2 commands --
+Living room light turned ON
+Bedroom light turned OFF</code></pre>
+   </div>
+   <div class="workflow-step">
+    <h5>
+     Execution and Undo: the State That Must Be Saved
+    </h5>
+    <ol>
+     <li>
+      Read the light’s current state, execute the action, then store the successful execution.
+     </li>
+     <li>
+      Undo restores that saved state; simply calling the opposite action is insufficient when the light was already on or off.
+     </li>
+     <li>
+      Remove history entries only after undo succeeds. Per-command state stacks allow the same command instance to be reused in one LIFO history.
+     </li>
+    </ol>
+    <p>
+     The example is synchronous and assumes actions on a receiver are undone in reverse execution order through one invoker, without out-of-band changes. It implements undo, not redo; external side effects may require compensation instead of exact reversal.
+    </p>
+   </div>
+   <h4>
+    When to Use It
+   </h4>
+   <ul>
+    <li>
+     When you need to parameterize objects with operations (e.g., menu
+              items, toolbar buttons).
+    </li>
+    <li>
+     When you need to support undo/redo functionality.
+    </li>
+    <li>
+     When you want to queue, schedule, or log operations for later
+              execution.
+    </li>
+    <li>
+     When grouping operations into a macro command. Reliable rollback needs explicit failure handling and reversible actions; the pattern alone does not provide transaction atomicity.
+    </li>
+   </ul>
+   <!-- ===================== STRATEGY ===================== -->
+   <h2 id="strategy">
+    3. Strategy
+   </h2>
+   <h4>
+    Intent
+   </h4>
+   <p>
+    The
+    <strong>
+     Strategy
+    </strong>
+    pattern defines a family of algorithms,
+            encapsulates each one in its own class, and makes them
+    <strong>
+     interchangeable at runtime
+    </strong>
+    . The client delegates the
+            algorithm to a strategy object rather than implementing it directly,
+            which means the algorithm can change without altering the client.
+   </p>
+   <h4>
+    The Problem It Solves
+   </h4>
+   <p>
+    Imagine an e-commerce application that calculates shipping costs. The
+            initial implementation uses standard shipping, but you later need to
+            add express shipping, overnight shipping, and in-store pickup, each
+            with its own pricing formula. Without the Strategy pattern, you would
+            end up with a large
+    <code>
+     if/elif/else
+    </code>
+    block or a
+    <code>
+     switch
+    </code>
+    statement inside the shipping calculator, growing
+            with every new option. The Strategy pattern lets you extract each
+            algorithm into its own class and swap them in without touching the
+            calculator itself.
+   </p>
+   <h4>
+    Structure
+   </h4>
+   <ul>
+    <li>
+     <strong>
+      Strategy
+     </strong>:
+     the interface declaring the algorithm
+              method (e.g.,
+     <code>
+      calculate(order)
+     </code>
+     ).
+    </li>
+    <li>
+     <strong>
+      Concrete Strategy
+     </strong>:
+     implements the algorithm
+              (e.g.,
+     <code>
+      StandardShipping
+     </code>
+     ,
+     <code>
+      ExpressShipping
+     </code>
+     ).
+    </li>
+    <li>
+     <strong>
+      Context
+     </strong>:
+     holds a reference to a Strategy and
+              delegates the work to it. The Context does not know which concrete
+              strategy it is using.
+    </li>
+   </ul>
+   <h4>
+    Python Implementation
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-python">from abc import ABC, abstractmethod
+from math import isfinite
+
+
+# Strategy interface
+class ShippingStrategy(ABC):
+    @abstractmethod
+    def calculate(self, order_weight: float) -&gt; float:
+        pass
+
+
+# Concrete Strategies
+class StandardShipping(ShippingStrategy):
+    def calculate(self, order_weight: float) -&gt; float:
+        return order_weight * 1.5
+
+class ExpressShipping(ShippingStrategy):
+    def calculate(self, order_weight: float) -&gt; float:
+        return order_weight * 3.0 + 5.0
+
+class OvernightShipping(ShippingStrategy):
+    def calculate(self, order_weight: float) -&gt; float:
+        return order_weight * 5.0 + 15.0
+
+
+# Context
+class ShippingCalculator:
+    def __init__(self, strategy: ShippingStrategy):
+        self._strategy = strategy
+
+    def set_strategy(self, strategy: ShippingStrategy) -&gt; None:
+        self._strategy = strategy
+
+    def get_cost(self, order_weight: float) -&gt; float:
+        if not isfinite(order_weight) or order_weight &lt; 0:
+            raise ValueError("Order weight must be finite and non-negative")
+        return self._strategy.calculate(order_weight)
+
+
+# Example usage
+if __name__ == "__main__":
+    calculator = ShippingCalculator(StandardShipping())
+    print(f"Standard:  ${calculator.get_cost(10):.2f}")
+
+    calculator.set_strategy(ExpressShipping())
+    print(f"Express:   ${calculator.get_cost(10):.2f}")
+
+    calculator.set_strategy(OvernightShipping())
+    print(f"Overnight: ${calculator.get_cost(10):.2f}")</code></pre>
+   </div>
+   <h4>
+    Java Implementation
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-java">// ShippingCalculator.java
+
+import java.util.Locale;
+import java.util.Objects;
+
+
+// Strategy interface
+interface ShippingStrategy {
+    double calculate(double orderWeight);
+}
+
+
+// Concrete Strategies
+class StandardShipping implements ShippingStrategy {
+    @Override
+    public double calculate(double orderWeight) {
+        return orderWeight * 1.5;
+    }
+}
+
+class ExpressShipping implements ShippingStrategy {
+    @Override
+    public double calculate(double orderWeight) {
+        return orderWeight * 3.0 + 5.0;
+    }
+}
+
+class OvernightShipping implements ShippingStrategy {
+    @Override
+    public double calculate(double orderWeight) {
+        return orderWeight * 5.0 + 15.0;
+    }
+}
+
+
+// Context
+public class ShippingCalculator {
+    private ShippingStrategy strategy;
+
+    public ShippingCalculator(ShippingStrategy strategy) {
+        this.strategy = Objects.requireNonNull(strategy, "strategy");
+    }
+
+    public void setStrategy(ShippingStrategy strategy) {
+        this.strategy = Objects.requireNonNull(strategy, "strategy");
+    }
+
+    public double getCost(double orderWeight) {
+        if (!Double.isFinite(orderWeight) || orderWeight &lt; 0) {
+            throw new IllegalArgumentException("Order weight must be finite and non-negative");
+        }
+        return strategy.calculate(orderWeight);
+    }
+
+    public static void main(String[] args) {
+        ShippingCalculator calculator = new ShippingCalculator(new StandardShipping());
+        System.out.printf(Locale.ROOT, "Standard:  $%.2f%n", calculator.getCost(10));
+
+        calculator.setStrategy(new ExpressShipping());
+        System.out.printf(Locale.ROOT, "Express:   $%.2f%n", calculator.getCost(10));
+
+        calculator.setStrategy(new OvernightShipping());
+        System.out.printf(Locale.ROOT, "Overnight: $%.2f%n", calculator.getCost(10));
+    }
+}</code></pre>
+   </div>
+   <div class="key-insight">
+    <p>
+     Weights are expressed in kilograms, and the rates are illustrative. The context rejects negative and non-finite weights. Floating-point costs keep the example focused on algorithm selection; production money calculations need an explicit decimal or minor-unit representation and rounding policy.
+    </p>
+   </div>
+   <h4>
+    Output
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-none">Standard:  $15.00
+Express:   $35.00
+Overnight: $65.00</code></pre>
+   </div>
+   <h4>
+    Strategy vs. Command
+   </h4>
+   <p>
+    Strategy selects
+    <em>
+     how
+    </em>
+    to perform a calculation; Command packages
+    <em>
+     what
+    </em>
+    action should run. Neither is defined by being stateless or stateful: strategies may hold configuration, and commands do not have to support undo. Choose by the responsibility you need to separate, not by the shape of the interface.
+   </p>
+   <h4>
+    When to Use It
+   </h4>
+   <ul>
+    <li>
+     When you have multiple variants of an algorithm and want to switch
+              between them at runtime.
+    </li>
+    <li>
+     When you want to eliminate large conditional blocks that select
+              behavior based on type.
+    </li>
+    <li>
+     When different classes differ only in their behavior: extract that
+              behavior into a strategy.
+    </li>
+   </ul>
+   <!-- ===================== OBSERVER ===================== -->
+   <h2 id="observer">
+    4. Observer
+   </h2>
+   <h4>
+    Intent
+   </h4>
+   <p>
+    The
+    <strong>
+     Observer
+    </strong>
+    pattern defines a
+    <strong>
+     one-to-many dependency
+    </strong>
+    between objects so that when
+            one object (the
+    <em>
+     subject
+    </em>
+    or
+    <em>
+     publisher
+    </em>
+    ) changes state,
+            all its dependents (
+    <em>
+     observers
+    </em>
+    or
+    <em>
+     subscribers
+    </em>
+    ) are
+            notified and updated automatically. This is the backbone of event-driven
+            systems.
+   </p>
+   <h4>
+    The Problem It Solves
+   </h4>
+   <p>
+    Suppose you are building a weather station application. The station
+            reads the current temperature and needs to update a display panel, a
+            mobile app, and a logging service every time the temperature changes.
+            Without the Observer pattern, the weather station would need a direct
+            reference to every one of these components and would call their update
+            methods manually. Adding a new subscriber (say, an alert service)
+            would require modifying the station itself. The Observer pattern
+            inverts this: the station simply notifies all registered observers
+            when its state changes, without caring who they are.
+   </p>
+   <h4>
+    Structure
+   </h4>
+   <ul>
+    <li>
+     <strong>
+      Subject (Publisher)
+     </strong>:
+     maintains a list of observers
+              and provides
+     <code>
+      subscribe()
+     </code>
+     ,
+     <code>
+      unsubscribe()
+     </code>
+     ,
+              and
+     <code>
+      notify()
+     </code>
+     methods.
+    </li>
+    <li>
+     <strong>
+      Observer (Subscriber)
+     </strong>:
+     the interface declaring
+     <code>
+      update()
+     </code>
+     , called by the subject when state changes.
+    </li>
+    <li>
+     <strong>
+      Concrete Subject
+     </strong>:
+     stores the state and triggers
+              notifications (e.g.,
+     <code>
+      WeatherStation
+     </code>
+     ).
+    </li>
+    <li>
+     <strong>
+      Concrete Observer
+     </strong>:
+     reacts to updates
+              (e.g.,
+     <code>
+      DisplayPanel
+     </code>
+     ,
+     <code>
+      Logger
+     </code>
+     ).
+    </li>
+   </ul>
+   <h4>
+    Python Implementation
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-python">from abc import ABC, abstractmethod
+from typing import List
+
+
+# Observer interface
+class Observer(ABC):
+    @abstractmethod
+    def update(self, temperature: float) -&gt; None:
+        pass
+
+
+# Subject
+class WeatherStation:
+    def __init__(self):
+        self._observers: List[Observer] = []
+        self._temperature: float = 0.0
+
+    def subscribe(self, observer: Observer) -&gt; None:
+        if not any(current is observer for current in self._observers):
+            self._observers.append(observer)
+
+    def unsubscribe(self, observer: Observer) -&gt; None:
+        self._observers[:] = [
+            current for current in self._observers if current is not observer
+        ]
+
+    def set_temperature(self, temperature: float) -&gt; None:
+        print(f"\nWeatherStation: temperature changed to {temperature}°C")
+        self._temperature = temperature
+        self._notify()
+
+    def _notify(self) -&gt; None:
+        temperature = self._temperature
+        for observer in tuple(self._observers):
+            observer.update(temperature)
+
+
+# Concrete Observers
+class DisplayPanel(Observer):
+    def update(self, temperature: float) -&gt; None:
+        print(f"  DisplayPanel: showing {temperature}°C")
+
+class MobileApp(Observer):
+    def update(self, temperature: float) -&gt; None:
+        print(f"  MobileApp: pushing notification: {temperature}°C")
+
+class Logger(Observer):
+    def update(self, temperature: float) -&gt; None:
+        print(f"  Logger: recorded {temperature}°C")
+
+
+# Example usage
+if __name__ == "__main__":
+    station = WeatherStation()
+
+    display = DisplayPanel()
+    app     = MobileApp()
+    logger  = Logger()
+
+    station.subscribe(display)
+    station.subscribe(app)
+    station.subscribe(logger)
+
+    station.set_temperature(22.5)
+    station.set_temperature(19.0)
+
+    print("\n-- Unsubscribing MobileApp --")
+    station.unsubscribe(app)
+    station.set_temperature(25.0)</code></pre>
+   </div>
+   <h4>
+    Java Implementation
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-java">// WeatherStation.java
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+
+
+// Observer interface
+interface Observer {
+    void update(double temperature);
+}
+
+
+// Subject
+public class WeatherStation {
+    private final List&lt;Observer&gt; observers = new ArrayList&lt;&gt;();
+    private double temperature;
+
+    public void subscribe(Observer observer) {
+        Objects.requireNonNull(observer, "observer");
+        if (!observers.contains(observer)) {
+            observers.add(observer);
+        }
+    }
+
+    public void unsubscribe(Observer observer) {
+        observers.remove(observer);
+    }
+
+    public void setTemperature(double temperature) {
+        System.out.printf(Locale.ROOT, "%nWeatherStation: temperature changed to %.1f°C%n", temperature);
+        this.temperature = temperature;
+        notifyObservers();
+    }
+
+    private void notifyObservers() {
+        double eventTemperature = temperature;
+        for (Observer observer : new ArrayList&lt;&gt;(observers)) {
+            observer.update(eventTemperature);
+        }
+    }
+
+    public static void main(String[] args) {
+        WeatherStation station = new WeatherStation();
+
+        DisplayPanel display = new DisplayPanel();
+        MobileApp    app     = new MobileApp();
+        Logger       logger  = new Logger();
+
+        station.subscribe(display);
+        station.subscribe(app);
+        station.subscribe(logger);
+
+        station.setTemperature(22.5);
+        station.setTemperature(19.0);
+
+        System.out.println("\n-- Unsubscribing MobileApp --");
+        station.unsubscribe(app);
+        station.setTemperature(25.0);
+    }
+}
+
+
+// Concrete Observers
+class DisplayPanel implements Observer {
+    @Override
+    public void update(double temperature) {
+        System.out.printf(Locale.ROOT, "  DisplayPanel: showing %.1f°C%n", temperature);
+    }
+}
+
+class MobileApp implements Observer {
+    @Override
+    public void update(double temperature) {
+        System.out.printf(Locale.ROOT, "  MobileApp: pushing notification: %.1f°C%n", temperature);
+    }
+}
+
+class Logger implements Observer {
+    @Override
+    public void update(double temperature) {
+        System.out.printf(Locale.ROOT, "  Logger: recorded %.1f°C%n", temperature);
+    }
+}</code></pre>
+   </div>
+   <h4>
+    Output
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-none">
+WeatherStation: temperature changed to 22.5°C
+  DisplayPanel: showing 22.5°C
+  MobileApp: pushing notification: 22.5°C
+  Logger: recorded 22.5°C
+
+WeatherStation: temperature changed to 19.0°C
+  DisplayPanel: showing 19.0°C
+  MobileApp: pushing notification: 19.0°C
+  Logger: recorded 19.0°C
+
+-- Unsubscribing MobileApp --
+
+WeatherStation: temperature changed to 25.0°C
+  DisplayPanel: showing 25.0°C
+  Logger: recorded 25.0°C</code></pre>
+   </div>
+   <div class="key-insight">
+    <p>
+     Notification is synchronous and uses a subscription snapshot plus a captured event value. Duplicate subscriptions are ignored, and removing a missing observer is harmless. Changes made inside a callback affect the next notification: an observer already in the current snapshot still receives the current event. Callback exceptions propagate and stop that notification; delivery is neither asynchronous nor fault-isolated. The example does not coordinate concurrent or reentrant updates.
+    </p>
+   </div>
+   <h4>
+    When to Use It
+   </h4>
+   <ul>
+    <li>
+     When a change in one object requires notifying others, and you do
+              not know in advance how many objects need to change.
+    </li>
+    <li>
+     When objects should be able to notify other objects without making
+              assumptions about who those objects are.
+    </li>
+    <li>
+     It is the foundation of event systems, GUI frameworks, and reactive
+              programming paradigms.
+    </li>
+   </ul>
+   <!-- ===================== CHAIN OF RESPONSIBILITY ===================== -->
+   <h2 id="chain">
+    5. Chain of Responsibility
+   </h2>
+   <h4>
+    Intent
+   </h4>
+   <p>
+    The
+    <strong>
+     Chain of Responsibility
+    </strong>
+    pattern lets you pass a
+            request along a
+    <strong>
+     chain of handlers
+    </strong>
+    . Each handler
+            decides either to process the request or to pass it to the next handler
+            in the chain. This decouples the sender of a request from its receivers,
+            giving multiple objects a chance to handle it.
+   </p>
+   <h4>
+    The Problem It Solves
+   </h4>
+   <p>
+    Consider a technical support system where user tickets are assigned a
+            severity level. A basic issue can be resolved by a Level 1 agent, a
+            medium issue escalates to Level 2, and a critical issue goes to Level 3.
+            Without this pattern, the dispatcher would contain a nested chain of
+            conditionals, tightly coupling it to every support tier. The Chain of
+            Responsibility lets each handler decide whether to handle or forward the
+            request, and new tiers can be inserted without modifying existing code.
+   </p>
+   <h4>
+    Structure
+   </h4>
+   <ul>
+    <li>
+     <strong>
+      Handler
+     </strong>:
+     the interface declaring
+     <code>
+      set_next(handler)
+     </code>
+     and
+     <code>
+      handle(request)
+     </code>
+     .
+    </li>
+    <li>
+     <strong>
+      Base Handler
+     </strong>:
+     an optional abstract class that
+              stores the reference to the next handler and implements the default
+              forwarding logic.
+    </li>
+    <li>
+     <strong>
+      Concrete Handlers
+     </strong>:
+     process requests they can
+              handle; forward the rest to the next handler in the chain.
+    </li>
+   </ul>
+   <h4>
+    Python Implementation
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-python">from __future__ import annotations
+from abc import ABC, abstractmethod
+from typing import Optional
+
+
+# Handler interface + base class
+class SupportHandler(ABC):
+    def __init__(self):
+        self._next: Optional[SupportHandler] = None
+
+    def set_next(self, handler: SupportHandler) -&gt; SupportHandler:
+        if handler is None:
+            raise ValueError("Next handler cannot be None")
+        current = handler
+        while current is not None:
+            if current is self:
+                raise ValueError("A handler chain cannot contain a cycle")
+            current = current._next
+        self._next = handler
+        return handler  # allows chaining: h1.set_next(h2).set_next(h3)
+
+    @abstractmethod
+    def handle(self, severity: int, description: str) -&gt; None:
+        pass
+
+    def _forward(self, severity: int, description: str) -&gt; None:
+        if self._next:
+            self._next.handle(severity, description)
+        else:
+            print(f"  No handler available for severity {severity}: {description}")
+
+
+# Concrete Handlers
+class Level1Support(SupportHandler):
+    def handle(self, severity: int, description: str) -&gt; None:
+        if severity == 1:
+            print(f"Level1Support resolved: {description}")
+        else:
+            self._forward(severity, description)
+
+class Level2Support(SupportHandler):
+    def handle(self, severity: int, description: str) -&gt; None:
+        if severity == 2:
+            print(f"Level2Support resolved: {description}")
+        else:
+            self._forward(severity, description)
+
+class Level3Support(SupportHandler):
+    def handle(self, severity: int, description: str) -&gt; None:
+        if severity == 3:
+            print(f"Level3Support resolved: {description}")
+        else:
+            self._forward(severity, description)
+
+
+# Example usage
+if __name__ == "__main__":
+    l1 = Level1Support()
+    l2 = Level2Support()
+    l3 = Level3Support()
+
+    l1.set_next(l2).set_next(l3)
+
+    tickets = [
+        (1, "Password reset request"),
+        (2, "Application crash on login"),
+        (3, "Data breach detected"),
+        (4, "Unknown severity issue"),
+    ]
+
+    for severity, description in tickets:
+        l1.handle(severity, description)</code></pre>
+   </div>
+   <h4>
+    Java Implementation
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-java">// SupportChain.java
+
+import java.util.Objects;
+
+
+// Handler interface
+abstract class SupportHandler {
+    private SupportHandler next;
+
+    public SupportHandler setNext(SupportHandler handler) {
+        Objects.requireNonNull(handler, "handler");
+        for (SupportHandler current = handler; current != null; current = current.next) {
+            if (current == this) {
+                throw new IllegalArgumentException("A handler chain cannot contain a cycle");
+            }
+        }
+        this.next = handler;
+        return handler;
+    }
+
+    public abstract void handle(int severity, String description);
+
+    protected void forward(int severity, String description) {
+        if (next != null) {
+            next.handle(severity, description);
+        } else {
+            System.out.println("  No handler available for severity " + severity + ": " + description);
+        }
+    }
+}
+
+
+// Concrete Handlers
+class Level1Support extends SupportHandler {
+    @Override
+    public void handle(int severity, String description) {
+        if (severity == 1) System.out.println("Level1Support resolved: " + description);
+        else forward(severity, description);
+    }
+}
+
+class Level2Support extends SupportHandler {
+    @Override
+    public void handle(int severity, String description) {
+        if (severity == 2) System.out.println("Level2Support resolved: " + description);
+        else forward(severity, description);
+    }
+}
+
+class Level3Support extends SupportHandler {
+    @Override
+    public void handle(int severity, String description) {
+        if (severity == 3) System.out.println("Level3Support resolved: " + description);
+        else forward(severity, description);
+    }
+}
+
+
+// Entry point
+public class SupportChain {
+    public static void main(String[] args) {
+        Level1Support l1 = new Level1Support();
+        Level2Support l2 = new Level2Support();
+        Level3Support l3 = new Level3Support();
+
+        l1.setNext(l2).setNext(l3);
+
+        int[] severities = {1, 2, 3, 4};
+        String[] descriptions = {
+            "Password reset request",
+            "Application crash on login",
+            "Data breach detected",
+            "Unknown severity issue"
+        };
+
+        for (int i = 0; i &lt; descriptions.length; i++) {
+            l1.handle(severities[i], descriptions[i]);
+        }
+    }
+}</code></pre>
+   </div>
+   <h4>
+    Output
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-none">Level1Support resolved: Password reset request
+Level2Support resolved: Application crash on login
+Level3Support resolved: Data breach detected
+  No handler available for severity 4: Unknown severity issue</code></pre>
+   </div>
+   <div class="highlight-box">
+    <p>
+     This example stops at the first matching handler and reports unhandled severities explicitly. Middleware may instead process a request and continue, including work on the return path. Link creation rejects cycles to prevent infinite forwarding; the chain is configured before requests are processed.
+    </p>
+   </div>
+   <h4>
+    When to Use It
+   </h4>
+   <ul>
+    <li>
+     When more than one object may handle a request, and the handler
+              is not known a priori.
+    </li>
+    <li>
+     When you want to issue a request to one of several handlers without
+              specifying the receiver explicitly.
+    </li>
+    <li>
+     It is widely used in middleware pipelines, logging frameworks, and
+              HTTP request processing (e.g., Django middleware, Express.js).
+    </li>
+   </ul>
+   <!-- ===================== TEMPLATE METHOD ===================== -->
+   <h2 id="template-method">
+    6. Template Method
+   </h2>
+   <h4>
+    Intent
+   </h4>
+   <p>
+    The
+    <strong>
+     Template Method
+    </strong>
+    pattern defines the
+    <strong>
+     skeleton of an algorithm in a base class
+    </strong>
+    , deferring
+            some steps to subclasses. Subclasses can override specific steps
+            without changing the algorithm's overall structure. This is a
+            classic application of the Hollywood Principle: "Don't call us, we'll
+            call you."
+   </p>
+   <h4>
+    The Problem It Solves
+   </h4>
+   <p>
+    Suppose CSV and XML reports share the same processing sequence: extract the source, parse records, analyze them, and send a report. The variable extraction and parsing steps belong in subclasses; the base class keeps the orchestration in one place. The two implementations below use in-memory fixtures, so they run without external files;
+    <code>
+     path
+    </code>
+    is a source label, not a file that is opened.
+   </p>
+   <h4>
+    Structure
+   </h4>
+   <ul>
+    <li>
+     <strong>
+      Abstract Class
+     </strong>:
+     defines the template method (the
+              algorithm skeleton) and declares abstract
+     <em>
+      primitive operations
+     </em>
+     that subclasses must implement. It may also provide
+     <em>
+      hook
+              methods
+     </em>
+     with default (often empty) implementations.
+    </li>
+    <li>
+     <strong>
+      Concrete Class
+     </strong>:
+     implements the primitive operations
+              to carry out subclass-specific steps of the algorithm.
+    </li>
+   </ul>
+   <h4>
+    Python Implementation
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-python">from abc import ABC, abstractmethod
+import csv
+from io import StringIO
+from typing import final
+import xml.etree.ElementTree as ET
+
+
+# Abstract Class
+class DataMiner(ABC):
+    @final  # checked by type checkers; not enforced by the Python runtime
+    def mine(self, path: str) -&gt; None:
+        raw = self.extract_data(path)
+        data = self.parse_data(raw)
+        analysis = self.analyze_data(data)
+        self.send_report(analysis)
+
+    @abstractmethod
+    def extract_data(self, path: str) -&gt; str:
+        pass
+
+    @abstractmethod
+    def parse_data(self, raw: str) -&gt; list:
+        pass
+
+    def analyze_data(self, data: list) -&gt; dict:
+        return {"total_records": len(data), "sample": data[0] if data else None}
+
+    def send_report(self, analysis: dict) -&gt; None:
+        sample = analysis["sample"]
+        if isinstance(sample, list):
+            sample = ",".join(sample)
+        elif sample is None:
+            sample = "&lt;empty&gt;"
+        print(f"  Report: total_records={analysis['total_records']}, sample={sample}")
+
+
+# In-memory fixtures keep this example runnable without external files.
+class CSVDataMiner(DataMiner):
+    def extract_data(self, path: str) -&gt; str:
+        print(f"CSV: demo data for {path}")
+        return "Alice,30\nBob,25\nCarol,35"
+
+    def parse_data(self, raw: str) -&gt; list:
+        return [row for row in csv.reader(StringIO(raw)) if row]
+
+
+class XMLDataMiner(DataMiner):
+    def extract_data(self, path: str) -&gt; str:
+        print(f"XML: demo data for {path}")
+        return "&lt;users&gt;&lt;user&gt;Alice&lt;/user&gt;&lt;user&gt;Bob&lt;/user&gt;&lt;/users&gt;"
+
+    def parse_data(self, raw: str) -&gt; list:
+        root = ET.fromstring(raw)
+        if root.tag != "users":
+            raise ValueError("Expected a &lt;users&gt; root element")
+        return ["".join(user.itertext()).strip() for user in root.findall("user")]
+
+
+if __name__ == "__main__":
+    print("=== CSV Mining ===")
+    CSVDataMiner().mine("data.csv")
+
+    print("\n=== XML Mining ===")
+    XMLDataMiner().mine("data.xml")</code></pre>
+   </div>
+   <h4>
+    Java Implementation
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-java">// DataMiner.java
+
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
+
+// Abstract Class and entry point: only one DataMiner declaration.
+public abstract class DataMiner {
+    public final void mine(String path) {
+        String raw = extractData(path);
+        String[] data = parseData(raw);
+        String analysis = analyzeData(data);
+        sendReport(analysis);
+    }
+
+    protected abstract String extractData(String path);
+    protected abstract String[] parseData(String raw);
+
+    protected String analyzeData(String[] data) {
+        String sample = data.length == 0 ? "&lt;empty&gt;" : data[0];
+        return "total_records=" + data.length + ", sample=" + sample;
+    }
+
+    protected void sendReport(String analysis) {
+        System.out.println("  Report: " + analysis);
+    }
+
+    public static void main(String[] args) {
+        System.out.println("=== CSV Mining ===");
+        new CSVDataMiner().mine("data.csv");
+
+        System.out.println("\n=== XML Mining ===");
+        new XMLDataMiner().mine("data.xml");
+    }
+}
+
+
+class CSVDataMiner extends DataMiner {
+    @Override
+    protected String extractData(String path) {
+        System.out.println("CSV: demo data for " + path);
+        return "Alice,30\nBob,25\nCarol,35";
+    }
+
+    @Override
+    protected String[] parseData(String raw) {
+        // Demo subset: one record per line, without quoted CSV fields.
+        // Use a dedicated CSV library for general CSV input.
+        if (raw.indexOf('"') &gt;= 0) {
+            throw new IllegalArgumentException("Quoted CSV fields are outside this demo's scope");
+        }
+        List&lt;String&gt; records = new ArrayList&lt;&gt;();
+        for (String line : raw.split("\\R")) {
+            if (!line.trim().isEmpty()) {
+                records.add(line);
+            }
+        }
+        return records.toArray(new String[0]);
+    }
+}
+
+
+class XMLDataMiner extends DataMiner {
+    @Override
+    protected String extractData(String path) {
+        System.out.println("XML: demo data for " + path);
+        return "&lt;users&gt;&lt;user&gt;Alice&lt;/user&gt;&lt;user&gt;Bob&lt;/user&gt;&lt;/users&gt;";
+    }
+
+    @Override
+    protected String[] parseData(String raw) {
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+            factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+            Element root = factory.newDocumentBuilder()
+                    .parse(new InputSource(new StringReader(raw)))
+                    .getDocumentElement();
+            if (!"users".equals(root.getTagName())) {
+                throw new IllegalArgumentException("Expected a &lt;users&gt; root element");
+            }
+            List&lt;String&gt; users = new ArrayList&lt;&gt;();
+            NodeList children = root.getChildNodes();
+            for (int i = 0; i &lt; children.getLength(); i++) {
+                Node node = children.item(i);
+                if (node.getNodeType() == Node.ELEMENT_NODE
+                        &amp;&amp; "user".equals(node.getNodeName())) {
+                    users.add(node.getTextContent().trim());
+                }
+            }
+            return users.toArray(new String[0]);
+        } catch (Exception exception) {
+            throw new IllegalArgumentException("Cannot parse users XML", exception);
+        }
+    }
+}</code></pre>
+   </div>
+   <div class="highlight-box">
+    <p>
+     The Python version uses
+     <code>
+      csv.reader
+     </code>
+     and an XML parser, not comma splitting or regular expressions for general structured input. The dependency-free Java CSV example intentionally accepts only unquoted, one-record-per-line input and rejects quoted fields; use a CSV library for general CSV. Java XML parsing disables DTDs and external resources. Both reports handle zero records and produce the same displayed output for the fixtures. These are teaching examples, not a complete ingestion or untrusted-input security layer.
+    </p>
+    <p>
+     <code>
+      final
+     </code>
+     prevents overriding
+     <code>
+      mine()
+     </code>
+     in Java. Python’s
+     <code>
+      @final
+     </code>
+     documents the same contract for type checkers but does not enforce it at runtime.
+    </p>
+   </div>
+   <h4>
+    Output
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-none">=== CSV Mining ===
+CSV: demo data for data.csv
+  Report: total_records=3, sample=Alice,30
+
+=== XML Mining ===
+XML: demo data for data.xml
+  Report: total_records=2, sample=Alice</code></pre>
+   </div>
+   <h4>
+    Template Method vs. Strategy
+   </h4>
+   <p>
+    Template Method fixes the orchestration in a base class and varies selected steps through inheritance. Strategy injects a replaceable collaborator. Use the former when subclasses must follow a common sequence; use the latter when clients should switch an algorithm independently of their class hierarchy. Boilerplate depends on the language: Python strategies can also be callables.
+   </p>
+   <h4>
+    When to Use It
+   </h4>
+   <ul>
+    <li>
+     When several classes share the same algorithm structure but differ
+              in specific steps.
+    </li>
+    <li>
+     When you want to avoid code duplication by pulling the common
+              skeleton up into a base class.
+    </li>
+    <li>
+     When you want to control which parts of an algorithm subclasses can
+              override (using
+     <code>
+      final
+     </code>
+     for the template method in Java).
+    </li>
+   </ul>
+   <!-- ===================== STATE ===================== -->
+   <h2 id="state">
+    7. State
+   </h2>
+   <h4>
+    Intent
+   </h4>
+   <p>
+    The
+    <strong>
+     State
+    </strong>
+    pattern allows an object to
+    <strong>
+     alter its behavior when its internal state changes
+    </strong>
+    .
+            The object will appear to change its class. Instead of encoding all
+            state-dependent behavior in one monolithic class using
+    <code>
+     if
+    </code>
+    /
+    <code>
+     switch
+    </code>
+    statements, each state is extracted
+            into its own class.
+   </p>
+   <h4>
+    The Problem It Solves
+   </h4>
+   <p>
+    Consider a simplified vending machine with three states: idle, coin inserted, and dispensing after an item is selected. A single class with several flags would mix valid transitions with actions that must be rejected. Here each state owns those decisions, while the machine delegates actions to its current state. Stock, payment amounts, cancellation, and hardware failures are deliberately outside the example’s scope.
+   </p>
+   <h4>
+    Structure
+   </h4>
+   <ul>
+    <li>
+     <strong>
+      Context
+     </strong>:
+     maintains an instance of a Concrete State
+              and delegates all state-dependent behavior to it
+              (e.g.,
+     <code>
+      VendingMachine
+     </code>
+     ).
+    </li>
+    <li>
+     <strong>
+      State
+     </strong>:
+     the interface declaring the actions
+              (e.g.,
+     <code>
+      insert_coin()
+     </code>
+     ,
+     <code>
+      select_item()
+     </code>
+     ,
+     <code>
+      dispense()
+     </code>
+     ).
+    </li>
+    <li>
+     <strong>
+      Concrete States
+     </strong>:
+     implement behavior for each state
+              and trigger transitions by calling
+     <code>
+      context.set_state()
+     </code>
+     .
+    </li>
+   </ul>
+   <figure class="pattern-figure">
+    <svg aria-labelledby="state-diagram-title state-diagram-desc" class="pattern-diagram" height="230" role="img" viewBox="0 0 760 230" width="760" xmlns="http://www.w3.org/2000/svg">
+     <title id="state-diagram-title">
+      Vending machine state transitions
+     </title>
+     <desc id="state-diagram-desc">
+      Idle changes to HasCoin on insert_coin. HasCoin changes to Dispensing on select_item. Dispensing returns to Idle on dispense. Other actions only print a message and leave the state unchanged.
+     </desc>
+     <defs>
+      <marker id="state-arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10">
+       <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor">
+       </path>
+      </marker>
+     </defs>
+     <g fill="none" stroke="currentColor" stroke-width="2">
+      <rect height="60" rx="8" width="160" x="30" y="75">
+      </rect>
+      <rect height="60" rx="8" width="160" x="300" y="75">
+      </rect>
+      <rect height="60" rx="8" width="160" x="570" y="75">
+      </rect>
+      <path d="M190 105 H295" marker-end="url(#state-arrow)">
+      </path>
+      <path d="M460 105 H565" marker-end="url(#state-arrow)">
+      </path>
+      <path d="M650 135 V185 H110 V140" marker-end="url(#state-arrow)">
+      </path>
+     </g>
+     <g fill="currentColor" font-family="Arial, sans-serif" font-size="16" text-anchor="middle">
+      <text x="110" y="111">
+       IdleState
+      </text>
+      <text x="380" y="111">
+       HasCoinState
+      </text>
+      <text x="650" y="111">
+       DispensingState
+      </text>
+      <text font-size="14" x="245" y="65">
+       insert_coin()
+      </text>
+      <text font-size="14" x="515" y="65">
+       select_item()
+      </text>
+      <text font-size="14" x="380" y="213">
+       dispense()
+      </text>
+     </g>
+    </svg>
+    <figcaption>
+     Only the three successful actions change state; rejected actions preserve it.
+    </figcaption>
+   </figure>
+   <h4>
+    Python Implementation
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-python">from __future__ import annotations
+from abc import ABC, abstractmethod
+
+
+# State interface
+class VendingState(ABC):
+    @abstractmethod
+    def insert_coin(self, machine: VendingMachine) -&gt; None:
+        pass
+
+    @abstractmethod
+    def select_item(self, machine: VendingMachine) -&gt; None:
+        pass
+
+    @abstractmethod
+    def dispense(self, machine: VendingMachine) -&gt; None:
+        pass
+
+
+# Concrete States
+class IdleState(VendingState):
+    def insert_coin(self, machine: VendingMachine) -&gt; None:
+        print("Coin inserted.")
+        machine.set_state(HasCoinState())
+
+    def select_item(self, machine: VendingMachine) -&gt; None:
+        print("Please insert a coin first.")
+
+    def dispense(self, machine: VendingMachine) -&gt; None:
+        print("Please insert a coin first.")
+
+
+class HasCoinState(VendingState):
+    def insert_coin(self, machine: VendingMachine) -&gt; None:
+        print("Coin already inserted.")
+
+    def select_item(self, machine: VendingMachine) -&gt; None:
+        print("Item selected.")
+        machine.set_state(DispensingState())
+
+    def dispense(self, machine: VendingMachine) -&gt; None:
+        print("Please select an item first.")
+
+
+class DispensingState(VendingState):
+    def insert_coin(self, machine: VendingMachine) -&gt; None:
+        print("Please wait, dispensing in progress.")
+
+    def select_item(self, machine: VendingMachine) -&gt; None:
+        print("Please wait, dispensing in progress.")
+
+    def dispense(self, machine: VendingMachine) -&gt; None:
+        print("Item dispensed. Enjoy!")
+        machine.set_state(IdleState())
+
+
+# Context
+class VendingMachine:
+    def __init__(self):
+        self._state: VendingState = IdleState()
+
+    def set_state(self, state: VendingState) -&gt; None:
+        self._state = state
+
+    def insert_coin(self) -&gt; None:
+        self._state.insert_coin(self)
+
+    def select_item(self) -&gt; None:
+        self._state.select_item(self)
+
+    def dispense(self) -&gt; None:
+        self._state.dispense(self)
+
+
+# Example usage
+if __name__ == "__main__":
+    machine = VendingMachine()
+
+    machine.select_item()     # Error: no coin
+    machine.insert_coin()     # OK
+    machine.insert_coin()     # Error: already inserted
+    machine.select_item()     # OK
+    machine.dispense()        # OK
+    machine.dispense()        # Error: back to idle</code></pre>
+   </div>
+   <h4>
+    Output
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-none">Please insert a coin first.
+Coin inserted.
+Coin already inserted.
+Item selected.
+Item dispensed. Enjoy!
+Please insert a coin first.</code></pre>
+   </div>
+   <h4>
+    When to Use It
+   </h4>
+   <ul>
+    <li>
+     When an object's behavior depends on its state, and it must change
+              behavior at runtime depending on that state.
+    </li>
+    <li>
+     When you have large conditional blocks that select behavior based on
+              the object's state: extract each branch into its own class.
+    </li>
+    <li>
+     Ideal for implementing finite state machines, game characters with
+              multiple modes, or UI workflows with discrete steps.
+    </li>
+   </ul>
+   <!-- ===================== MEDIATOR ===================== -->
+   <h2 id="mediator">
+    8. Mediator
+   </h2>
+   <h4>
+    Intent
+   </h4>
+   <p>
+    The
+    <strong>
+     Mediator
+    </strong>
+    pattern defines an object
+            (
+    <em>
+     the mediator
+    </em>
+    ) that
+    <strong>
+     encapsulates how a set of objects interact
+    </strong>
+    . It promotes
+            loose coupling by keeping objects from referring to each other
+            explicitly, and it lets you vary their interaction independently.
+            Instead of many-to-many communication between objects, all communication
+            is routed through the mediator.
+   </p>
+   <h4>
+    The Problem It Solves
+   </h4>
+   <p>
+    In a chat room application, each user might need to send messages to
+            every other user. Without a mediator, every
+    <code>
+     User
+    </code>
+    object
+            would hold a reference to every other
+    <code>
+     User
+    </code>
+    , creating a
+            tangled web of dependencies. Adding a new user means updating all
+            existing users. The mediator, the
+    <code>
+     ChatRoom
+    </code>
+    , centralizes
+            this: every user sends messages to the chat room, and the chat room
+            decides how to route them. Users only know about the mediator, not
+            about each other.
+   </p>
+   <h4>
+    Structure
+   </h4>
+   <ul>
+    <li>
+     <strong>
+      Mediator
+     </strong>:
+     the interface declaring
+     <code>
+      notify(sender, event)
+     </code>
+     or a similar routing method.
+    </li>
+    <li>
+     <strong>
+      Concrete Mediator
+     </strong>:
+     implements the coordination
+              logic and keeps references to all colleague objects
+              (e.g.,
+     <code>
+      ChatRoom
+     </code>
+     ).
+    </li>
+    <li>
+     <strong>
+      Colleague
+     </strong>:
+     each object that communicates through
+              the mediator (e.g.,
+     <code>
+      User
+     </code>
+     ). Colleagues hold a reference
+              to the mediator, not to each other.
+    </li>
+   </ul>
+   <h4>
+    Python Implementation
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-python">from __future__ import annotations
+from abc import ABC, abstractmethod
+from typing import List, Optional
+
+
+# Mediator interface
+class Mediator(ABC):
+    @abstractmethod
+    def send_message(self, message: str, sender: User) -&gt; None:
+        pass
+
+
+# Concrete Mediator
+class ChatRoom(Mediator):
+    def __init__(self):
+        self._users: List[User] = []
+
+    def register(self, user: User) -&gt; None:
+        if user.mediator is not None and user.mediator is not self:
+            raise ValueError("Unregister the user from its current room first")
+        if not any(current is user for current in self._users):
+            self._users.append(user)
+        user.set_mediator(self)
+
+    def unregister(self, user: User) -&gt; None:
+        self._users[:] = [current for current in self._users if current is not user]
+        if user.mediator is self:
+            user.set_mediator(None)
+
+    def send_message(self, message: str, sender: User) -&gt; None:
+        if not any(user is sender for user in self._users) or sender.mediator is not self:
+            raise ValueError("Sender must be registered in this room")
+        for user in tuple(self._users):
+            if user is not sender:
+                user.receive(message, sender.name)
+
+
+# Colleague
+class User:
+    def __init__(self, name: str):
+        self.name = name
+        self._mediator: Optional[Mediator] = None
+
+    @property
+    def mediator(self) -&gt; Optional[Mediator]:
+        return self._mediator
+
+    # Called by ChatRoom.register/unregister to keep both sides in sync.
+    def set_mediator(self, mediator: Optional[Mediator]) -&gt; None:
+        self._mediator = mediator
+
+    def send(self, message: str) -&gt; None:
+        if self._mediator is None:
+            raise RuntimeError("Register the user before sending messages")
+        print(f"{self.name} sends: '{message}'")
+        self._mediator.send_message(message, self)
+
+    def receive(self, message: str, sender_name: str) -&gt; None:
+        print(f"  {self.name} received from {sender_name}: '{message}'")
+
+
+# Example usage
+if __name__ == "__main__":
+    room = ChatRoom()
+
+    alice = User("Alice")
+    bob   = User("Bob")
+    carol = User("Carol")
+
+    room.register(alice)
+    room.register(bob)
+    room.register(carol)
+
+    alice.send("Hello everyone!")
+    bob.send("Hey Alice!")</code></pre>
+   </div>
+   <h4>
+    Output
+   </h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-none">Alice sends: 'Hello everyone!'
+  Bob received from Alice: 'Hello everyone!'
+  Carol received from Alice: 'Hello everyone!'
+Bob sends: 'Hey Alice!'
+  Alice received from Bob: 'Hey Alice!'
+  Carol received from Bob: 'Hey Alice!'</code></pre>
+   </div>
+   <h4>
+    Mediator vs. Observer
+   </h4>
+   <p>
+    Observer expresses a subscription relationship: a subject notifies dependents of an event or state change, using either push data or a pull-style update. Mediator encapsulates coordination rules among colleagues; it need not broadcast. This chat room broadcasts to other members, but a dialog mediator might enable only one control. The two patterns can coexist, so bidirectional observation alone is not a sufficient reason to replace Observer.
+   </p>
+   <div class="key-insight">
+    <p>
+     Registration is idempotent. Sending without a room raises an explicit error; a room also rejects senders that are not members. A user must leave its current room before joining another, and
+     <code>
+      unregister()
+     </code>
+     clears the association. Registration methods maintain the link on both sides; calling
+     <code>
+      set_mediator()
+     </code>
+     directly is not the membership API. Routing uses a membership snapshot and remains synchronous.
+    </p>
+   </div>
+   <h4>
+    When to Use It
+   </h4>
+   <ul>
+    <li>
+     When a set of objects communicate in well-defined but complex ways,
+              resulting in interdependencies that are difficult to understand.
+    </li>
+    <li>
+     When reusing an object is difficult because it refers to and
+              communicates with many other objects.
+    </li>
+    <li>
+     Common in UI frameworks (e.g., a dialog box mediating its controls),
+              air traffic control systems, and message brokers.
+    </li>
+   </ul>
+   <!-- ===================== MEMENTO ===================== -->
+   <h2 id="memento">9. Memento</h2>
+   <h4>Intent</h4>
+   <p>The Memento pattern captures an object's state so it can be restored later, without requiring the object that stores the snapshot to understand that state.</p>
+   <h4>The Problem It Solves</h4>
+   <p>A text editor must restore both its content and its cursor position when a user returns to a checkpoint. If the history manager copies those fields directly, it becomes coupled to the editor's internal representation. Adding selection or formatting state would then require changes outside the editor. Memento keeps snapshot creation and restoration inside the object that owns the state.</p>
+   <h4>Structure</h4>
+   <ul>
+    <li>Originator: <code>Editor</code> creates snapshots and restores its own state from them.</li>
+    <li>Memento: an immutable snapshot containing the text, cursor, and an owner identity used to reject snapshots from another editor.</li>
+    <li>Caretaker: <code>History</code> stores mementos through a narrow interface and decides when a saved checkpoint should be restored.</li>
+   </ul>
+   <figure class="pattern-figure">
+    <svg class="pattern-diagram" xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300" role="img" aria-labelledby="memento-diagram-title memento-diagram-desc">
+     <title id="memento-diagram-title">Saving and restoring an editor snapshot</title>
+     <desc id="memento-diagram-desc">History asks Editor to save its state. Editor creates an immutable memento containing text and cursor. History stores the opaque memento and later passes it back to Editor to restore the saved state.</desc>
+     <defs>
+      <marker id="memento-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+       <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
+      </marker>
+     </defs>
+     <g fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="20" y="100" width="190" height="80" rx="8"/>
+      <rect x="285" y="100" width="190" height="80" rx="8"/>
+      <rect x="550" y="100" width="190" height="80" rx="8"/>
+      <path d="M210 120 H280" marker-end="url(#memento-arrow)"/>
+      <path d="M475 120 H545" marker-end="url(#memento-arrow)"/>
+      <path d="M645 180 V225 H115 V185" marker-end="url(#memento-arrow)"/>
+      <path d="M115 100 V35 H380 V95" stroke-dasharray="6 4" marker-end="url(#memento-arrow)"/>
+     </g>
+     <g fill="currentColor" font-family="Arial, sans-serif" font-size="16" text-anchor="middle">
+      <text x="115" y="132">History</text>
+      <text x="115" y="158" font-size="14">Caretaker</text>
+      <text x="380" y="132">Editor</text>
+      <text x="380" y="158" font-size="14">Originator</text>
+      <text x="645" y="132">Memento</text>
+      <text x="645" y="158" font-size="14">text + cursor</text>
+      <text x="245" y="88" font-size="14">1. save()</text>
+      <text x="510" y="88" font-size="14">2. create</text>
+      <text x="380" y="248" font-size="14">3. Return snapshot to History; store without inspecting it</text>
+      <text x="248" y="23" font-size="14">4. restore(snapshot) on undo</text>
+      <text x="380" y="283" font-size="14">Only Editor interprets the saved state.</text>
+     </g>
+    </svg>
+    <figcaption>The caretaker owns the history, not the editor's state representation. Dashed flow shows a later restore request.</figcaption>
+   </figure>
+   <div class="workflow-step">
+    <h5>From Checkpoint to Undo</h5>
+    <ol>
+     <li>Before an edit, <code>backup()</code> asks the editor to create a memento and pushes it onto a stack.</li>
+     <li>The editor changes independently; the saved checkpoint remains unchanged.</li>
+     <li><code>undo()</code> passes the latest memento back to the editor and removes it only after restoration succeeds.</li>
+    </ol>
+    <p>The example saves two checkpoints, then restores them in reverse order. It implements undo only, not redo or automatic checkpoint creation.</p>
+   </div>
+   <h4>Python Implementation</h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-python">from __future__ import annotations
+from abc import ABC
+from dataclasses import dataclass
+
+
+# Narrow interface: the caretaker cannot access state through this API.
+class Memento(ABC):
+    pass
+
+
+@dataclass(frozen=True)
+class _EditorSnapshot(Memento):
+    _owner: object
+    _text: str
+    _cursor: int
+
+
+# Originator
+class Editor:
+    def __init__(self, text: str = "", cursor: int = 0):
+        self.__owner = object()
+        self.replace(text, cursor)
+
+    @property
+    def text(self) -&gt; str:
+        return self.__text
+
+    @property
+    def cursor(self) -&gt; int:
+        return self.__cursor
+
+    def replace(self, text: str, cursor: int) -&gt; None:
+        if not 0 &lt;= cursor &lt;= len(text):
+            raise ValueError("Cursor must be inside the text")
+        self.__text = text
+        self.__cursor = cursor
+
+    def save(self) -&gt; Memento:
+        return _EditorSnapshot(self.__owner, self.__text, self.__cursor)
+
+    def restore(self, memento: Memento) -&gt; None:
+        if not isinstance(memento, _EditorSnapshot):
+            raise ValueError("Unsupported memento")
+        if memento._owner is not self.__owner:
+            raise ValueError("Memento belongs to another editor")
+        self.replace(memento._text, memento._cursor)
+
+
+# Caretaker
+class History:
+    def __init__(self, editor: Editor):
+        self._editor = editor
+        self._snapshots: list[Memento] = []
+
+    def backup(self) -&gt; None:
+        self._snapshots.append(self._editor.save())
+
+    def undo(self) -&gt; bool:
+        if not self._snapshots:
+            return False
+        self._editor.restore(self._snapshots[-1])
+        self._snapshots.pop()  # discard only after a successful restore
+        return True
+
+
+if __name__ == "__main__":
+    editor = Editor("Draft", 5)
+    history = History(editor)
+
+    history.backup()
+    editor.replace("Draft v2", 8)
+    history.backup()
+    editor.replace("Final", 5)
+    print(f"Current: {editor.text} (cursor={editor.cursor})")
+
+    while history.undo():
+        print(f"Restored: {editor.text} (cursor={editor.cursor})")
+    print("Nothing to undo")</code></pre>
+   </div>
+   <h4>Java Implementation</h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-java">// MementoDemo.java
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+
+// Narrow interface used by the caretaker.
+interface Memento {}
+
+
+// Originator
+final class Editor {
+    private String text;
+    private int cursor;
+
+    private static final class Snapshot implements Memento {
+        private final Editor owner;
+        private final String text;
+        private final int cursor;
+
+        private Snapshot(Editor owner, String text, int cursor) {
+            this.owner = owner;
+            this.text = text;
+            this.cursor = cursor;
+        }
+    }
+
+    public Editor(String text, int cursor) {
+        replace(text, cursor);
+    }
+
+    public String getText() { return text; }
+    public int getCursor() { return cursor; }
+
+    public void replace(String text, int cursor) {
+        if (text == null || cursor &lt; 0 || cursor &gt; text.length()) {
+            throw new IllegalArgumentException("Invalid text or cursor");
+        }
+        this.text = text;
+        this.cursor = cursor;
+    }
+
+    public Memento save() {
+        return new Snapshot(this, text, cursor);
+    }
+
+    public void restore(Memento memento) {
+        if (!(memento instanceof Snapshot)) {
+            throw new IllegalArgumentException("Unsupported memento");
+        }
+        Snapshot snapshot = (Snapshot) memento;
+        if (snapshot.owner != this) {
+            throw new IllegalArgumentException("Memento belongs to another editor");
+        }
+        replace(snapshot.text, snapshot.cursor);
+    }
+}
+
+
+// Caretaker
+final class History {
+    private final Editor editor;
+    private final Deque&lt;Memento&gt; snapshots = new ArrayDeque&lt;&gt;();
+
+    public History(Editor editor) {
+        this.editor = editor;
+    }
+
+    public void backup() {
+        snapshots.push(editor.save());
+    }
+
+    public boolean undo() {
+        if (snapshots.isEmpty()) return false;
+        editor.restore(snapshots.peek());
+        snapshots.pop();
+        return true;
+    }
+}
+
+
+public class MementoDemo {
+    public static void main(String[] args) {
+        Editor editor = new Editor("Draft", 5);
+        History history = new History(editor);
+
+        history.backup();
+        editor.replace("Draft v2", 8);
+        history.backup();
+        editor.replace("Final", 5);
+        System.out.println("Current: " + editor.getText()
+                + " (cursor=" + editor.getCursor() + ")");
+
+        while (history.undo()) {
+            System.out.println("Restored: " + editor.getText()
+                    + " (cursor=" + editor.getCursor() + ")");
+        }
+        System.out.println("Nothing to undo");
+    }
+}</code></pre>
+   </div>
+   <h4>Output</h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-none">Current: Final (cursor=5)
+Restored: Draft v2 (cursor=8)
+Restored: Draft (cursor=5)
+Nothing to undo</code></pre>
+   </div>
+   <div class="key-insight">
+    <p>Snapshot isolation matters more than copying every field mechanically. Here, strings and cursor values are immutable, so later edits cannot mutate a saved checkpoint. Mutable lists or nested objects would require defensive copies, immutable structures, or a carefully defined sharing policy. Retaining many versions can consume significant memory, so real histories often impose a size limit.</p>
+    <p>Java hides the snapshot class inside <code>Editor</code>. Python uses a frozen dataclass and internal attributes by convention; these discourage accidental changes but are not a security boundary. The caretaker in both implementations uses only <code>save()</code> and <code>restore()</code>, never snapshot fields.</p>
+   </div>
+   <h4>Relationship to Command</h4>
+   <p><a href="#command">Command</a> represents an action; Memento represents a saved state. A reversible command can keep a memento instead of learning the receiver's internals. Restoring an in-memory checkpoint does not reverse external effects such as a sent message or a completed payment.</p>
+   <h4>When to Use It</h4>
+   <ul>
+    <li>When an editor, form, or simulation needs user-controlled checkpoints or rollback of local state.</li>
+    <li>When exposing an object's internals to a history manager would undermine encapsulation.</li>
+   </ul>
+   <!-- ===================== VISITOR ===================== -->
+   <h2 id="visitor">10. Visitor</h2>
+   <h4>Intent</h4>
+   <p>The Visitor pattern separates operations from the objects they work on. Once an element hierarchy supports <code>accept(visitor)</code>, a new operation can be added as a visitor without changing every element class.</p>
+   <h4>The Problem It Solves</h4>
+   <p>A drawing contains circles and rectangles. Calculating area and generating descriptions are distinct operations, but putting both into every shape class makes that hierarchy grow with each reporting requirement. Moving them into external functions with repeated type checks spreads knowledge of concrete shapes across the application. Visitor groups each operation in one class while preserving type-specific behavior.</p>
+   <h4>Structure</h4>
+   <ul>
+    <li>Element: <code>Shape</code> declares <code>accept(visitor)</code>.</li>
+    <li>Concrete Elements: <code>Circle</code> and <code>Rectangle</code> forward themselves to the matching visitor method.</li>
+    <li>Visitor: <code>ShapeVisitor</code> declares one visit method for each concrete element type.</li>
+    <li>Concrete Visitors: <code>AreaVisitor</code> computes a number; <code>DescriptionVisitor</code> produces text.</li>
+    <li>Object Structure: the client's list holds different shapes and controls traversal. Visitor does not itself require a tree or define an iteration order.</li>
+   </ul>
+   <figure class="pattern-figure">
+    <svg class="pattern-diagram" xmlns="http://www.w3.org/2000/svg" width="760" height="310" viewBox="0 0 760 310" role="img" aria-labelledby="visitor-diagram-title visitor-diagram-desc">
+     <title id="visitor-diagram-title">Visitor dispatch for a heterogeneous shape collection</title>
+     <desc id="visitor-diagram-desc">The client calls accept on a Circle or Rectangle with an AreaVisitor. Each concrete shape calls its corresponding visit method. AreaVisitor computes the result. A DescriptionVisitor can follow the same route without changing either shape class.</desc>
+     <defs>
+      <marker id="visitor-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+       <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
+      </marker>
+     </defs>
+     <g fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="20" y="110" width="150" height="70" rx="8"/>
+      <rect x="265" y="35" width="180" height="70" rx="8"/>
+      <rect x="265" y="195" width="180" height="70" rx="8"/>
+      <rect x="565" y="100" width="175" height="90" rx="8"/>
+      <path d="M170 130 H210 V70 H260" marker-end="url(#visitor-arrow)"/>
+      <path d="M170 160 H210 V230 H260" marker-end="url(#visitor-arrow)"/>
+      <path d="M445 70 H525 V120 H560" marker-end="url(#visitor-arrow)"/>
+      <path d="M445 230 H525 V170 H560" marker-end="url(#visitor-arrow)"/>
+     </g>
+     <g fill="currentColor" font-family="Arial, sans-serif" font-size="16" text-anchor="middle">
+      <text x="95" y="140">Client</text>
+      <text x="95" y="164" font-size="14">list of Shape</text>
+      <text x="355" y="65">Circle.accept()</text>
+      <text x="355" y="89" font-size="14">concrete element</text>
+      <text x="355" y="225">Rectangle.accept()</text>
+      <text x="355" y="249" font-size="14">concrete element</text>
+      <text x="652" y="137">AreaVisitor</text>
+      <text x="652" y="163" font-size="14">operation logic</text>
+      <text x="125" y="83" font-size="14">1. accept(visitor)</text>
+      <text x="597" y="25" font-size="14">2. visit_circle(self)</text>
+      <text x="597" y="265" font-size="14">2. visit_rectangle(self)</text>
+      <text x="380" y="299" font-size="14">New operation: pass a different visitor through the same accept() methods.</text>
+     </g>
+    </svg>
+    <figcaption>The element selects the type-specific visit method; the concrete visitor supplies its implementation. Java uses overloaded visit methods for the same two routes.</figcaption>
+   </figure>
+   <div class="workflow-step">
+    <h5>Two Dispatch Steps, One Operation</h5>
+    <ol>
+     <li>The client calls <code>shape.accept(visitor)</code>; the concrete shape determines which <code>accept()</code> implementation runs.</li>
+     <li>That method calls the shape-specific visit method on the visitor, passing the shape itself.</li>
+     <li>The concrete visitor determines the operation to run. The same list can then accept a different visitor.</li>
+    </ol>
+    <p>This is double dispatch: behavior depends on both the element and the visitor. Python names the routes explicitly, such as <code>visit_circle()</code>. Java resolves the overloaded <code>visit(this)</code> signature inside each concrete shape, then dynamically dispatches to the concrete visitor implementation. Calling an overloaded method directly with a variable typed only as <code>Shape</code> would not provide this behavior.</p>
+   </div>
+   <h4>Python Implementation</h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-python">from __future__ import annotations
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
+from math import pi
+from typing import Generic, TypeVar
+
+
+R = TypeVar("R")
+
+
+class ShapeVisitor(ABC, Generic[R]):
+    @abstractmethod
+    def visit_circle(self, circle: Circle) -&gt; R:
+        pass
+
+    @abstractmethod
+    def visit_rectangle(self, rectangle: Rectangle) -&gt; R:
+        pass
+
+
+class Shape(ABC):
+    @abstractmethod
+    def accept(self, visitor: ShapeVisitor[R]) -&gt; R:
+        pass
+
+
+@dataclass(frozen=True)
+class Circle(Shape):
+    radius: float
+
+    def accept(self, visitor: ShapeVisitor[R]) -&gt; R:
+        return visitor.visit_circle(self)
+
+
+@dataclass(frozen=True)
+class Rectangle(Shape):
+    width: float
+    height: float
+
+    def accept(self, visitor: ShapeVisitor[R]) -&gt; R:
+        return visitor.visit_rectangle(self)
+
+
+class AreaVisitor(ShapeVisitor[float]):
+    def visit_circle(self, circle: Circle) -&gt; float:
+        return pi * circle.radius ** 2
+
+    def visit_rectangle(self, rectangle: Rectangle) -&gt; float:
+        return rectangle.width * rectangle.height
+
+
+class DescriptionVisitor(ShapeVisitor[str]):
+    def visit_circle(self, circle: Circle) -&gt; str:
+        return f"Circle(radius={circle.radius:.1f})"
+
+    def visit_rectangle(self, rectangle: Rectangle) -&gt; str:
+        return f"Rectangle(width={rectangle.width:.1f}, height={rectangle.height:.1f})"
+
+
+if __name__ == "__main__":
+    shapes: list[Shape] = [Circle(2.0), Rectangle(3.0, 4.0)]
+    area = AreaVisitor()
+    description = DescriptionVisitor()
+
+    for shape in shapes:
+        print(f"{shape.accept(description)}: area={shape.accept(area):.2f}")</code></pre>
+   </div>
+   <h4>Java Implementation</h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-java">// VisitorDemo.java
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+
+
+interface ShapeVisitor&lt;R&gt; {
+    R visit(Circle circle);
+    R visit(Rectangle rectangle);
+}
+
+
+interface Shape {
+    &lt;R&gt; R accept(ShapeVisitor&lt;R&gt; visitor);
+}
+
+
+final class Circle implements Shape {
+    private final double radius;
+
+    public Circle(double radius) { this.radius = radius; }
+    public double getRadius() { return radius; }
+
+    @Override
+    public &lt;R&gt; R accept(ShapeVisitor&lt;R&gt; visitor) {
+        return visitor.visit(this);  // this has static type Circle
+    }
+}
+
+
+final class Rectangle implements Shape {
+    private final double width;
+    private final double height;
+
+    public Rectangle(double width, double height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    public double getWidth() { return width; }
+    public double getHeight() { return height; }
+
+    @Override
+    public &lt;R&gt; R accept(ShapeVisitor&lt;R&gt; visitor) {
+        return visitor.visit(this);  // this has static type Rectangle
+    }
+}
+
+
+final class AreaVisitor implements ShapeVisitor&lt;Double&gt; {
+    @Override
+    public Double visit(Circle circle) {
+        return Math.PI * circle.getRadius() * circle.getRadius();
+    }
+
+    @Override
+    public Double visit(Rectangle rectangle) {
+        return rectangle.getWidth() * rectangle.getHeight();
+    }
+}
+
+
+final class DescriptionVisitor implements ShapeVisitor&lt;String&gt; {
+    @Override
+    public String visit(Circle circle) {
+        return String.format(Locale.ROOT, "Circle(radius=%.1f)", circle.getRadius());
+    }
+
+    @Override
+    public String visit(Rectangle rectangle) {
+        return String.format(Locale.ROOT, "Rectangle(width=%.1f, height=%.1f)",
+                rectangle.getWidth(), rectangle.getHeight());
+    }
+}
+
+
+public class VisitorDemo {
+    public static void main(String[] args) {
+        List&lt;Shape&gt; shapes = Arrays.asList(new Circle(2.0), new Rectangle(3.0, 4.0));
+        ShapeVisitor&lt;Double&gt; area = new AreaVisitor();
+        ShapeVisitor&lt;String&gt; description = new DescriptionVisitor();
+
+        for (Shape shape : shapes) {
+            System.out.printf(Locale.ROOT, "%s: area=%.2f%n",
+                    shape.accept(description), shape.accept(area));
+        }
+    }
+}</code></pre>
+   </div>
+   <h4>Output</h4>
+   <div class="responsive-code-container">
+<pre tabindex="0"><code class="language-none">Circle(radius=2.0): area=12.57
+Rectangle(width=3.0, height=4.0): area=12.00</code></pre>
+   </div>
+   <div class="key-insight">
+    <p>The generic result type lets each visitor return its own kind of value without mixing printing into the element classes. Shapes in this demo contain trusted, non-negative dimensions; validation and units are outside its scope. Visitors use public shape data, not private-state access.</p>
+    <p>Visitor makes new operations inexpensive, but new element types more expensive. Adding a <code>Triangle</code> requires a new visit method and updates to every concrete visitor. Prefer it when the element types are relatively stable and operations change frequently; for a small, stable operation such as area alone, ordinary shape methods may be simpler.</p>
+   </div>
+   <h4>When to Use It</h4>
+   <ul>
+    <li>When several unrelated operations must work across the same stable set of element types.</li>
+    <li>When reports, exporters, or syntax-tree analyses should evolve separately from the underlying domain objects.</li>
+   </ul>
+      <!-- ===================== COMPARISON ===================== -->
+   <h2 id="comparison">
+    11. Detailed Comparison
+   </h2>
+   <h4>
+    Pattern Selection Guide
+   </h4>
+   <p>
+    Choosing the right Behavioral pattern depends on the specific problem
+            you are facing. The table below summarizes each pattern along the
+            dimensions most relevant to that decision.
+   </p>
+   <div aria-label="Scrollable pattern comparison table" class="responsive-table-container" role="region" tabindex="0">
+    <table>
+     <thead>
+      <tr>
+       <th scope="col">
+        Pattern
+       </th>
+       <th scope="col">
+        Coupling Direction
+       </th>
+       <th scope="col">
+        Key Mechanism
+       </th>
+       <th scope="col">
+        Undo/Redo
+       </th>
+       <th scope="col">
+        Runtime Swap
+       </th>
+       <th scope="col">
+        Typical Use Case
+       </th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td>
+        <strong>
+         Iterator
+        </strong>
+       </td>
+       <td>
+        Client → Iterator
+       </td>
+       <td>
+        Sequential access
+       </td>
+       <td>
+        No
+       </td>
+       <td>
+        Yes
+       </td>
+       <td>
+        Traversing any collection uniformly
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         Command
+        </strong>
+       </td>
+       <td>
+        Invoker → Command → Receiver
+       </td>
+       <td>
+        Encapsulated request
+       </td>
+       <td>
+        Optional; requires saved state or compensation
+       </td>
+       <td>
+        Yes
+       </td>
+       <td>
+        GUI buttons, transactions, job queues
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         Strategy
+        </strong>
+       </td>
+       <td>
+        Context → Strategy
+       </td>
+       <td>
+        Interchangeable algorithm
+       </td>
+       <td>
+        No
+       </td>
+       <td>
+        Yes
+       </td>
+       <td>
+        Sorting, compression, payment methods
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         Observer
+        </strong>
+       </td>
+       <td>
+        Subject → Observers
+       </td>
+       <td>
+        Event notification
+       </td>
+       <td>
+        No
+       </td>
+       <td>
+        Yes (subscribe/unsubscribe)
+       </td>
+       <td>
+        Event systems, MVC, reactive UI
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         Chain of Responsibility
+        </strong>
+       </td>
+       <td>
+        Sender → Chain
+       </td>
+       <td>
+        Request forwarding
+       </td>
+       <td>
+        No
+       </td>
+       <td>
+        Yes
+       </td>
+       <td>
+        Middleware, logging pipelines, auth checks
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         Template Method
+        </strong>
+       </td>
+       <td>
+        Base template → overridden steps
+       </td>
+       <td>
+        Inheritance skeleton
+       </td>
+       <td>
+        No
+       </td>
+       <td>
+        Steps are subclass-defined, not independently injected
+       </td>
+       <td>
+        Frameworks, data processing pipelines
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         State
+        </strong>
+       </td>
+       <td>
+        Context → State
+       </td>
+       <td>
+        Delegated state behavior
+       </td>
+       <td>
+        Not automatic; requires transition history
+       </td>
+       <td>
+        Yes (transitions)
+       </td>
+       <td>
+        Finite state machines, UI workflows
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         Mediator
+        </strong>
+       </td>
+       <td>
+        Colleagues → Mediator
+       </td>
+       <td>
+        Centralized routing
+       </td>
+       <td>
+        No
+       </td>
+       <td>
+        Possible if the design exposes reconfiguration
+       </td>
+       <td>
+        Chat rooms, air traffic control, dialogs
+       </td>
+      </tr>
+           <tr>
+       <td>Memento</td>
+       <td>Caretaker → Originator; stores opaque Mementos</td>
+       <td>Immutable state snapshots</td>
+       <td>Supports restoration; redo needs additional history logic</td>
+       <td>Not its purpose; checkpoints can be selected at runtime</td>
+       <td>Editor checkpoints, local rollback</td>
+      </tr>
+      <tr>
+       <td>Visitor</td>
+       <td>Element → Visitor interface; visit methods name concrete types</td>
+       <td>Double dispatch through accept/visit</td>
+       <td>No; requires a separate history mechanism</td>
+       <td>Yes (choose a visitor for each operation)</td>
+       <td>Reports, exporters, syntax-tree analyses</td>
+      </tr>
+     </tbody>
+    </table>
+   </div>
+   <h4>
+    Common Pitfalls
+   </h4>
+   <p>
+    Even experienced developers sometimes misapply Behavioral patterns. Here
+            are the most frequent mistakes and how to avoid them:
+   </p>
+   <div aria-label="Scrollable pattern comparison table" class="responsive-table-container" role="region" tabindex="0">
+    <table>
+     <thead>
+      <tr>
+       <th scope="col">
+        Pattern
+       </th>
+       <th scope="col">
+        Pitfall
+       </th>
+       <th scope="col">
+        Better Approach
+       </th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td>
+        <strong>
+         Command
+        </strong>
+       </td>
+       <td>
+        Treating undo as the opposite action, or assuming all requests are reversible
+       </td>
+       <td>
+        Capture the prior state for undo; add redo or compensation only when needed
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         Observer
+        </strong>
+       </td>
+       <td>
+        Keeping strong subscriber references beyond the subscriber lifecycle
+       </td>
+       <td>
+        Unsubscribe explicitly or use a suitable weak-reference policy; long-lived publishers otherwise retain subscribers
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         Strategy
+        </strong>
+       </td>
+       <td>
+        Mixing algorithm configuration with mutable context internals
+       </td>
+       <td>
+        Inject stable configuration through the constructor and pass per-call data explicitly
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         Chain of Responsibility
+        </strong>
+       </td>
+       <td>
+        Leaving end-of-chain behavior undefined
+       </td>
+       <td>
+        Specify whether an unhandled request is returned, logged, ignored, or rejected
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         State
+        </strong>
+       </td>
+       <td>
+        Confusing state transitions with client-selected strategies
+       </td>
+       <td>
+        Let states or the context own transitions; direct state-to-state construction is valid for a small, stable state graph
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         Mediator
+        </strong>
+       </td>
+       <td>
+        The mediator becoming a "God object" that knows too much
+       </td>
+       <td>
+        Split large mediators into domain-specific ones
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <strong>
+         Template Method
+        </strong>
+       </td>
+       <td>
+        Overriding the orchestration instead of the intended extension steps
+       </td>
+       <td>
+        Use final in Java and a documented @final contract with type checking in Python
+       </td>
+      </tr>
+           <tr>
+       <td>Memento</td>
+       <td>Retaining mutable aliases or keeping unlimited snapshots</td>
+       <td>Define snapshot isolation and a bounded history policy</td>
+      </tr>
+      <tr>
+       <td>Visitor</td>
+       <td>Choosing Visitor for an element hierarchy that changes frequently</td>
+       <td>Use it for stable element types; budget for updates to every visitor when adding a type</td>
+      </tr>
+     </tbody>
+    </table>
+   </div>
+   <!-- ===================== CLOSING ===================== -->
+   <h2 id="conclusion">
+    12. Putting It All Together
+   </h2>
+   <p>
+    Behavioral Design Patterns are not silver bullets: they are
+    <strong>
+     vocabulary for solutions to recurring design problems
+    </strong>
+    .
+            Understanding them deeply means you can recognize the problem first
+            and then apply the appropriate pattern, rather than forcing a pattern
+            onto a problem that does not need it.
+   </p>
+   <p>
+    A few guiding principles to carry forward:
+   </p>
+   <div class="summary">
+    <ul>
+     <li>
+      <strong>
+       Favor composition over inheritance.
+      </strong>
+      Strategy,
+              Command, Observer, and Mediator all achieve flexibility through object
+              composition. Template Method is the main exception, relying on
+              inheritance, which is why it is less flexible at runtime.
+     </li>
+     <li>
+      <strong>
+       Program to interfaces, not implementations.
+      </strong>
+      Use
+              narrow contracts for collaborators. For example, the Memento caretaker
+              handles opaque snapshots, while Visitor elements depend on a visitor
+              interface. These boundaries let implementations change without
+              spreading unrelated details through the client.
+     </li>
+     <li>
+      <strong>
+       Start simple.
+      </strong>
+      Not every conditional needs a Strategy,
+              and not every object graph needs a Mediator. Apply a pattern when
+              the problem it solves (large conditionals, tight coupling, missing
+              undo) actually exists in your codebase.
+     </li>
+    </ul>
+   </div>
+   <p>
+    With a solid understanding of Behavioral patterns, combined with
+            Creational and Structural patterns, you will be equipped to design
+            systems that are easier to extend, test, and reason about, systems
+            that communicate
+    <em>
+     intent
+    </em>
+    through their structure rather than
+            through comments.
+   </p>
+     <div id="disqus_thread"></div>
+     <script>
+        var disqus_config = function () {
+            this.page.url = "https://www.francescosannicola.com/articles/oop-behavioral-patterns.html";
+            this.page.identifier = "oop-behavioral-patterns";
+            this.page.title = "Behavioral Design Patterns";
+        };
+        (function () {
+            var d = document, s = d.createElement("script");
+            s.src = "https://francescosannicola.disqus.com/embed.js";
+            s.setAttribute("data-timestamp", +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+     </script>
+     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </main>
+  <button aria-label="Back to top" id="backToTopButton" title="Back to top" type="button">
+   <i aria-hidden="true" class="fa fa-arrow-up">
+   </i>
+  </button>
+  <script>
+   (() => {
+  "use strict";
+  const toggle = document.getElementById("darkModeToggle");
+  const backToTop = document.getElementById("backToTopButton");
+  const targets = [document.body, ...document.querySelectorAll(
+    ".main-container, .article-container, .link-container"
+  )];
+
+  function applyDarkMode(dark, persist = false) {
+    targets.forEach((element) => element.classList.toggle("dark-mode", dark));
+    if (toggle) {
+      toggle.checked = dark;
+      toggle.setAttribute("aria-label", dark ? "Disable dark mode" : "Enable dark mode");
+    }
+    if (persist) {
+      try {
+        window.localStorage.setItem("darkMode", String(dark));
+      } catch (_) {
+        // The toggle still works when browser storage is unavailable.
+      }
+    }
+  }
+
+  let dark = false;
+  try {
+    dark = window.localStorage.getItem("darkMode") === "true";
+  } catch (_) {
+    // Keep the site's default light theme if storage is blocked.
+  }
+  applyDarkMode(dark);
+  if (toggle) {
+    toggle.addEventListener("change", () => applyDarkMode(toggle.checked, true));
+  }
+
+  if (backToTop) {
+    const updateVisibility = () => {
+      backToTop.style.display = window.scrollY > 500 ? "block" : "none";
+    };
+    backToTop.addEventListener("click", () => {
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
+    });
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    updateVisibility();
+  }
+
+    document.querySelectorAll(".behavioral-patterns h2[id]").forEach((sectionHeading, index) => {
+        const sectionNodes = [];
+        for (let node = sectionHeading.nextElementSibling; node && node.tagName !== "H2"; node = node.nextElementSibling) {
+            sectionNodes.push(node);
+        }
+
+        const implementationHeading = sectionNodes.find((node) =>
+            node.tagName === "H4" && /^(Python|Java) Implementation$/.test(node.textContent.trim())
+        );
+        const outputHeading = sectionNodes.find((node) =>
+            node.tagName === "H4" && node.textContent.trim() === "Output"
+        );
+        const outputPanel = outputHeading && outputHeading.nextElementSibling;
+        if (!implementationHeading || !outputPanel || !outputPanel.classList.contains("responsive-code-container")) return;
+
+        const accordion = document.createElement("h4");
+        accordion.className = "accordion";
+        accordion.setAttribute("role", "button");
+        accordion.setAttribute("tabindex", "0");
+        accordion.setAttribute("aria-expanded", "false");
+        accordion.setAttribute("aria-controls", `code-examples-${index + 1}`);
+        accordion.append("Code Examples and Output");
+
+        const arrow = document.createElement("span");
+        arrow.className = "arrow";
+        arrow.setAttribute("aria-hidden", "true");
+        arrow.textContent = "▼";
+        accordion.appendChild(arrow);
+
+        const panel = document.createElement("div");
+        panel.id = `code-examples-${index + 1}`;
+        panel.style.display = "none";
+        const nextSectionHeading = sectionNodes[sectionNodes.length - 1].nextElementSibling;
+        const parent = sectionHeading.parentNode;
+        parent.insertBefore(accordion, nextSectionHeading);
+        parent.insertBefore(panel, nextSectionHeading);
+
+        let node = implementationHeading;
+        while (node) {
+            const nextNode = node.nextElementSibling;
+            panel.appendChild(node);
+            if (node === outputPanel) break;
+            node = nextNode;
+        }
+
+        const togglePanel = () => {
+            const isExpanded = accordion.getAttribute("aria-expanded") === "true";
+            accordion.setAttribute("aria-expanded", String(!isExpanded));
+            accordion.classList.toggle("active", !isExpanded);
+            panel.style.display = isExpanded ? "none" : "block";
+        };
+
+        accordion.addEventListener("click", togglePanel);
+        accordion.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                togglePanel();
+            }
+        });
+    });
+})();
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js">
+  </script>
+ </body>
+</html>

@@ -59,5 +59,29 @@
         <changefreq>yearly</changefreq>
         <priority>0.64</priority>
     </url>
+        <url>
+            <loc>https://francescosannicola.com/articles/design-patterns.html</loc>
+            <lastmod>2026-10-21</lastmod>
+            <changefreq>yearly</changefreq>
+            <priority>0.64</priority>
+        </url>
+        <url>
+            <loc>https://francescosannicola.com/articles/oop-creational-patterns.html</loc>
+            <lastmod>2026-10-18</lastmod>
+            <changefreq>yearly</changefreq>
+            <priority>0.64</priority>
+        </url>
+        <url>
+            <loc>https://francescosannicola.com/articles/oop-structural-design-patterns.html</loc>
+            <lastmod>2026-10-18</lastmod>
+            <changefreq>yearly</changefreq>
+            <priority>0.64</priority>
+        </url>
+        <url>
+            <loc>https://francescosannicola.com/articles/oop-behavioral-patterns.html</loc>
+            <lastmod>2026-10-18</lastmod>
+            <changefreq>yearly</changefreq>
+            <priority>0.64</priority>
+        </url>
 
 </urlset>
